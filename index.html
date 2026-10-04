@@ -425,7 +425,12 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @media (max-height:820px){.dnscene{max-height:30vh}.pick.dnopt{min-width:92px;padding:4px 10px 6px}.dnopt svg{width:52px;height:40px}}
 
 /* Laberintos */
+.lbq{margin:0}.lbmain{flex:1 1 0;min-height:0;width:100%;display:flex;flex-direction:column;gap:8px}
 .lbwrap{position:relative;flex:1 1 0;min-height:200px;width:100%;display:flex;align-items:center;justify-content:center}
+.lbside{order:-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center}
+.lbside .btn{padding:6px 14px;min-height:44px}.lblv{padding:3px;gap:2px}.lblv .mode{font-size:1.15rem;padding:4px 10px}
+.lbmsg{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);margin:0;background:rgba(255,255,255,.94);border-radius:14px;padding:4px 14px;box-shadow:0 2px 6px rgba(0,0,0,.15);pointer-events:none;white-space:nowrap;z-index:2}.lbmsg:empty{display:none}
+@media (min-width:1000px),(orientation:landscape) and (min-width:700px){.lbmain{flex-direction:row}.lbside{order:1;flex-direction:column;flex-wrap:nowrap;justify-content:center}.lblv{flex-direction:column;border-radius:22px}}
 .lbsvg{width:300px;height:200px;touch-action:none;flex:0 0 auto;filter:drop-shadow(0 4px 0 rgba(31,42,68,.15))}
 .lbsvg text{transform-box:fill-box;transform-origin:center}
 .lbshake{animation:lbsh .35s}@keyframes lbsh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
@@ -577,7 +582,7 @@ const T={
 <li>Tres juegos: <b>🫳 Ponlo</b> (arrastra el personaje con el dedo o el lápiz: «Pon el gato debajo de la mesa»; en el nivel difícil, a veces dos órdenes a la vez), <b>👀 ¿Dónde está?</b> (la voz lee la pregunta y las respuestas, cada una con un dibujito, para que no necesite leer) y <b>🔍 Busca</b> (varios iguales en sitios distintos: «Toca el gato que está detrás de la casa»).</li>
 <li>Al acertar, la voz dice la frase entera («El gato está debajo de la mesa»). Tras dos fallos se señala el sitio o la respuesta. En «🔢 Números y letras» se ve cada palabra con 🟢🟡🔴 y lo que más confunde (por ejemplo delante ↔ detrás). Cada pregunta cuenta en Actividad como «Otros juegos».</li></ul>
 <h4>🌀 Laberintos</h4>
-<ul><li>66 laberintos fijos (en «🎲 Jugar»), 22 por nivel: 🟢 pequeños (4×3 a 5×4 casillas, caminos anchos, casi sin desvíos), 🟡 medianos (6×4 a 7×5, con callejones sin salida y algún camino alternativo) y 🔴 grandes (8×5 a 9×6). Cada uno tiene su personaje y su meta (el ratón al queso, la abeja a la flor, el cohete a la luna… 22 temas). Siempre son los mismos, así se puede ver cuántos ha terminado.</li>
+<ul><li>66 laberintos fijos (en «🎲 Jugar»), 22 por nivel: 🟢 pequeños (4×3 a 5×4 casillas, caminos anchos, casi sin desvíos), 🟡 medianos (6×4 a 8×6, con callejones sin salida y algún camino alternativo) y 🔴 grandes (9×6 a 12×8, con un solo camino y muchos callejones sin salida). Cada uno tiene su personaje y su meta (el ratón al queso, la abeja a la flor, el cohete a la luna… 22 temas). Siempre son los mismos, así se puede ver cuántos ha terminado.</li>
 <li>Se recorre arrastrando el personaje con el dedo o el lápiz (o tocando la casilla de al lado). No puede atravesar paredes: si choca suena un «toc» suave y no pasa nada más. Volver atrás borra el camino. «💡 Pista» enseña con huellas los próximos pasos; «↺ Otra vez» lo reinicia. Primero salen los que aún no ha hecho, en orden.</li>
 <li>⭐⭐⭐ sin chocar ni pedir pista; ⭐⭐ con pocos choques y como mucho una pista; ⭐ el resto. En «🔢 Números y letras» se ve por nivel cuántos ha terminado, sus estrellas, el % sin choques ni pistas, los choques de media y las pistas, con «💡 Lista para el nivel…» cuando lo hace bien. Cada laberinto cuenta en Actividad como «Otros juegos».</li></ul>
 <h4>〰️ Trazos (graphisme)</h4>
@@ -668,7 +673,7 @@ const T={
 <li>Three games: <b>🫳 Put it</b> (drag the character with a finger or the pen: “Put the cat under the table”; at the hard level, sometimes two instructions at once), <b>👀 Where is it?</b> (the voice reads the question and the answers, each with a little picture, so no reading is needed) and <b>🔍 Find it</b> (several identical ones in different places: “Tap the cat that is behind the house”).</li>
 <li>When right, the voice says the whole sentence (“The cat is under the table”). After two mistakes the place or the answer is highlighted. In “🔢 Numbers & letters” you can see each word with 🟢🟡🔴 and the most confused pairs (for example in front ↔ behind). Each question counts in Activity as “Other games”.</li></ul>
 <h4>🌀 Mazes</h4>
-<ul><li>66 fixed mazes (in “🎲 Play”), 22 per level: 🟢 small (4×3 to 5×4 squares, wide paths, hardly any detours), 🟡 medium (6×4 to 7×5, with dead ends and some alternative routes) and 🔴 large (8×5 to 9×6). Each has its own character and goal (the mouse to the cheese, the bee to the flower, the rocket to the moon… 22 themes). They are always the same, so you can see how many are finished.</li>
+<ul><li>66 fixed mazes (in “🎲 Play”), 22 per level: 🟢 small (4×3 to 5×4 squares, wide paths, hardly any detours), 🟡 medium (6×4 to 8×6, with dead ends and some alternative routes) and 🔴 large (9×6 to 12×8, with a single route and many dead ends). Each has its own character and goal (the mouse to the cheese, the bee to the flower, the rocket to the moon… 22 themes). They are always the same, so you can see how many are finished.</li>
 <li>The child drags the character with a finger or the pen (or taps the next square). Walls can’t be crossed: a bump makes a soft “knock” and nothing else happens. Going back erases the path. “💡 Hint” shows the next steps with footprints; “↺ Again” restarts. Unfinished mazes come first, in order.</li>
 <li>⭐⭐⭐ with no bumps or hints; ⭐⭐ with few bumps and at most one hint; ⭐ otherwise. In “🔢 Numbers & letters” you can see per level how many are finished, the stars, the % without bumps or hints, average bumps and hints, with “💡 Ready for the … level” when it goes well. Each maze counts in Activity as “Other games”.</li></ul>
 <h4>〰️ Lines (pre-writing)</h4>
@@ -759,7 +764,7 @@ const T={
 <li>Trois jeux : <b>🫳 Place-le</b> (glisser le personnage avec le doigt ou le stylet : « Mets le chat sous la table » ; au niveau difficile, parfois deux consignes à la fois), <b>👀 Où est-il ?</b> (la voix lit la question et les réponses, chacune avec un petit dessin, pour qu’il n’ait pas besoin de lire) et <b>🔍 Trouve-le</b> (plusieurs identiques à des endroits différents : « Touche le chat qui est derrière la maison »).</li>
 <li>Quand c’est réussi, la voix dit la phrase entière (« Le chat est sous la table »). Après deux erreurs, l’endroit ou la réponse est montré. Dans « 🔢 Nombres et lettres », on voit chaque mot avec 🟢🟡🔴 et ce qu’il confond le plus (par exemple devant ↔ derrière). Chaque question compte dans Activité comme « Autres jeux ».</li></ul>
 <h4>🌀 Labyrinthes</h4>
-<ul><li>66 labyrinthes fixes (dans « 🎲 Jouer »), 22 par niveau : 🟢 petits (de 4×3 à 5×4 cases, chemins larges, presque sans détours), 🟡 moyens (de 6×4 à 7×5, avec des impasses et parfois deux chemins possibles) et 🔴 grands (de 8×5 à 9×6). Chacun a son personnage et son but (la souris jusqu’au fromage, l’abeille jusqu’à la fleur, la fusée jusqu’à la lune… 22 thèmes). Ce sont toujours les mêmes, on voit donc combien sont terminés.</li>
+<ul><li>66 labyrinthes fixes (dans « 🎲 Jouer »), 22 par niveau : 🟢 petits (de 4×3 à 5×4 cases, chemins larges, presque sans détours), 🟡 moyens (de 6×4 à 8×6, avec des impasses et parfois deux chemins possibles) et 🔴 grands (de 9×6 à 12×8, avec un seul chemin et beaucoup d’impasses). Chacun a son personnage et son but (la souris jusqu’au fromage, l’abeille jusqu’à la fleur, la fusée jusqu’à la lune… 22 thèmes). Ce sont toujours les mêmes, on voit donc combien sont terminés.</li>
 <li>L’enfant fait glisser le personnage avec le doigt ou le stylet (ou touche la case d’à côté). Impossible de traverser les murs : un choc fait un petit « toc » et rien d’autre. Revenir en arrière efface le chemin. « 💡 Indice » montre les prochains pas avec des empreintes ; « ↺ Recommencer » le remet au début. Les labyrinthes pas encore faits passent en premier, dans l’ordre.</li>
 <li>⭐⭐⭐ sans toucher de mur ni demander d’indice ; ⭐⭐ avec peu de chocs et au plus un indice ; ⭐ sinon. Dans « 🔢 Nombres et lettres », on voit par niveau combien sont terminés, les étoiles, le % sans chocs ni indices, les chocs en moyenne et les indices, avec « 💡 Prêt pour le niveau… » quand ça va bien. Chaque labyrinthe compte dans Activité comme « Autres jeux ».</li></ul>
 <h4>〰️ Graphisme</h4>
@@ -3644,7 +3649,7 @@ function dondeSection(){const t=DN_T[lang],tt=L(),r=P.pos||{st:{},conf:{}};
 // ===== Laberintos: 66 laberintos fijos (22 por nivel), se recorren con el dedo o el lápiz =====
 // Cada laberinto sale de una semilla fija, así siempre es el mismo y se puede seguir el progreso.
 const LB_PER=22;
-const LB_SIZES=[[],[[4,3],[5,3],[4,4],[5,4]],[[6,4],[7,4],[6,5],[7,5]],[[8,5],[9,5],[8,6],[9,6]]];
+const LB_SIZES=[[],[[4,3],[5,3],[4,4],[5,4]],[[6,4],[7,5],[8,5],[8,6]],[[9,6],[10,7],[11,7],[12,8]]];
 // Temas: [personaje, meta, color de fondo, color de paredes, es, en, fr]
 const LB_THEMES=[
  ['🐭','🧀','#FFF6DD','#C98B4A','Lleva el ratón al queso','Take the mouse to the cheese','Emmène la souris jusqu’au fromage'],
@@ -3687,7 +3692,7 @@ function lbMaze(lv,n){const id=lv+'-'+n;if(lbCache[id])return lbCache[id];const 
     if(!nb.length){st.pop();continue}const [a,b,dx,dy]=nb[Math.floor(r()*nb.length)];
     if(dx===1)E[y][x]=0;if(dx===-1)E[y][a]=0;if(dy===1)S[y][x]=0;if(dy===-1)S[b][x]=0;seen[b][a]=1;st.push([a,b])}
   // en los niveles 2 y 3 se abren algunas paredes más: hay caminos alternativos, no solo uno
-  if(lv>=2){const k=lv===2?1:2;for(let i=0;i<k;i++){const x=Math.floor(r()*(C-1)),y=Math.floor(r()*R);E[y][x]=0}}
+  if(lv===2){const k=1;for(let i=0;i<k;i++){const x=Math.floor(r()*(C-1)),y=Math.floor(r()*R);E[y][x]=0}}
   const m={id,lv,n,C,R,E,S};
   const open=(x,y,dx,dy)=>dx===1?x<C-1&&!E[y][x]:dx===-1?x>0&&!E[y][x-1]:dy===1?y<R-1&&!S[y][x]:y>0&&!S[y-1][x];
   m.open=open;
@@ -3712,9 +3717,8 @@ function laberinto(n){qCtx=null;qAns=false;const t=L(),tt=LB_T[lang],rec=lbRec()
   const night=bg==='#1F2A50',wallW=lbLv===1?14:lbLv===2?12:10;
   let walls='';for(let y=0;y<m.R;y++)for(let x=0;x<m.C;x++){if(x<m.C-1&&m.E[y][x])walls+=`M${(x+1)*CS} ${y*CS}V${(y+1)*CS}`;if(y<m.R-1&&m.S[y][x])walls+=`M${x*CS} ${(y+1)*CS}H${(x+1)*CS}`}
   const cxy=c=>[c[0]*CS+CS/2,c[1]*CS+CS/2];
-  stage.innerHTML=`<div class="modes" role="group">${[1,2,3].map(v=>`<button class="mode" data-ll="${v}" aria-pressed="${v===lbLv}">${t.pnLevels[v-1]}</button>`).join('')}</div>
-   <p class="q">${esc(q)}</p>
-   <div class="lbwrap" id="lbwrap"><svg class="lbsvg" id="lbsvg" viewBox="-8 -8 ${W+16} ${H+16}" style="--bg:${bg}" role="img" aria-label="${esc(q)}">
+  stage.innerHTML=`<p class="q lbq">${esc(q)}</p>
+   <div class="lbmain"><div class="lbwrap" id="lbwrap"><svg class="lbsvg" id="lbsvg" viewBox="-8 -8 ${W+16} ${H+16}" style="--bg:${bg}" role="img" aria-label="${esc(q)}">
     <rect x="-8" y="-8" width="${W+16}" height="${H+16}" rx="22" fill="${wc}"/><rect x="0" y="0" width="${W}" height="${H}" rx="10" fill="${bg}"/>
     ${night?Array.from({length:12},(_,i)=>`<circle cx="${(i*137)%W}" cy="${(i*91)%H}" r="2.5" fill="#FFFFFF" opacity=".5"/>`).join(''):''}
     <g class="lbhint"></g><polyline class="lbtrail" fill="none" stroke="${night?'#FFD23F':'#FF8C2B'}" stroke-width="${CS*.3}" stroke-linecap="round" stroke-linejoin="round" opacity=".55" points=""/>
@@ -3722,9 +3726,9 @@ function laberinto(n){qCtx=null;qAns=false;const t=L(),tt=LB_T[lang],rec=lbRec()
     <text class="lbgoal" x="${cxy(m.g)[0]}" y="${cxy(m.g)[1]}" font-size="${CS*.66}" text-anchor="middle" dominant-baseline="central">${goal}</text>
     <circle class="lbstart" cx="${cxy(m.s)[0]}" cy="${cxy(m.s)[1]}" r="${CS*.44}" fill="none" stroke="#3BB273" stroke-width="5" stroke-dasharray="10 8"/>
     <g class="lbme"><text x="0" y="0" font-size="${CS*.66}" text-anchor="middle" dominant-baseline="central">${ch}</text></g>
-   </svg></div>
-   <p class="msg" aria-live="polite"></p>
-   <div class="row drawbtns"><button class="btn alt icon" id="hear" aria-label="${t.hear}">🔊</button><button class="btn alt" id="lbHint">${tt.hint}</button><button class="btn alt" id="lbAgain">${tt.again}</button><span class="pncount">⭐ ${done}/${LB_PER}</span></div>`;
+   </svg><p class="msg lbmsg" aria-live="polite"></p></div>
+   <div class="lbside"><div class="modes lblv" role="group">${[1,2,3].map(v=>`<button class="mode" data-ll="${v}" aria-pressed="${v===lbLv}" aria-label="${t.pnLevels[v-1]}" title="${t.pnLevels[v-1]}">${t.pnLevels[v-1].split(' ')[0]}</button>`).join('')}</div>
+    <button class="btn alt icon" id="hear" aria-label="${t.hear}">🔊</button><button class="btn alt" id="lbHint">${tt.hint}</button><button class="btn alt" id="lbAgain">${tt.again}</button><span class="pncount">⭐ ${done}/${LB_PER}</span></div></div>`;
   const svg=document.getElementById('lbsvg'),wrap=document.getElementById('lbwrap'),me=svg.querySelector('.lbme'),trail=svg.querySelector('.lbtrail'),msg=stage.querySelector('.msg'),hintG=svg.querySelector('.lbhint');
   const fit=()=>{const r=wrap.getBoundingClientRect();if(!r.width||!r.height)return;const ar=(W+16)/(H+16),w=Math.floor(Math.min(r.width,r.height*ar));svg.style.width=w+'px';svg.style.height=Math.floor(w/ar)+'px'};
   requestAnimationFrame(fit);try{if(lbRO)lbRO.disconnect();lbRO=new ResizeObserver(fit);lbRO.observe(wrap)}catch(e){}
