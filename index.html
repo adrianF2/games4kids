@@ -461,6 +461,7 @@ body.menu-closed .tabs{display:none!important}
   .cats .acts{flex-direction:column;flex-wrap:nowrap;gap:4px;padding:6px;border-top:none;border-radius:0 0 14px 14px;margin-bottom:4px}
   .acts .tab{flex:none;max-width:none;width:100%;padding:4px 12px}
   .tabs.folded .cat[aria-selected="true"]{border-bottom:3px solid var(--cc);border-radius:12px;margin-bottom:0}}
+.psubs{flex-wrap:wrap;justify-content:center;margin:6px auto 4px}.psubs .mode{font-size:.95rem}
 .accrow{display:grid;grid-template-columns:1fr auto auto;gap:6px 8px;align-items:center;padding:6px 10px;border-radius:14px;background:var(--sky);margin:4px 0}
 .accrow.none{opacity:.75}.accname{font-weight:800}
 .accsw{font:800 .9rem "Baloo 2",sans-serif;border:2px solid var(--ink);border-radius:999px;padding:4px 12px;background:#FFFFFF;cursor:pointer;min-width:150px}
@@ -1904,6 +1905,9 @@ function pianoSection(){const t=L(),p=P.piano||{1:[],2:[],3:[]},st=p.st||{};
     <h4 class="ch">${t.pnHardTitle}</h4><p class="pnote">${t.pnHardNote}</p>${hardHtml}`}
 // Pestañas de la pantalla de padres; cada una con su parte de la explicación
 const PTABS=['time','activity','numlet','words','settings'];
+// Sub-pestañas de «⚙️ Ajustes»
+const PSUBS=['kid','guest','acts','data'],PSUB_T={es:['👧 Niño/a','👥 Invitado','🗓️ Actividades','💾 Datos'],en:['👧 Child','👥 Guest','🗓️ Activities','💾 Data'],fr:['👧 Enfant','👥 Invité','🗓️ Activités','💾 Données']};
+let pSub='kid';try{const v=localStorage.getItem('peques-psub');if(PSUBS.includes(v))pSub=v}catch(e){}
 let pTab='time';try{const v=localStorage.getItem('peques-ptab');if(PTABS.includes(v))pTab=v}catch(e){}
 const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','📏':'numlet','📍':'numlet','🌀':'numlet','💾':'settings','🗓️':'settings','🧸':'words'};
 function phelp(tab){const t=L(),parts=t.helpBody.split(/(?=<h4>)/).filter(s=>{const k=Object.keys(HELP_TAB).find(e=>s.startsWith('<h4>'+e));return k&&HELP_TAB[k]===tab});
@@ -1961,14 +1965,17 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     <h3>${t.confTitle}</h3><p>${oc.length?oc.slice(0,6).map(([a,b2,k])=>`<span class="chip">${a} ${nameOf(a)} → ${b2} ${nameOf(b2)} ×${k}</span>`).join(' '):t.nothingYet}</p>
     </section>
     <section class="ppane" data-pane="settings"${pTab==='settings'||window.__allPanes?'':' hidden'}>${phelp('settings')}
-    ${guestSection()}
-    <div class="pname"><label for="kidname">👧 ${t.nameLabel}</label><input id="kidname" maxlength="16" autocomplete="off" value="${childName.replace(/"/g,'&quot;')}"><button class="btn" id="namesave">${t.nameSave}</button><p class="pnote">${t.nameHint}</p></div>
-    ${accessSection()}
-    ${backupSection()}
-    <div class="row" id="resetRow"><button class="btn alt" id="preset">🗑️ ${t.resetBtn}</button></div></section>
+    <div class="modes psubs" role="tablist">${PSUBS.map((k,i)=>`<button class="mode" data-ps="${k}" aria-pressed="${k===pSub}">${PSUB_T[lang][i]}</button>`).join('')}</div>
+    <div class="psub" data-psub="kid"${pSub==='kid'||window.__allPanes?'':' hidden'}><div class="pname"><label for="kidname">👧 ${t.nameLabel}</label><input id="kidname" maxlength="16" autocomplete="off" value="${childName.replace(/"/g,'&quot;')}"><button class="btn" id="namesave">${t.nameSave}</button><p class="pnote">${t.nameHint}</p></div></div>
+    <div class="psub" data-psub="guest"${pSub==='guest'||window.__allPanes?'':' hidden'}>${guestSection()}</div>
+    <div class="psub" data-psub="acts"${pSub==='acts'||window.__allPanes?'':' hidden'}>${accessSection()}</div>
+    <div class="psub" data-psub="data"${pSub==='data'||window.__allPanes?'':' hidden'}>${backupSection()}
+    <h3>🗑️ ${t.resetBtn}</h3><div class="row" id="resetRow"><button class="btn alt" id="preset">🗑️ ${t.resetBtn}</button></div></div></section>
   </div>`;
   box.hidden=false;
   limitHandlers(box);backupHandlers();accessHandlers();
+  box.querySelectorAll('[data-ps]').forEach(b=>b.onclick=()=>{pSub=b.dataset.ps;try{localStorage.setItem('peques-psub',pSub)}catch(e){}
+    box.querySelectorAll('[data-ps]').forEach(x=>x.setAttribute('aria-pressed',x===b));box.querySelectorAll('.psub').forEach(d=>d.hidden=d.dataset.psub!==pSub)});
   document.getElementById('namesave').onclick=()=>{childName=document.getElementById('kidname').value.trim().slice(0,16);try{localStorage.setItem('peques-name',childName)}catch(e){}nameIdx=0;if(!nameSeq().length){wMode='abc'}openParents();if(current==='escletras')escletras()};
   box.querySelectorAll('[data-ad]').forEach(b=>b.onclick=()=>{actDays=+b.dataset.ad;const sc=box.scrollTop;openParents();box.scrollTop=sc});
   {const ps=box.querySelector('.psess');if(ps)ps.addEventListener('toggle',()=>{sessOpen=ps.open})}
