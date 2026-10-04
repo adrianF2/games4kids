@@ -413,6 +413,16 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .opi.many{font-size:.48em;line-height:1.1}
 @media (max-height:820px){.czscene{max-height:31vh}.czscale{max-height:20vh}.czcard{min-height:84px;min-width:100px;font-size:2.7rem;padding:4px 12px}.czcard.big{min-height:104px;min-width:140px;font-size:3.4rem}.czcards,.czopp,.czopts{gap:10px}}
 @media (max-width:600px){.cmpmodes .mode{font-size:.74rem;padding:4px 6px}.czcard{min-width:84px;min-height:80px;font-size:2.5rem}.czcard.big{min-width:120px;min-height:110px;font-size:3.3rem}.czscene{max-height:30vh}.czscale{max-height:20vh}}
+
+/* ¿Dónde está? */
+.dnscene{width:min(100%,660px);height:auto;max-height:46vh;touch-action:none;border-radius:18px;border:3px solid var(--ink)}
+.dndrag{cursor:grab}.dndrag:not(.done):not(.lift) text{animation:dnbob 1.4s ease-in-out infinite}@keyframes dnbob{50%{transform:translateY(-6px)}}.dndrag.lift text{filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}.dndrag.lift{cursor:grabbing}
+.dnit.right text{filter:drop-shadow(0 0 10px #3BB273)}.dnit[data-v]{cursor:pointer}.dnit.wrong text{opacity:.45}
+.dnpulse{animation:czp .8s ease infinite}
+.dnscene>g[transform]{pointer-events:none}
+.pick.dnopt{width:auto;height:auto;min-width:104px;border-radius:18px;padding:6px 12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;font:800 1.05rem "Baloo 2",sans-serif}
+.dnopt svg{width:64px;height:48px}
+@media (max-height:820px){.dnscene{max-height:30vh}.pick.dnopt{min-width:92px;padding:4px 10px 6px}.dnopt svg{width:52px;height:40px}}
 /* Menú por categorías */
 .tabs{display:flex!important;flex-direction:column;gap:0}
 body.menu-closed .tabs{display:none!important}
@@ -482,6 +492,7 @@ body.menu-closed .tabs{display:none!important}
     <button class="tab" role="tab" id="t-colores" aria-selected="false"><b>🎨</b><span></span></button>
     <button class="tab" role="tab" id="t-formas" aria-selected="false"><b>🔺</b><span></span></button>
     <button class="tab" role="tab" id="t-comparar" aria-selected="false"><b>📏</b><span></span></button>
+    <button class="tab" role="tab" id="t-donde" aria-selected="false"><b>📍</b><span></span></button>
     <button class="tab" role="tab" id="t-objetos" aria-selected="false"><b>🧸</b><span></span></button>
     <button class="tab" role="tab" id="t-cuentos" aria-selected="false"><b>📚</b><span></span></button>
     <button class="tab" role="tab" id="t-memoria" aria-selected="false"><b>🐶</b><span></span></button>
@@ -497,7 +508,7 @@ body.menu-closed .tabs{display:none!important}
 
 <script>
 const T={
- es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',componer:'Componer',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',comparar:'Comparar',objetos:'Objetos',memoria:'Parejas',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano'},
+ es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',componer:'Componer',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',comparar:'Comparar',donde:'Dónde está',objetos:'Objetos',memoria:'Parejas',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano'},
   tap:'👆 Tocar',type:'⌨️ Escribir',qCount:'¿Cuántos hay?',qWrite:'¿Cuántos hay? Escribe el número',qMissing:'¿Qué número falta?',
   qColor:c=>`Toca el color <u>${c}</u>`,qShape:(a,s)=>`¿Dónde está ${a}<u>${s}</u>?`,qPairs:'Encuentra las parejas',storyLevels:['🌱 Fácil','🌿 Medio','🌳 Difícil'],listenStory:'🔊 Escuchar el cuento',toQuestions:'➡️ Preguntas',questionsNow:'¡Ahora, las preguntas!',replayStory:'📖 Escuchar el cuento otra vez',repeatQ:'🔊 Repetir la pregunta',seqQ:'¿Qué pasó primero, después y al final? Tócalos en orden.',storyDone:'¡Terminaste el cuento!',anotherStory:'📚 Otro cuento',storyOf:(i,n)=>`Cuento ${i} de ${n}`,imgOn:'🖼️ Con imágenes',imgOff:'🙈 Sin imágenes',mastered:n=>`¡Ya sabes el ${n}!`,masteredWord:w=>`¡Ya sabes «${w}»!`,parentsTitle:'Progreso',numbersTitle:'Números',legend:'R = reconocer · D = decir · E = escribir — 🟢 lo domina · 🟡 aprendiendo · 🔴 le cuesta · gris: pocos intentos',skillNames:{recog:'Reconocer',say:'Decir',write:'Escribir'},skillShort:{recog:'R',say:'D',write:'E'},confTitle:'Confusiones frecuentes',askedGot:(a,b)=>`pedía ${a}, eligió ${b}`,nothingYet:'Todavía no hay datos.',wordsTitle:'Palabras de Objetos',hardWords:'Palabras que más le cuestan',resetBtn:'Borrar progreso',stKnown:'Las sabe',stLearning:'Está aprendiendo (× = errores)',stNew:'Todavía no han salido',tapCat:'Toca una categoría para ver las palabras.',resetAsk:'¿Seguro? Se borrará todo el progreso.',resetYes:'Sí, borrar',resetNo:'Cancelar',holdHint:'👆 Para padres: mantén pulsado 📊 2 segundos para ver el progreso',qPattern:'¿Qué sigue?',levelNames:['Fácil','Medio','Difícil'],qLetter:'Escucha y toca la letra',qObj:(n,pl)=>pl?`¿Dónde están <u>${n}</u>?`:`¿Dónde está <u>${n}</u>?`,catLabel:'Categoría',cats:{all:'Todo',fruit:'Frutas',veg:'Verduras',body:'Cuerpo',animal:'Animales',home:'Casa',music:'Música',build:'Construcción',school:'Escuela',transport:'Transporte',nature:'Naturaleza',toys:'Juguetes',clothes:'Ropa',food:'Comida',sport:'Deportes',place:'Lugares',people:'Personas',face:'Caras'},qDrawL:l=>`Escribe la letra <u>${l}</u>`,qDrawLsay:nm=>`Escribe la letra ${nm}`,drawEmptyL:'Primero escribe la letra con el lápiz',showMe:'👀 Mira cómo',mirrorMsgN:'¡Casi! El número quedó al revés. Mira cómo se hace.',mirrorMsg:'¡Casi! La letra quedó al revés. Mira cómo se hace.',masteredLetter:l=>`¡Ya sabes la ${l}!`,qSayL:'Di esta letra en voz alta',lettersTitle:'Letras',lettersLegend:'R = reconocer (Letras) · D = decir · E = escribir (🔒 aún no abierta) — mismos colores que los números',writeOpenTxt:n=>`Escribir ABC: ${n} de 26 letras abiertas. Se abre una nueva cuando quedan 2 o menos por dominar.`,wroteLike:(a,b)=>`pedía ${a}, escribió algo como ${b}`,mirrorChip:(a,k)=>`${a} al revés ×${k}`,helpTitle:'ℹ️ ¿Cómo funciona el seguimiento?',helpBody:`<h4>⏱️ Tiempo de pantalla y PIN</h4>
 <ul><li><b>Qué cuenta:</b> el tiempo que la app está abierta y visible en pantalla, juegue o no (también escuchando un cuento). Se pausa si la tablet se bloquea o se apaga la pantalla, si se cambia de app y mientras la pantalla de padres está abierta. Cada día empieza de cero a medianoche.</li>
@@ -553,6 +564,10 @@ const T={
 <ul><li>Cuatro juegos (en «🧭 Descubrir»): <b>📏 Tamaños</b> (grande/pequeño con dibujos de animales y cosas, largo/corto con lápices, cintas, serpientes, gusanos, panes, cuerdas y trenes, alto/bajo con torres, árboles, edificios, flores, velas y cohetes, grueso/delgado con libros, cuerdas, troncos, crayones y sándwiches), <b>⚖️ Balanza</b> (¿qué pesa más / menos?, con una balanza de dos platos que se puede usar para pesar), <b>💧 Lleno o vacío</b> (vasos, botellas, frascos, baldes, peceras y tazas con agua, jugo, leche o limonada) y <b>🔄 Contrarios</b> (30 parejas: abierto/cerrado, encendido/apagado, caliente/frío, rápido/lento, día/noche, contento/triste, despierto/dormido, joven/viejo, lleno/vacío, mucho/poco, mojado/seco, limpio/sucio, entero/roto, dulce/salado, duro/blando, verano/invierno, claro/oscuro…).</li>
 <li>Niveles: 🟢 dos cosas con una diferencia clara; 🟡 trampas (en Tamaños, cosas que no empiezan en la misma línea o subidas a una caja, y la opción «= Iguales»; en Balanza, cosas grandes pero ligeras, como un globo frente a una piedra pequeña; en Contrarios, más parejas); 🔴 ordenar 3 o 4 (del más corto al más largo, del que tiene menos al que tiene más…), leer una balanza ya cargada con dos regalos iguales, y buscar «lo contrario» entre tres dibujos.</li>
 <li>Si cae en una trampa, la app lo muestra: alinea las cosas en la misma línea, quita la caja o pesa en la balanza. En «🔢 Números y letras» se ve cada comparación con 🟢🟡🔴 y su % a la primera, cuántas veces le engañan las trampas y los contrarios que más le cuestan. Cada pregunta cuenta en Actividad como «Otros juegos».</li></ul>
+<h4>📍 ¿Dónde está?</h4>
+<ul><li>Las palabras de posición de MS: <b>encima / debajo, dentro / fuera, arriba / abajo</b> (🟢), <b>delante / detrás, al lado, cerca / lejos</b> (🟡) y <b>entre, a la izquierda / a la derecha</b> (🔴). Escenas de casa y de fuera (mesa, silla, cama, caja, canasta, estantería, casa, árbol, carro, paraguas) con 12 personajes (gato, perro, conejo, pelota, osito, ratón, pollito, manzana, rana, pato, mariquita, pájaro).</li>
+<li>Tres juegos: <b>🫳 Ponlo</b> (arrastra el personaje con el dedo o el lápiz: «Pon el gato debajo de la mesa»; en el nivel difícil, a veces dos órdenes a la vez), <b>👀 ¿Dónde está?</b> (la voz lee la pregunta y las respuestas, cada una con un dibujito, para que no necesite leer) y <b>🔍 Busca</b> (varios iguales en sitios distintos: «Toca el gato que está detrás de la casa»).</li>
+<li>Al acertar, la voz dice la frase entera («El gato está debajo de la mesa»). Tras dos fallos se señala el sitio o la respuesta. En «🔢 Números y letras» se ve cada palabra con 🟢🟡🔴 y lo que más confunde (por ejemplo delante ↔ detrás). Cada pregunta cuenta en Actividad como «Otros juegos».</li></ul>
 <h4>〰️ Trazos (graphisme)</h4>
 <ul><li>Preparan la mano para escribir, como las fichas de graphisme de la escuela: el niño repasa con el lápiz los puntitos de una pequeña escena (la lluvia que cae, el barco sobre las olas, el humo del tren…), empezando en el punto verde 🟢. Cada parte que completa se colorea; al terminarla entera, un personaje recorre el trazo y gana de 1 a 3 ⭐ según lo bien que siguió la línea.</li>
 <li>66 escenas en 3 niveles: 🟢 Fácil (líneas verticales, horizontales y oblicuas, puntos, cruces, círculos, rayos), 🟡 Medio (olas, zigzag, puentes ∩, copas ∪, almenas, escaleras, cuadrados y triángulos), 🔴 Difícil (bucles como los de la «l» y la «e» de la cursiva, bucles hacia abajo, espirales, y trazos más pequeños y largos). Primero salen las que aún no ha hecho.</li>
@@ -580,7 +595,7 @@ const T={
   praise:['¡Muy bien!','¡Genial!','¡Bravo!','¡Excelente!','¡Así se hace!','¡Eso es!'],
   colors:{red:'rojo',yellow:'amarillo',green:'verde',blue:'azul',purple:'morado',orange:'naranja',pink:'rosado',brown:'café',black:'negro',white:'blanco',gray:'gris'},
   shapes:{circle:['el ','círculo'],square:['el ','cuadrado'],triangle:['el ','triángulo'],star:['la ','estrella'],heart:['el ','corazón']},},
- en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',componer:'Bonds',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',comparar:'Compare',objetos:'Objects',memoria:'Pairs',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano'},
+ en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',componer:'Bonds',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',comparar:'Compare',donde:'Where is it',objetos:'Objects',memoria:'Pairs',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano'},
   tap:'👆 Tap',type:'⌨️ Type',qCount:'How many are there?',qWrite:'How many? Type the number',qMissing:'Which number is missing?',
   qColor:c=>`Tap the color <u>${c}</u>`,qShape:(a,s)=>`Where is ${a}<u>${s}</u>?`,qPairs:'Find the pairs',storyLevels:['🌱 Easy','🌿 Medium','🌳 Hard'],listenStory:'🔊 Listen to the story',toQuestions:'➡️ Questions',questionsNow:'Now, the questions!',replayStory:'📖 Listen to the story again',repeatQ:'🔊 Repeat the question',seqQ:'What happened first, next and last? Tap them in order.',storyDone:'You finished the story!',anotherStory:'📚 Another story',storyOf:(i,n)=>`Story ${i} of ${n}`,imgOn:'🖼️ With pictures',imgOff:'🙈 No pictures',mastered:n=>`You know ${n} now!`,masteredWord:w=>`You know “${w}” now!`,parentsTitle:'Progress',numbersTitle:'Numbers',legend:'R = recognize · S = say · W = write — 🟢 mastered · 🟡 learning · 🔴 struggling · gray: few tries',skillNames:{recog:'Recognize',say:'Say',write:'Write'},skillShort:{recog:'R',say:'S',write:'W'},confTitle:'Frequent mix-ups',askedGot:(a,b)=>`asked ${a}, chose ${b}`,nothingYet:'No data yet.',wordsTitle:'Words in Objects',hardWords:'Hardest words',resetBtn:'Reset progress',stKnown:'Knows',stLearning:'Learning (× = mistakes)',stNew:'Not shown yet',tapCat:'Tap a category to see the words.',resetAsk:'Are you sure? All progress will be deleted.',resetYes:'Yes, delete',resetNo:'Cancel',holdHint:'👆 For parents: press and hold 📊 for 2 seconds to see progress',qPattern:'What comes next?',levelNames:['Easy','Medium','Hard'],qLetter:'Listen and tap the letter',qObj:(n,pl)=>pl?`Where are <u>${n}</u>?`:`Where is <u>${n}</u>?`,catLabel:'Category',cats:{all:'All',fruit:'Fruits',veg:'Vegetables',body:'Body',animal:'Animals',home:'Home',music:'Music',build:'Building',school:'School',transport:'Transport',nature:'Nature',toys:'Toys',clothes:'Clothes',food:'Food',sport:'Sports',place:'Places',people:'People',face:'Faces'},qDrawL:l=>`Write the letter <u>${l}</u>`,qDrawLsay:nm=>`Write the letter ${nm}`,drawEmptyL:'First write the letter with the pen',showMe:'👀 Show me',mirrorMsgN:'Almost! The number is backwards. Watch how to write it.',mirrorMsg:'Almost! The letter is backwards. Watch how to write it.',masteredLetter:l=>`You know ${l} now!`,qSayL:'Say this letter out loud',lettersTitle:'Letters',lettersLegend:'R = recognize (Letters) · S = say · W = write (🔒 not open yet) — same colors as numbers',writeOpenTxt:n=>`Write ABC: ${n} of 26 letters open. A new one opens when 2 or fewer are still being learned.`,wroteLike:(a,b)=>`asked ${a}, wrote something like ${b}`,mirrorChip:(a,k)=>`${a} backwards ×${k}`,helpTitle:'ℹ️ How does tracking work?',helpBody:`<h4>⏱️ Screen time and PIN</h4>
 <ul><li><b>What counts:</b> the time the app is open and visible on screen, playing or not (also listening to a story). It pauses when the tablet locks or the screen turns off, in another app, and while the parents’ screen is open. Each day starts from zero at midnight.</li>
@@ -636,6 +651,10 @@ const T={
 <ul><li>Four games (in “🧭 Discover”): <b>📏 Sizes</b> (big/small with animals and things, long/short with pencils, ribbons, snakes, worms, bread, ropes and trains, tall/short with towers, trees, buildings, flowers, candles and rockets, thick/thin with books, ropes, logs, crayons and sandwiches), <b>⚖️ Scales</b> (which is heavier / lighter?, with a two-pan balance that can be used to weigh), <b>💧 Full or empty</b> (glasses, bottles, jars, buckets, fish tanks and cups with water, juice, milk or lemonade) and <b>🔄 Opposites</b> (30 pairs: open/closed, on/off, hot/cold, fast/slow, day/night, happy/sad, awake/asleep, young/old, full/empty, many/few, wet/dry, clean/dirty, whole/broken, sweet/salty, hard/soft, summer/winter, light/dark…).</li>
 <li>Levels: 🟢 two things with a clear difference; 🟡 traps (in Sizes, things that don’t start on the same line or stand on a box, and the “= Same” option; in Scales, big but light things such as a balloon against a small stone; in Opposites, more pairs); 🔴 ordering 3 or 4 (from shortest to longest, from least to most…), reading scales already loaded with two identical presents, and finding “the opposite” among three pictures.</li>
 <li>When a trap catches them, the app shows why: it lines things up, removes the box or weighs on the scales. In “🔢 Numbers & letters” you can see each comparison with 🟢🟡🔴 and its first-try %, how often traps fool them and the hardest opposites. Each question counts in Activity as “Other games”.</li></ul>
+<h4>📍 Where is it?</h4>
+<ul><li>The position words of pre-K: <b>on / under, in / out, top / bottom</b> (🟢), <b>in front / behind, next to, near / far</b> (🟡) and <b>between, left / right</b> (🔴). Indoor and outdoor scenes (table, chair, bed, box, basket, shelves, house, tree, car, umbrella) with 12 characters (cat, dog, rabbit, ball, teddy, mouse, chick, apple, frog, duck, ladybird, bird).</li>
+<li>Three games: <b>🫳 Put it</b> (drag the character with a finger or the pen: “Put the cat under the table”; at the hard level, sometimes two instructions at once), <b>👀 Where is it?</b> (the voice reads the question and the answers, each with a little picture, so no reading is needed) and <b>🔍 Find it</b> (several identical ones in different places: “Tap the cat that is behind the house”).</li>
+<li>When right, the voice says the whole sentence (“The cat is under the table”). After two mistakes the place or the answer is highlighted. In “🔢 Numbers & letters” you can see each word with 🟢🟡🔴 and the most confused pairs (for example in front ↔ behind). Each question counts in Activity as “Other games”.</li></ul>
 <h4>〰️ Lines (pre-writing)</h4>
 <ul><li>They prepare the hand for writing, like the pre-writing worksheets at school: the child traces the dots of a little scene with the pen (rain falling, a boat on the waves, smoke from a train…), starting at the green dot 🟢. Each part completed gets coloured in; when it is all done, a character travels along the line and the child earns 1 to 3 ⭐ depending on how well they followed it.</li>
 <li>66 scenes in 3 levels: 🟢 Easy (vertical, horizontal and slanted lines, dots, crosses, circles, rays), 🟡 Medium (waves, zigzags, bridges ∩, cups ∪, battlements, stairs, squares and triangles), 🔴 Hard (loops like the cursive “l” and “e”, downward loops, spirals, and smaller, longer patterns). Scenes not yet done come first.</li>
@@ -663,7 +682,7 @@ const T={
   praise:['Great job!','Awesome!','Well done!','Excellent!','You did it!','That’s right!'],
   colors:{red:'red',yellow:'yellow',green:'green',blue:'blue',purple:'purple',orange:'orange',pink:'pink',brown:'brown',black:'black',white:'white',gray:'gray'},
   shapes:{circle:['the ','circle'],square:['the ','square'],triangle:['the ','triangle'],star:['the ','star'],heart:['the ','heart']},},
- fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',componer:'Composer',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',comparar:'Comparer',objetos:'Objets',memoria:'Paires',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano'},
+ fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',componer:'Composer',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',comparar:'Comparer',donde:'Où est-il',objetos:'Objets',memoria:'Paires',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano'},
   tap:'👆 Toucher',type:'⌨️ Écrire',qCount:'Combien y en a-t-il ?',qWrite:'Combien ? Écris le chiffre',qMissing:'Quel nombre manque ?',
   qColor:c=>`Touche la couleur <u>${c}</u>`,qShape:(a,s)=>`Où est ${a}<u>${s}</u> ?`,qPairs:'Trouve les paires',storyLevels:['🌱 Facile','🌿 Moyen','🌳 Difficile'],listenStory:'🔊 Écouter l’histoire',toQuestions:'➡️ Questions',questionsNow:'Maintenant, les questions !',replayStory:'📖 Réécouter l’histoire',repeatQ:'🔊 Répéter la question',seqQ:'Qu’est-ce qui s’est passé en premier, ensuite et à la fin ? Touche-les dans l’ordre.',storyDone:'Tu as fini l’histoire !',anotherStory:'📚 Une autre histoire',storyOf:(i,n)=>`Histoire ${i} sur ${n}`,imgOn:'🖼️ Avec images',imgOff:'🙈 Sans images',mastered:n=>`Tu connais le ${n} !`,masteredWord:w=>`Tu connais « ${w} » !`,parentsTitle:'Progrès',numbersTitle:'Nombres',legend:'R = reconnaître · D = dire · É = écrire — 🟢 acquis · 🟡 en cours · 🔴 difficile · gris : peu d’essais',skillNames:{recog:'Reconnaître',say:'Dire',write:'Écrire'},skillShort:{recog:'R',say:'D',write:'É'},confTitle:'Confusions fréquentes',askedGot:(a,b)=>`demandé ${a}, choisi ${b}`,nothingYet:'Pas encore de données.',wordsTitle:'Mots des Objets',hardWords:'Mots les plus difficiles',resetBtn:'Effacer la progression',stKnown:'Les connaît',stLearning:'En cours (× = erreurs)',stNew:'Pas encore vus',tapCat:'Touche une catégorie pour voir les mots.',resetAsk:'Vraiment ? Toute la progression sera effacée.',resetYes:'Oui, effacer',resetNo:'Annuler',holdHint:'👆 Pour les parents : reste appuyé 2 secondes sur 📊 pour voir la progression',qPattern:'Qu’est-ce qui vient après ?',levelNames:['Facile','Moyen','Difficile'],qLetter:'Écoute et touche la lettre',qObj:(n,pl)=>pl?`Où sont <u>${n}</u> ?`:`Où est <u>${n}</u> ?`,catLabel:'Catégorie',cats:{all:'Tout',fruit:'Fruits',veg:'Légumes',body:'Corps',animal:'Animaux',home:'Maison',music:'Musique',build:'Chantier',school:'École',transport:'Transports',nature:'Nature',toys:'Jouets',clothes:'Vêtements',food:'Nourriture',sport:'Sports',place:'Lieux',people:'Personnes',face:'Visages'},qDrawL:l=>`Écris la lettre <u>${l}</u>`,qDrawLsay:nm=>`Écris la lettre ${nm}`,drawEmptyL:'Écris d’abord la lettre avec le stylet',showMe:'👀 Montre-moi',mirrorMsgN:'Presque ! Le chiffre est à l’envers. Regarde comment on fait.',mirrorMsg:'Presque ! La lettre est à l’envers. Regarde comment on fait.',masteredLetter:l=>`Tu connais le ${l} !`,qSayL:'Dis cette lettre à voix haute',lettersTitle:'Lettres',lettersLegend:'R = reconnaître (Lettres) · D = dire · É = écrire (🔒 pas encore ouverte) — mêmes couleurs que les nombres',writeOpenTxt:n=>`Écrire ABC : ${n} lettres sur 26 ouvertes. Une nouvelle s’ouvre quand il en reste 2 ou moins à apprendre.`,wroteLike:(a,b)=>`demandé ${a}, écrit comme ${b}`,mirrorChip:(a,k)=>`${a} à l’envers ×${k}`,helpTitle:'ℹ️ Comment fonctionne le suivi ?',helpBody:`<h4>⏱️ Temps d’écran et code</h4>
 <ul><li><b>Ce qui compte :</b> le temps où l’app est ouverte et affichée, que l’enfant joue ou non (aussi en écoutant une histoire). Le compteur s’arrête quand la tablette se verrouille ou que l’écran s’éteint, dans une autre app et quand l’écran parents est ouvert. Chaque jour repart de zéro à minuit.</li>
@@ -719,6 +738,10 @@ const T={
 <ul><li>Quatre jeux (dans « 🧭 Découvrir ») : <b>📏 Tailles</b> (grand/petit avec des animaux et des objets, long/court avec des crayons, rubans, serpents, vers de terre, baguettes, cordes et trains, haut/bas avec des tours, arbres, immeubles, fleurs, bougies et fusées, épais/fin avec des livres, cordes, troncs, crayons et sandwichs), <b>⚖️ Balance</b> (qu’est-ce qui est le plus lourd / le plus léger ?, avec une balance à deux plateaux qu’on peut utiliser pour peser), <b>💧 Plein ou vide</b> (verres, bouteilles, bocaux, seaux, aquariums et tasses avec de l’eau, du jus, du lait ou de la limonade) et <b>🔄 Contraires</b> (30 paires : ouvert/fermé, allumé/éteint, chaud/froid, rapide/lent, jour/nuit, content/triste, réveillé/endormi, jeune/vieux, plein/vide, beaucoup/peu, mouillé/sec, propre/sale, entier/cassé, sucré/salé, dur/mou, été/hiver, clair/sombre…).</li>
 <li>Niveaux : 🟢 deux objets avec une différence nette ; 🟡 pièges (dans Tailles, objets qui ne partent pas de la même ligne ou posés sur une caisse, et l’option « = Pareils » ; dans Balance, objets gros mais légers, comme un ballon face à un petit caillou ; dans Contraires, plus de paires) ; 🔴 ranger 3 ou 4 objets (du plus court au plus long, de celui qui en a le moins à celui qui en a le plus…), lire une balance déjà chargée avec deux cadeaux identiques, et trouver « le contraire » parmi trois images.</li>
 <li>Quand un piège le trompe, l’app montre pourquoi : elle aligne les objets, enlève la caisse ou pèse sur la balance. Dans « 🔢 Nombres et lettres », on voit chaque comparaison avec 🟢🟡🔴 et son % du premier coup, combien de fois les pièges le trompent et les contraires les plus difficiles. Chaque question compte dans Activité comme « Autres jeux ».</li></ul>
+<h4>📍 Où est-il ?</h4>
+<ul><li>Le vocabulaire spatial de MS : <b>sur / sous, dedans / dehors, en haut / en bas</b> (🟢), <b>devant / derrière, à côté, près / loin</b> (🟡) et <b>entre, à gauche / à droite</b> (🔴). Scènes de maison et d’extérieur (table, chaise, lit, boîte, panier, étagère, maison, arbre, voiture, parapluie) avec 12 personnages (chat, chien, lapin, balle, nounours, souris, poussin, pomme, grenouille, canard, coccinelle, oiseau).</li>
+<li>Trois jeux : <b>🫳 Place-le</b> (glisser le personnage avec le doigt ou le stylet : « Mets le chat sous la table » ; au niveau difficile, parfois deux consignes à la fois), <b>👀 Où est-il ?</b> (la voix lit la question et les réponses, chacune avec un petit dessin, pour qu’il n’ait pas besoin de lire) et <b>🔍 Trouve-le</b> (plusieurs identiques à des endroits différents : « Touche le chat qui est derrière la maison »).</li>
+<li>Quand c’est réussi, la voix dit la phrase entière (« Le chat est sous la table »). Après deux erreurs, l’endroit ou la réponse est montré. Dans « 🔢 Nombres et lettres », on voit chaque mot avec 🟢🟡🔴 et ce qu’il confond le plus (par exemple devant ↔ derrière). Chaque question compte dans Activité comme « Autres jeux ».</li></ul>
 <h4>〰️ Graphisme</h4>
 <ul><li>Il prépare la main à l’écriture, comme les fiches de graphisme de l’école : l’enfant repasse au stylet sur les pointillés d’une petite scène (la pluie qui tombe, le bateau sur les vagues, la fumée du train…), en commençant au point vert 🟢. Chaque partie terminée se colorie ; une fois tout fini, un personnage parcourt le tracé et l’enfant gagne de 1 à 3 ⭐ selon la précision.</li>
 <li>66 scènes en 3 niveaux : 🟢 Facile (lignes verticales, horizontales et obliques, points, croix, ronds, rayons), 🟡 Moyen (vagues, zigzags, ponts ∩, coupes ∪, créneaux, escaliers, carrés et triangles), 🔴 Difficile (boucles comme le « l » et le « e » de la cursive, boucles à l’envers, spirales, tracés plus petits et plus longs). Les scènes pas encore réussies passent en premier.</li>
@@ -1857,7 +1880,7 @@ function pianoSection(){const t=L(),p=P.piano||{1:[],2:[],3:[]},st=p.st||{};
 // Pestañas de la pantalla de padres; cada una con su parte de la explicación
 const PTABS=['time','activity','numlet','words','settings'];
 let pTab='time';try{const v=localStorage.getItem('peques-ptab');if(PTABS.includes(v))pTab=v}catch(e){}
-const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','📏':'numlet','💾':'settings','🗓️':'settings','🧸':'words'};
+const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','📏':'numlet','📍':'numlet','💾':'settings','🗓️':'settings','🧸':'words'};
 function phelp(tab){const t=L(),parts=t.helpBody.split(/(?=<h4>)/).filter(s=>{const k=Object.keys(HELP_TAB).find(e=>s.startsWith('<h4>'+e));return k&&HELP_TAB[k]===tab});
   return parts.length?`<details class="phelp"${helpOpen?' open':''}><summary>${t.helpTitle}</summary><div class="phbody">${parts.join('')}</div></details>`:''}
 function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&document.getElementById('parents').hidden)pTab='time';
@@ -1900,6 +1923,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     <h3>${t.confTitle}</h3><p>${lconf.length?lconf.slice(0,8).map(([s,k])=>`<span class="chip">${s}${s.includes('×')?'':` ×${k}`}</span>`).join(' '):t.nothingYet}</p>
     ${componerSection()}
     ${compararSection()}
+    ${dondeSection()}
     ${trazosSection()}
     ${pianoSection()}
     </section>
@@ -1945,7 +1969,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
 // Sesión de juego = juego seguido: si pasan más de 10 min sin tocar la pantalla, empieza otra.
 // Solo cuenta el tiempo entre toques (cada hueco cuenta como máximo 2 min), así no se suma el tiempo con la tablet olvidada.
 const SESS_GAP=10*60e3,TOUCH_CAP=120e3;
-const ACT_GROUP={contar:'num',poner:'num',componer:'num',orden:'num',sonidos:'num',decirN:'num',trazar:'num',letras:'let',decirL:'let',escletras:'let',trazos:'let',objetos:'obj',cuentos:'story',patrones:'other',colores:'other',formas:'other',comparar:'other',memoria:'other',dibujar:'art',colorear:'art',piano:'music'};
+const ACT_GROUP={contar:'num',poner:'num',componer:'num',orden:'num',sonidos:'num',decirN:'num',trazar:'num',letras:'let',decirL:'let',escletras:'let',trazos:'let',objetos:'obj',cuentos:'story',patrones:'other',colores:'other',formas:'other',comparar:'other',donde:'other',memoria:'other',dibujar:'art',colorear:'art',piano:'music'};
 const GROUP_COLOR={num:'#3A86FF',let:'#7B5CD6',obj:'#FF8C2B',story:'#3BB273',art:'#FF7EB6',music:'#00A6A6',other:'#9AA0A6'};
 const dayKey=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const actKey=()=>current==='decir'?(sayMode==='abc'?'decirL':'decirN'):current;
@@ -3392,7 +3416,211 @@ function compararSection(){const t=CZ_T[lang],tt=L(),r=P.cmz||{st:{},trap:{a:0,m
    ${r.trap.a?`<p class="pnote">⚠️ ${t.trap(r.trap.m,r.trap.a)}</p>`:''}
    ${hard.length?`<h4 class="ch">${t.oppHard}</h4><p>${hard.map(z=>`<span class="chip">${z.o[1].replace(/<[^>]+>/g,'').replace(/<br>/g,'')}↔${z.o[2].replace(/<[^>]+>/g,'')} ${esc(w(z.o))} <small>${z.x.f}/${z.x.a}</small></span>`).join(' ')}</p>`:''}`}
 
-const games={cuentos,contar,poner,componer,comparar,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano};
+// ===== ¿Dónde está?: posiciones en el espacio (dentro/fuera, encima/debajo, delante/detrás, al lado, entre, cerca/lejos, izquierda/derecha…) =====
+const DN_MODES=['put','where','find'];
+const DN_G=300,DN_S=58; // suelo y tamaño de los personajes
+const DN_LV=[[],['on','under','in','out','top','bottom'],['front','behind','next','near','far'],['between','left','right']];
+const DN_DRAG=new Set(['on','under','in','out','next','near','far','left','right','between','top','bottom']);
+// relaciones que también son verdad en la misma posición (no sirven como opción falsa)
+const DN_ALSO={next:['near','left','right'],near:['next','left','right'],left:['next','near'],right:['next','near'],under:['near','next'],front:['near','next'],behind:['near','next'],out:['near','next','left','right'],between:['near','next'],far:['left','right'],in:[],on:[],top:[],bottom:[]};
+const DN_OPP={on:'under',under:'on',in:'out',out:'in',top:'bottom',bottom:'top',front:'behind',behind:'front',near:'far',far:'near',left:'right',right:'left',next:'far',between:'far'};
+// Personajes: [emoji, es, en, fr]
+const DN_ITEMS=[['🐱','el gato','the cat','le chat'],['🐶','el perro','the dog','le chien'],['🐰','el conejo','the rabbit','le lapin'],['⚽','la pelota','the ball','la balle'],['🧸','el osito','the teddy bear','le nounours'],['🐭','el ratón','the mouse','la souris'],['🐤','el pollito','the chick','le poussin'],['🍎','la manzana','the apple','la pomme'],['🐸','la rana','the frog','la grenouille'],['🦆','el pato','the duck','le canard'],['🐞','la mariquita','the ladybird','la coccinelle'],['🐦','el pájaro','the bird','l’oiseau']];
+// Escenarios: medidas (ancho W, alto H sobre el suelo), si es interior, relaciones posibles, nombres {es:[art, de], en, fr:[art, de]}
+const DN_REFS={
+ table:{W:200,H:100,ind:1,rels:['on','under','next','near','far','left','right'],n:{es:['la mesa','de la mesa'],en:'the table',fr:['la table','de la table']},
+   draw:()=>`<rect x="-100" y="-100" width="200" height="16" rx="5" fill="#C98B4A"/><rect x="-92" y="-86" width="13" height="86" fill="#A0703C"/><rect x="79" y="-86" width="13" height="86" fill="#A0703C"/>`},
+ chair:{W:100,H:80,ind:1,rels:['on','under','next','left','right'],n:{es:['la silla','de la silla'],en:'the chair',fr:['la chaise','de la chaise']},
+   draw:()=>`<rect x="-50" y="-175" width="13" height="95" rx="4" fill="#A0703C"/><rect x="-50" y="-82" width="100" height="13" rx="4" fill="#C98B4A"/><rect x="-48" y="-70" width="10" height="70" fill="#A0703C"/><rect x="38" y="-70" width="10" height="70" fill="#A0703C"/>`},
+ bed:{W:260,H:85,ind:1,rels:['on','under'],n:{es:['la cama','de la cama'],en:'the bed',fr:['le lit','du lit']},
+   draw:()=>`<rect x="-134" y="-150" width="18" height="150" rx="6" fill="#A0703C"/><rect x="-118" y="-86" width="248" height="30" rx="10" fill="#FFFFFF" stroke="#7AA7E8" stroke-width="4"/><rect x="-118" y="-58" width="248" height="16" fill="#C98B4A"/><ellipse cx="-88" cy="-95" rx="26" ry="12" fill="#DDEBFF" stroke="#7AA7E8" stroke-width="3"/><rect x="-116" y="-42" width="12" height="42" fill="#A0703C"/><rect x="116" y="-42" width="12" height="42" fill="#A0703C"/>`},
+ box:{W:140,H:110,ind:1,cont:1,rels:['in','out','front','behind','next','left','right'],n:{es:['la caja','de la caja'],en:'the box',fr:['la boîte','de la boîte']},
+   draw:()=>`<rect x="-70" y="-110" width="140" height="110" fill="#B9813E"/><path d="M-70 -110 l-24 -26 h40 l24 26 Z M70 -110 l24 -26 h-40 l-24 26 Z" fill="#D9A066"/>`,
+   front:()=>`<rect x="-70" y="-78" width="140" height="78" fill="#D9A066" stroke="#B9813E" stroke-width="3"/><rect x="-12" y="-78" width="24" height="78" fill="#E8C48C"/>`},
+ basket:{W:120,H:80,ind:1,cont:1,rels:['in','out','next'],n:{es:['la canasta','de la canasta'],en:'the basket',fr:['le panier','du panier']},
+   draw:()=>`<path d="M-56 -80 Q0 -170 56 -80" stroke="#A0703C" stroke-width="9" fill="none"/><rect x="-60" y="-80" width="120" height="80" rx="10" fill="#B9813E"/>`,
+   front:()=>`<rect x="-60" y="-55" width="120" height="55" rx="10" fill="#D9A066"/>${[-40,-20,0,20,40].map(x=>`<line x1="${x}" y1="-55" x2="${x}" y2="0" stroke="#B9813E" stroke-width="3"/>`).join('')}<line x1="-60" y1="-30" x2="60" y2="-30" stroke="#B9813E" stroke-width="3"/>`},
+ bookcase:{W:160,H:240,ind:1,rels:['top','bottom'],n:{es:['la estantería','de la estantería'],en:'the shelves',fr:['l’étagère','de l’étagère']},
+   draw:()=>`<rect x="-80" y="-240" width="160" height="240" rx="6" fill="#A0703C"/><rect x="-68" y="-228" width="136" height="64" fill="#F5E6D0"/><rect x="-68" y="-152" width="136" height="64" fill="#F5E6D0"/><rect x="-68" y="-76" width="136" height="64" fill="#F5E6D0"/><rect x="40" y="-150" width="12" height="58" fill="#3A86FF"/><rect x="26" y="-146" width="12" height="54" fill="#FF5D5D"/>`},
+ house:{W:180,H:150,ind:0,rels:['front','behind','next','near','far','left','right'],n:{es:['la casa','de la casa'],en:'the house',fr:['la maison','de la maison']},
+   draw:()=>`<rect x="-90" y="-150" width="180" height="150" fill="#FFE3B3" stroke="#C98B4A" stroke-width="4"/><path d="M-108 -150 L0 -232 L108 -150 Z" fill="#E86B5A"/><rect x="-22" y="-72" width="44" height="72" fill="#A0703C"/><rect x="-72" y="-120" width="36" height="32" fill="#9FD4FF" stroke="#C98B4A" stroke-width="3"/><rect x="36" y="-120" width="36" height="32" fill="#9FD4FF" stroke="#C98B4A" stroke-width="3"/>`},
+ tree:{W:150,H:245,ind:0,rels:['under','front','behind','near','far','next','left','right'],n:{es:['el árbol','del árbol'],en:'the tree',fr:['l’arbre','de l’arbre']},
+   draw:()=>`<rect x="-14" y="-130" width="28" height="130" fill="#A0703C"/><circle cx="0" cy="-170" r="75" fill="#3BB273"/><circle cx="-38" cy="-150" r="36" fill="#4CC584"/><circle cx="34" cy="-196" r="30" fill="#4CC584"/>`},
+ car:{W:150,H:100,ind:0,rels:['front','behind','next','near','far','left','right'],n:{es:['el carro','del carro'],en:'the car',fr:['la voiture','de la voiture']},
+   draw:()=>`<path d="M-75 -30 Q-75 -58 -50 -60 L-36 -96 Q-30 -104 -18 -104 H36 Q46 -104 52 -96 L66 -62 Q80 -58 80 -36 V-22 H-75 Z" fill="#FF5D5D"/><path d="M-28 -92 H0 V-64 H-40 Z M8 -92 H38 L50 -64 H8 Z" fill="#CFEAFF"/><circle cx="-42" cy="-18" r="18" fill="#1F2A44"/><circle cx="46" cy="-18" r="18" fill="#1F2A44"/><circle cx="-42" cy="-18" r="7" fill="#C9CDD3"/><circle cx="46" cy="-18" r="7" fill="#C9CDD3"/>`},
+ umbrella:{W:180,H:260,ind:0,rels:['under','next'],n:{es:['el paraguas','del paraguas'],en:'the umbrella',fr:['le parapluie','du parapluie']},
+   draw:()=>`<path d="M0 -170 V-12 q0 14 -14 14 q-12 0 -12 -12" stroke="#1F2A44" stroke-width="6" fill="none"/><path d="M-90 -170 A90 90 0 0 1 90 -170 Q75 -184 60 -170 Q45 -184 30 -170 Q15 -184 0 -170 Q-15 -184 -30 -170 Q-45 -184 -60 -170 Q-75 -184 -90 -170 Z" fill="#9B5DE5"/>${[-150,-60,40,140].map(x=>`<text x="${x}" y="-210" font-size="22" text-anchor="middle">💧</text>`).join('')}`}};
+const DN_PAIRS=[['house','tree'],['car','tree'],['chair','box'],['table','basket'],['tree','tree'],['house','car']];
+const DN_T={
+ es:{modes:['🫳 Ponlo','👀 ¿Dónde está?','🔍 Busca'],put:(i,r)=>`Pon ${i} ${r}`,put2:(a,b)=>`Pon ${a} y ${b}`,where:i=>`¿Dónde está ${i}?`,find:(i,r)=>`Toca ${i} que está ${r}`,is:(i,r)=>`${i} está ${r}.`,
+   rel:{on:'encima ',under:'debajo ',in:'dentro ',out:'fuera ',front:'delante ',behind:'detrás ',next:'al lado ',near:'cerca ',far:'lejos ',left:'a la izquierda ',right:'a la derecha ',top:'en el estante de arriba',bottom:'en el estante de abajo'},
+   btw:(a,b)=>`entre ${a} y ${b}`,
+   word:{on:'encima',under:'debajo',in:'dentro',out:'fuera',front:'delante',behind:'detrás',next:'al lado',near:'cerca',far:'lejos',left:'a la izquierda',right:'a la derecha',between:'entre',top:'arriba',bottom:'abajo'},
+   hint:'Mira dónde va 👆',title:'📍 ¿Dónde está?',note:'Cada pregunta cuenta como una respuesta en Actividad. % = acertada a la primera.',dimNote:'🟢 bien (3 o más y 70 % a la primera) · 🟡 practicando · 🔴 le cuesta · ⬜ sin probar.',conf:'Lo que más confunde',confChip:(a,b,n)=>`${a} ↔ ${b} ×${n}`},
+ en:{modes:['🫳 Put it','👀 Where is it?','🔍 Find it'],put:(i,r)=>`Put ${i} ${r}`,put2:(a,b)=>`Put ${a} and ${b}`,where:i=>`Where is ${i}?`,find:(i,r)=>`Tap ${i} that is ${r}`,is:(i,r)=>`${i} is ${r}.`,
+   rel:{on:'on ',under:'under ',in:'in ',out:'out of ',front:'in front of ',behind:'behind ',next:'next to ',near:'near ',far:'far from ',left:'to the left of ',right:'to the right of ',top:'on the top shelf',bottom:'on the bottom shelf'},
+   btw:(a,b)=>`between ${a} and ${b}`,
+   word:{on:'on',under:'under',in:'in',out:'out',front:'in front',behind:'behind',next:'next to',near:'near',far:'far',left:'left',right:'right',between:'between',top:'top',bottom:'bottom'},
+   hint:'Look where it goes 👆',title:'📍 Where is it?',note:'Each question counts as one answer in Activity. % = right on the first try.',dimNote:'🟢 good (3+ and 70% first try) · 🟡 practising · 🔴 finds it hard · ⬜ not tried.',conf:'Most confused',confChip:(a,b,n)=>`${a} ↔ ${b} ×${n}`},
+ fr:{modes:['🫳 Place-le','👀 Où est-il ?','🔍 Trouve-le'],put:(i,r)=>`Mets ${i} ${r}`,put2:(a,b)=>`Mets ${a} et ${b}`,where:i=>`Où est ${i} ?`,find:(i,r)=>`Touche ${i} qui est ${r}`,is:(i,r)=>`${i} est ${r}.`,
+   rel:{on:'sur ',under:'sous ',in:'dans ',out:'hors ',front:'devant ',behind:'derrière ',next:'à côté ',near:'près ',far:'loin ',left:'à gauche ',right:'à droite ',top:'sur l’étagère du haut',bottom:'sur l’étagère du bas'},
+   btw:(a,b)=>`entre ${a} et ${b}`,
+   word:{on:'sur',under:'sous',in:'dedans',out:'dehors',front:'devant',behind:'derrière',next:'à côté',near:'près',far:'loin',left:'à gauche',right:'à droite',between:'entre',top:'en haut',bottom:'en bas'},
+   hint:'Regarde où il va 👆',title:'📍 Où est-il ?',note:'Chaque question compte comme une réponse dans Activité. % = réussie du premier coup.',dimNote:'🟢 acquis (3 fois ou plus et 70 % du premier coup) · 🟡 en cours · 🔴 difficile · ⬜ pas essayé.',conf:'Ce qu’il confond le plus',confChip:(a,b,n)=>`${a} ↔ ${b} ×${n}`}};
+// en francés «sur/sous/dans/devant/derrière» van con el artículo; «hors/à côté/près/loin/à gauche/à droite» con «de»
+const DN_FR_ART=new Set(['on','under','in','front','behind']);
+const DN_ES_ART=new Set([]);
+function dnRelText(rel,ref,ref2){const t=DN_T[lang],r=DN_REFS[ref];
+  if(rel==='top'||rel==='bottom')return t.rel[rel];
+  if(rel==='between'){const a=DN_REFS[ref].n,b=DN_REFS[ref2].n;const art=n=>lang==='en'?n.en:n[lang][0];if(ref===ref2)return lang==='es'?'entre los dos árboles':lang==='fr'?'entre les deux arbres':'between the two trees';return t.btw(art(a),art(b))}
+  if(lang==='en')return t.rel[rel]+r.n.en;
+  if(lang==='fr')return t.rel[rel]+(DN_FR_ART.has(rel)?r.n.fr[0]:r.n.fr[1]);
+  return t.rel[rel]+r.n.es[1]}
+const dnItem=it=>it[{es:1,en:2,fr:3}[lang]];
+const dnCap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+// Posición (centro del personaje) para una relación; capa 'back' = detrás del dibujo
+function dnPos(ref,cx,k,rel){const r=DN_REFS[ref],W=r.W*k,H=r.H*k,s=DN_S,G=DN_G,L=cx-W/2,R=cx+W/2,top=G-H;
+  switch(rel){
+   case 'on':return {x:cx+(ref==='chair'?8*k:0),y:top-s*.42,layer:'front'};
+   case 'under':if(ref==='tree')return {x:cx-48*k,y:G-s*.45,layer:'front'};if(ref==='umbrella')return {x:cx+8*k,y:G-s*.45,layer:'front'};return {x:cx,y:G-s*.45,layer:'front'};
+   case 'in':return {x:cx,y:G-(ref==='box'?78:55)*k-s*.05,layer:'mid'};
+   case 'out':return {x:R+s*.75,y:G-s*.45,layer:'front'};
+   case 'front':return {x:cx+(ref==='tree'?40:0)*k,y:G-s*.3,layer:'front',big:1};
+   case 'behind':if(ref==='tree')return {x:cx+70*k,y:G-150*k,layer:'back'};if(ref==='house')return {x:R-6,y:G-150*k-4,layer:'back'};if(ref==='car')return {x:cx+30*k,y:G-100*k-10,layer:'back'};return {x:cx+40*k,y:top-s*.1,layer:'back'};
+   case 'next':return {x:R+s*.52,y:G-s*.45,layer:'front'};
+   case 'near':return {x:R+s*.9,y:G-s*.45,layer:'front'};
+   case 'far':return {x:Math.min(560,R+250),y:G-s*.45,layer:'front',small:1};
+   case 'left':return {x:L-s*.75,y:G-s*.45,layer:'front'};
+   case 'right':return {x:R+s*.75,y:G-s*.45,layer:'front'};
+   case 'top':return {x:cx,y:G-196*k,layer:'front'};
+   case 'bottom':return {x:cx,y:G-44*k,layer:'front'}}}
+// ¿Está el punto p en la zona correcta? (para «Ponlo»)
+function dnCheck(ref,cx,k,rel,p,ref2,cx2,k2){const r=DN_REFS[ref],W=r.W*k,H=r.H*k,G=DN_G,L=cx-W/2,R=cx+W/2,top=G-H,inY=p.y>top-30&&p.y<G+25;
+  const dist=()=>{const dx=Math.max(L-p.x,0,p.x-R),dy=Math.max(top-p.y,0,p.y-G);return Math.hypot(dx,dy)};
+  switch(rel){
+   case 'on':return p.x>L-8&&p.x<R+8&&p.y>top-105&&p.y<top+14;
+   case 'under':if(ref==='tree')return Math.abs(p.x-cx)<80*k&&p.y>G-110*k&&p.y<G+25;if(ref==='umbrella')return Math.abs(p.x-cx)<88*k&&p.y>G-160*k&&p.y<G+25;return p.x>L+4&&p.x<R-4&&p.y>top+14&&p.y<G+25;
+   case 'in':return p.x>L+6&&p.x<R-6&&p.y>top-30&&p.y<G;
+   case 'out':return !(p.x>L-10&&p.x<R+10&&p.y>top-40&&p.y<G+20);
+   case 'next':return inY&&p.y>top-10&&((p.x>R-10&&p.x<R+DN_S*1.35)||(p.x<L+10&&p.x>L-DN_S*1.35));
+   case 'near':return dist()<115&&!(p.x>L&&p.x<R&&p.y>top&&p.y<G);
+   case 'far':return dist()>215;
+   case 'left':return p.x<L-6&&p.y>top-70&&p.y<G+25;
+   case 'right':return p.x>R+6&&p.y>top-70&&p.y<G+25;
+   case 'top':return p.x>L&&p.x<R&&p.y>G-240*k-10&&p.y<G-160*k;
+   case 'bottom':return p.x>L&&p.x<R&&p.y>G-80*k&&p.y<G+10;
+   case 'between':{const r2=DN_REFS[ref2],L2=cx2-r2.W*k2/2;return p.x>R-4&&p.x<L2+4&&p.y>G-200&&p.y<G+25}}
+  return false}
+// Pictogramas de las respuestas
+const DN_ICON={on:'<rect x="22" y="24" width="20" height="18" rx="3" fill="#9AA0A6"/><circle cx="32" cy="16" r="7" fill="#FF5D5D"/>',
+ under:'<rect x="12" y="14" width="40" height="6" rx="2" fill="#9AA0A6"/><rect x="14" y="20" width="5" height="22" fill="#9AA0A6"/><rect x="45" y="20" width="5" height="22" fill="#9AA0A6"/><circle cx="32" cy="35" r="7" fill="#FF5D5D"/>',
+ in:'<circle cx="32" cy="32" r="7" fill="#FF5D5D"/><path d="M16 16 V42 H48 V16" stroke="#9AA0A6" stroke-width="5" fill="none"/>',
+ out:'<path d="M8 16 V42 H36 V16" stroke="#9AA0A6" stroke-width="5" fill="none"/><circle cx="52" cy="35" r="7" fill="#FF5D5D"/>',
+ front:'<rect x="18" y="10" width="28" height="28" rx="3" fill="#9AA0A6"/><circle cx="34" cy="34" r="9" fill="#FF5D5D" stroke="#FFFFFF" stroke-width="2"/>',
+ behind:'<circle cx="42" cy="14" r="9" fill="#FF5D5D"/><rect x="14" y="14" width="30" height="28" rx="3" fill="#9AA0A6"/>',
+ next:'<rect x="12" y="20" width="22" height="22" rx="3" fill="#9AA0A6"/><circle cx="43" cy="34" r="7" fill="#FF5D5D"/>',
+ near:'<rect x="8" y="20" width="22" height="22" rx="3" fill="#9AA0A6"/><circle cx="40" cy="34" r="7" fill="#FF5D5D"/>',
+ far:'<rect x="2" y="20" width="18" height="22" rx="3" fill="#9AA0A6"/><circle cx="56" cy="34" r="7" fill="#FF5D5D"/><path d="M24 34 H46" stroke="#C9CDD3" stroke-width="3" stroke-dasharray="3 3"/>',
+ left:'<circle cx="11" cy="31" r="7" fill="#FF5D5D"/><rect x="28" y="20" width="22" height="22" rx="3" fill="#9AA0A6"/><path d="M26 10 H8 m6 -5 l-6 5 l6 5" stroke="#1F2A44" stroke-width="3" fill="none"/>',
+ right:'<rect x="14" y="20" width="22" height="22" rx="3" fill="#9AA0A6"/><circle cx="53" cy="31" r="7" fill="#FF5D5D"/><path d="M38 10 H56 m-6 -5 l6 5 l-6 5" stroke="#1F2A44" stroke-width="3" fill="none"/>',
+ between:'<rect x="4" y="20" width="16" height="22" rx="3" fill="#9AA0A6"/><rect x="44" y="20" width="16" height="22" rx="3" fill="#9AA0A6"/><circle cx="32" cy="33" r="7" fill="#FF5D5D"/>',
+ top:'<rect x="18" y="3" width="28" height="42" rx="2" fill="none" stroke="#9AA0A6" stroke-width="4"/><line x1="18" y1="17" x2="46" y2="17" stroke="#9AA0A6" stroke-width="3"/><line x1="18" y1="31" x2="46" y2="31" stroke="#9AA0A6" stroke-width="3"/><circle cx="32" cy="10" r="5" fill="#FF5D5D"/>',
+ bottom:'<rect x="18" y="3" width="28" height="42" rx="2" fill="none" stroke="#9AA0A6" stroke-width="4"/><line x1="18" y1="17" x2="46" y2="17" stroke="#9AA0A6" stroke-width="3"/><line x1="18" y1="31" x2="46" y2="31" stroke="#9AA0A6" stroke-width="3"/><circle cx="32" cy="38" r="5" fill="#FF5D5D"/>'};
+let dnMode='put',dnLv=1,dnLast='';
+try{const m=localStorage.getItem('peques-dnmode');if(DN_MODES.includes(m))dnMode=m;const v=+localStorage.getItem('peques-dnlv');if(v>=1&&v<=3)dnLv=v}catch(e){}
+function dnRec(){if(!P.pos)P.pos={st:{},conf:{}};return P.pos}
+// relación a preguntar: en cada nivel, sobre todo las nuevas
+function dnPickRel(pool){const lv=dnLv,newR=DN_LV[lv].filter(r=>pool.includes(r)),all=DN_LV.slice(1,lv+1).flat().filter(r=>pool.includes(r));
+  const src=newR.length&&Math.random()<(lv===1?1:.6)?newR:all;let r,g=0;do{r=src[rand(src.length)]}while(r===dnLast&&g++<10);dnLast=r;return r}
+const dnRefsFor=rel=>Object.keys(DN_REFS).filter(k=>DN_REFS[k].rels.includes(rel));
+function dnScene(refs,inner){const ind=DN_REFS[refs[0].ref].ind;
+  return `<svg class="dnscene" viewBox="0 0 600 340" role="img"><defs><linearGradient id="dnsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${ind?'#FFF4E0':'#CFEAFF'}"/><stop offset="1" stop-color="${ind?'#FFF4E0':'#EAF6FF'}"/></linearGradient></defs>
+   <rect width="600" height="${DN_G}" fill="url(#dnsky)"/><rect y="${DN_G}" width="600" height="40" fill="${ind?'#E8C9A0':'#8BD17C'}"/>${ind?'<rect x="0" y="40" width="600" height="6" fill="#F0DCC0"/>':'<text x="70" y="60" font-size="40">☁️</text>'}${inner}</svg>`}
+const dnRefSvg=(o,part='draw')=>{const f=DN_REFS[o.ref][part];return f?`<g transform="translate(${o.cx} ${DN_G}) scale(${o.k})">${f()}</g>`:''};
+const dnItemSvg=(e,p,attrs='')=>`<g class="dnit" ${attrs}><text x="${p.x}" y="${p.y}" font-size="${DN_S*(p.big?1.12:p.small?.8:1)}" text-anchor="middle" dominant-baseline="central">${e}</text></g>`;
+function donde(){const t=DN_T[lang],rec=dnRec(),lv=dnLv;let over=false,first=true,fails=0;const msgEl=()=>stage.querySelector('.msg');
+  const mark=(rels,ok,chosen)=>{if(!first)return;first=false;rels.forEach(r=>{const s=rec.st[r]||(rec.st[r]={a:0,f:0,m:0});s.a++;if(ok)s.f++;else s.m++});
+    if(!ok&&chosen&&chosen!==rels[0]){const k=[rels[0],chosen].sort().join('>');rec.conf[k]=(rec.conf[k]||0)+1}saveP()};
+  const good=(el,sentence)=>{if(over)return;over=true;noteAns(true);if(el)el.classList.add('right');score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
+    msgEl().innerHTML=`${p} ⭐<br><small>${esc(sentence)}</small>`;saySeq([[p,lang],[sentence,lang]],{gap:250});afterSpeech(()=>{if(current==='donde')donde()},1200,10000)};
+  const bar=()=>stage.insertAdjacentHTML('afterbegin',`<div class="cmpbar"><div class="modes cmpmodes" role="group">${DN_MODES.map((m,i)=>`<button class="mode" data-dm="${m}" aria-pressed="${m===dnMode}">${t.modes[i]}</button>`).join('')}</div><div class="modes cmplv" role="group">${[1,2,3].map(v=>`<button class="mode" data-dl="${v}" aria-pressed="${v===dnLv}" aria-label="${L().pnLevels[v-1]}" title="${L().pnLevels[v-1]}">${L().pnLevels[v-1].split(' ')[0]}</button>`).join('')}</div></div>`);
+  const bind=(speak=true)=>{if(speak)sayQuestion();stage.querySelectorAll('[data-dm]').forEach(b=>b.onclick=()=>{dnMode=b.dataset.dm;try{localStorage.setItem('peques-dnmode',dnMode)}catch(e){}stopSpeech();donde()});
+    stage.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>{dnLv=+b.dataset.dl;try{localStorage.setItem('peques-dnlv',dnLv)}catch(e){}stopSpeech();donde()})};
+  const items=shuffle(DN_ITEMS.slice());
+  // ======== 🫳 Ponlo: arrastrar el personaje ========
+  if(dnMode==='put'){
+    const double=lv===3&&Math.random()<.4;let refs,targets;
+    if(double){const pair=shuffle([['table','box'],['chair','basket'],['bed','box'],['table','basket'],['chair','box']][rand(5)]);
+      refs=[{ref:pair[0],cx:165,k:.72},{ref:pair[1],cx:445,k:.72}];
+      targets=refs.map((o,i)=>{const pool=DN_REFS[o.ref].rels.filter(r=>['on','under','in','out'].includes(r));return {ref:i,rel:pool[rand(pool.length)],item:items[i]}})}
+    else{const rel=dnPickRel([...DN_DRAG]);
+      if(rel==='between'){const pr=DN_PAIRS[rand(DN_PAIRS.length)];refs=[{ref:pr[0],cx:150,k:.7},{ref:pr[1],cx:450,k:.7}];targets=[{ref:0,rel,item:items[0],ref2:1}]}
+      else{const cand=dnRefsFor(rel),ref=cand[rand(cand.length)],cx=rel==='far'?175:rel==='left'?360:rel==='right'?240:300;refs=[{ref,cx,k:1}];targets=[{ref:0,rel,item:items[0]}]}}
+    const relTxt=tg=>{const o=refs[tg.ref];return dnRelText(tg.rel,o.ref,tg.ref2!=null?refs[tg.ref2].ref:null)};
+    const q=targets.length>1?t.put2(`${dnItem(targets[0].item)} ${relTxt(targets[0])}`,`${dnItem(targets[1].item)} ${relTxt(targets[1])}`):t.put(dnItem(targets[0].item),relTxt(targets[0]));
+    // bandeja de salida: un sitio donde la respuesta todavía no es correcta
+    const chk=(tg,p)=>{const o=refs[tg.ref],o2=tg.ref2!=null?refs[tg.ref2]:null;return dnCheck(o.ref,o.cx,o.k,tg.rel,p,o2&&o2.ref,o2&&o2.cx,o2&&o2.k)};
+    const trays=[{x:45,y:318},{x:555,y:318},{x:300,y:318},{x:45,y:40},{x:555,y:40}];
+    targets.forEach((tg,i)=>{const fr=trays.filter(p=>!chk(tg,p));tg.start=fr.find(p=>!targets.slice(0,i).some(o=>o.start===p))||trays[i]});
+    const back=refs.map(o=>dnRefSvg(o)).join(''),front=refs.map(o=>dnRefSvg(o,'front')).join('');
+    frame(q,`${dnScene(refs,`${back}<g class="dnmid"></g>${front}<g class="dnghost"></g>${targets.map((tg,i)=>`<g class="dnit dndrag" data-t="${i}" style="transform:translate(${tg.start.x}px,${tg.start.y}px)"><circle r="38" fill="#FFFFFF" fill-opacity=".001"/><text font-size="${DN_S}" text-anchor="middle" dominant-baseline="central">${tg.item[0]}</text></g>`).join('')}`)}`);bar();
+    window.__dnT=targets.map(tg=>{const o=refs[tg.ref];return {rel:tg.rel,p:tg.rel==='between'?{x:300,y:DN_G-DN_S*.45}:dnPos(o.ref,o.cx,o.k,tg.rel)}});
+    const svg=stage.querySelector('.dnscene'),mid=svg.querySelector('.dnmid');let placed=new Set();
+    const toSvg=e=>{const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse())};
+    svg.querySelectorAll('.dndrag').forEach(g=>{const i=+g.dataset.t,tg=targets[i];let drag=null,pos={...tg.start};
+      const put=(p,anim)=>{pos=p;g.style.transition=anim?'transform .45s':'none';g.style.transform=`translate(${p.x}px,${p.y}px)`};
+      g.addEventListener('pointerdown',e=>{if(over||placed.has(i))return;e.preventDefault();try{g.setPointerCapture(e.pointerId)}catch(_){}const p=toSvg(e);drag={dx:pos.x-p.x,dy:pos.y-p.y,id:e.pointerId,moved:0};g.classList.add('lift')});
+      g.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;e.preventDefault();const p=toSvg(e);const np={x:Math.max(20,Math.min(580,p.x+drag.dx)),y:Math.max(20,Math.min(330,p.y+drag.dy))};drag.moved=Math.max(drag.moved,Math.hypot(np.x-tg.start.x,np.y-tg.start.y));put(np)});
+      const up=e=>{if(!drag||e.pointerId!==drag.id)return;g.classList.remove('lift');const moved=drag.moved;drag=null;if(moved<25){put(pos);return}
+        if(chk(tg,pos)){placed.add(i);g.classList.add('done');const o=refs[tg.ref],cp=tg.rel==='between'?{x:300,y:DN_G-DN_S*.45}:dnPos(o.ref,o.cx,o.k,tg.rel);
+          if(cp.layer==='mid'){mid.appendChild(g)}put(cp,true);
+          if(placed.size===targets.length){mark(targets.map(x=>x.rel),true);good(g,targets.map(x=>dnCap(t.is(dnItem(x.item),relTxt(x)))).join(' '))}}
+        else{mark(targets.map(x=>x.rel),false);fails++;miss(g,'drop');put(tg.start,true);
+          if(fails>=2){const o=refs[tg.ref],cp=tg.rel==='between'?{x:300,y:DN_G-DN_S*.45}:dnPos(o.ref,o.cx,o.k,tg.rel);svg.querySelector('.dnghost').innerHTML=`<circle cx="${cp.x}" cy="${cp.y}" r="34" fill="none" stroke="#FF8C2B" stroke-width="5" stroke-dasharray="8 8" class="dnpulse"/>`;msgEl().textContent=t.hint}}};
+      g.addEventListener('pointerup',up);g.addEventListener('pointercancel',up)});
+    bind();return}
+  // escena con uno o varios personajes colocados
+  let rel=dnPickRel(Object.keys(DN_ICON)),refs,ref2=null;
+  if(rel==='between'){const pr=DN_PAIRS[rand(DN_PAIRS.length)];refs=[{ref:pr[0],cx:150,k:.7},{ref:pr[1],cx:450,k:.7}];ref2=pr[1]}
+  else{const cand=dnRefsFor(rel),ref=cand[rand(cand.length)];refs=[{ref,cx:['far','near','next','right','out'].includes(rel)?(rel==='far'?170:250):rel==='left'?360:300,k:1}]}
+  const o=refs[0],posOf=r=>r==='between'?{x:300,y:DN_G-DN_S*.45,layer:'front'}:dnPos(o.ref,o.cx,o.k,r);
+  const layerSvg=list=>{const back=list.filter(x=>x.p.layer==='back'),mid=list.filter(x=>x.p.layer==='mid'),fr=list.filter(x=>x.p.layer==='front');
+    return `${back.map(x=>x.svg).join('')}${refs.map(r=>dnRefSvg(r)).join('')}${mid.map(x=>x.svg).join('')}${refs.map(r=>dnRefSvg(r,'front')).join('')}${fr.map(x=>x.svg).join('')}`};
+  const item=items[0],sentence=dnCap(t.is(dnItem(item),dnRelText(rel,o.ref,refs[1]&&refs[1].ref)));
+  // ======== 👀 ¿Dónde está?: elegir la palabra (con dibujito) ========
+  if(dnMode==='where'){const pool=(rel==='between'?['on','in','behind','far']:[...new Set([...DN_REFS[o.ref].rels,...shuffle(Object.keys(DN_ICON))])]).filter(r=>r!==rel&&!(DN_ALSO[rel]||[]).includes(r)&&!(DN_ALSO[r]||[]).includes(rel));
+    const lvAll=DN_LV.slice(1,lv+1).flat(),n=lv===1?2:3;let opts=[rel];const opp=DN_OPP[rel];if(opp&&pool.includes(opp))opts.push(opp);
+    for(const r of shuffle(pool.filter(r=>lvAll.includes(r)).concat(shuffle(pool))))if(opts.length<n&&!opts.includes(r))opts.push(r);
+    opts=shuffle(opts);
+    const q=t.where(dnItem(item));
+    frame(q,`${dnScene(refs,layerSvg([{p:posOf(rel),svg:dnItemSvg(item[0],posOf(rel))}]))}<div class="row dnopts">${opts.map(r=>`<button class="pick dnopt" data-v="${r}"><svg viewBox="0 0 64 48" aria-hidden="true">${DN_ICON[r]}</svg><span>${t.word[r]}</span></button>`).join('')}</div>`);bar();
+    window.__dnAns=rel;
+    stage.querySelectorAll('.dnopt').forEach(b=>b.onclick=()=>{if(over)return;const v=b.dataset.v;if(v===rel){mark([rel],true);good(b,sentence)}else{mark([rel],false,v);fails++;miss(b,v);if(fails>=2){const c=stage.querySelector(`.dnopt[data-v="${rel}"]`);c.classList.remove('czhint');void c.offsetWidth;c.classList.add('czhint')}}});
+    // la voz lee la pregunta y cada opción, iluminándola
+    const lit=v=>stage.querySelectorAll('.dnopt').forEach(b=>b.classList.toggle('speaking',b.dataset.v===v));
+    setTimeout(()=>{if(stage.querySelector('.dnopt'))saySeq([[q,lang,()=>lit(null)],...opts.map(r=>[t.word[r],lang,()=>lit(r)])],{rate:.9,gap:300,done:()=>lit(null)})},300);
+    document.getElementById('hear').onclick=()=>saySeq([[q,lang,()=>lit(null)],...opts.map(r=>[t.word[r],lang,()=>lit(r)])],{rate:.9,gap:300,done:()=>lit(null)});
+    bind(false);return}
+  // ======== 🔍 Busca: varios iguales, tocar el que está en el sitio dicho ========
+  let others=[];if(rel!=='between'){const pool=shuffle(DN_REFS[o.ref].rels.filter(r=>r!==rel&&!(DN_ALSO[rel]||[]).includes(r)&&!(DN_ALSO[r]||[]).includes(rel)));
+    pool.push(...['far','left','right','behind','front','on'].filter(r=>r!==rel&&!pool.includes(r)&&!(DN_ALSO[rel]||[]).includes(r)&&!(DN_ALSO[r]||[]).includes(rel)));
+    for(const r of pool){if(others.length>=(lv===1?1:2))break;const p=posOf(r);if([rel,...others].every(x=>{const q2=posOf(x);return Math.hypot(q2.x-p.x,q2.y-p.y)>70&&!others.some(y=>(DN_ALSO[y]||[]).includes(r))}))others.push(r)}}
+  else others=['far'].filter(()=>false);
+  const extra=rel==='between'?[{p:{x:560,y:DN_G-DN_S*.45,layer:'front'},r:'right2'},{p:{x:40,y:DN_G-DN_S*.45,layer:'front'},r:'left2'}].slice(0,lv===1?1:2):[];
+  const all=shuffle([{r:rel,p:posOf(rel)},...others.map(r=>({r,p:posOf(r)})),...extra]);
+  const q=t.find(dnItem(item),dnRelText(rel,o.ref,refs[1]&&refs[1].ref));
+  frame(q,dnScene(refs,layerSvg(all.map(x=>({p:x.p,svg:dnItemSvg(item[0],x.p,`data-v="${x.r}"`)})))));bar();
+  window.__dnAns=rel;
+  stage.querySelectorAll('.dnit[data-v]').forEach(g=>g.addEventListener('click',()=>{if(over)return;const v=g.dataset.v;if(v===rel){mark([rel],true);good(g,sentence)}else{mark([rel],false,DN_ICON[v]?v:null);fails++;miss(g,v);if(fails>=2){const c=stage.querySelector(`.dnit[data-v="${rel}"]`);c.classList.remove('czhint');void c.getBoundingClientRect();c.classList.add('czhint')}}}));
+  bind()}
+// Sección de padres
+function dondeSection(){const t=DN_T[lang],tt=L(),r=P.pos||{st:{},conf:{}};
+  const chip=k=>{const s=r.st[k],nm=t.word[k];if(!s||!s.a)return `<span class="chip">⬜ ${nm}</span>`;const p=s.f/s.a,c=s.a>=3&&p>=.7?'🟢':p>=.4||s.a<3?'🟡':'🔴';return `<span class="chip">${c} ${nm} <small>${s.f}/${s.a}</small></span>`};
+  const conf=Object.entries(r.conf).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  return `<h3>${t.title}</h3><p class="pnote">${t.note} ${t.dimNote}</p>${[1,2,3].map(lv=>`<p><b>${tt.pnLevels[lv-1]}</b> ${DN_LV[lv].map(chip).join(' ')}</p>`).join('')}
+   ${conf.length?`<h4 class="ch">${t.conf}</h4><p>${conf.map(([k,n])=>{const [a,b]=k.split('>');return `<span class="chip">${t.confChip(t.word[a],t.word[b],n)}</span>`}).join(' ')}</p>`:''}`}
+
+const games={cuentos,contar,poner,componer,comparar,donde,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano};
 
 // Panel de juegos que se puede ocultar
 let menuOpen=true;
@@ -3428,7 +3656,7 @@ document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{lang=b.dataset.l;tr
 
 // ===== Menú por categorías + actividades visibles según el día de la semana =====
 const CATS=[['num','🔢','#3A86FF',['contar','poner','componer','orden','sonidos','trazar']],['let','🔤','#7B5CD6',['letras','decir','escletras','trazos']],
-  ['desc','🧭','#3BB273',['colores','formas','comparar','patrones','objetos']],['crear','🎨','#FF7EB6',['dibujar','colorear','piano']],['jugar','🎲','#FF8C2B',['cuentos','memoria']]];
+  ['desc','🧭','#3BB273',['colores','formas','comparar','donde','patrones','objetos']],['crear','🎨','#FF7EB6',['dibujar','colorear','piano']],['jugar','🎲','#FF8C2B',['cuentos','memoria']]];
 const CAT_T={es:{num:'Números',let:'Letras',desc:'Descubrir',crear:'Crear',jugar:'Jugar'},en:{num:'Numbers',let:'Letters',desc:'Discover',crear:'Create',jugar:'Play'},fr:{num:'Nombres',let:'Lettres',desc:'Découvrir',crear:'Créer',jugar:'Jouer'}};
 const catOf=id=>(CATS.find(c=>c[3].includes(id))||CATS[0])[0];
 const ALL_ACTS=CATS.flatMap(c=>c[3]);
