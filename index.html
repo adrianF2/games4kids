@@ -3046,7 +3046,8 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
   // primer intento: guarda el resultado en sus estadísticas
   const mark=(ok,extra)=>{if(!first)return;first=false;const s=st();s.a++;if(ok)s.f++;else s.m++;if(extra)extra(ok);saveP()};
   const bar=()=>stage.insertAdjacentHTML('afterbegin',`<div class="cmpbar"><div class="modes cmpmodes" role="group">${CMP_MODES.map((m,i)=>`<button class="mode" data-cm="${m}" aria-pressed="${m===cmpMode}">${t.modes[i]}</button>`).join('')}</div><div class="modes cmplv" role="group">${[1,2,3].map(v=>`<button class="mode" data-cl="${v}" aria-pressed="${v===cmpLv}" aria-label="${L().pnLevels[v-1]}" title="${L().pnLevels[v-1]}">${L().pnLevels[v-1].split(' ')[0]}</button>`).join('')}</div></div>`);
-  const bind=()=>{stage.querySelectorAll('[data-cm]').forEach(b=>b.onclick=()=>{cmpMode=b.dataset.cm;try{localStorage.setItem('peques-cmpmode',cmpMode)}catch(e){}stopSpeech();componer()});
+  // al empezar cada pregunta, la voz la lee (como en las demás actividades)
+  const bind=()=>{sayQuestion();stage.querySelectorAll('[data-cm]').forEach(b=>b.onclick=()=>{cmpMode=b.dataset.cm;try{localStorage.setItem('peques-cmpmode',cmpMode)}catch(e){}stopSpeech();componer()});
     stage.querySelectorAll('[data-cl]').forEach(b=>b.onclick=()=>{cmpLv=+b.dataset.cl;try{localStorage.setItem('peques-cmplv',cmpLv)}catch(e){}stopSpeech();componer()})};
   const fresh=f=>{let k,g=0;do{k=f()}while(k[0]===cmpLastKey&&g++<20);cmpLastKey=k[0];return k[1]};
   if(cmpMode==='hide'){
