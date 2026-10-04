@@ -2452,6 +2452,9 @@ const pnRec=()=>P.piano||(P.piano={1:[],2:[],3:[]});
 const pnStat=(lv,i)=>{const r=pnRec();r.st=r.st||{};return r.st[lv+':'+i]||(r.st[lv+':'+i]={a:0,f:0,m:0})};
 function pnPick(){const list=PN_SEQ[pnLv],done=new Set(pnRec()[pnLv]);const idx=list.map((_,i)=>i).filter(i=>i!==pnLast);
   const fresh=idx.filter(i=>!done.has(i)),pool=fresh.length&&Math.random()<0.75?fresh:idx;const i=pool[rand(pool.length)];pnLast=i;return i}
+// Espera a que la voz termine antes de seguir (mín. para que empiece a hablar, máx. por si el navegador no informa)
+function afterSpeech(fn,min=500,max=9000,gap=350){const t0=Date.now();const chk=()=>{let sp=false;try{sp=speechSynthesis.speaking||speechSynthesis.pending}catch(e){}
+  if(sp&&Date.now()-t0<max)setTimeout(chk,150);else setTimeout(fn,sp?0:gap)};setTimeout(chk,min)}
 function piano(){qCtx=null;qAns=false;const t=L(),run=++pnRun,nk=PN_KEYCOUNT[pnFree?'free':pnLv],names=PN_NAMES[lang];
   const seqI=pnFree?-1:pnPick(),item=pnFree?null:PN_SEQ[pnLv][seqI],seq=item?item[0]:[],durs=item&&item[1]?item[1]:seq.map(()=>1),song=item?item[2]:null;
   const done=pnRec();
@@ -2481,11 +2484,11 @@ function piano(){qCtx=null;qAns=false;const t=L(),run=++pnRun,nk=PN_KEYCOUNT[pnF
         const p=t.praise[rand(t.praise.length)],sn=song?PN_SONGS[song][lang]:'';
         msg.innerHTML=`${p} ⭐${sn?`<br>🎵 ${t.pnSong(sn)}`:''}`;stage.querySelector('.pncount').textContent=`⭐ ${d.length}/${PN_SEQ[pnLv].length}`;
         saySeq([[p,lang],...(sn?[[t.pnSong(sn),lang]]:[])],{gap:250});
-        setTimeout(()=>{if(run!==pnRun)return;keys.forEach(k=>k.classList.add('party'));playSeq(0.85,()=>{setTimeout(()=>{if(run===pnRun&&current==='piano')piano()},700)})},sn?2600:1500)}}
+        afterSpeech(()=>{if(run!==pnRun||current!=='piano')return;keys.forEach(k=>k.classList.add('party'));playSeq(0.85,()=>{setTimeout(()=>{if(run===pnRun&&current==='piano')piano()},700)})},sn?1200:800,12000)}}
     else{noteAns(false);fails++;pnStat(pnLv,seqI).m++;saveP();k.classList.remove('bad');void k.offsetWidth;k.classList.add('bad');if(dots[pos])dots[pos].className='bad';
-      if(fails>=2)slow=1.5;msg.textContent=t.pnMiss;say(t.pnMiss);setTimeout(()=>{if(run===pnRun&&!finished)demoNow()},1600)}}));
+      if(fails>=2)slow=1.5;msg.textContent=t.pnMiss;say(t.pnMiss);afterSpeech(()=>{if(run===pnRun&&!finished&&current==='piano')demoNow()},600)}}));
   if(!pnFree){document.getElementById('pnAgain').onclick=()=>{slow=1;demoNow()};document.getElementById('pnSlow').onclick=()=>{slow=1.6;demoNow()};
-    say(t.pnQ);later(()=>{if(run===pnRun)demoNow()},2000)}
+    say(t.pnQ);afterSpeech(()=>{if(run===pnRun&&current==='piano')demoNow()},700)}
   else say(t.pnFreeQ)}
 
 
