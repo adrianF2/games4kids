@@ -355,6 +355,37 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+
+/* Componer números */
+.cmpbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.cmpmodes .mode{font-size:.95rem;padding:6px 10px}.cmplv .mode{padding:6px 9px;font-size:1.05rem}
+.cnum{font:800 3.2rem "Baloo 2",sans-serif;color:var(--blue)}.cop{font:800 2.4rem "Baloo 2",sans-serif;color:var(--soft)}
+.cdicerow{display:flex;align-items:center;gap:18px;font:800 2.4rem "Baloo 2",sans-serif}.cdice{width:118px;height:118px}
+.chide{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;font-size:2.4rem;padding-top:14px}
+.cvis,.cunder{display:flex;gap:6px;min-height:3.3rem;align-items:center}
+.cunder{position:relative;min-width:calc(var(--k)*3.1rem)}
+.ccup{position:absolute;inset:-16px -10px -6px;background:linear-gradient(#FFAE5E,#E8762B);border:3px solid var(--ink);border-radius:45% 45% 12px 12px;transition:transform .6s,opacity .4s;z-index:1}
+.cunder.show .ccup{transform:translateY(-125%)}.cunder.peek .ccup{opacity:.35}
+.cplates{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+.cplate{width:min(330px,42vw);min-height:150px;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:4px;padding:18px;border:3px solid var(--ink);border-radius:50%;background:#FFFFFF;font-size:2.1rem;cursor:pointer;line-height:1.15}
+.cplate.spread{gap:14px 26px;font-size:3rem}
+.cplate.right{border-color:var(--green);background:#DFF5D8}.cplate.wrong{animation:shake .35s;border-color:var(--red)}
+.chelp:empty{display:none}.chelp .pnote{margin:0 0 4px}
+.cpair{display:grid;grid-template-columns:repeat(var(--n),2.4rem);justify-content:center;gap:2px 6px;font-size:1.9rem}
+.cpair i{height:16px;width:3px;justify-self:center}.cpair i.ln{background:var(--ink)}.cpair .xtra{background:#FFD6D6;border-radius:10px}
+.cbox{position:relative;min-width:300px;min-height:130px;border:4px solid #A0703C;border-radius:18px;background:#FFF3DF;padding:14px;display:flex;align-items:center;justify-content:center;margin-top:12px}
+.citems{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:2.4rem;max-width:440px}
+.citems span{transition:opacity .7s,transform .7s}
+.citems .come{opacity:0;transform:translateY(-70px)}.cbox.moved .citems .come{opacity:1;transform:none}
+.cbox.moved .citems .go{opacity:0;transform:translateY(-70px)}
+.clid{position:absolute;inset:-4px;border-radius:18px;background:repeating-linear-gradient(45deg,#C98B4A 0 14px,#B97A3A 14px 28px);border:4px solid #A0703C;opacity:0;pointer-events:none;transition:opacity .5s;z-index:1}
+.cbox.closed .clid{opacity:1}
+.cfly{position:absolute;left:50%;top:0;font-size:2.4rem;opacity:0;z-index:2;transform:translate(-50%,-90px);pointer-events:none;white-space:nowrap}
+.cbox.moved .cfly.in{animation:cflyin 1.3s forwards}.cbox.moved .cfly.out{animation:cflyout 1.3s forwards}
+@keyframes cflyin{0%{opacity:1;transform:translate(-50%,-90px)}70%{opacity:1;transform:translate(-50%,30px)}100%{opacity:0;transform:translate(-50%,40px)}}
+@keyframes cflyout{0%{opacity:0;transform:translate(-50%,40px)}25%{opacity:1}100%{opacity:1;transform:translate(-50%,-95px)}}
+.cmodel{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;font-size:2.1rem;padding:6px 18px;border:3px solid var(--ink);border-radius:999px;background:#FFFFFF;max-width:540px}
+.cmodel.scatter{gap:8px 22px}
+#cbasket{grid-template-columns:repeat(6,auto);min-height:86px;max-width:560px;padding:8px 14px}#cbasket button{font-size:2.2rem}
 /* Menú por categorías */
 .tabs{display:flex!important;flex-direction:column;gap:8px}
 .cats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -398,6 +429,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   <nav class="tabs" id="tabs" role="tablist">
     <button class="tab" role="tab" id="t-contar" aria-selected="true"><b>🍎</b><span></span></button>
     <button class="tab" role="tab" id="t-poner" aria-selected="false"><b>🧺</b><span></span></button>
+    <button class="tab" role="tab" id="t-componer" aria-selected="false"><b>🖐️</b><span></span></button>
     <button class="tab" role="tab" id="t-orden" aria-selected="false"><b>🔢</b><span></span></button>
     <button class="tab" role="tab" id="t-patrones" aria-selected="false"><b>🔁</b><span></span></button>
     <button class="tab" role="tab" id="t-sonidos" aria-selected="false"><b>👂</b><span></span></button>
@@ -423,7 +455,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 
 <script>
 const T={
- es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',objetos:'Objetos',memoria:'Parejas',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano'},
+ es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',componer:'Componer',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',objetos:'Objetos',memoria:'Parejas',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano'},
   tap:'👆 Tocar',type:'⌨️ Escribir',qCount:'¿Cuántos hay?',qWrite:'¿Cuántos hay? Escribe el número',qMissing:'¿Qué número falta?',
   qColor:c=>`Toca el color <u>${c}</u>`,qShape:(a,s)=>`¿Dónde está ${a}<u>${s}</u>?`,qPairs:'Encuentra las parejas',storyLevels:['🌱 Fácil','🌿 Medio','🌳 Difícil'],listenStory:'🔊 Escuchar el cuento',toQuestions:'➡️ Preguntas',questionsNow:'¡Ahora, las preguntas!',replayStory:'📖 Escuchar el cuento otra vez',repeatQ:'🔊 Repetir la pregunta',seqQ:'¿Qué pasó primero, después y al final? Tócalos en orden.',storyDone:'¡Terminaste el cuento!',anotherStory:'📚 Otro cuento',storyOf:(i,n)=>`Cuento ${i} de ${n}`,imgOn:'🖼️ Con imágenes',imgOff:'🙈 Sin imágenes',mastered:n=>`¡Ya sabes el ${n}!`,masteredWord:w=>`¡Ya sabes «${w}»!`,parentsTitle:'Progreso',numbersTitle:'Números',legend:'R = reconocer · D = decir · E = escribir — 🟢 lo domina · 🟡 aprendiendo · 🔴 le cuesta · gris: pocos intentos',skillNames:{recog:'Reconocer',say:'Decir',write:'Escribir'},skillShort:{recog:'R',say:'D',write:'E'},confTitle:'Confusiones frecuentes',askedGot:(a,b)=>`pedía ${a}, eligió ${b}`,nothingYet:'Todavía no hay datos.',wordsTitle:'Palabras de Objetos',hardWords:'Palabras que más le cuestan',resetBtn:'Borrar progreso',stKnown:'Las sabe',stLearning:'Está aprendiendo (× = errores)',stNew:'Todavía no han salido',tapCat:'Toca una categoría para ver las palabras.',resetAsk:'¿Seguro? Se borrará todo el progreso.',resetYes:'Sí, borrar',resetNo:'Cancelar',holdHint:'👆 Para padres: mantén pulsado 📊 2 segundos para ver el progreso',qPattern:'¿Qué sigue?',levelNames:['Fácil','Medio','Difícil'],qLetter:'Escucha y toca la letra',qObj:(n,pl)=>pl?`¿Dónde están <u>${n}</u>?`:`¿Dónde está <u>${n}</u>?`,catLabel:'Categoría',cats:{all:'Todo',fruit:'Frutas',veg:'Verduras',body:'Cuerpo',animal:'Animales',home:'Casa',music:'Música',build:'Construcción',school:'Escuela',transport:'Transporte',nature:'Naturaleza',toys:'Juguetes',clothes:'Ropa',food:'Comida',sport:'Deportes',place:'Lugares',people:'Personas',face:'Caras'},qDrawL:l=>`Escribe la letra <u>${l}</u>`,qDrawLsay:nm=>`Escribe la letra ${nm}`,drawEmptyL:'Primero escribe la letra con el lápiz',showMe:'👀 Mira cómo',mirrorMsgN:'¡Casi! El número quedó al revés. Mira cómo se hace.',mirrorMsg:'¡Casi! La letra quedó al revés. Mira cómo se hace.',masteredLetter:l=>`¡Ya sabes la ${l}!`,qSayL:'Di esta letra en voz alta',lettersTitle:'Letras',lettersLegend:'R = reconocer (Letras) · D = decir · E = escribir (🔒 aún no abierta) — mismos colores que los números',writeOpenTxt:n=>`Escribir ABC: ${n} de 26 letras abiertas. Se abre una nueva cuando quedan 2 o menos por dominar.`,wroteLike:(a,b)=>`pedía ${a}, escribió algo como ${b}`,mirrorChip:(a,k)=>`${a} al revés ×${k}`,helpTitle:'ℹ️ ¿Cómo funciona el seguimiento?',helpBody:`<h4>⏱️ Tiempo de pantalla y PIN</h4>
 <ul><li><b>Qué cuenta:</b> el tiempo que la app está abierta y visible en pantalla, juegue o no (también escuchando un cuento). Se pausa si la tablet se bloquea o se apaga la pantalla, si se cambia de app y mientras la pantalla de padres está abierta. Cada día empieza de cero a medianoche.</li>
@@ -471,6 +503,10 @@ const T={
 <ul><li>La página toca una melodía iluminando las teclas; luego el niño la repite. Si se equivoca, se la vuelve a enseñar (tras dos errores, más despacio). «▶️ Otra vez» y «🐢 Despacio» la repiten cuando quiera.</li>
 <li>100 melodías en 3 niveles: 🟢 Fácil (2–3 notas, 4 teclas), 🟡 Medio (4–5 notas, 6 teclas), 🔴 Difícil (6–8 notas, 8 teclas). Muchas son trozos de canciones tradicionales (Frère Jacques, Au clair de la lune, Estrellita, Himno de la alegría, Cumpleaños feliz…) y al acertar se dice cuál era. Primero salen las que aún no ha logrado.</li>
 <li>Cada melodía cuenta como una respuesta en Actividad (acierto si la repite bien a la primera); el tiempo aparece como «Música». En «🔢 Números y letras» se ve, por nivel, cuántas melodías ha logrado y su % a la primera (con «💡 Lista para el nivel…» cuando acierta el 80 % o más), qué canciones conoce (✅ todas sus partes, 🟡 algunas, ⬜ ninguna) y las 5 melodías en las que más se equivoca, dibujadas con las frutas de las teclas. «🎹 Libre» es para tocar a su gusto.</li></ul>
+<h4>🖐️ Componer números</h4>
+<ul><li>Pasar de «contar» a entender que un número está hecho de otros (5 es 3 y 2), como en MS. Cuatro juegos: <b>🙈 Escondidos</b> (se ven todos, un vaso tapa algunos: ¿cuántos hay debajo?; o dos tarjetas de puntos como en un dado: ¿cuántos en total?), <b>⚖️ Más o menos</b> (¿dónde hay más / menos? y, desde el nivel medio, «= igual»), <b>➕ Uno más</b> (llega uno o se va uno: ¿cuántos hay ahora?) y <b>🧺 Tantos como</b> (hacer un plato con la misma cantidad que el modelo, sin número).</li>
+<li>Niveles: 🟢 hasta 4, 🟡 hasta 6 (lo que se pide al final de MS), 🔴 hasta 10. En el medio y difícil aparecen trampas: en «Más o menos» la colección más pequeña tiene cosas más grandes o más separadas, y en «Uno más» la caja se cierra (hay que pensarlo sin contar).</li>
+<li>Si se equivoca, se le enseña a emparejar «uno con uno» (dos filas alineadas, lo que sobra en rojo), que es como se compara en clase. En «🔢 Números y letras» se ve el % a la primera de cada juego, qué números sabe descomponer (🟢🟡🔴 del 2 al 10) y cuántas veces le engaña la trampa del tamaño o del espacio. Cada pregunta cuenta en Actividad como «Números».</li></ul>
 <h4>〰️ Trazos (graphisme)</h4>
 <ul><li>Preparan la mano para escribir, como las fichas de graphisme de la escuela: el niño repasa con el lápiz los puntitos de una pequeña escena (la lluvia que cae, el barco sobre las olas, el humo del tren…), empezando en el punto verde 🟢. Cada parte que completa se colorea; al terminarla entera, un personaje recorre el trazo y gana de 1 a 3 ⭐ según lo bien que siguió la línea.</li>
 <li>66 escenas en 3 niveles: 🟢 Fácil (líneas verticales, horizontales y oblicuas, puntos, cruces, círculos, rayos), 🟡 Medio (olas, zigzag, puentes ∩, copas ∪, almenas, escaleras, cuadrados y triángulos), 🔴 Difícil (bucles como los de la «l» y la «e» de la cursiva, bucles hacia abajo, espirales, y trazos más pequeños y largos). Primero salen las que aún no ha hecho.</li>
@@ -498,7 +534,7 @@ const T={
   praise:['¡Muy bien!','¡Genial!','¡Bravo!','¡Excelente!','¡Así se hace!','¡Eso es!'],
   colors:{red:'rojo',yellow:'amarillo',green:'verde',blue:'azul',purple:'morado',orange:'naranja',pink:'rosado',brown:'café',black:'negro',white:'blanco',gray:'gris'},
   shapes:{circle:['el ','círculo'],square:['el ','cuadrado'],triangle:['el ','triángulo'],star:['la ','estrella'],heart:['el ','corazón']},},
- en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',objetos:'Objects',memoria:'Pairs',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano'},
+ en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',componer:'Bonds',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',objetos:'Objects',memoria:'Pairs',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano'},
   tap:'👆 Tap',type:'⌨️ Type',qCount:'How many are there?',qWrite:'How many? Type the number',qMissing:'Which number is missing?',
   qColor:c=>`Tap the color <u>${c}</u>`,qShape:(a,s)=>`Where is ${a}<u>${s}</u>?`,qPairs:'Find the pairs',storyLevels:['🌱 Easy','🌿 Medium','🌳 Hard'],listenStory:'🔊 Listen to the story',toQuestions:'➡️ Questions',questionsNow:'Now, the questions!',replayStory:'📖 Listen to the story again',repeatQ:'🔊 Repeat the question',seqQ:'What happened first, next and last? Tap them in order.',storyDone:'You finished the story!',anotherStory:'📚 Another story',storyOf:(i,n)=>`Story ${i} of ${n}`,imgOn:'🖼️ With pictures',imgOff:'🙈 No pictures',mastered:n=>`You know ${n} now!`,masteredWord:w=>`You know “${w}” now!`,parentsTitle:'Progress',numbersTitle:'Numbers',legend:'R = recognize · S = say · W = write — 🟢 mastered · 🟡 learning · 🔴 struggling · gray: few tries',skillNames:{recog:'Recognize',say:'Say',write:'Write'},skillShort:{recog:'R',say:'S',write:'W'},confTitle:'Frequent mix-ups',askedGot:(a,b)=>`asked ${a}, chose ${b}`,nothingYet:'No data yet.',wordsTitle:'Words in Objects',hardWords:'Hardest words',resetBtn:'Reset progress',stKnown:'Knows',stLearning:'Learning (× = mistakes)',stNew:'Not shown yet',tapCat:'Tap a category to see the words.',resetAsk:'Are you sure? All progress will be deleted.',resetYes:'Yes, delete',resetNo:'Cancel',holdHint:'👆 For parents: press and hold 📊 for 2 seconds to see progress',qPattern:'What comes next?',levelNames:['Easy','Medium','Hard'],qLetter:'Listen and tap the letter',qObj:(n,pl)=>pl?`Where are <u>${n}</u>?`:`Where is <u>${n}</u>?`,catLabel:'Category',cats:{all:'All',fruit:'Fruits',veg:'Vegetables',body:'Body',animal:'Animals',home:'Home',music:'Music',build:'Building',school:'School',transport:'Transport',nature:'Nature',toys:'Toys',clothes:'Clothes',food:'Food',sport:'Sports',place:'Places',people:'People',face:'Faces'},qDrawL:l=>`Write the letter <u>${l}</u>`,qDrawLsay:nm=>`Write the letter ${nm}`,drawEmptyL:'First write the letter with the pen',showMe:'👀 Show me',mirrorMsgN:'Almost! The number is backwards. Watch how to write it.',mirrorMsg:'Almost! The letter is backwards. Watch how to write it.',masteredLetter:l=>`You know ${l} now!`,qSayL:'Say this letter out loud',lettersTitle:'Letters',lettersLegend:'R = recognize (Letters) · S = say · W = write (🔒 not open yet) — same colors as numbers',writeOpenTxt:n=>`Write ABC: ${n} of 26 letters open. A new one opens when 2 or fewer are still being learned.`,wroteLike:(a,b)=>`asked ${a}, wrote something like ${b}`,mirrorChip:(a,k)=>`${a} backwards ×${k}`,helpTitle:'ℹ️ How does tracking work?',helpBody:`<h4>⏱️ Screen time and PIN</h4>
 <ul><li><b>What counts:</b> the time the app is open and visible on screen, playing or not (also listening to a story). It pauses when the tablet locks or the screen turns off, in another app, and while the parents’ screen is open. Each day starts from zero at midnight.</li>
@@ -546,6 +582,10 @@ const T={
 <ul><li>The page plays a tune lighting up the keys; then the child plays it back. After a mistake it is shown again (after two mistakes, more slowly). “▶️ Again” and “🐢 Slowly” replay it at any time.</li>
 <li>100 tunes in 3 levels: 🟢 Easy (2–3 notes, 4 keys), 🟡 Medium (4–5 notes, 6 keys), 🔴 Hard (6–8 notes, 8 keys). Many are bits of traditional songs (Frère Jacques, Twinkle Twinkle, Ode to Joy, Happy Birthday…) and their name is said when completed. Tunes not yet completed come first.</li>
 <li>Each tune counts as one answer in Activity (right if played back correctly the first time); the time appears as “Music”. In “🔢 Numbers & letters” you see, per level, how many tunes are completed and the % right first time (with “💡 Ready for the … level” at 80 % or more), which songs are known (✅ all parts, 🟡 some, ⬜ none) and the 5 tunes with most mistakes, drawn with the fruit on the keys. “🎹 Free play” is for playing freely.</li></ul>
+<h4>🖐️ Number bonds</h4>
+<ul><li>Moving from “counting” to understanding that a number is made of others (5 is 3 and 2), as in pre-K. Four games: <b>🙈 Hidden</b> (all are shown, then a cup covers some: how many are under it?; or two dot cards like dice: how many altogether?), <b>⚖️ More or less</b> (where are there more / fewer? and, from the medium level, “= same”), <b>➕ One more</b> (one arrives or one leaves: how many now?) and <b>🧺 As many as</b> (make a plate with the same amount as the model, with no number).</li>
+<li>Levels: 🟢 up to 4, 🟡 up to 6 (what is expected at the end of the year), 🔴 up to 10. Medium and hard include traps: in “More or less” the smaller set has bigger or more spread-out things, and in “One more” the box closes (it has to be worked out without counting).</li>
+<li>After a mistake the app shows how to match them “one with one” (two aligned rows, the extra ones in red), which is how comparing is taught at school. In “🔢 Numbers & letters” you can see the first-try % of each game, which numbers they can split (🟢🟡🔴 from 2 to 10) and how often the size or spacing trap fools them. Each question counts in Activity as “Numbers”.</li></ul>
 <h4>〰️ Lines (pre-writing)</h4>
 <ul><li>They prepare the hand for writing, like the pre-writing worksheets at school: the child traces the dots of a little scene with the pen (rain falling, a boat on the waves, smoke from a train…), starting at the green dot 🟢. Each part completed gets coloured in; when it is all done, a character travels along the line and the child earns 1 to 3 ⭐ depending on how well they followed it.</li>
 <li>66 scenes in 3 levels: 🟢 Easy (vertical, horizontal and slanted lines, dots, crosses, circles, rays), 🟡 Medium (waves, zigzags, bridges ∩, cups ∪, battlements, stairs, squares and triangles), 🔴 Hard (loops like the cursive “l” and “e”, downward loops, spirals, and smaller, longer patterns). Scenes not yet done come first.</li>
@@ -573,7 +613,7 @@ const T={
   praise:['Great job!','Awesome!','Well done!','Excellent!','You did it!','That’s right!'],
   colors:{red:'red',yellow:'yellow',green:'green',blue:'blue',purple:'purple',orange:'orange',pink:'pink',brown:'brown',black:'black',white:'white',gray:'gray'},
   shapes:{circle:['the ','circle'],square:['the ','square'],triangle:['the ','triangle'],star:['the ','star'],heart:['the ','heart']},},
- fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',objetos:'Objets',memoria:'Paires',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano'},
+ fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',componer:'Composer',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',objetos:'Objets',memoria:'Paires',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano'},
   tap:'👆 Toucher',type:'⌨️ Écrire',qCount:'Combien y en a-t-il ?',qWrite:'Combien ? Écris le chiffre',qMissing:'Quel nombre manque ?',
   qColor:c=>`Touche la couleur <u>${c}</u>`,qShape:(a,s)=>`Où est ${a}<u>${s}</u> ?`,qPairs:'Trouve les paires',storyLevels:['🌱 Facile','🌿 Moyen','🌳 Difficile'],listenStory:'🔊 Écouter l’histoire',toQuestions:'➡️ Questions',questionsNow:'Maintenant, les questions !',replayStory:'📖 Réécouter l’histoire',repeatQ:'🔊 Répéter la question',seqQ:'Qu’est-ce qui s’est passé en premier, ensuite et à la fin ? Touche-les dans l’ordre.',storyDone:'Tu as fini l’histoire !',anotherStory:'📚 Une autre histoire',storyOf:(i,n)=>`Histoire ${i} sur ${n}`,imgOn:'🖼️ Avec images',imgOff:'🙈 Sans images',mastered:n=>`Tu connais le ${n} !`,masteredWord:w=>`Tu connais « ${w} » !`,parentsTitle:'Progrès',numbersTitle:'Nombres',legend:'R = reconnaître · D = dire · É = écrire — 🟢 acquis · 🟡 en cours · 🔴 difficile · gris : peu d’essais',skillNames:{recog:'Reconnaître',say:'Dire',write:'Écrire'},skillShort:{recog:'R',say:'D',write:'É'},confTitle:'Confusions fréquentes',askedGot:(a,b)=>`demandé ${a}, choisi ${b}`,nothingYet:'Pas encore de données.',wordsTitle:'Mots des Objets',hardWords:'Mots les plus difficiles',resetBtn:'Effacer la progression',stKnown:'Les connaît',stLearning:'En cours (× = erreurs)',stNew:'Pas encore vus',tapCat:'Touche une catégorie pour voir les mots.',resetAsk:'Vraiment ? Toute la progression sera effacée.',resetYes:'Oui, effacer',resetNo:'Annuler',holdHint:'👆 Pour les parents : reste appuyé 2 secondes sur 📊 pour voir la progression',qPattern:'Qu’est-ce qui vient après ?',levelNames:['Facile','Moyen','Difficile'],qLetter:'Écoute et touche la lettre',qObj:(n,pl)=>pl?`Où sont <u>${n}</u> ?`:`Où est <u>${n}</u> ?`,catLabel:'Catégorie',cats:{all:'Tout',fruit:'Fruits',veg:'Légumes',body:'Corps',animal:'Animaux',home:'Maison',music:'Musique',build:'Chantier',school:'École',transport:'Transports',nature:'Nature',toys:'Jouets',clothes:'Vêtements',food:'Nourriture',sport:'Sports',place:'Lieux',people:'Personnes',face:'Visages'},qDrawL:l=>`Écris la lettre <u>${l}</u>`,qDrawLsay:nm=>`Écris la lettre ${nm}`,drawEmptyL:'Écris d’abord la lettre avec le stylet',showMe:'👀 Montre-moi',mirrorMsgN:'Presque ! Le chiffre est à l’envers. Regarde comment on fait.',mirrorMsg:'Presque ! La lettre est à l’envers. Regarde comment on fait.',masteredLetter:l=>`Tu connais le ${l} !`,qSayL:'Dis cette lettre à voix haute',lettersTitle:'Lettres',lettersLegend:'R = reconnaître (Lettres) · D = dire · É = écrire (🔒 pas encore ouverte) — mêmes couleurs que les nombres',writeOpenTxt:n=>`Écrire ABC : ${n} lettres sur 26 ouvertes. Une nouvelle s’ouvre quand il en reste 2 ou moins à apprendre.`,wroteLike:(a,b)=>`demandé ${a}, écrit comme ${b}`,mirrorChip:(a,k)=>`${a} à l’envers ×${k}`,helpTitle:'ℹ️ Comment fonctionne le suivi ?',helpBody:`<h4>⏱️ Temps d’écran et code</h4>
 <ul><li><b>Ce qui compte :</b> le temps où l’app est ouverte et affichée, que l’enfant joue ou non (aussi en écoutant une histoire). Le compteur s’arrête quand la tablette se verrouille ou que l’écran s’éteint, dans une autre app et quand l’écran parents est ouvert. Chaque jour repart de zéro à minuit.</li>
@@ -621,6 +661,10 @@ const T={
 <ul><li>La page joue une mélodie en allumant les touches ; puis l’enfant la rejoue. En cas d’erreur, elle est rejouée (après deux erreurs, plus lentement). « ▶️ Encore » et « 🐢 Doucement » la rejouent à tout moment.</li>
 <li>100 mélodies sur 3 niveaux : 🟢 Facile (2–3 notes, 4 touches), 🟡 Moyen (4–5 notes, 6 touches), 🔴 Difficile (6–8 notes, 8 touches). Beaucoup sont des extraits de chansons traditionnelles (Frère Jacques, Au clair de la lune, Ah ! vous dirai-je maman, Hymne à la joie, Joyeux anniversaire…) dont le nom est annoncé à la fin. Les mélodies pas encore réussies passent en premier.</li>
 <li>Chaque mélodie compte comme une réponse dans Activité (réussie si rejouée correctement du premier coup) ; le temps apparaît comme « Musique ». Dans « 🔢 Nombres et lettres », on voit par niveau combien de mélodies sont réussies et le % du premier coup (avec « 💡 Prêt pour le niveau… » à partir de 80 %), quelles chansons sont connues (✅ toutes les parties, 🟡 certaines, ⬜ aucune) et les 5 mélodies avec le plus d’erreurs, dessinées avec les fruits des touches. « 🎹 Libre » permet de jouer librement.</li></ul>
+<h4>🖐️ Composer les nombres</h4>
+<ul><li>Passer de « compter » à comprendre qu’un nombre est fait d’autres nombres (5, c’est 3 et 2), comme en MS. Quatre jeux : <b>🙈 Cachés</b> (on voit tout, puis un gobelet en cache une partie : combien dessous ? ; ou deux cartes à points comme un dé : combien en tout ?), <b>⚖️ Plus ou moins</b> (où y en a-t-il le plus / le moins ? et, dès le niveau moyen, « = autant »), <b>➕ Un de plus</b> (il en arrive un ou il en part un : combien maintenant ?) et <b>🧺 Autant que</b> (faire une assiette avec autant d’objets que le modèle, sans nombre).</li>
+<li>Niveaux : 🟢 jusqu’à 4, 🟡 jusqu’à 6 (attendu de fin de MS), 🔴 jusqu’à 10. Aux niveaux moyen et difficile, des pièges : dans « Plus ou moins » la plus petite collection a des objets plus gros ou plus écartés, et dans « Un de plus » la boîte se ferme (il faut réfléchir sans compter).</li>
+<li>Après une erreur, l’app montre comment mettre « un avec un » (deux rangées alignées, ceux en trop en rouge), comme en classe. Dans « 🔢 Nombres et lettres », on voit le % du premier coup de chaque jeu, les nombres qu’il sait décomposer (🟢🟡🔴 de 2 à 10) et combien de fois le piège de la taille ou de l’espacement le trompe. Chaque question compte dans Activité comme « Nombres ».</li></ul>
 <h4>〰️ Graphisme</h4>
 <ul><li>Il prépare la main à l’écriture, comme les fiches de graphisme de l’école : l’enfant repasse au stylet sur les pointillés d’une petite scène (la pluie qui tombe, le bateau sur les vagues, la fumée du train…), en commençant au point vert 🟢. Chaque partie terminée se colorie ; une fois tout fini, un personnage parcourt le tracé et l’enfant gagne de 1 à 3 ⭐ selon la précision.</li>
 <li>66 scènes en 3 niveaux : 🟢 Facile (lignes verticales, horizontales et obliques, points, croix, ronds, rayons), 🟡 Moyen (vagues, zigzags, ponts ∩, coupes ∪, créneaux, escaliers, carrés et triangles), 🔴 Difficile (boucles comme le « l » et le « e » de la cursive, boucles à l’envers, spirales, tracés plus petits et plus longs). Les scènes pas encore réussies passent en premier.</li>
@@ -1759,7 +1803,7 @@ function pianoSection(){const t=L(),p=P.piano||{1:[],2:[],3:[]},st=p.st||{};
 // Pestañas de la pantalla de padres; cada una con su parte de la explicación
 const PTABS=['time','activity','numlet','words','settings'];
 let pTab='time';try{const v=localStorage.getItem('peques-ptab');if(PTABS.includes(v))pTab=v}catch(e){}
-const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','💾':'settings','🗓️':'settings','🧸':'words'};
+const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','💾':'settings','🗓️':'settings','🧸':'words'};
 function phelp(tab){const t=L(),parts=t.helpBody.split(/(?=<h4>)/).filter(s=>{const k=Object.keys(HELP_TAB).find(e=>s.startsWith('<h4>'+e));return k&&HELP_TAB[k]===tab});
   return parts.length?`<details class="phelp"${helpOpen?' open':''}><summary>${t.helpTitle}</summary><div class="phbody">${parts.join('')}</div></details>`:''}
 function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&document.getElementById('parents').hidden)pTab='time';
@@ -1800,6 +1844,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     <h3>${t.confTitle}</h3><p>${confs.length||nmir.length?[...confs.slice(0,6).map(([a,b,k])=>`<span class="chip">${t.askedGot(a,b)} ×${k}</span>`),...nmir.map(([n,k])=>`<span class="chip">${t.mirrorChip(n,k)}</span>`)].join(' '):t.nothingYet}</p>
     <h3>${t.lettersTitle}</h3><p class="pnote">${t.lettersLegend}</p><div class="ptgrid">${letTiles}</div><p class="pnote">${t.writeOpenTxt(P.letOpen||6)}${nlet.length?' '+t.nameLettersNote:''}</p>
     <h3>${t.confTitle}</h3><p>${lconf.length?lconf.slice(0,8).map(([s,k])=>`<span class="chip">${s}${s.includes('×')?'':` ×${k}`}</span>`).join(' '):t.nothingYet}</p>
+    ${componerSection()}
     ${trazosSection()}
     ${pianoSection()}
     </section>
@@ -1845,7 +1890,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
 // Sesión de juego = juego seguido: si pasan más de 10 min sin tocar la pantalla, empieza otra.
 // Solo cuenta el tiempo entre toques (cada hueco cuenta como máximo 2 min), así no se suma el tiempo con la tablet olvidada.
 const SESS_GAP=10*60e3,TOUCH_CAP=120e3;
-const ACT_GROUP={contar:'num',poner:'num',orden:'num',sonidos:'num',decirN:'num',trazar:'num',letras:'let',decirL:'let',escletras:'let',trazos:'let',objetos:'obj',cuentos:'story',patrones:'other',colores:'other',formas:'other',memoria:'other',dibujar:'art',colorear:'art',piano:'music'};
+const ACT_GROUP={contar:'num',poner:'num',componer:'num',orden:'num',sonidos:'num',decirN:'num',trazar:'num',letras:'let',decirL:'let',escletras:'let',trazos:'let',objetos:'obj',cuentos:'story',patrones:'other',colores:'other',formas:'other',memoria:'other',dibujar:'art',colorear:'art',piano:'music'};
 const GROUP_COLOR={num:'#3A86FF',let:'#7B5CD6',obj:'#FF8C2B',story:'#3BB273',art:'#FF7EB6',music:'#00A6A6',other:'#9AA0A6'};
 const dayKey=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const actKey=()=>current==='decir'?(sayMode==='abc'?'decirL':'decirN'):current;
@@ -2957,7 +3002,108 @@ function backupHandlers(){const b=BK_T[lang],g=id=>document.getElementById(id),m
     g('bkNo').onclick=()=>{row.innerHTML=old;backupHandlers()};
     g('bkYes').onclick=async()=>{row.innerHTML='';msg().textContent=b.busy;await bkRestore(d);msg().textContent=b.done;window.__bkRestored=true;setTimeout(()=>location.reload(),900)}}}
 
-const games={cuentos,contar,poner,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano};
+// ===== Componer números: descomponer, más/menos/igual, uno más/uno menos, tantos como =====
+const CMP_MODES=['hide','cmp','plus','same'];
+const CMP_MAX=[0,4,6,10];
+const CMP_ITEMS=['🍎','🐞','🍓','⭐','🐟','🎈','🍪','🐤','🌸','🚗'];
+const CMP_BIG=[['🍉','🍓'],['🐘','🐭'],['🎃','🫐'],['🏀','⚪'],['🍍','🍒']];
+const CMP_T={
+ es:{modes:['🙈 Escondidos','⚖️ Más o menos','➕ Uno más','🧺 Tantos como'],
+   hideQ:(n,v)=>`Hay ${n}. Ves ${v}. ¿Cuántos hay debajo del vaso?`,sumQ:'¿Cuántos puntos hay en total?',
+   moreQ:'¿Dónde hay más?',lessQ:'¿Dónde hay menos?',same:'= Igual',sameSay:'igual',
+   plusQ:(n,d)=>d>0?(d===1?`Hay ${n}. Llega uno más. ¿Cuántos hay ahora?`:`Hay ${n}. Llegan ${d} más. ¿Cuántos hay ahora?`):(d===-1?`Hay ${n}. Se va uno. ¿Cuántos quedan?`:`Hay ${n}. Se van ${-d}. ¿Cuántos quedan?`),
+   sameQ:'Pon tantos como en el plato de arriba',add:'➕',rem:'➖',
+   pairNote:'Mira: los ponemos uno con uno.',extra:n=>n===1?'Te sobra 1':`Te sobran ${n}`,lack:n=>n===1?'Te falta 1':`Te faltan ${n}`,emptyTry:'Pon algunos primero',
+   title:'🖐️ Componer números',note:'Cada pregunta cuenta como una respuesta en Actividad. % = acertada a la primera.',decTitle:'Descomponer: cuánto suma cada número',decNote:'🟢 acierta a la primera (3 o más veces y 70 %) · 🟡 practicando · 🔴 le cuesta · ⬜ sin probar. Incluye «Escondidos» y «junta los puntos».',
+   trap:(m,a)=>`Trampa del tamaño o del espacio (cosas más grandes o más separadas): se equivocó ${m} de ${a} veces.`},
+ en:{modes:['🙈 Hidden','⚖️ More or less','➕ One more','🧺 As many as'],
+   hideQ:(n,v)=>`There are ${n}. You see ${v}. How many are under the cup?`,sumQ:'How many dots are there altogether?',
+   moreQ:'Where are there more?',lessQ:'Where are there fewer?',same:'= Same',sameSay:'the same',
+   plusQ:(n,d)=>d>0?(d===1?`There are ${n}. One more comes. How many are there now?`:`There are ${n}. ${d} more come. How many are there now?`):(d===-1?`There are ${n}. One goes away. How many are left?`:`There are ${n}. ${-d} go away. How many are left?`),
+   sameQ:'Put as many as on the top plate',add:'➕',rem:'➖',
+   pairNote:'Look: we match them one with one.',extra:n=>n===1?'You have 1 too many':`You have ${n} too many`,lack:n=>n===1?'You need 1 more':`You need ${n} more`,emptyTry:'Put some first',
+   title:'🖐️ Number bonds',note:'Each question counts as one answer in Activity. % = right on the first try.',decTitle:'Splitting numbers: what makes each number',decNote:'🟢 right on the first try (3+ times and 70%) · 🟡 practising · 🔴 finds it hard · ⬜ not tried. Includes “Hidden” and “add the dots”.',
+   trap:(m,a)=>`Size or spacing trap (bigger or more spread-out things): wrong ${m} of ${a} times.`},
+ fr:{modes:['🙈 Cachés','⚖️ Plus ou moins','➕ Un de plus','🧺 Autant que'],
+   hideQ:(n,v)=>`Il y en a ${n}. Tu en vois ${v}. Combien y en a-t-il sous le gobelet ?`,sumQ:'Combien de points en tout ?',
+   moreQ:'Où y en a-t-il le plus ?',lessQ:'Où y en a-t-il le moins ?',same:'= Autant',sameSay:'autant',
+   plusQ:(n,d)=>d>0?(d===1?`Il y en a ${n}. Il en arrive un de plus. Combien y en a-t-il maintenant ?`:`Il y en a ${n}. Il en arrive ${d} de plus. Combien y en a-t-il maintenant ?`):(d===-1?`Il y en a ${n}. Il y en a un qui s’en va. Combien en reste-t-il ?`:`Il y en a ${n}. Il y en a ${-d} qui s’en vont. Combien en reste-t-il ?`),
+   sameQ:'Mets-en autant que dans l’assiette du haut',add:'➕',rem:'➖',
+   pairNote:'Regarde : on les met un avec un.',extra:n=>n===1?'Il y en a 1 de trop':`Il y en a ${n} de trop`,lack:n=>n===1?'Il en manque 1':`Il en manque ${n}`,emptyTry:'Mets-en d’abord quelques-uns',
+   title:'🖐️ Composer les nombres',note:'Chaque question compte comme une réponse dans Activité. % = réussie du premier coup.',decTitle:'Décomposer : ce qui fait chaque nombre',decNote:'🟢 réussi du premier coup (3 fois ou plus et 70 %) · 🟡 en cours · 🔴 difficile · ⬜ pas essayé. Comprend « Cachés » et « ajoute les points ».',
+   trap:(m,a)=>`Piège de la taille ou de l’espacement (objets plus gros ou plus écartés) : ${m} erreurs sur ${a}.`}};
+let cmpMode='hide',cmpLv=1,cmpLastKey='';
+try{const m=localStorage.getItem('peques-cmpmode');if(CMP_MODES.includes(m))cmpMode=m;const v=+localStorage.getItem('peques-cmplv');if(v>=1&&v<=3)cmpLv=v}catch(e){}
+function cmpRec(){if(!P.cmp)P.cmp={st:{},dec:{},trap:{a:0,m:0}};return P.cmp}
+// Tarjeta de puntos como en un dado (1-6)
+const DICE={1:[[50,50]],2:[[28,28],[72,72]],3:[[25,25],[50,50],[75,75]],4:[[28,28],[72,28],[28,72],[72,72]],5:[[25,25],[75,25],[50,50],[25,75],[75,75]],6:[[28,22],[72,22],[28,50],[72,50],[28,78],[72,78]]};
+const diceSvg=n=>`<svg class="cdice" viewBox="0 0 100 100" aria-label="${n}"><rect x="3" y="3" width="94" height="94" rx="16" fill="#FFFFFF" stroke="#1F2A44" stroke-width="5"/>${DICE[n].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="10" fill="#1F2A44"/>`).join('')}</svg>`;
+const cmpOpts=(ans,max)=>{const s=new Set([ans]);let g=0;while(s.size<Math.min(4,max+1)&&g++<50){const v=ans+[-2,-1,1,2,3][rand(5)];if(v>=0&&v<=max)s.add(v)}return shuffle([...s])};
+// Vista «uno con uno»: dos filas alineadas, lo que sobra en rojo
+const pairView=(a,ea,b,eb)=>{const n=Math.max(a,b);return `<div class="cpair" style="--n:${n}">${Array.from({length:n},(_,i)=>`<span class="${i<a?(i<b?'ok':'xtra'):'gap'}">${i<a?ea:''}</span>`).join('')}${Array.from({length:n},(_,i)=>`<i class="${i<Math.min(a,b)?'ln':''}"></i>`).join('')}${Array.from({length:n},(_,i)=>`<span class="${i<b?(i<a?'ok':'xtra'):'gap'}">${i<b?eb:''}</span>`).join('')}</div>`};
+function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_ITEMS[rand(CMP_ITEMS.length)];
+  const st=()=>rec.st[cmpMode]||(rec.st[cmpMode]={a:0,f:0,m:0});let first=true,fails=0;
+  // primer intento: guarda el resultado en sus estadísticas
+  const mark=(ok,extra)=>{if(!first)return;first=false;const s=st();s.a++;if(ok)s.f++;else s.m++;if(extra)extra(ok);saveP()};
+  const bar=()=>stage.insertAdjacentHTML('afterbegin',`<div class="cmpbar"><div class="modes cmpmodes" role="group">${CMP_MODES.map((m,i)=>`<button class="mode" data-cm="${m}" aria-pressed="${m===cmpMode}">${t.modes[i]}</button>`).join('')}</div><div class="modes cmplv" role="group">${[1,2,3].map(v=>`<button class="mode" data-cl="${v}" aria-pressed="${v===cmpLv}" aria-label="${L().pnLevels[v-1]}" title="${L().pnLevels[v-1]}">${L().pnLevels[v-1].split(' ')[0]}</button>`).join('')}</div></div>`);
+  const bind=()=>{stage.querySelectorAll('[data-cm]').forEach(b=>b.onclick=()=>{cmpMode=b.dataset.cm;try{localStorage.setItem('peques-cmpmode',cmpMode)}catch(e){}stopSpeech();componer()});
+    stage.querySelectorAll('[data-cl]').forEach(b=>b.onclick=()=>{cmpLv=+b.dataset.cl;try{localStorage.setItem('peques-cmplv',cmpLv)}catch(e){}stopSpeech();componer()})};
+  const fresh=f=>{let k,g=0;do{k=f()}while(k[0]===cmpLastKey&&g++<20);cmpLastKey=k[0];return k[1]};
+  if(cmpMode==='hide'){
+    // Escondidos (un número total, una parte bajo el vaso) o Junta los puntos (dos tarjetas)
+    const dice=Math.random()<.4;
+    if(dice){const [a,b]=fresh(()=>{const n=2+rand(max-1),a=1+rand(Math.min(6,n-1));const b=Math.min(6,n-a);return [`d${a}+${b}`,[a,b]]});
+      const n=a+b,opts=cmpOpts(n,Math.max(max,n));
+      frame(t.sumQ,`<div class="cdicerow">${diceSvg(a)}<b>+</b>${diceSvg(b)}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
+      const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
+      stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===n){mark(true,decRec);win(bt,componer)}else{mark(false,decRec);miss(bt)}});bind();return}
+    const [n,v]=fresh(()=>{const n=2+rand(max-1),v=rand(n);return [`h${n}-${v}`,[n,v]]}),h=n-v,opts=cmpOpts(h,n);
+    frame(t.hideQ(n,v),`<div class="chide"><b class="cnum">${n}</b><b class="cop">=</b>${v?`<div class="cvis">${Array.from({length:v},()=>`<span>${it}</span>`).join('')}</div><b class="cop">+</b>`:''}<div class="cunder" style="--k:${Math.max(h,1)}">${Array.from({length:h},()=>`<span>${it}</span>`).join('')}<div class="ccup"></div></div></div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
+    const under=stage.querySelector('.cunder');under.classList.add('show');setTimeout(()=>{if(under.isConnected)under.classList.remove('show')},1300);
+    const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
+    stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===h){mark(true,decRec);under.classList.add('show');win(bt,componer)}else{mark(false,decRec);fails++;miss(bt);if(fails>=2)under.classList.add('peek')}});bind();return}
+  if(cmpMode==='cmp'){
+    // Más / menos / igual; en niveles 2-3 a veces la trampa: la colección menor más grande o más separada
+    const eqOk=cmpLv>=2;let a,b;
+    const k=fresh(()=>{let a=1+rand(max),b=1+rand(max);if(!eqOk)while(Math.abs(a-b)<(cmpLv===1?2:1)){a=1+rand(max);b=1+rand(max)}else if(Math.random()<.2)b=a;return [`c${a}-${b}`,[a,b]]});[a,b]=k;
+    const trap=cmpLv>=2&&a!==b&&Math.random()<.5,ask=Math.random()<.6?'more':'less',big=CMP_BIG[rand(CMP_BIG.length)];
+    // trampa: la colección MENOR tiene cosas grandes y separadas
+    const small=a<b?'L':'R',ea=trap&&small==='L'?big[0]:trap?big[1]:it,eb=trap&&small==='R'?big[0]:trap?big[1]:it;
+    const plate=(n,e,side)=>`<button class="cplate${trap&&side===small?' spread':''}" data-side="${side}" aria-label="${n}">${Array.from({length:n},()=>`<span>${e}</span>`).join('')}</button>`;
+    const right=a===b?'=':ask==='more'?(a>b?'L':'R'):(a<b?'L':'R');
+    frame(ask==='more'?t.moreQ:t.lessQ,`<div class="cplates">${plate(a,ea,'L')}${plate(b,eb,'R')}</div>${eqOk?`<div class="row"><button class="btn alt csame" data-side="=">${t.same}</button></div>`:''}<div class="chelp"></div>`);bar();
+    const trapRec=ok=>{if(trap){rec.trap.a++;if(!ok)rec.trap.m++}};
+    let over=false;stage.querySelectorAll('[data-side]').forEach(bt=>bt.onclick=()=>{if(over)return;if(bt.dataset.side===right){over=true;mark(true,trapRec);win(bt,componer)}
+      else{mark(false,trapRec);miss(bt,bt.dataset.side);fails++;const h=stage.querySelector('.chelp');h.innerHTML=`<p class="pnote">${t.pairNote}</p>${pairView(a,ea,b,eb)}`;}});bind();return}
+  if(cmpMode==='plus'){
+    const [n,d]=fresh(()=>{let d=Math.random()<.5?1:-1;if(cmpLv===3&&Math.random()<.4)d*=2;const n=d>0?1+rand(max-d):Math.max(1,-d)+rand(max-Math.max(1,-d)+1);return [`p${n}${d}`,[n,d]]});
+    const r=n+d,hid=cmpLv>=2,opts=cmpOpts(r,max);
+    frame(t.plusQ(n,d),`<div class="cbox${hid?' lid':''}"><div class="citems">${Array.from({length:n},(_,i)=>`<span class="${d<0&&i>=n+d?'go':''}">${it}</span>`).join('')}${d>0?Array.from({length:d},()=>`<span class="come">${it}</span>`).join(''):''}</div><div class="clid"></div>${hid?`<div class="cfly ${d>0?'in':'out'}">${it.repeat(Math.abs(d))}</div>`:''}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
+    const box=stage.querySelector('.cbox');box.classList.add('start');
+    setTimeout(()=>{if(!box.isConnected)return;box.classList.remove('start');if(hid)box.classList.add('closed');setTimeout(()=>{if(box.isConnected)box.classList.add('moved')},hid?700:200)},1500);
+    stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===r){mark(true);box.classList.remove('closed');win(bt,componer)}else{mark(false);fails++;miss(bt);if(fails>=2)box.classList.remove('closed')}});bind();return}
+  // Tantos como: hace su plato con la misma cantidad que el modelo (sin número)
+  const n=fresh(()=>{const n=1+rand(max);return [`s${n}`,n]}),e2=CMP_ITEMS[(CMP_ITEMS.indexOf(it)+1+rand(CMP_ITEMS.length-1))%CMP_ITEMS.length];let k=0,done=false;
+  frame(t.sameQ,`<div class="cmodel${cmpLv===3?' scatter':''}">${Array.from({length:n},()=>`<span>${it}</span>`).join('')}</div><div class="basket" id="cbasket"></div><div class="row"><button class="btn big" id="cadd">➕ ${e2}</button><button class="btn alt" id="csub" aria-label="${L().remove}">➖</button><button class="btn" id="cok">${L().done}</button></div><div class="chelp"></div>`);bar();
+  const basket=document.getElementById('cbasket'),msg=stage.querySelector('.msg'),help=stage.querySelector('.chelp');
+  if(cmpLv===3)stage.querySelectorAll('.cmodel span').forEach(s=>{s.style.transform=`translate(${rand(16)-8}px,${rand(16)-8}px)`});
+  const draw=()=>{basket.innerHTML=Array.from({length:k},()=>`<button aria-label="${L().remove}">${e2}</button>`).join('');basket.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(done)return;k--;msg.textContent='';draw()})};
+  document.getElementById('cadd').onclick=()=>{if(done||k>=12)return;k++;msg.textContent='';help.innerHTML='';draw()};
+  document.getElementById('csub').onclick=()=>{if(done||k<=0)return;k--;msg.textContent='';draw()};
+  document.getElementById('cok').onclick=e=>{if(done)return;if(!k){msg.textContent=t.emptyTry;say(t.emptyTry);return}
+    if(k===n){done=true;mark(true);help.innerHTML=pairView(n,it,k,e2);win(e.currentTarget,componer);return}
+    mark(false);miss(e.currentTarget,k);const m=k>n?t.extra(k-n):t.lack(n-k);help.innerHTML=`<p class="pnote">${t.pairNote}</p>${pairView(n,it,k,e2)}`;setTimeout(()=>{if(help.isConnected){msg.textContent=m;say(m)}},900)};
+  bind()}
+// Sección de padres
+function componerSection(){const t=CMP_T[lang],tt=L(),r=P.cmp||{st:{},dec:{},trap:{a:0,m:0}};
+  const rows=CMP_MODES.map((m,i)=>{const s=r.st[m]||{a:0,f:0};const pct=s.a?Math.round(s.f*100/s.a):null;
+    return `<div class="pnlv"><b>${t.modes[i]}</b><div class="lhbar"><i style="width:${pct||0}%;background:var(--green)"></i></div><em>${s.a}</em><em>${pct===null?'–':tt.pnFirst(pct)}</em></div>`}).join('');
+  const dec=[2,3,4,5,6,7,8,9,10].map(n=>{const d=r.dec[n];if(!d||!d.a)return `<span class="chip">⬜ ${n}</span>`;const p=d.f/d.a,c=d.a>=3&&p>=.7?'🟢':p>=.4||d.a<3?'🟡':'🔴';return `<span class="chip">${c} ${n} <small>${d.f}/${d.a}</small></span>`}).join(' ');
+  return `<h3>${t.title}</h3><p class="pnote">${t.note}</p><div class="pnlvs">${rows}</div>
+   <h4 class="ch">${t.decTitle}</h4><p class="pnote">${t.decNote}</p><p>${dec}</p>
+   ${r.trap.a?`<p class="pnote">⚠️ ${t.trap(r.trap.m,r.trap.a)}</p>`:''}`}
+
+const games={cuentos,contar,poner,componer,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano};
 
 // Panel de juegos que se puede ocultar
 let menuOpen=true;
@@ -2992,7 +3138,7 @@ function applyLang(){const t=L();guestBadge();document.documentElement.lang=lang
 document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('peques-lang',lang)}catch(e){}stopSpeech();applyLang()});
 
 // ===== Menú por categorías + actividades visibles según el día de la semana =====
-const CATS=[['num','🔢','#3A86FF',['contar','poner','orden','sonidos','trazar']],['let','🔤','#7B5CD6',['letras','decir','escletras','trazos']],
+const CATS=[['num','🔢','#3A86FF',['contar','poner','componer','orden','sonidos','trazar']],['let','🔤','#7B5CD6',['letras','decir','escletras','trazos']],
   ['desc','🧭','#3BB273',['colores','formas','patrones','objetos']],['crear','🎨','#FF7EB6',['dibujar','colorear','piano']],['jugar','🎲','#FF8C2B',['cuentos','memoria']]];
 const CAT_T={es:{num:'Números',let:'Letras',desc:'Descubrir',crear:'Crear',jugar:'Jugar'},en:{num:'Numbers',let:'Letters',desc:'Discover',crear:'Create',jugar:'Play'},fr:{num:'Nombres',let:'Lettres',desc:'Découvrir',crear:'Créer',jugar:'Jouer'}};
 const catOf=id=>(CATS.find(c=>c[3].includes(id))||CATS[0])[0];
