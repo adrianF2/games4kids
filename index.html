@@ -3528,7 +3528,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=70; // se sube junto con la caché de sw.js
+const APP_VER=71; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4616,7 +4616,7 @@ const SY_T={
    offNote:'💤 Sincronización desactivada: la app funciona solo con los datos de este dispositivo.',
    stNever:'Todavía no se ha sincronizado.',stOk:(a,r,w)=>`✅ Conectado. Última sincronización: ${a}.${r?' Última lectura: '+r+'.':''}${w?' Último envío: '+w+'.':''}`,
    stOff:'📴 Sin internet: la app sigue funcionando con normalidad y sincronizará cuando vuelva la conexión.',stErr:e=>`⚠️ No se pudo sincronizar (${e}). Se reintenta solo cada poco.`,
-   errKey:'la clave no coincide con la del script',errResp:'el script no respondió bien',
+   errKey:'la clave no coincide con la del script',errResp:'el script no respondió bien',errApi:'Google Drive no está activado en el script: pega de nuevo «appsscript.json», guarda y crea una versión nueva de la implementación',errScope:'el script no tiene permiso: pega «appsscript.json», ejecuta «probar» en el editor para autorizar y crea una versión nueva de la implementación',
    testOk:f=>`✅ Conexión correcta con la carpeta «${f}».`,testing:'Probando…',saved:'Guardado.',missing:'Falta la dirección o la clave.',needName:'Escribe el nombre de este dispositivo.',needPName:'Escribe tu nombre.',
    dupName:n=>`⚠️ Ya hay otro dispositivo llamado «${n}». Mejor usa otro nombre para no confundirlos.`,needNet:'Hace falta internet para esto.',needKid:'👉 Elige el niño de este dispositivo (o «➕ Niño nuevo») y toca «✔️ Usar».',
    ago:m=>m<1?'hace un momento':m<60?`hace ${m} min`:m<1440?`hace ${Math.round(m/60)} h`:`hace ${Math.round(m/1440)} d`,
@@ -4629,7 +4629,7 @@ const SY_T={
    dExtra:m=>m>=0?`+${m} min hoy`:`−${-m} min hoy`,dFree:on=>on?'sin límite hoy':'con límite hoy',kidDefault:'Niño',
    banner:'☁️ Modo padre: no lo uses para que juegue un niño (aquí no cuenta el tiempo).',
    guideT:'📜 Cómo configurarlo (una vez por familia)',copy:'📋 Copiar el script',copyMan:'📋 Copiar appsscript.json',manT:'Segundo cuadro: appsscript.json',copied:'¡Copiado!',
-   guide:['En un dispositivo, pon una clave (o toca «🎲 Generar»). Esa misma clave irá en el script y en todos los dispositivos de la familia.','En tu ordenador, abre <b>script.google.com</b> con tu cuenta de Google y crea un «Nuevo proyecto» (uno por familia).','Borra lo que hay en «Código.gs» y pega el script de abajo (ya lleva tu clave): «📋 Copiar el script».','En ⚙️ «Configuración del proyecto», marca «Mostrar el archivo de manifiesto “appsscript.json” en el editor». Vuelve al editor, abre <code>appsscript.json</code>, borra lo que hay y pega el segundo cuadro: «📋 Copiar appsscript.json». Así el script solo pide permiso sobre los archivos que él mismo crea.','Pulsa «Implementar → Nueva implementación», tipo «Aplicación web», «Ejecutar como: yo» y «Quién tiene acceso: cualquier usuario». Autoriza: Google pedirá permiso solo para los archivos de Drive que use esta app (si avisa de «app no verificada», entra en «Configuración avanzada → Ir a…»).','Copia la «URL de la aplicación web» (termina en /exec) y pégala en «Dirección del script» en cada dispositivo, con la misma clave.','En cada dispositivo pon su nombre y elige si es 👧 de un niño (y qué niño) o 👨 de un padre (y tu nombre). Activa la sincronización y toca «🔌 Probar conexión».','El script crea en tu Drive la carpeta «Juegos para Peques» con «dispositivos.json» y «ninos/&lt;nombre&gt;/» (estado y ajustes de cada niño), y guarda versiones: las 5 últimas y una por día durante 30 días. Puedes moverla o renombrarla. El script no ve nada más de tu Drive, ni siquiera lo que pongas tú en esa carpeta.']},
+   guide:['En un dispositivo, pon una clave (o toca «🎲 Generar»). Esa misma clave irá en el script y en todos los dispositivos de la familia.','En tu ordenador, abre <b>script.google.com</b> con tu cuenta de Google y crea un «Nuevo proyecto» (uno por familia).','Borra lo que hay en «Código.gs» y pega el script de abajo (ya lleva tu clave): «📋 Copiar el script».','En ⚙️ «Configuración del proyecto», marca «Mostrar el archivo de manifiesto “appsscript.json” en el editor». Vuelve al editor, abre <code>appsscript.json</code>, borra lo que hay y pega el segundo cuadro: «📋 Copiar appsscript.json». Así el script solo pide permiso sobre los archivos que él mismo crea.','Guarda (💾). Arriba, elige la función «probar» y pulsa «▶ Ejecutar»: Google pide autorización (solo para los archivos de Drive que use esta app; si avisa de «app no verificada», entra en «Configuración avanzada → Ir a…»). Abajo debe salir «✅ Todo bien».','Pulsa «Implementar → Nueva implementación», tipo «Aplicación web», «Ejecutar como: yo» y «Quién tiene acceso: cualquier usuario». Si más adelante cambias el script o appsscript.json, no basta con guardar: «Implementar → Gestionar implementaciones → ✏️ → Versión: Nueva versión → Implementar» (la dirección no cambia).','Copia la «URL de la aplicación web» (termina en /exec) y pégala en «Dirección del script» en cada dispositivo, con la misma clave.','En cada dispositivo pon su nombre y elige si es 👧 de un niño (y qué niño) o 👨 de un padre (y tu nombre). Activa la sincronización y toca «🔌 Probar conexión».','El script crea en tu Drive la carpeta «Juegos para Peques» con «dispositivos.json» y «ninos/&lt;nombre&gt;/» (estado y ajustes de cada niño), y guarda versiones: las 5 últimas y una por día durante 30 días. Puedes moverla o renombrarla. El script no ve nada más de tu Drive, ni siquiera lo que pongas tú en esa carpeta.']},
  en:{title:'☁️ Sync with Google Drive',note:'To see the tracking and change settings from another phone or computer, with several children and several parents. It uses a small Google script in your account (set up once per family) that can only see the files it creates itself. Without internet the app works the same and syncs when the connection is back.',
    on:'Sync',yes:'On',no:'Off',role:'This device belongs to',kid:'👧 a child (to play)',parent:'👨 a parent (to watch and adjust)',
    roleNote:{kid:'Reads the child’s settings and applies them between questions (never the tracking). Every 5 minutes and when leaving it saves its full state. If the child plays on another device, it continues from there (relay).',parent:'You see all the family’s children, their charts and their settings, and your changes are sent signed with your name. Screen time is not counted here and the app never locks: don’t use it for a child to play.'},
@@ -4640,7 +4640,7 @@ const SY_T={
    offNote:'💤 Sync is off: the app only uses this device’s data.',
    stNever:'Not synced yet.',stOk:(a,r,w)=>`✅ Connected. Last sync: ${a}.${r?' Last read: '+r+'.':''}${w?' Last sent: '+w+'.':''}`,
    stOff:'📴 No internet: the app keeps working normally and will sync when the connection is back.',stErr:e=>`⚠️ Could not sync (${e}). It retries on its own.`,
-   errKey:'the key doesn’t match the script’s',errResp:'the script didn’t answer properly',
+   errKey:'the key doesn’t match the script’s',errResp:'the script didn’t answer properly',errApi:'Google Drive is not enabled in the script: paste “appsscript.json” again, save and create a new version of the deployment',errScope:'the script has no permission: paste “appsscript.json”, run “probar” in the editor to authorize and create a new version of the deployment',
    testOk:f=>`✅ Connected to the folder “${f}”.`,testing:'Testing…',saved:'Saved.',missing:'The address or the key is missing.',needName:'Type the name of this device.',needPName:'Type your name.',
    dupName:n=>`⚠️ Another device is already called “${n}”. Better use another name so they aren’t confused.`,needNet:'This needs internet.',needKid:'👉 Choose this device’s child (or “➕ New child”) and tap “✔️ Use”.',
    ago:m=>m<1?'just now':m<60?`${m} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`,
@@ -4653,7 +4653,7 @@ const SY_T={
    dExtra:m=>m>=0?`+${m} min today`:`−${-m} min today`,dFree:on=>on?'no limit today':'limit back today',kidDefault:'Child',
    banner:'☁️ Parent mode: don’t use it for a child to play (time isn’t counted here).',
    guideT:'📜 How to set it up (once per family)',copy:'📋 Copy the script',copyMan:'📋 Copy appsscript.json',manT:'Second box: appsscript.json',copied:'Copied!',
-   guide:['On one device, type a key (or tap “🎲 Generate”). The same key goes in the script and on all the family’s devices.','On your computer, open <b>script.google.com</b> with your Google account and create a “New project” (one per family).','Delete what is in “Code.gs” and paste the script below (it already has your key): “📋 Copy the script”.','In ⚙️ “Project Settings”, tick “Show “appsscript.json” manifest file in editor”. Back in the editor, open <code>appsscript.json</code>, delete its content and paste the second box: “📋 Copy appsscript.json”. This way the script only asks for access to the files it creates itself.','Click “Deploy → New deployment”, type “Web app”, “Execute as: Me” and “Who has access: Anyone”. Authorize: Google will only ask for access to the Drive files this app uses (if it warns “app not verified”, go to “Advanced → Go to…”).','Copy the “Web app URL” (it ends in /exec) and paste it in “Script address” on each device, with the same key.','On each device type its name and choose 👧 a child’s (and which child) or 👨 a parent’s (and your name). Turn sync on and tap “🔌 Test connection”.','The script creates the folder “Juegos para Peques” in your Drive with “dispositivos.json” and “ninos/&lt;name&gt;/” (each child’s state and settings), and keeps versions: the last 5 and one per day for 30 days. You can move or rename it. The script sees nothing else in your Drive, not even what you put in that folder yourself.']},
+   guide:['On one device, type a key (or tap “🎲 Generate”). The same key goes in the script and on all the family’s devices.','On your computer, open <b>script.google.com</b> with your Google account and create a “New project” (one per family).','Delete what is in “Code.gs” and paste the script below (it already has your key): “📋 Copy the script”.','In ⚙️ “Project Settings”, tick “Show “appsscript.json” manifest file in editor”. Back in the editor, open <code>appsscript.json</code>, delete its content and paste the second box: “📋 Copy appsscript.json”. This way the script only asks for access to the files it creates itself.','Save (💾). At the top, choose the function “probar” and click “▶ Run”: Google asks for authorization (only for the Drive files this app uses; if it warns “app not verified”, go to “Advanced → Go to…”). Below it should say “✅ Todo bien”.','Click “Deploy → New deployment”, type “Web app”, “Execute as: Me” and “Who has access: Anyone”. If you later change the script or appsscript.json, saving is not enough: “Deploy → Manage deployments → ✏️ → Version: New version → Deploy” (the address stays the same).','Copy the “Web app URL” (it ends in /exec) and paste it in “Script address” on each device, with the same key.','On each device type its name and choose 👧 a child’s (and which child) or 👨 a parent’s (and your name). Turn sync on and tap “🔌 Test connection”.','The script creates the folder “Juegos para Peques” in your Drive with “dispositivos.json” and “ninos/&lt;name&gt;/” (each child’s state and settings), and keeps versions: the last 5 and one per day for 30 days. You can move or rename it. The script sees nothing else in your Drive, not even what you put in that folder yourself.']},
  fr:{title:'☁️ Synchroniser avec Google Drive',note:'Pour voir le suivi et changer les réglages depuis un autre téléphone ou ordinateur, avec plusieurs enfants et plusieurs parents. Utilise un petit script Google dans votre compte (à configurer une fois par famille) qui ne voit que les fichiers qu’il crée lui-même. Sans internet, l’app fonctionne pareil et se synchronise au retour de la connexion.',
    on:'Synchronisation',yes:'Activée',no:'Désactivée',role:'Cet appareil est',kid:'👧 celui d’un enfant (pour jouer)',parent:'👨 celui d’un parent (pour voir et régler)',
    roleNote:{kid:'Lit les réglages de l’enfant et les applique entre deux questions (jamais le suivi). Toutes les 5 minutes et en quittant, enregistre son état complet. Si l’enfant joue sur un autre appareil, il reprend à partir de là (relais).',parent:'Vous voyez tous les enfants de la famille, leurs graphiques et leurs réglages, et vos changements sont envoyés signés de votre nom. Ici, le temps d’écran n’est pas compté et l’app ne se bloque jamais : ne l’utilisez pas pour faire jouer un enfant.'},
@@ -4664,7 +4664,7 @@ const SY_T={
    offNote:'💤 Synchronisation désactivée : l’app n’utilise que les données de cet appareil.',
    stNever:'Pas encore synchronisé.',stOk:(a,r,w)=>`✅ Connecté. Dernière synchronisation : ${a}.${r?' Dernière lecture : '+r+'.':''}${w?' Dernier envoi : '+w+'.':''}`,
    stOff:'📴 Pas d’internet : l’app continue de fonctionner normalement et se synchronisera au retour de la connexion.',stErr:e=>`⚠️ Synchronisation impossible (${e}). Elle réessaie toute seule.`,
-   errKey:'la clé ne correspond pas à celle du script',errResp:'le script n’a pas bien répondu',
+   errKey:'la clé ne correspond pas à celle du script',errResp:'le script n’a pas bien répondu',errApi:'Google Drive n’est pas activé dans le script : collez à nouveau « appsscript.json », enregistrez et créez une nouvelle version du déploiement',errScope:'le script n’a pas l’autorisation : collez « appsscript.json », exécutez « probar » dans l’éditeur pour autoriser et créez une nouvelle version du déploiement',
    testOk:f=>`✅ Connexion correcte avec le dossier « ${f} ».`,testing:'Test…',saved:'Enregistré.',missing:'Il manque l’adresse ou la clé.',needName:'Tapez le nom de cet appareil.',needPName:'Tapez votre nom.',
    dupName:n=>`⚠️ Un autre appareil s’appelle déjà « ${n} ». Mieux vaut un autre nom pour ne pas les confondre.`,needNet:'Il faut internet pour cela.',needKid:'👉 Choisissez l’enfant de cet appareil (ou « ➕ Nouvel enfant ») et touchez « ✔️ Utiliser ».',
    ago:m=>m<1?'à l’instant':m<60?`il y a ${m} min`:m<1440?`il y a ${Math.round(m/60)} h`:`il y a ${Math.round(m/1440)} j`,
@@ -4677,7 +4677,7 @@ const SY_T={
    dExtra:m=>m>=0?`+${m} min aujourd’hui`:`−${-m} min aujourd’hui`,dFree:on=>on?'sans limite aujourd’hui':'limite rétablie aujourd’hui',kidDefault:'Enfant',
    banner:'☁️ Mode parent : ne l’utilisez pas pour faire jouer un enfant (le temps n’est pas compté ici).',
    guideT:'📜 Comment le configurer (une fois par famille)',copy:'📋 Copier le script',copyMan:'📋 Copier appsscript.json',manT:'Deuxième cadre : appsscript.json',copied:'Copié !',
-   guide:['Sur un appareil, tapez une clé (ou touchez « 🎲 Générer »). La même clé ira dans le script et sur tous les appareils de la famille.','Sur votre ordinateur, ouvrez <b>script.google.com</b> avec votre compte Google et créez un « Nouveau projet » (un par famille).','Effacez le contenu de « Code.gs » et collez le script ci-dessous (il contient déjà votre clé) : « 📋 Copier le script ».','Dans ⚙️ « Paramètres du projet », cochez « Afficher le fichier manifeste “appsscript.json” dans l’éditeur ». De retour dans l’éditeur, ouvrez <code>appsscript.json</code>, effacez son contenu et collez le deuxième cadre : « 📋 Copier appsscript.json ». Ainsi, le script ne demande l’accès qu’aux fichiers qu’il crée lui-même.','Cliquez sur « Déployer → Nouveau déploiement », type « Application Web », « Exécuter en tant que : moi » et « Qui a accès : tout le monde ». Autorisez : Google demandera l’accès uniquement aux fichiers Drive utilisés par cette app (s’il indique « application non validée », allez dans « Paramètres avancés → Accéder à… »).','Copiez l’« URL de l’application Web » (elle finit par /exec) et collez-la dans « Adresse du script » sur chaque appareil, avec la même clé.','Sur chaque appareil, tapez son nom et choisissez 👧 celui d’un enfant (et lequel) ou 👨 celui d’un parent (et votre nom). Activez la synchronisation et touchez « 🔌 Tester la connexion ».','Le script crée dans votre Drive le dossier « Juegos para Peques » avec « dispositivos.json » et « ninos/&lt;prénom&gt;/ » (état et réglages de chaque enfant), et garde des versions : les 5 dernières et une par jour pendant 30 jours. Vous pouvez le déplacer ou le renommer. Le script ne voit rien d’autre de votre Drive, pas même ce que vous mettez vous-même dans ce dossier.']}};
+   guide:['Sur un appareil, tapez une clé (ou touchez « 🎲 Générer »). La même clé ira dans le script et sur tous les appareils de la famille.','Sur votre ordinateur, ouvrez <b>script.google.com</b> avec votre compte Google et créez un « Nouveau projet » (un par famille).','Effacez le contenu de « Code.gs » et collez le script ci-dessous (il contient déjà votre clé) : « 📋 Copier le script ».','Dans ⚙️ « Paramètres du projet », cochez « Afficher le fichier manifeste “appsscript.json” dans l’éditeur ». De retour dans l’éditeur, ouvrez <code>appsscript.json</code>, effacez son contenu et collez le deuxième cadre : « 📋 Copier appsscript.json ». Ainsi, le script ne demande l’accès qu’aux fichiers qu’il crée lui-même.','Enregistrez (💾). En haut, choisissez la fonction « probar » et cliquez sur « ▶ Exécuter » : Google demande l’autorisation (uniquement pour les fichiers Drive utilisés par cette app ; s’il indique « application non validée », allez dans « Paramètres avancés → Accéder à… »). En bas, il doit s’afficher « ✅ Todo bien ».','Cliquez sur « Déployer → Nouveau déploiement », type « Application Web », « Exécuter en tant que : moi » et « Qui a accès : tout le monde ». Si vous modifiez plus tard le script ou appsscript.json, enregistrer ne suffit pas : « Déployer → Gérer les déploiements → ✏️ → Version : Nouvelle version → Déployer » (l’adresse ne change pas).','Copiez l’« URL de l’application Web » (elle finit par /exec) et collez-la dans « Adresse du script » sur chaque appareil, avec la même clé.','Sur chaque appareil, tapez son nom et choisissez 👧 celui d’un enfant (et lequel) ou 👨 celui d’un parent (et votre nom). Activez la synchronisation et touchez « 🔌 Tester la connexion ».','Le script crée dans votre Drive le dossier « Juegos para Peques » avec « dispositivos.json » et « ninos/&lt;prénom&gt;/ » (état et réglages de chaque enfant), et garde des versions : les 5 dernières et une par jour pendant 30 jours. Vous pouvez le déplacer ou le renommer. Le script ne voit rien d’autre de votre Drive, pas même ce que vous mettez vous-même dans ce dossier.']}};
 const SYT=()=>SY_T[lang];
 // ---------- el script de Google (uno por familia) ----------
 const SY_SCRIPT=key=>`// Juegos para Peques · sincronización con Google Drive (varios niños y varios padres)
@@ -4688,6 +4688,8 @@ const NOMBRE_CARPETA = 'Juegos para Peques';
 
 function doPost(e) { let p = {}; try { p = JSON.parse(e.postData.contents); } catch (x) {} return salida(p); }
 function doGet(e) { return salida(e.parameter || {}); }
+// Ejecútala una vez desde el editor (botón ▶ con «probar» elegido): pide la autorización y comprueba que todo funciona
+function probar() { const id = base(); Logger.log('✅ Todo bien: carpeta «' + NOMBRE_CARPETA + '» lista (' + id + ').'); }
 function salida(p) { let o; try { o = responder(p); } catch (err) { o = { ok: false, err: String((err && err.message) || err) }; }
   o.now = Date.now(); return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
@@ -4698,7 +4700,10 @@ function llamar(metodo, url, cuerpo, tipo) {
   if (cuerpo !== undefined) { o.contentType = tipo || 'application/json; charset=UTF-8'; o.payload = Utilities.newBlob(typeof cuerpo === 'string' ? cuerpo : JSON.stringify(cuerpo)).getBytes(); }
   const r = UrlFetchApp.fetch(url, o), c = r.getResponseCode(), t = r.getContentText('UTF-8');
   if (c === 404) return null;
-  if (c >= 300) throw new Error('drive ' + c);
+  if (c >= 300) { let m = ''; try { m = JSON.parse(t).error.message; } catch (x) {}
+    if (/has not been used|is disabled|not enabled/i.test(m)) throw new Error('driveapi');
+    if (/authentication scopes|scope/i.test(m)) throw new Error('drivescope');
+    throw new Error('drive ' + c + (m ? ': ' + m : '')); }
   return t; }
 const q = s => encodeURIComponent(s);
 function buscar(padre, extra) { const cond = "'" + padre + "' in parents and trashed = false" + (extra ? ' and ' + extra : '');
@@ -4711,7 +4716,8 @@ function crearArchivo(dir, nombre, texto) { const b = 'peques' + Date.now();
   return JSON.parse(llamar('post', SUBIR + '?uploadType=multipart&fields=id', cuerpo, 'multipart/related; boundary=' + b)).id; }
 function cambiar(id, meta) { llamar('patch', API + '/' + id + '?fields=id', meta); }
 function contenido(id) { return llamar('get', API + '/' + id + '?alt=media'); }
-function existe(id) { const t = id && llamar('get', API + '/' + id + '?fields=id,trashed'); return !!(t && !JSON.parse(t).trashed); }
+function existe(id) { try { const t = id && llamar('get', API + '/' + id + '?fields=id,trashed'); return !!(t && !JSON.parse(t).trashed); }
+  catch (e) { if (e.message === 'driveapi' || e.message === 'drivescope') throw e; return false; } }
 
 // ---------- carpetas (los identificadores se recuerdan para no buscarlas cada vez) ----------
 const props = PropertiesService.getScriptProperties();
@@ -4748,6 +4754,7 @@ function conBloqueo(fn) { const l = LockService.getScriptLock(); l.waitLock(2500
 
 function responder(p) {
   if (!p.key || p.key !== CLAVE) return { ok: false, err: 'key' };
+  B = null;
   if (p.action === 'ping') { b(); return { ok: true, v: 3, folder: NOMBRE_CARPETA }; }
   if (p.action === 'hello') return conBloqueo(() => { const r = registro(b()); const m = p.me || {};
     if (m.id) { r.devices[m.id] = Object.assign(r.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(b(), r); } return { ok: true, reg: r }; });
@@ -4782,6 +4789,9 @@ const SY_MANIFEST=`{
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/script.external_request"
   ],
+  "dependencies": {
+    "enabledAdvancedServices": [{ "userSymbol": "Drive", "version": "v3", "serviceId": "drive" }]
+  },
   "webapp": { "executeAs": "USER_DEPLOYING", "access": "ANYONE_ANONYMOUS" }
 }
 `;
@@ -4790,9 +4800,10 @@ const SY_MANIFEST=`{
 function syAgoTxt(t){return t?SYT().ago(Math.floor((Date.now()-t)/60e3)):''}
 const syAgoSrv=t=>t?SYT().ago(Math.floor(syServerAgo(t)/60e3)):'';
 function syStateTxt(){const t=SYT();if(!syOn())return '';if(SY.lastErr==='offline'||!navigator.onLine)return t.stOff;
-  if(SY.lastErr)return t.stErr(SY.lastErr==='key'?t.errKey:SY.lastErr==='resp'?t.errResp:SY.lastErr);
+  if(SY.lastErr)return t.stErr(syErrTxt(SY.lastErr));
   if(SY.role==='kid'&&!SY.kid)return t.needKid;
   return SY.lastOk?t.stOk(syAgoTxt(SY.lastOk),syAgoTxt(SY.lastPull),syAgoTxt(SY.lastPush)):t.stNever}
+const syErrTxt=m=>{const t=SYT();return m==='key'?t.errKey:m==='resp'?t.errResp:m==='driveapi'?t.errApi:m==='drivescope'?t.errScope:m};
 function syShowState(){const el=document.getElementById('syState');if(el)el.textContent=syStateTxt()}
 function syKidLabel(k){const t=SYT(),devs=syDevs().filter(d=>d.role==='kid'&&d.kid===k.id).sort((a,b)=>b.lastSeen-a.lastSeen),d=devs[0];
   const play=d&&d.active&&syServerAgo(d.lastSeen)<3*60e3,sum=d&&d.sum&&d.sum.day===dayKey(now())?d.sum.min:0;
@@ -4853,7 +4864,7 @@ function syncHandlers(){syBannerHandlers();const g=id=>document.getElementById(i
     msg(dup()||t.saved);syKick()};
   g('syTest').onclick=async()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}if(!navigator.onLine){msg(t.stOff);return}msg(t.testing);
     try{const j=await syCall({action:'ping'});SY.lastErr='';sySave();msg(t.testOk(j.folder||''));syKick()}
-    catch(e){const m=String((e&&e.message)||e);msg(t.stErr(m==='key'?t.errKey:m==='resp'?t.errResp:m))}};
+    catch(e){const m=String((e&&e.message)||e);msg(t.stErr(syErrTxt(m)))}};
   g('syNow').onclick=()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}syKick()};
   const pick=g('syKidPick');if(pick)pick.onchange=()=>{const k=syKids().find(x=>x.id===pick.value);g('syKidName').value=k?k.name:(childName||'')};
   const use=g('syKidUse');if(use)use.onclick=async()=>{read();if(!navigator.onLine){msg(t.needNet);return}if(!SY.devName){msg(t.needName);return}
