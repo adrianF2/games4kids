@@ -3528,7 +3528,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=78; // se sube junto con la caché de sw.js
+const APP_VER=79; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4640,7 +4640,7 @@ const SY_T={
    lastBy:(n,a,d)=>`Última actualización: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Ajustes recibidos de ${n} ${a}.`,stateFrom:(n,a)=>`Datos de ${n} ${a}`,
    busy:(k,d)=>`⚠️ ${k||'Este niño'} está jugando ahora en «${d}». Mejor no jugar en dos aparatos a la vez.`,
    devsT:'📱 Dispositivos de la familia',kidsT:'👧 Niños',archive:'Archivar',unarchive:'Recuperar',archived:'(archivado)',histT:'🕘 Últimos cambios de ajustes',noHist:'Todavía no hay cambios.',
-   versT:'🗂️ Versiones guardadas en el Drive',versBtn:'🕘 Ver versiones',versNone:'No hay versiones guardadas todavía.',versUse:'Recuperar',versAsk:(d,s)=>`¿Recuperar la versión del ${d}? Contiene: ${s}. Será el estado actual de este niño en todos sus dispositivos.`,versDone:'✅ Versión recuperada.',
+   versT:'🗂️ Versiones guardadas en el Drive',versBtn:'🕘 Ver versiones',versNone:'No hay versiones guardadas todavía.',versLoading:'⏳ Buscando las versiones en el Drive…',versNow:'(actual)',versNote:'Cada versión es una copia completa del seguimiento y los ajustes del niño en ese momento. Se guarda una cada vez que su aparato envía cambios (unas cada 5 minutos mientras juega): se conservan las 5 últimas y una por día durante 30 días. Al recuperar una, pasa a ser su estado actual en todos sus aparatos.',versUse:'Recuperar',versAsk:(d,s)=>`¿Recuperar la versión del ${d}? Contiene: ${s}. Será el estado actual de este niño en todos sus dispositivos.`,versDone:'✅ Versión recuperada.',
    dLimit:(d,m)=>`límite del ${d}: ${m?m+' min':'sin límite'}`,dPin:'PIN cambiado',dPinOff:'PIN quitado',dName:n=>`nombre: ${n}`,dHelp:on=>`ayuda cuando falla: ${on?'sí':'no'}`,dWake:'pantalla encendida',dAcc:'actividades visibles',dSugg:'sugerencias',dOther:'ajustes',dInit:'configuración inicial',
    dExtra:m=>m>=0?`+${m} min hoy`:`−${-m} min hoy`,dFree:on=>on?'sin límite hoy':'con límite hoy',kidDefault:'Niño',
    banner:'☁️ Modo padre: no lo uses para que juegue un niño (aquí no cuenta el tiempo).',
@@ -4664,7 +4664,7 @@ const SY_T={
    lastBy:(n,a,d)=>`Last update: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Settings received from ${n} ${a}.`,stateFrom:(n,a)=>`Data from ${n} ${a}`,
    busy:(k,d)=>`⚠️ ${k||'This child'} is playing now on “${d}”. Better not to play on two devices at once.`,
    devsT:'📱 Family devices',kidsT:'👧 Children',archive:'Archive',unarchive:'Restore',archived:'(archived)',histT:'🕘 Latest settings changes',noHist:'No changes yet.',
-   versT:'🗂️ Versions saved in Drive',versBtn:'🕘 See versions',versNone:'No saved versions yet.',versUse:'Restore',versAsk:(d,s)=>`Restore the version from ${d}? It contains: ${s}. It will become this child’s current state on all their devices.`,versDone:'✅ Version restored.',
+   versT:'🗂️ Versions saved in Drive',versBtn:'🕘 See versions',versNone:'No saved versions yet.',versLoading:'⏳ Looking for the versions in Drive…',versNow:'(current)',versNote:'Each version is a full copy of the child’s tracking and settings at that moment. One is saved every time their device sends changes (about every 5 minutes while playing): the last 5 are kept, plus one per day for 30 days. Restoring one makes it their current state on all their devices.',versUse:'Restore',versAsk:(d,s)=>`Restore the version from ${d}? It contains: ${s}. It will become this child’s current state on all their devices.`,versDone:'✅ Version restored.',
    dLimit:(d,m)=>`${d} limit: ${m?m+' min':'no limit'}`,dPin:'PIN changed',dPinOff:'PIN removed',dName:n=>`name: ${n}`,dHelp:on=>`help after a mistake: ${on?'yes':'no'}`,dWake:'keep screen on',dAcc:'visible activities',dSugg:'suggestions',dOther:'settings',dInit:'initial settings',
    dExtra:m=>m>=0?`+${m} min today`:`−${-m} min today`,dFree:on=>on?'no limit today':'limit back today',kidDefault:'Child',
    banner:'☁️ Parent mode: don’t use it for a child to play (time isn’t counted here).',
@@ -4688,7 +4688,7 @@ const SY_T={
    lastBy:(n,a,d)=>`Dernière mise à jour : ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Réglages reçus de ${n} ${a}.`,stateFrom:(n,a)=>`Données de ${n} ${a}`,
    busy:(k,d)=>`⚠️ ${k||'Cet enfant'} joue en ce moment sur « ${d} ». Mieux vaut ne pas jouer sur deux appareils à la fois.`,
    devsT:'📱 Appareils de la famille',kidsT:'👧 Enfants',archive:'Archiver',unarchive:'Récupérer',archived:'(archivé)',histT:'🕘 Derniers changements de réglages',noHist:'Pas encore de changements.',
-   versT:'🗂️ Versions enregistrées sur le Drive',versBtn:'🕘 Voir les versions',versNone:'Pas encore de versions enregistrées.',versUse:'Restaurer',versAsk:(d,s)=>`Restaurer la version du ${d} ? Contenu : ${s}. Ce sera l’état actuel de cet enfant sur tous ses appareils.`,versDone:'✅ Version restaurée.',
+   versT:'🗂️ Versions enregistrées sur le Drive',versBtn:'🕘 Voir les versions',versNone:'Pas encore de versions enregistrées.',versLoading:'⏳ Recherche des versions sur le Drive…',versNow:'(actuelle)',versNote:'Chaque version est une copie complète du suivi et des réglages de l’enfant à ce moment-là. Une est enregistrée chaque fois que son appareil envoie des changements (environ toutes les 5 minutes pendant qu’il joue) : les 5 dernières sont gardées, plus une par jour pendant 30 jours. En restaurer une en fait son état actuel sur tous ses appareils.',versUse:'Restaurer',versAsk:(d,s)=>`Restaurer la version du ${d} ? Contenu : ${s}. Ce sera l’état actuel de cet enfant sur tous ses appareils.`,versDone:'✅ Version restaurée.',
    dLimit:(d,m)=>`limite du ${d} : ${m?m+' min':'sans limite'}`,dPin:'code changé',dPinOff:'code supprimé',dName:n=>`prénom : ${n}`,dHelp:on=>`aide quand il se trompe : ${on?'oui':'non'}`,dWake:'écran allumé',dAcc:'activités visibles',dSugg:'suggestions',dOther:'réglages',dInit:'réglages initiaux',
    dExtra:m=>m>=0?`+${m} min aujourd’hui`:`−${-m} min aujourd’hui`,dFree:on=>on?'sans limite aujourd’hui':'limite rétablie aujourd’hui',kidDefault:'Enfant',
    banner:'☁️ Mode parent : ne l’utilisez pas pour faire jouer un enfant (le temps n’est pas compté ici).',
@@ -4966,15 +4966,17 @@ function syncHandlers(){syBannerHandlers();const g=id=>document.getElementById(i
     syBusyUI(box);msg(t.working);try{const r=await syCall({action:'kidSet',kid:{id:k.id,archived:!k.archived}});SY.reg=r.reg;sySave();msg(t.done)}catch(e){msg(t.needNet)}
     const m0=(g('syMsg')||{}).textContent;syRefreshPanel(true);msg(m0)});
   const vb=g('syVers');if(vb)vb.onclick=async()=>{const kid=SY.role==='parent'?SY.sel:SY.kid,list=g('syVersList');if(!navigator.onLine){msg(t.needNet);return}
+    vb.disabled=true;list.textContent=t.versLoading;
     try{const r=await syCall({action:'versions',kid});if(!r.list||!r.list.length){list.textContent=t.versNone;return}
-      list.innerHTML='<ul class="sydevs">'+r.list.slice(0,40).map(v=>`<li>${esc(bkDate(v.t))} · ${Math.round(v.size/1024)} KB <button class="btn alt mini" data-syver="${esc(v.name)}">${t.versUse}</button></li>`).join('')+'</ul>';
-      list.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(kid,b.dataset.syver))}catch(e){msg(t.stErr(String(e.message||e)))}};
+      // la primera es el estado actual; las demás, copias anteriores que se pueden recuperar
+      list.innerHTML=`<p class="pnote">${t.versNote}</p><ul class="sydevs">`+r.list.slice(0,40).map(v=>`<li>${esc(bkDate(v.t))} · ${Math.round(v.size/1024)} KB ${v.name==='estado.json'?`<b>${t.versNow}</b>`:`<button class="btn alt mini" data-syver="${esc(v.name)}">${t.versUse}</button>`}</li>`).join('')+'</ul>';
+      list.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(kid,b.dataset.syver))}catch(e){list.textContent='';msg(t.stErr(syErrTxt(String(e.message||e))))}finally{vb.disabled=false}};
   const cp=(bid,tid,lab)=>{g(bid).onclick=async()=>{const ta=g(tid);try{await navigator.clipboard.writeText(ta.value)}catch(e){ta.select();try{document.execCommand('copy')}catch(x){}}g(bid).textContent=t.copied;setTimeout(()=>{const b=g(bid);if(b)b.textContent=lab},1500)}};
   cp('syCopy','syScript',t.copy);cp('syCopyMan','syMan',t.copyMan);
   syShowHist()}
 // recuperar una versión guardada en el Drive: pasa a ser el estado actual del niño en todos sus aparatos
-async function syRestoreVersion(kid,name){const t=SYT();try{const r=await syCall({action:'getVersion',kid,name});const d=syJ(r.data);if(!d||!d.ls)return;
-  if(!confirm(t.versAsk(bkDate(d.t||Date.now()),b2s(d))))return;
+async function syRestoreVersion(kid,name){const t=SYT(),sm=x=>{const m=document.getElementById('syMsg');if(m)m.textContent=x};sm(t.working);try{const r=await syCall({action:'getVersion',kid,name});const d=syJ(r.data);sm('');if(!d||!d.ls)return;
+  if(!confirm(t.versAsk(bkDate(d.t||Date.now()),b2s(d))))return;{const m=document.getElementById('syMsg');if(m)m.textContent=t.working;document.querySelectorAll('[data-syver],#syVers').forEach(x=>x.disabled=true)}
   const cur=syJ((await syCall({action:'getState',kid})).data);const ep=Math.max(cur?(cur.epoch||0):0,SY.epoch)+1;
   const data=Object.assign({},d,{t:Date.now(),from:DEVID,fromName:syMyName(),epoch:ep});delete data.seq;delete data.st;
   const pr=await syCall({action:'putState',kid,data:JSON.stringify(data),base:0,force:true});
