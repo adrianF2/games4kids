@@ -450,6 +450,10 @@ g.agshow,.czcard.agshow{box-shadow:none!important;animation:agglow .8s ease-in-o
 .msg .agfin{display:inline-block;margin-top:4px;font-size:.85em;opacity:.85}
 @keyframes agshow{0%,100%{box-shadow:0 0 0 4px #FFC93C;background-color:#FFFFFF}50%{box-shadow:0 0 0 12px #FF8C2B,0 0 38px 14px rgba(255,140,43,.9);background-color:#FFE7A8}}@keyframes agglow{0%,100%{filter:drop-shadow(0 0 3px #FFB020)}50%{filter:drop-shadow(0 0 16px #FF8C2B) drop-shadow(0 0 6px #FF8C2B);opacity:.6}}
 .pseq .ptile.agcount{transform:scale(1.18);box-shadow:0 0 0 5px #FFB020,0 0 18px 4px rgba(255,176,32,.8);transition:transform .2s,box-shadow .2s;position:relative;z-index:2}
+.agt{transform:scale(1.15);box-shadow:0 0 0 5px #FFB020,0 0 18px 4px rgba(255,176,32,.8)!important;transition:transform .2s,box-shadow .2s;position:relative;z-index:1}
+.agbig{font-size:92px;line-height:1;font-weight:900;color:#FF8C2B;text-align:center;margin:4px auto 6px;text-shadow:0 0 16px rgba(255,201,60,.9);animation:agbig .45s ease-out}
+@keyframes agbig{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.agbign{color:#FF8C2B!important;font-weight:900}.pick.agnum{color:#FF8C2B!important}
 .agc{display:inline-block;transform:scale(1.28);filter:drop-shadow(0 0 8px #FFB020) drop-shadow(0 0 3px #FF8C2B);transition:transform .2s}
 circle.agc{fill:#FF8C2B;transform:none;filter:none}
 .cpair .xtra.agc{background:#FFB020;transform:none}
@@ -675,8 +679,9 @@ const T={
 <li><b>Dónde ves el resultado:</b> en «📅 Actividad» están las últimas sugerencias con su motivo y si las aceptó, el total aceptado, lo que sugeriría ahora mismo y un aviso cuando algo que necesita refuerzo está oculto o en 🚫. Estos ajustes y el registro se guardan en la copia de seguridad.</li></ul>
 <h4>🧠 Ayuda cuando falla</h4>
 <ul><li><b>Para qué:</b> que no toque una opción tras otra hasta acertar (así casi no aprende) y ayudarle de verdad cuando no sabe la respuesta.</li>
-<li><b>Si no lo sabe</b> (según su seguimiento: letras, números, palabras o ejercicios que todavía falla, o algo nuevo): al primer fallo la respuesta correcta se ilumina, las demás se apagan y la voz dice una frase completa con el contexto. Por ejemplo: «Lola come un pescado», «Mira: uno, dos, tres. Hay 3 manzanas», «Esta es la letra B, como en banano» o «El gato está debajo de la mesa». Cuando termina la frase, toca la respuesta y sigue. Esa letra, número o palabra vuelve a salir dos preguntas después.</li>
-<li><b>En Componer, la explicación se hace contando</b>, iluminando cada cosa mientras la voz cuenta: en «Uno más» cuenta las que hay, enseña las que llegan o se van y cuenta el resultado («una, dos, tres, cuatro: ahora hay 4 manzanas»); en «Escondidos» cuenta las que se ven, levanta el vaso y sigue contando las de debajo (o cuenta los puntos de los dos dados); en «Más o menos» cuenta cada plato, las pone una con una y señala las que sobran.</li>
+<li><b>Si no lo sabe</b> (según su seguimiento: letras, números, palabras o ejercicios que todavía falla, o algo nuevo): al primer fallo la respuesta correcta se ilumina, las demás se apagan y la voz dice una frase completa con el contexto. Por ejemplo: «Lola come un pescado», «Hay 3 manzanas. El tres se escribe así», «Esta es la letra B, como en banano» o «El gato está debajo de la mesa». Cuando termina la frase, toca la respuesta y sigue; si toca la pantalla mientras la voz explica, la voz se calla y puede responder enseguida, sin esperar. Esa letra, número o palabra vuelve a salir dos preguntas después.</li>
+<li><b>Cuando la respuesta es un número</b> (Contar, Orden, Escuchar, Componer), la ayuda se centra en reconocer el número escrito, no en contar: las cosas se iluminan una a una, rápido y <b>en silencio</b>; luego aparece el número en grande junto a ellas y la voz dice una sola frase que lo une («Hay 7 manzanas. El siete se escribe así»), y el botón de ese número parpadea del mismo color. En Orden, cada número se ilumina mientras la voz lo lee y el hueco muestra el que falta.</li>
+<li><b>En Componer, la explicación sigue los pasos</b> iluminando las cosas en silencio: en «Uno más» enseña las que hay, las que llegan o se van y el resultado («Ahora hay 4 manzanas»); en «Escondidos» enseña las que se ven y levanta el vaso (o enseña los puntos de los dos dados); en «Más o menos» enseña cada plato, las pone una con una y señala las que sobran.</li>
 <li><b>Menos opciones</b> en lo que más le cuesta: 3 en vez de 4, o 2 si le cuesta mucho, hasta que empiece a acertar.</li>
 <li><b>Si lo sabe pero va con prisa</b> (falla algo que suele acertar y toca en menos de un segundo): las opciones se ponen grises un segundo, la voz dice «Escucha bien», repite la pregunta y las opciones cambian de sitio. Si vuelve a fallar, se le enseña la respuesta como arriba.</li>
 <li><b>La estrella ⭐ y el «¡Bravo!»</b> solo se ganan acertando a la primera. Si acierta después de fallar oye un «Eso es» tranquilo: sin reproches ni sonidos de error.</li>
@@ -814,8 +819,9 @@ const T={
 <li><b>Where you see the results:</b> “📅 Activity” shows the latest suggestions with their reason and whether they were accepted, the total accepted, what it would suggest right now and a warning when something needing practice is hidden or set to 🚫. These settings and the log are included in the backup.</li></ul>
 <h4>🧠 Help after a mistake</h4>
 <ul><li><b>Why:</b> so she doesn’t tap one option after another until it works (she hardly learns that way), and to really help her when she doesn’t know the answer.</li>
-<li><b>If she doesn’t know it</b> (from her tracking: letters, numbers, words or exercises she still gets wrong, or something new): after the first mistake the right answer lights up, the others fade and the voice says a full sentence with the context. For example: “Lola eats a fish”, “Look: one, two, three. There are 3 apples”, “This is the letter B, as in banana” or “The cat is under the table”. When the sentence ends she taps the answer and carries on. That letter, number or word comes back two questions later.</li>
-<li><b>In Bonds, the explanation is done by counting</b>, lighting up each thing as the voice counts: in “One more” it counts what is there, shows what arrives or goes away and counts the result (“one, two, three, four: now there are 4 apples”); in “Hidden” it counts what can be seen, lifts the cup and keeps counting the ones underneath (or counts the dots on both dice); in “More or less” it counts each plate, matches them one with one and points out the ones left over.</li>
+<li><b>If she doesn’t know it</b> (from her tracking: letters, numbers, words or exercises she still gets wrong, or something new): after the first mistake the right answer lights up, the others fade and the voice says a full sentence with the context. For example: “Lola eats a fish”, “There are 3 apples. This is how you write three”, “This is the letter B, as in banana” or “The cat is under the table”. When the sentence ends she taps the answer and carries on; if she taps the screen while the voice is explaining, the voice stops and she can answer straight away, without waiting. That letter, number or word comes back two questions later.</li>
+<li><b>When the answer is a number</b> (Count, Order, Listen, Bonds), the help focuses on recognising the written number, not on counting: the things light up one by one, quickly and <b>silently</b>; then the number appears big next to them and the voice says a single sentence linking them (“There are 7 apples. This is how you write seven”), and that number’s button blinks in the same colour. In Order, each number lights up as the voice reads it and the gap shows the missing one.</li>
+<li><b>In Bonds, the explanation follows the steps</b>, lighting things up silently: in “One more” it shows what is there, what arrives or goes away and the result (“Now there are 4 apples”); in “Hidden” it shows what can be seen and lifts the cup (or shows the dots on both dice); in “More or less” it shows each plate, matches them one with one and points out the ones left over.</li>
 <li><b>Fewer options</b> for what she finds hardest: 3 instead of 4, or 2 if it is very hard, until she starts getting it right.</li>
 <li><b>If she knows it but rushes</b> (gets wrong something she usually gets right, tapping in under a second): the options go grey for a second, the voice says “Listen carefully”, repeats the question and the options move around. If she gets it wrong again, the answer is shown as above.</li>
 <li><b>The star ⭐ and “Well done!”</b> are only earned on the first try. If she gets it right after a mistake she hears a calm “That’s it”: no telling off, no error sounds.</li>
@@ -953,8 +959,9 @@ const T={
 <li><b>Où voir le résultat :</b> dans « 📅 Activité », les dernières suggestions avec leur raison et si elles ont été acceptées, le total accepté, ce que l’app suggérerait maintenant et un avertissement quand quelque chose qui a besoin de renforcement est masqué ou sur 🚫. Ces réglages et l’historique sont inclus dans la sauvegarde.</li></ul>
 <h4>🧠 Aide quand il se trompe</h4>
 <ul><li><b>Pourquoi :</b> pour qu’il ne touche pas un choix après l’autre jusqu’à trouver (il n’apprend presque rien ainsi), et pour vraiment l’aider quand il ne connaît pas la réponse.</li>
-<li><b>S’il ne la connaît pas</b> (d’après son suivi : lettres, nombres, mots ou exercices qu’il rate encore, ou quelque chose de nouveau) : dès la première erreur, la bonne réponse s’allume, les autres s’éteignent et la voix dit une phrase complète avec le contexte. Par exemple : « Lola mange un poisson », « Regarde : un, deux, trois. Il y a 3 pommes », « Voici la lettre B, comme dans banane » ou « Le chat est sous la table ». Quand la phrase est finie, il touche la réponse et continue. Cette lettre, ce nombre ou ce mot revient deux questions plus tard.</li>
-<li><b>Dans Composer, l’explication se fait en comptant</b>, en allumant chaque objet pendant que la voix compte : dans « Un de plus », elle compte ce qu’il y a, montre ce qui arrive ou s’en va et compte le résultat (« une, deux, trois, quatre : maintenant il y a 4 pommes ») ; dans « Cachés », elle compte ce qu’on voit, soulève le gobelet et continue à compter ceux du dessous (ou compte les points des deux dés) ; dans « Plus ou moins », elle compte chaque assiette, les met un avec un et montre ceux qui restent en trop.</li>
+<li><b>S’il ne la connaît pas</b> (d’après son suivi : lettres, nombres, mots ou exercices qu’il rate encore, ou quelque chose de nouveau) : dès la première erreur, la bonne réponse s’allume, les autres s’éteignent et la voix dit une phrase complète avec le contexte. Par exemple : « Lola mange un poisson », « Il y a 3 pommes. Le trois s’écrit comme ça », « Voici la lettre B, comme dans banane » ou « Le chat est sous la table ». Quand la phrase est finie, il touche la réponse et continue ; s’il touche l’écran pendant l’explication, la voix se tait et il peut répondre tout de suite, sans attendre. Cette lettre, ce nombre ou ce mot revient deux questions plus tard.</li>
+<li><b>Quand la réponse est un nombre</b> (Compter, Ordre, Écoute, Composer), l’aide porte sur la reconnaissance du chiffre écrit, pas sur le comptage : les objets s’allument un par un, vite et <b>en silence</b> ; puis le chiffre apparaît en grand à côté et la voix dit une seule phrase qui les relie (« Il y a 7 pommes. Le sept s’écrit comme ça »), et le bouton de ce chiffre clignote de la même couleur. Dans Ordre, chaque nombre s’allume pendant que la voix le lit et la case vide montre celui qui manque.</li>
+<li><b>Dans Composer, l’explication suit les étapes</b> en allumant les objets en silence : dans « Un de plus », elle montre ce qu’il y a, ce qui arrive ou s’en va et le résultat (« Maintenant il y a 4 pommes ») ; dans « Cachés », elle montre ce qu’on voit et soulève le gobelet (ou montre les points des deux dés) ; dans « Plus ou moins », elle montre chaque assiette, les met un avec un et montre ceux qui restent en trop.</li>
 <li><b>Moins de choix</b> pour ce qui lui est le plus difficile : 3 au lieu de 4, ou 2 si c’est très difficile, jusqu’à ce qu’il commence à réussir.</li>
 <li><b>S’il la connaît mais va trop vite</b> (il rate ce qu’il réussit d’habitude en touchant en moins d’une seconde) : les choix deviennent gris une seconde, la voix dit « Écoute bien », répète la question et les choix changent de place. S’il se trompe encore, la réponse lui est montrée comme ci-dessus.</li>
 <li><b>L’étoile ⭐ et le « Bravo ! »</b> ne se gagnent que du premier coup. S’il trouve après une erreur, il entend un « C’est ça » calme : pas de reproches ni de sons d’erreur.</li>
@@ -1030,7 +1037,7 @@ function say(t,o={}){if(sgShown&&!o.sg)return;seqId++;try{if(!o.keep)speechSynth
 // Estrella y «¡Bravo!» solo a la primera; si acierta después, un «Eso es» tranquilo. El búho interviene si adivina varias seguidas.
 let AG_ON=true;try{AG_ON=localStorage.getItem('peques-ayuda')!=='0'}catch(e){}
 const AG_T={
- es:{tap:x=>`Ahora toca ${x} para seguir.`,tapIt:'Ahora tócalo para seguir.',write:n=>`Ahora escribe el ${n}.`,ok:'Eso es.',listen:'Escucha bien.',owl:'Despacito: primero mira bien y luego toca.',look:'Mira:',
+ es:{numIs:n=>`El ${agNumW(n)} se escribe así.`,tap:x=>`Ahora toca ${x} para seguir.`,tapIt:'Ahora tócalo para seguir.',write:n=>`Ahora escribe el ${n}.`,ok:'Eso es.',listen:'Escucha bien.',owl:'Despacito: primero mira bien y luego toca.',look:'Mira:',
    count:(n,w,g)=>n===1?`Hay ${g==='f'?'una':'un'} ${w}.`:`Hay ${n} ${w}.`,
    order:(seq,gi,n)=>gi>0?`Después del ${seq[gi-1]} viene el ${n}.`:`Antes del ${seq[1]} va el ${n}.`,
    hear:(w,n)=>`Has oído «${w}». Es este: el ${n}.`,
@@ -1053,7 +1060,7 @@ const AG_T={
    setNote:'Si no sabe la respuesta, al primer fallo la app se la enseña con una frase completa («Lola come un pescado») y se la vuelve a preguntar poco después; en lo que le cuesta pone menos opciones. Si sí lo sabe pero toca deprisa, hace una pausa corta y cambia las opciones de sitio. La estrella solo se gana acertando a la primera. Explicación completa en «ℹ️ ¿Cómo funciona…?» (🧠).',
    actT:'🧠 Preguntas resueltas por descarte',actNote:'Porcentaje de preguntas en las que tocó varias opciones hasta acertar o tocó deprisa al azar (desde que se activó la ayuda). Si una actividad sube mucho, puede que ese nivel sea difícil para ella o que esté cansada.',
    actRow:(g,q)=>`${g} de ${q}`,none:'Todavía no hay datos.',itT:'🧠 Donde más adivina',itNote:'Lo que más resuelve por descarte: suele ser lo que todavía no sabe.'},
- en:{tap:x=>`Now tap ${x} to continue.`,tapIt:'Now tap it to continue.',write:n=>`Now write ${n}.`,ok:'That’s it.',listen:'Listen carefully.',owl:'Slowly: look carefully first, then tap.',look:'Look:',
+ en:{numIs:n=>`This is how you write ${agNumW(n)}.`,tap:x=>`Now tap ${x} to continue.`,tapIt:'Now tap it to continue.',write:n=>`Now write ${n}.`,ok:'That’s it.',listen:'Listen carefully.',owl:'Slowly: look carefully first, then tap.',look:'Look:',
    count:(n,w)=>n===1?`There is one ${w}.`:`There are ${n} ${w}.`,
    order:(seq,gi,n)=>gi>0?`After ${seq[gi-1]} comes ${n}.`:`${n} comes before ${seq[1]}.`,
    hear:(w,n)=>`You heard “${w}”. It’s this one: ${n}.`,
@@ -1076,7 +1083,7 @@ const AG_T={
    setNote:'If she doesn’t know the answer, after the first mistake the app shows it with a full sentence (“Lola eats a fish”) and asks it again a little later; for what she finds hard it shows fewer options. If she knows it but taps too fast, it pauses briefly and moves the options around. The star is only earned on the first try. Full explanation in “ℹ️ How does … work?” (🧠).',
    actT:'🧠 Questions solved by elimination',actNote:'Share of questions where she tapped several options until right or tapped too fast at random (since the help was turned on). If an activity goes up a lot, that level may be too hard or she may be tired.',
    actRow:(g,q)=>`${g} of ${q}`,none:'No data yet.',itT:'🧠 Where she guesses most',itNote:'What she most often solves by elimination: usually what she doesn’t know yet.'},
- fr:{tap:x=>`Maintenant, touche ${x} pour continuer.`,tapIt:'Maintenant, touche-le pour continuer.',write:n=>`Maintenant, écris le ${n}.`,ok:'C’est ça.',listen:'Écoute bien.',owl:'Doucement : regarde bien d’abord, puis touche.',look:'Regarde :',
+ fr:{numIs:n=>n===1?'Un s’écrit comme ça.':`Le ${agNumW(n)} s’écrit comme ça.`,tap:x=>`Maintenant, touche ${x} pour continuer.`,tapIt:'Maintenant, touche-le pour continuer.',write:n=>`Maintenant, écris le ${n}.`,ok:'C’est ça.',listen:'Écoute bien.',owl:'Doucement : regarde bien d’abord, puis touche.',look:'Regarde :',
    count:(n,w,g)=>n===1?`Il y a ${g==='f'?'une':'un'} ${w}.`:`Il y a ${n} ${w}.`,
    order:(seq,gi,n)=>gi>0?`Après le ${seq[gi-1]}, il y a le ${n}.`:`Avant le ${seq[1]}, il y a le ${n}.`,
    hear:(w,n)=>`Tu as entendu « ${w} ». C’est celui-ci : le ${n}.`,
@@ -1166,13 +1173,35 @@ function agTeach(){const my=ag,c=my.cfg;my.taught=true;let right=null;try{right=
   const m=stage.querySelector('.msg');if(m&&txt){let e='';try{e=c.emoji?c.emoji():''}catch(x){}m.innerHTML=esc(txt+(e?' '+e:''))+`<br><small class="agfin">${esc(fin[0])}</small>`}
   stopSpeech();try{if(c.show)c.show()}catch(e){}
   if(c.input){c.input.readOnly=true;c.input.classList.add('agwait')}
-  let unl=false;const unlock=()=>{if(unl)return;unl=true;if(ag!==my)return;if(right)right.classList.remove('agwait');if(c.input){c.input.readOnly=false;c.input.classList.remove('agwait');c.input.value='';try{c.input.focus({preventScroll:true})}catch(e){}}};
+  let unl=false,run=null;const t0=Date.now();
+  const intr=e=>{if(unl||ag!==my){stage.removeEventListener('pointerdown',intr,true);return}if(Date.now()-t0<400)return;if(run)run.flush();unlock()};
+  const unlock=()=>{if(unl)return;unl=true;stage.removeEventListener('pointerdown',intr,true);if(ag!==my)return;if(right)right.classList.remove('agwait');if(c.input){c.input.readOnly=false;c.input.classList.remove('agwait');c.input.value='';try{c.input.focus({preventScroll:true})}catch(e){}}};
   let seq=null;try{seq=c.seq?c.seq(txt):null}catch(e){}if(!seq)seq=txt?[[txt,lang]]:[];
+  // el número escrito, grande, junto a la cantidad: «El siete se escribe así»
+  let num=null;try{num=typeof c.num==='function'?c.num():c.num}catch(e){}
+  if(num!=null)seq=seq.concat([[AGT().numIs(num),lang,()=>agBig(c,right,num)]]);
   seq=seq.concat([[fin[1],lang]]);
-  // se desbloquea cuando la voz termina la ÚLTIMA frase (no en las pausas entre frases); por si la voz falla, un tiempo máximo según la longitud
-  saySeq(seq,{rate:.85,gap:250,done:()=>setTimeout(unlock,150)});
-  setTimeout(unlock,Math.min(16000,1800+seq.reduce((a,x)=>a+String(x[0]).length*80+300,0)));
+  // las palabras de contar no se dicen: las cosas se iluminan rápido y en silencio (ya sabe contar; así no se hace pesado)
+  run=agRun(seq,()=>setTimeout(unlock,150));
+  // si toca la pantalla mientras se explica, la voz se calla y puede responder enseguida
+  stage.addEventListener('pointerdown',intr,true);
+  setTimeout(unlock,Math.min(16000,1800+seq.reduce((a,x)=>a+(x[3]==='n'?400:String(x[0]).length*80+300),0)));
   const it=my.item;if(it)agRQ[agRK(it)]={v:it.kind==='obj'?it.e:it.n,due:agQn+1}}
+// dice las frases y hace en silencio los pasos de contar (marcados con 'n'); flush() deja todo como al final, sin voz
+function agRun(items,done){const id=++seqId;try{speechSynthesis.cancel()}catch(e){}let i=0;const ran=new Set();
+  const cb=k=>{if(ran.has(k))return;ran.add(k);try{items[k][2]&&items[k][2]()}catch(e){}};
+  const step=()=>{if(id!==seqId)return;if(i>=items.length){done&&done();return}const k=i++,[t,l,,mk]=items[k];
+    if(mk==='n'||sgShown||!t){cb(k);setTimeout(step,mk==='n'?380:0);return}
+    try{const u=new SpeechSynthesisUtterance(t),v=voiceFor(l);u.lang=v?v.lang:defLang[l];if(v)u.voice=v;tune(u,l,.85);
+      u.onstart=()=>{if(id===seqId)cb(k)};u.onend=()=>setTimeout(()=>{cb(k);step()},250);speechSynthesis.speak(u)}catch(e){cb(k);setTimeout(step,0)}};
+  step();
+  return {flush:()=>{if(id===seqId){seqId++;try{speechSynthesis.cancel()}catch(e){}}for(let k=0;k<items.length;k++)cb(k)}}}
+// el número escrito en grande al lado de lo contado (o dentro del hueco), del mismo color que la respuesta que parpadea
+function agBig(c,right,n){let el=null;try{el=c.bigIn?c.bigIn():null}catch(e){}
+  if(right)right.classList.add('agnum');
+  if(el){el.textContent=n;el.classList.add('agbign');return}
+  if(stage.querySelector('.agbig'))return;const d=document.createElement('div');d.className='agbig';d.setAttribute('aria-hidden','true');d.textContent=n;
+  const anc=(right&&(right.closest('.row')||right))||c.input;if(anc&&anc.parentNode)anc.parentNode.insertBefore(d,anc);else{const m=stage.querySelector('.msg');if(m)m.parentNode.insertBefore(d,m)}}
 // quita las marcas de ayuda (para preguntas con varios pasos, como ordenar la historia)
 function agClear(){stage.querySelectorAll('.agoff,.agshow,.agwait,.aglock').forEach(e=>{e.classList.remove('agoff','agnofade','agshow','agwait','aglock');if(e.tagName==='BUTTON')e.disabled=false});if(ag)ag.taught=false}
 // ---- volver a preguntar lo enseñado (en la misma actividad) ----
@@ -1207,7 +1236,7 @@ function agItemsSection(kind){const t=AGT(),it=(P.ag||{}).it||{};let rows=Object
   return `<h3>${t.itT}</h3><p class="pnote">${t.itNote}</p><p>${rows.slice(0,10).map(([k,v])=>`<span class="chip">${esc(k)} ×${v}</span>`).join(' ')}</p>`}
 // Contar: la voz cuenta iluminando cada cosa y dice cuántas hay
 const agCountQ=(f,n)=>({say:()=>AGT().count(n,agFruit(f,n),agFruitG(f)),
-  seq:txt=>[[AGT().look,lang,()=>stage.querySelectorAll('.agcount').forEach(e=>e.classList.remove('agcount'))],...numWords[lang].slice(0,n).map((w,i)=>[i===0&&agFruitG(f)==='f'?(lang==='es'?'una':lang==='fr'?'une':w):w,lang,()=>{const s=stage.querySelectorAll('.fruits span')[i];if(s)s.classList.add('agcount')}]),[txt,lang]]});
+  seq:txt=>[[AGT().look,lang,()=>stage.querySelectorAll('.agcount').forEach(e=>e.classList.remove('agcount'))],...numWords[lang].slice(0,n).map((w,i)=>[i===0&&agFruitG(f)==='f'?(lang==='es'?'una':lang==='fr'?'une':w):w,lang,()=>{const s=stage.querySelectorAll('.fruits span')[i];if(s)s.classList.add('agcount')},'n']),[txt,lang]]});
 const agPatN=e=>(AG_PAT[e]||[e,e,e])[agLi()];
 function czAnsSize(dim,nm,g,more,eq){const T=AGT();if(eq)return T.czEq;const A=CZ_ADJ[dim],i=more?0:1;const adj=lang==='en'?A.en[i]:A[lang][i][g==='f'?1:0];return T.czSize(nm,g,adj)}
 
@@ -1228,7 +1257,7 @@ function contarEscribir(){const n=pickNum('recog'),f=fruits[rand(fruits.length)]
   frame(L().qWrite,`<div class="fruits">${Array.from({length:n},()=>`<span>${f}</span>`).join('')}</div><input id="numIn" class="numbox" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="${L().qWrite}">`);
   trackStart({kind:'num',sk:'recog',n});
   const box=document.getElementById('numIn');
-  agQ(Object.assign(agCountQ(f,n),{right:null,opts:'#agNone',noShuffle:true,input:box,show:()=>{box.placeholder=String(n)},fin:()=>{const t=AGT().write(n);return [t,t]}}));
+  agQ(Object.assign(agCountQ(f,n),{num:n,right:null,opts:'#agNone',noShuffle:true,input:box,show:()=>{box.placeholder=String(n)},fin:()=>{const t=AGT().write(n);return [t,t]}}));
   sayQuestion();
   const check=()=>{if(done)return;if(box.readOnly){box.value='';return}const d=(box.value.match(/[1-9]/g)||[]).pop();if(!d){box.value='';return}box.value=d;
     if(+d===n){done=true;box.readOnly=true;win(box,contar)}else{miss(box,d);setTimeout(()=>{if(!done&&box.isConnected){box.value='';box.classList.remove('wrong');box.focus({preventScroll:true})}},800)}};
@@ -1243,7 +1272,7 @@ function contarTocar(){const n=pickNum('recog'),f=fruits[rand(fruits.length)];
   frame(L().qCount,`<div class="fruits">${Array.from({length:n},()=>`<span>${f}</span>`).join('')}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);
   trackStart({kind:'num',sk:'recog',n});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>+b.dataset.v===n?win(b,contar):miss(b));
-  agQ(Object.assign(agCountQ(f,n),{right:()=>stage.querySelector(`.pick[data-v="${n}"]`),fin:()=>agFinN(n)}));
+  agQ(Object.assign(agCountQ(f,n),{num:n,right:()=>stage.querySelector(`.pick[data-v="${n}"]`),fin:()=>agFinN(n)}));
   sayQuestion()}
 
 // Poner: se muestra un número y hay que meter esa cantidad en la cesta
@@ -1266,7 +1295,9 @@ function orden(){const n=pickNum('recog'),lo=Math.max(1,n-4),hi=Math.min(5,n),st
   frame(L().qMissing,`<div class="seq">${seq.map((v,i)=>i===gi?'<div class="tile gap" id="gap">?</div>':`<div class="tile">${v}</div>`).join('')}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);
   trackStart({kind:'num',sk:'recog',n});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{if(+b.dataset.v===n){const g=document.getElementById('gap');g.textContent=n;g.classList.add('filled');win(b,orden)}else miss(b)});
-  agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().look+' '+seq.join(', ')+'. '+AGT().order(seq,gi,n),fin:()=>agFinN(n)});
+  agQ({num:n,bigIn:()=>document.getElementById('gap'),right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().look+' '+seq.join(', ')+'. '+AGT().order(seq,gi,n),fin:()=>agFinN(n),
+    seq:()=>{const tiles=[...stage.querySelectorAll('.seq .tile')],only=el=>{agUnlight();if(el)el.classList.add('agt')};
+      return [[AGT().look,lang,()=>only(null)],...seq.map((v,i)=>i===gi?['…',lang,()=>only(tiles[i]),'n']:[agNumW(v),lang,()=>only(tiles[i])]),[AGT().order(seq,gi,n),lang,()=>{only(tiles[gi-1]||tiles[1]);if(tiles[gi])tiles[gi].classList.add('agt')}]]}});
   sayQuestion()}
 
 // Escuchar: se dice un número y hay que tocarlo
@@ -1281,7 +1312,7 @@ function sonidos(){const n=pickNum('recog'),set=numOptions(n,agN('num',n,'recog'
   document.getElementById('play').onclick=play;
   trackStart({kind:'num',sk:'recog',n});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>+b.dataset.v===n?win(b,sonidos):miss(b));
-  agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),noShuffle:true,say:()=>AGT().hear(numWords[lang][n-1],n),fin:()=>agFinN(n)});
+  agQ({num:n,right:()=>stage.querySelector(`.pick[data-v="${n}"]`),noShuffle:true,say:()=>AGT().hear(numWords[lang][n-1],n),fin:()=>agFinN(n)});
   later(play,300)}
 
 // Decir: se muestra un número y el niño lo dice en voz alta.
@@ -3497,7 +3528,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=69; // se sube junto con la caché de sw.js
+const APP_VER=70; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -3615,8 +3646,8 @@ function agQty(n,e){const t=agTh(e);if(n===1)return (lang==='es'?(t.g==='f'?'una
 const agCap=x=>x.charAt(0).toUpperCase()+x.slice(1);
 const agNumW=i=>i<=9?numWords[lang][i-1]:({es:'diez',en:'ten',fr:'dix'})[lang];
 // palabras de contar de «from» a «to», iluminando cada cosa (el «una/une» concuerda con lo que se cuenta)
-function agCountSteps(from,to,els,e,clear){const out=[];for(let i=from;i<=to;i++){const el=els[i-from],first=i===from;let w=agNumW(i);if(i===1&&agTh(e).g==='f')w=lang==='es'?'una':lang==='fr'?'une':w;out.push([w,lang,()=>{if(clear&&first)agUnlight();if(el)el.classList.add('agc')}])}return out}
-const agUnlight=()=>stage.querySelectorAll('.agc').forEach(x=>x.classList.remove('agc'));
+function agCountSteps(from,to,els,e,clear){const out=[];for(let i=from;i<=to;i++){const el=els[i-from],first=i===from;let w=agNumW(i);if(i===1&&agTh(e).g==='f')w=lang==='es'?'una':lang==='fr'?'une':w;out.push([w,lang,()=>{if(clear&&first)agUnlight();if(el)el.classList.add('agc')},'n'])}return out}
+const agUnlight=()=>stage.querySelectorAll('.agc,.agt').forEach(x=>x.classList.remove('agc','agt'));
 const AG_CT={
  es:{had:(n,e)=>`Había ${agQty(n,e)}.`,come:(d,e)=>d===1?`Y llega ${agQty(1,e)} más.`:`Y llegan ${agQty(d,e)} más.`,go:(d,e)=>d===1?`Se va ${agQty(1,e)}.`:`Se van ${agQty(d,e)}.`,
    now:(r,e)=>`Ahora hay ${agQty(r,e)}.`,left:(r,e)=>r===0?`No queda ${agTh(e).g==='f'?'ninguna':'ningún'} ${agTh(e).sg}.`:`${r===1?'Queda':'Quedan'} ${agQty(r,e)}.`,
@@ -3654,7 +3685,7 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
       frame(t.sumQ,`<div class="cdicerow">${diceSvg(a)}<b>+</b>${diceSvg(b)}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
       const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
       stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===n){mark(true,decRec);win(bt,componer)}else{mark(false,decRec);miss(bt)}});
-      agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().dice(a,b,n),fin:()=>agFinN(n),
+      agQ({num:n,right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().dice(a,b,n),fin:()=>agFinN(n),
         seq:txt=>{const dc=[...stage.querySelectorAll('.cdice')],c1=[...dc[0].querySelectorAll('circle')],c2=[...dc[1].querySelectorAll('circle')];
           return [[AGT().look,lang,agUnlight],...agCountSteps(1,a,c1,'•'),...agCountSteps(a+1,n,c2,'•'),[txt,lang]]},known:()=>agStK(rec.st[cmpMode])});bind();return}
     const [n,v]=fresh(()=>{const n=2+rand(max-1),v=1+rand(n-1);return [`h${n}-${v}`,[n,v]]}),h=n-v,opts=cmpOpts(h,n);
@@ -3662,7 +3693,7 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
     const under=stage.querySelector('.cunder');under.classList.add('show');setTimeout(()=>{if(under.isConnected)under.classList.remove('show')},1300);
     const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
     stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===h){mark(true,decRec);under.classList.add('show');win(bt,componer)}else{mark(false,decRec);fails++;miss(bt);if(fails>=2)under.classList.add('peek')}});
-    agQ({right:()=>stage.querySelector(`.pick[data-v="${h}"]`),say:()=>ACT().total(n,it)+' '+ACT().under(h,v,n,it),fin:()=>agFinN(h),
+    agQ({num:h,right:()=>stage.querySelector(`.pick[data-v="${h}"]`),say:()=>ACT().total(n,it)+' '+ACT().under(h,v,n,it),fin:()=>agFinN(h),
     seq:()=>{const vis=[...stage.querySelectorAll('.cvis span')],hid=[...stage.querySelectorAll('.cunder span')];
       return [[AGT().look,lang,()=>{agUnlight();under.classList.remove('show','peek')}],...agCountSteps(1,v,vis,it),[ACT().lift,lang,()=>under.classList.add('show')],...agCountSteps(v+1,n,hid,it),[ACT().under(h,v,n,it),lang]]},known:()=>agStK(rec.st[cmpMode])});bind();return}
   if(cmpMode==='cmp'){
@@ -3693,7 +3724,7 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
     const box=stage.querySelector('.cbox');box.classList.add('start');
     setTimeout(()=>{if(!box.isConnected)return;box.classList.remove('start');if(hid)box.classList.add('closed');setTimeout(()=>{if(box.isConnected)box.classList.add('moved')},hid?700:200)},1500);
     stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===r){mark(true);box.classList.remove('closed');win(bt,componer)}else{mark(false);fails++;miss(bt);if(fails>=2)box.classList.remove('closed')}});
-    agQ({right:()=>stage.querySelector(`.pick[data-v="${r}"]`),say:()=>ACT().had(n,it)+' '+(d>0?ACT().come(d,it)+' '+ACT().now(r,it):ACT().go(-d,it)+' '+ACT().left(r,it)),fin:()=>agFinN(r),
+    agQ({num:r,right:()=>stage.querySelector(`.pick[data-v="${r}"]`),say:()=>ACT().had(n,it)+' '+(d>0?ACT().come(d,it)+' '+ACT().now(r,it):ACT().go(-d,it)+' '+ACT().left(r,it)),fin:()=>agFinN(r),
     seq:()=>{const all=[...stage.querySelectorAll('.citems span')],fly=stage.querySelector('.cfly'),C=ACT();
       const start=[AGT().look,lang,()=>{agUnlight();box.classList.remove('closed','moved','start');if(fly)fly.style.display='none'}];
       if(d>0){const old=all.filter(x=>!x.classList.contains('come')),nw=all.filter(x=>x.classList.contains('come'));
