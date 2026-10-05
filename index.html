@@ -448,6 +448,7 @@ g.agoff{filter:none!important;opacity:.22!important}
 g.agshow,.czcard.agshow{box-shadow:none!important;animation:agglow .8s ease-in-out infinite}
 .msg .agfin{display:inline-block;margin-top:4px;font-size:.85em;opacity:.85}
 @keyframes agshow{0%,100%{box-shadow:0 0 0 4px #FFC93C;background-color:#FFFFFF}50%{box-shadow:0 0 0 12px #FF8C2B,0 0 38px 14px rgba(255,140,43,.9);background-color:#FFE7A8}}@keyframes agglow{0%,100%{filter:drop-shadow(0 0 3px #FFB020)}50%{filter:drop-shadow(0 0 16px #FF8C2B) drop-shadow(0 0 6px #FF8C2B);opacity:.6}}
+.pseq .ptile.agcount{transform:scale(1.18);box-shadow:0 0 0 5px #FFB020,0 0 18px 4px rgba(255,176,32,.8);transition:transform .2s,box-shadow .2s;position:relative;z-index:2}
 .fruits span.agcount{display:inline-block;transform:scale(1.3);filter:drop-shadow(0 0 8px #FFB020);transition:transform .25s}
 .sgowl{position:absolute;left:-14px;top:-30px;font-size:3.2rem}.sgq{font:800 1.35rem "Baloo 2",sans-serif;margin:4px 0 2px}.sgact{font-size:3.6rem;line-height:1.1;margin-bottom:8px}
 .sgrow{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:center;padding:5px 10px;border-radius:14px;background:var(--sky);margin:4px 0}
@@ -1147,7 +1148,7 @@ function agItemsSection(kind){const t=AGT(),it=(P.ag||{}).it||{};let rows=Object
   return `<h3>${t.itT}</h3><p class="pnote">${t.itNote}</p><p>${rows.slice(0,10).map(([k,v])=>`<span class="chip">${esc(k)} ×${v}</span>`).join(' ')}</p>`}
 // Contar: la voz cuenta iluminando cada cosa y dice cuántas hay
 const agCountQ=(f,n)=>({say:()=>AGT().count(n,agFruit(f,n)),
-  seq:txt=>[[AGT().look,lang],...numWords[lang].slice(0,n).map((w,i)=>[w,lang,()=>{const s=stage.querySelectorAll('.fruits span')[i];if(s)s.classList.add('agcount')}]),[txt,lang]]});
+  seq:txt=>[[AGT().look,lang,()=>stage.querySelectorAll('.agcount').forEach(e=>e.classList.remove('agcount'))],...numWords[lang].slice(0,n).map((w,i)=>[w,lang,()=>{const s=stage.querySelectorAll('.fruits span')[i];if(s)s.classList.add('agcount')}]),[txt,lang]]});
 const agPatN=e=>(AG_PAT[e]||[e,e,e])[agLi()];
 function czAnsSize(dim,nm,g,more,eq){const T=AGT();if(eq)return T.czEq;const A=CZ_ADJ[dim],i=more?0:1;const adj=lang==='en'?A.en[i]:A[lang][i][g==='f'?1:0];return T.czSize(nm,g,adj)}
 
@@ -2082,7 +2083,10 @@ function patrones(){const set=shuffle(patSets[rand(patSets.length)]),pat=patUnit
   stage.insertAdjacentHTML('afterbegin',`<div class="modes" role="group">${L().levelNames.map((n,i)=>`<button class="mode" data-lv="${i+1}" aria-pressed="${patLevel===i+1}">${n}</button>`).join('')}</div>`);
   stage.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>{patLevel=+b.dataset.lv;try{localStorage.setItem('peques-patlevel',patLevel)}catch(e){}patrones()});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{if(b.dataset.v===ans){const g=document.getElementById('gap');g.textContent=ans;g.classList.add('filled');win(b,patrones)}else miss(b)});
-  agQ({right:()=>stage.querySelector(`.pick[data-v="${ans}"]`),say:()=>AGT().pat(unit.map(agPatN).join(', '),agPatN(seq[seq.length-1]),agPatN(ans))});
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${ans}"]`),say:()=>AGT().pat(unit.map(agPatN).join(', '),agPatN(seq[seq.length-1]),agPatN(ans)),
+    // la voz recorre la fila iluminando cada dibujo y al final el hueco
+    seq:txt=>{const tiles=[...stage.querySelectorAll('.pseq .ptile')],only=el=>{tiles.forEach(t=>t.classList.remove('agcount'));if(el)el.classList.add('agcount')};
+      return [[AGT().look,lang,()=>only(null)],...seq.map((e,i)=>[agPatN(e),lang,()=>only(tiles[i])]),[txt,lang,()=>only(document.getElementById('gap'))]]}});
   sayQuestion()}
 
 // Letras: se dice una letra y hay que tocarla
@@ -3430,7 +3434,7 @@ const BK_T={
    save:'💾 Enregistrer une sauvegarde',load:'📂 Restaurer une sauvegarde',saved:n=>`✅ Sauvegarde enregistrée (${n} ${n===1?'dessin':'dessins'}). Elle est dans « Téléchargements ».`,bad:'⚠️ Ce fichier n’est pas une sauvegarde de cette app.',
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${x.days} jours de jeu · ${x.sess} sessions · ${x.ans} réponses · ${x.scr} jours de temps d’écran · ${x.trk} nombres/lettres suivis · ${x.gal} dessins`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres']);
-const APP_VER=62; // se sube junto con la caché de sw.js
+const APP_VER=63; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
