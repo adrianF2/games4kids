@@ -3528,7 +3528,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=71; // se sube junto con la caché de sw.js
+const APP_VER=72; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4689,8 +4689,8 @@ const NOMBRE_CARPETA = 'Juegos para Peques';
 function doPost(e) { let p = {}; try { p = JSON.parse(e.postData.contents); } catch (x) {} return salida(p); }
 function doGet(e) { return salida(e.parameter || {}); }
 // Ejecútala una vez desde el editor (botón ▶ con «probar» elegido): pide la autorización y comprueba que todo funciona
-function probar() { const id = base(); Logger.log('✅ Todo bien: carpeta «' + NOMBRE_CARPETA + '» lista (' + id + ').'); }
-function salida(p) { let o; try { o = responder(p); } catch (err) { o = { ok: false, err: String((err && err.message) || err) }; }
+function probar() { const id = conBloqueo(() => { const i = base(); unificar(i); return i; }); Logger.log('✅ Todo bien: carpeta «' + NOMBRE_CARPETA + '» lista (' + id + ').'); }
+function salida(p) { let o; try { o = conBloqueo(() => responder(p)); } catch (err) { o = { ok: false, err: String((err && err.message) || err) }; }
   o.now = Date.now(); return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
 // ---------- acceso a Drive (solo archivos creados por este script) ----------
@@ -4747,18 +4747,40 @@ function guardar(dir, n, texto) { const f = archivo(dir, n), pre = n.replace('.j
   const dias = {}, limite = Date.now() - 30 * 864e5;
   vs.forEach((x, i) => { if (i < 5) return; const t = Date.parse(x.createdTime), d = x.createdTime.slice(0, 10);
     if (t >= limite && !dias[d]) { dias[d] = 1; return; } cambiar(x.id, { trashed: true }); }); }
+// si por un fallo antiguo quedaron dos carpetas «Juegos para Peques», se juntan en la buena y la otra va a la papelera
+function buscarTodo(cond) { const t = llamar('get', API + '?q=' + q(cond + ' and trashed = false') + '&fields=' + q('files(id,name,createdTime,mimeType)') + '&pageSize=1000');
+  return t ? JSON.parse(t).files || [] : []; }
+const comillas = n => n.replace(/\\\\/g, '\\\\\\\\').replace(/'/g, "\\\\'");
+function mover(id, de, a) { llamar('patch', API + '/' + id + '?addParents=' + a + '&removeParents=' + de + '&fields=id', {}); }
+function mezclarRegistro(a, b) { const r = { devices: {}, kids: {} };
+  [b, a].forEach(x => { if (!x) return; Object.keys(x.kids || {}).forEach(k => r.kids[k] = Object.assign({}, r.kids[k] || {}, x.kids[k]));
+    Object.keys(x.devices || {}).forEach(k => { const d = x.devices[k], o = r.devices[k]; if (!o || (d.lastSeen || 0) >= (o.lastSeen || 0)) r.devices[k] = d; }); });
+  return r; }
+function mezclarCarpeta(de, a) { buscar(de).forEach(x => { const igual = buscar(a, "name = '" + comillas(x.name) + "'")[0];
+  if (!igual) return mover(x.id, de, a);
+  if (x.mimeType === CARPETA_MIME && igual.mimeType === CARPETA_MIME) { mezclarCarpeta(x.id, igual.id); cambiar(x.id, { trashed: true }); return; }
+  if (x.name === 'dispositivos.json') { let r1 = null, r2 = null; try { r1 = JSON.parse(contenido(igual.id)); } catch (e) {} try { r2 = JSON.parse(contenido(x.id)); } catch (e) {}
+    llamar('patch', SUBIR + '/' + igual.id + '?uploadType=media&fields=id', JSON.stringify(mezclarRegistro(r1, r2)), 'application/json; charset=UTF-8'); cambiar(x.id, { trashed: true }); return; }
+  // mismo archivo en las dos (estado o ajustes): se queda el más reciente y el otro pasa a ser una versión guardada
+  const num = f => { try { const d = JSON.parse(contenido(f.id)); return d.seq || d.ver || 0; } catch (e) { return 0; } }, nx = num(x), ni = num(igual);
+  const xGana = nx !== ni ? nx > ni : Date.parse(x.createdTime) > Date.parse(igual.createdTime), viejo = xGana ? igual : x, nuevo = xGana ? x : igual;
+  cambiar(viejo.id, { name: viejo.name.replace('.json', '-') + fecha() + '.json' }); mover(x.id, de, a); }); }
+function unificar(id) { const n = buscarTodo("name = '" + comillas(NOMBRE_CARPETA) + "' and mimeType = '" + CARPETA_MIME + "'").filter(f => f.id !== id);
+  if (!n.length) return; n.forEach(o => { mezclarCarpeta(o.id, id); cambiar(o.id, { trashed: true }); }); props.deleteProperty('ninos'); }
 function registro(b) { return leerJSON(b, 'dispositivos.json') || { devices: {}, kids: {} }; }
 function guardarRegistro(b, r) { const f = archivo(b, 'dispositivos.json'), t = JSON.stringify(r);
   if (f) llamar('patch', SUBIR + '/' + f.id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8'); else crearArchivo(b, 'dispositivos.json', t); }
+// cada petición se atiende de una en una (así nunca se crean dos carpetas iguales a la vez)
+const ya = fn => fn();
 function conBloqueo(fn) { const l = LockService.getScriptLock(); l.waitLock(25000); try { return fn(); } finally { l.releaseLock(); } }
 
 function responder(p) {
   if (!p.key || p.key !== CLAVE) return { ok: false, err: 'key' };
   B = null;
-  if (p.action === 'ping') { b(); return { ok: true, v: 3, folder: NOMBRE_CARPETA }; }
-  if (p.action === 'hello') return conBloqueo(() => { const r = registro(b()); const m = p.me || {};
+  if (p.action === 'ping') { unificar(b()); return { ok: true, v: 3, folder: NOMBRE_CARPETA }; }
+  if (p.action === 'hello') return ya(() => { const r = registro(b()); const m = p.me || {};
     if (m.id) { r.devices[m.id] = Object.assign(r.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(b(), r); } return { ok: true, reg: r }; });
-  if (p.action === 'kidSet') return conBloqueo(() => { const r = registro(b()), k = p.kid || {}; if (!k.id) return { ok: false, err: 'kid' };
+  if (p.action === 'kidSet') return ya(() => { const r = registro(b()), k = p.kid || {}; if (!k.id) return { ok: false, err: 'kid' };
     r.kids[k.id] = Object.assign(r.kids[k.id] || { created: Date.now() }, k); guardarRegistro(b(), r); carpetaNino(k.id, r.kids[k.id].name, true); return { ok: true, reg: r }; });
   const acciones = ['getState', 'getConfig', 'putState', 'patchConfig', 'versions', 'getVersion'];
   if (acciones.indexOf(p.action) < 0) return { ok: false, err: 'action' };
@@ -4767,10 +4789,10 @@ function responder(p) {
   if (!dir) return p.action === 'versions' ? { ok: true, list: [] } : { ok: true, data: null };
   if (p.action === 'getState') return { ok: true, data: leer(dir, 'estado.json') };
   if (p.action === 'getConfig') return { ok: true, data: leer(dir, 'config.json') };
-  if (p.action === 'putState') return conBloqueo(() => { const cur = leerJSON(dir, 'estado.json'), seq = cur ? (cur.seq || 0) : 0;
+  if (p.action === 'putState') return ya(() => { const cur = leerJSON(dir, 'estado.json'), seq = cur ? (cur.seq || 0) : 0;
     if (!p.force && cur && p.base !== seq && cur.from !== p.dev) return { ok: false, err: 'conflict', data: JSON.stringify(cur) };
     const d = JSON.parse(p.data); d.seq = seq + 1; d.st = Date.now(); guardar(dir, 'estado.json', JSON.stringify(d)); return { ok: true, seq: d.seq }; });
-  if (p.action === 'patchConfig') return conBloqueo(() => { const c = leerJSON(dir, 'config.json') || { type: 'config', kid: p.kid, ver: 0, ls: {}, hist: [], cmds: [] };
+  if (p.action === 'patchConfig') return ya(() => { const c = leerJSON(dir, 'config.json') || { type: 'config', kid: p.kid, ver: 0, ls: {}, hist: [], cmds: [] };
     const ch = p.changes || {}; Object.keys(ch).forEach(k => { if (ch[k] === null) delete c.ls[k]; else c.ls[k] = ch[k]; });
     const ids = {}; c.cmds.forEach(x => ids[x.id] = 1); (p.cmds || []).forEach(x => { if (x && x.id && !ids[x.id]) c.cmds.push(x); }); c.cmds = c.cmds.slice(-60);
     if (p.desc) c.hist.push({ t: Date.now(), by: p.by || '?', dev: p.dev, desc: p.desc }); c.hist = c.hist.slice(-30);
