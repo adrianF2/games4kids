@@ -3528,7 +3528,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=79; // se sube junto con la caché de sw.js
+const APP_VER=80; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4469,7 +4469,9 @@ function syReload(full){try{
   try{renderMenu()}catch(e){}
   syRefreshPanel()}catch(e){}}
 function syRefreshPanel(force){const par=document.getElementById('parents');
-  if(par&&!par.hidden){const a=document.activeElement;if(force||!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&par.contains(a))){const sc=par.scrollTop;openParents();par.scrollTop=sc}}}
+  if(par&&!par.hidden){const a=document.activeElement;if(force||!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&par.contains(a))){const sc=par.scrollTop,m=document.getElementById('syMsg'),mt=m?m.textContent:'',vl=document.getElementById('syVersList'),vh=vl?vl.innerHTML:'';openParents();par.scrollTop=sc;
+    // se conserva el último mensaje y la lista de versiones abierta
+    const m2=document.getElementById('syMsg');if(m2&&mt)m2.textContent=mt;const v2=document.getElementById('syVersList');if(v2&&vh&&!v2.innerHTML){v2.innerHTML=vh;v2.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(SY.role==='parent'?SY.sel:SY.kid,b.dataset.syver))}}}}
 
 // ---------- ajustes: cambios firmados ----------
 const syDayName=i=>new Date(2024,0,7+i).toLocaleDateString(locOf(),{weekday:'long'});
@@ -4599,13 +4601,16 @@ async function syTick(){if(!syOn()){if(SY&&SY.bye&&SY.url&&SY.key&&navigator.onL
   if(!navigator.onLine){if(SY.lastErr!=='offline'){SY.lastErr='offline';sySave();syShowState()}return}
   if(Date.now()<syRetry)return;syBusy=true;
   try{await syFlushFinal();
+    // el registro de la familia se pide a la vez que lo demás (una espera menos)
+    const hw=(ms)=>syDue('hello',ms)?syHello().then(()=>null,e=>e):null;
     if(SY.role==='kid'){
-      if(syDue('hello',120e3))await syHello();
+      const h=hw(120e3);
       if(SY.kid){await syFlushQ();
         // los ajustes se miran cada 30 s (una consulta pequeña); el seguimiento de otros aparatos, cada 3 min
         if(syDue('pull',180e3)){syNext.cfg=Date.now()+30e3;await syPullKid();syApplyPend()}
-        else if(syDue('cfg',30e3)){const c=syJ((await syCall({action:'getConfig',kid:SY.kid})).data);if(c){if((c.ver||0)>SY.cfgVer)syPendCfg=c;else scrApplyCmds(c.cmds)}syApplyPend()}if(syDue('push',300e3)||SY.forcePush)await syPushState()}}
-    else{if(SY.forcePush)await syParentPush();if(syDue('hello',60e3))await syHello();await syFlushQ();if(SY.sel&&syDue('pull',60e3))await syPullParent()}
+        else if(syDue('cfg',30e3)){const c=syJ((await syCall({action:'getConfig',kid:SY.kid})).data);if(c){if((c.ver||0)>SY.cfgVer)syPendCfg=c;else scrApplyCmds(c.cmds)}syApplyPend()}if(syDue('push',300e3)||SY.forcePush)await syPushState()}
+      const he=h&&await h;if(he)throw he}
+    else{if(SY.forcePush)await syParentPush();const h=hw(60e3);await syFlushQ();if(SY.sel&&syDue('pull',60e3))await syPullParent();const he=h&&await h;if(he)throw he}
     SY.lastOk=Date.now();SY.lastErr='';sySave();syFirst=false}
   catch(e){const m=String((e&&e.message)||e);if(m==='nokid'&&SY.role==='kid'){syFreeKid();SY.lastErr='';sySave();return}SY.lastErr=navigator.onLine?m:'offline';syRetry=Date.now()+30e3;sySave()}
   finally{syBusy=false;syShowState();syWarnOther()}}
@@ -4634,7 +4639,7 @@ const SY_T={
    stOff:'📴 Sin internet: la app sigue funcionando con normalidad y sincronizará cuando vuelva la conexión.',stErr:e=>`⚠️ No se pudo sincronizar (${e}). Se reintenta solo cada poco.`,
    errKey:'la clave no coincide con la del script',errResp:'el script no respondió bien',errApi:'Google Drive no está activado en el script: pega de nuevo «appsscript.json», guarda y crea una versión nueva de la implementación',errScope:'el script no tiene permiso: pega «appsscript.json», ejecuta «probar» en el editor para autorizar y crea una versión nueva de la implementación',
    testOk:f=>`✅ Conexión correcta con la carpeta «${f}».`,testing:'Probando…',saved:'Guardado.',missing:'Falta la dirección o la clave.',needName:'Escribe el nombre de este dispositivo.',needPName:'Escribe tu nombre.',
-   dupName:n=>`⚠️ Ya hay otro dispositivo llamado «${n}». Mejor usa otro nombre para no confundirlos.`,needNet:'Hace falta internet para esto.',working:'⏳ Un momento…',done:'✅ Hecho.',del:'🗑️ Borrar',remove:'🗑️ Quitar',removeAsk:n=>`¿Quitar «${n}» de la lista? Hazlo si ese aparato ya no se usa (si vuelve a conectarse, aparecerá otra vez). Su niño queda libre.`,delOld:(n,d,a)=>`«${n}» estaba en «${d}», que no se conecta desde ${a}. ¿Borrarlo igualmente? Su carpeta va a la papelera de tu Drive (recuperable 30 días).`,delAsk:n=>`¿Borrar a «${n}»? Su progreso, sus ajustes y sus versiones van a la papelera de tu Drive: puedes recuperarlos desde allí durante 30 días.`,delInUse:(n,d)=>`«${n}» está en uso en «${d}»: primero elige allí otro niño.`,kidDup:n=>`Ya existe «${n}». Lo he elegido en la lista: toca «✔️ Usar» para seguir con su progreso, o escribe otro nombre.`,needKid:'👉 Elige el niño de este dispositivo (o «➕ Niño nuevo») y toca «✔️ Usar».',
+   dupName:n=>`⚠️ Ya hay otro dispositivo llamado «${n}». Mejor usa otro nombre para no confundirlos.`,needNet:'Hace falta internet para esto.',working:'⏳ Un momento…',syncing:'⏳ Sincronizando…',syncDone:'✅ Sincronizado.',done:'✅ Hecho.',del:'🗑️ Borrar',remove:'🗑️ Quitar',removeAsk:n=>`¿Quitar «${n}» de la lista? Hazlo si ese aparato ya no se usa (si vuelve a conectarse, aparecerá otra vez). Su niño queda libre.`,delOld:(n,d,a)=>`«${n}» estaba en «${d}», que no se conecta desde ${a}. ¿Borrarlo igualmente? Su carpeta va a la papelera de tu Drive (recuperable 30 días).`,delAsk:n=>`¿Borrar a «${n}»? Su progreso, sus ajustes y sus versiones van a la papelera de tu Drive: puedes recuperarlos desde allí durante 30 días.`,delInUse:(n,d)=>`«${n}» está en uso en «${d}»: primero elige allí otro niño.`,kidDup:n=>`Ya existe «${n}». Lo he elegido en la lista: toca «✔️ Usar» para seguir con su progreso, o escribe otro nombre.`,needKid:'👉 Elige el niño de este dispositivo (o «➕ Niño nuevo») y toca «✔️ Usar».',
    ago:m=>m<1?'hace un momento':m<60?`hace ${m} min`:m<1440?`hace ${Math.round(m/60)} h`:`hace ${Math.round(m/1440)} d`,
    pick:'☁️ Niño:',playing:'jugando ahora',seen:a=>`visto ${a}`,today:m=>`${m} min hoy`,noKids:'Todavía no hay niños: activa la sincronización en el dispositivo de un niño.',
    lastBy:(n,a,d)=>`Última actualización: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Ajustes recibidos de ${n} ${a}.`,stateFrom:(n,a)=>`Datos de ${n} ${a}`,
@@ -4658,7 +4663,7 @@ const SY_T={
    stOff:'📴 No internet: the app keeps working normally and will sync when the connection is back.',stErr:e=>`⚠️ Could not sync (${e}). It retries on its own.`,
    errKey:'the key doesn’t match the script’s',errResp:'the script didn’t answer properly',errApi:'Google Drive is not enabled in the script: paste “appsscript.json” again, save and create a new version of the deployment',errScope:'the script has no permission: paste “appsscript.json”, run “probar” in the editor to authorize and create a new version of the deployment',
    testOk:f=>`✅ Connected to the folder “${f}”.`,testing:'Testing…',saved:'Saved.',missing:'The address or the key is missing.',needName:'Type the name of this device.',needPName:'Type your name.',
-   dupName:n=>`⚠️ Another device is already called “${n}”. Better use another name so they aren’t confused.`,needNet:'This needs internet.',working:'⏳ One moment…',done:'✅ Done.',del:'🗑️ Delete',remove:'🗑️ Remove',removeAsk:n=>`Remove “${n}” from the list? Do it if that device is no longer used (if it connects again, it will reappear). Its child becomes free.`,delOld:(n,d,a)=>`“${n}” was on “${d}”, which hasn’t connected since ${a}. Delete them anyway? Their folder goes to your Drive trash (restorable for 30 days).`,delAsk:n=>`Delete “${n}”? Their progress, settings and versions go to your Drive trash: you can restore them from there for 30 days.`,delInUse:(n,d)=>`“${n}” is in use on “${d}”: first choose another child there.`,kidDup:n=>`“${n}” already exists. I picked them in the list: tap “✔️ Use” to continue with their progress, or type another name.`,needKid:'👉 Choose this device’s child (or “➕ New child”) and tap “✔️ Use”.',
+   dupName:n=>`⚠️ Another device is already called “${n}”. Better use another name so they aren’t confused.`,needNet:'This needs internet.',working:'⏳ One moment…',syncing:'⏳ Syncing…',syncDone:'✅ Synced.',done:'✅ Done.',del:'🗑️ Delete',remove:'🗑️ Remove',removeAsk:n=>`Remove “${n}” from the list? Do it if that device is no longer used (if it connects again, it will reappear). Its child becomes free.`,delOld:(n,d,a)=>`“${n}” was on “${d}”, which hasn’t connected since ${a}. Delete them anyway? Their folder goes to your Drive trash (restorable for 30 days).`,delAsk:n=>`Delete “${n}”? Their progress, settings and versions go to your Drive trash: you can restore them from there for 30 days.`,delInUse:(n,d)=>`“${n}” is in use on “${d}”: first choose another child there.`,kidDup:n=>`“${n}” already exists. I picked them in the list: tap “✔️ Use” to continue with their progress, or type another name.`,needKid:'👉 Choose this device’s child (or “➕ New child”) and tap “✔️ Use”.',
    ago:m=>m<1?'just now':m<60?`${m} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`,
    pick:'☁️ Child:',playing:'playing now',seen:a=>`seen ${a}`,today:m=>`${m} min today`,noKids:'No children yet: turn sync on in a child’s device.',
    lastBy:(n,a,d)=>`Last update: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Settings received from ${n} ${a}.`,stateFrom:(n,a)=>`Data from ${n} ${a}`,
@@ -4682,7 +4687,7 @@ const SY_T={
    stOff:'📴 Pas d’internet : l’app continue de fonctionner normalement et se synchronisera au retour de la connexion.',stErr:e=>`⚠️ Synchronisation impossible (${e}). Elle réessaie toute seule.`,
    errKey:'la clé ne correspond pas à celle du script',errResp:'le script n’a pas bien répondu',errApi:'Google Drive n’est pas activé dans le script : collez à nouveau « appsscript.json », enregistrez et créez une nouvelle version du déploiement',errScope:'le script n’a pas l’autorisation : collez « appsscript.json », exécutez « probar » dans l’éditeur pour autoriser et créez une nouvelle version du déploiement',
    testOk:f=>`✅ Connexion correcte avec le dossier « ${f} ».`,testing:'Test…',saved:'Enregistré.',missing:'Il manque l’adresse ou la clé.',needName:'Tapez le nom de cet appareil.',needPName:'Tapez votre nom.',
-   dupName:n=>`⚠️ Un autre appareil s’appelle déjà « ${n} ». Mieux vaut un autre nom pour ne pas les confondre.`,needNet:'Il faut internet pour cela.',working:'⏳ Un instant…',done:'✅ C’est fait.',del:'🗑️ Supprimer',remove:'🗑️ Retirer',removeAsk:n=>`Retirer « ${n} » de la liste ? Faites-le si cet appareil n’est plus utilisé (s’il se reconnecte, il réapparaîtra). Son enfant devient libre.`,delOld:(n,d,a)=>`« ${n} » était sur « ${d} », qui ne s’est pas connecté depuis ${a}. Le supprimer quand même ? Son dossier va dans la corbeille de votre Drive (récupérable 30 jours).`,delAsk:n=>`Supprimer « ${n} » ? Sa progression, ses réglages et ses versions vont dans la corbeille de votre Drive : vous pouvez les récupérer pendant 30 jours.`,delInUse:(n,d)=>`« ${n} » est utilisé sur « ${d} » : choisissez d’abord un autre enfant sur cet appareil.`,kidDup:n=>`« ${n} » existe déjà. Je l’ai choisi dans la liste : touchez « ✔️ Utiliser » pour continuer avec sa progression, ou tapez un autre prénom.`,needKid:'👉 Choisissez l’enfant de cet appareil (ou « ➕ Nouvel enfant ») et touchez « ✔️ Utiliser ».',
+   dupName:n=>`⚠️ Un autre appareil s’appelle déjà « ${n} ». Mieux vaut un autre nom pour ne pas les confondre.`,needNet:'Il faut internet pour cela.',working:'⏳ Un instant…',syncing:'⏳ Synchronisation…',syncDone:'✅ Synchronisé.',done:'✅ C’est fait.',del:'🗑️ Supprimer',remove:'🗑️ Retirer',removeAsk:n=>`Retirer « ${n} » de la liste ? Faites-le si cet appareil n’est plus utilisé (s’il se reconnecte, il réapparaîtra). Son enfant devient libre.`,delOld:(n,d,a)=>`« ${n} » était sur « ${d} », qui ne s’est pas connecté depuis ${a}. Le supprimer quand même ? Son dossier va dans la corbeille de votre Drive (récupérable 30 jours).`,delAsk:n=>`Supprimer « ${n} » ? Sa progression, ses réglages et ses versions vont dans la corbeille de votre Drive : vous pouvez les récupérer pendant 30 jours.`,delInUse:(n,d)=>`« ${n} » est utilisé sur « ${d} » : choisissez d’abord un autre enfant sur cet appareil.`,kidDup:n=>`« ${n} » existe déjà. Je l’ai choisi dans la liste : touchez « ✔️ Utiliser » pour continuer avec sa progression, ou tapez un autre prénom.`,needKid:'👉 Choisissez l’enfant de cet appareil (ou « ➕ Nouvel enfant ») et touchez « ✔️ Utiliser ».',
    ago:m=>m<1?'à l’instant':m<60?`il y a ${m} min`:m<1440?`il y a ${Math.round(m/60)} h`:`il y a ${Math.round(m/1440)} j`,
    pick:'☁️ Enfant :',playing:'joue en ce moment',seen:a=>`vu ${a}`,today:m=>`${m} min aujourd’hui`,noKids:'Pas encore d’enfant : activez la synchronisation sur l’appareil d’un enfant.',
    lastBy:(n,a,d)=>`Dernière mise à jour : ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Réglages reçus de ${n} ${a}.`,stateFrom:(n,a)=>`Données de ${n} ${a}`,
@@ -4866,7 +4871,8 @@ const SY_MANIFEST=`{
 // ---------- pantalla de padres ----------
 function syAgoTxt(t){return t?SYT().ago(Math.floor((Date.now()-t)/60e3)):''}
 const syAgoSrv=t=>t?SYT().ago(Math.floor(syServerAgo(t)/60e3)):'';
-function syStateTxt(){const t=SYT();if(!syOn())return '';if(SY.lastErr==='offline'||!navigator.onLine)return t.stOff;
+let syManual=false;
+function syStateTxt(){const t=SYT();if(!syOn())return '';if(syManual)return t.syncing;if(SY.lastErr==='offline'||!navigator.onLine)return t.stOff;
   if(SY.lastErr)return t.stErr(syErrTxt(SY.lastErr));
   if(SY.role==='kid'&&!SY.kid)return t.needKid;
   return SY.lastOk?t.stOk(syAgoTxt(SY.lastOk),syAgoTxt(SY.lastPull),syAgoTxt(SY.lastPush)):t.stNever}
@@ -4902,7 +4908,7 @@ function syncSection(){const t=SYT(),on=!!SY.on,kids=syKids().filter(k=>!k.archi
     :`${SY.kid?`<p class="pnote"><b>${esc(t.kidNow(SY.kidName||kidName(SY.kid)))}</b></p>`:''}
      <div class="pname syfield"><label for="syKidPick">${t.kidSel}</label><select id="syKidPick"><option value="new">${t.kidNew}</option>${kids.map(k=>`<option value="${k.id}"${k.id===SY.kid?' selected':''}>${esc(k.name)}</option>`).join('')}</select>
       <input id="syKidName" autocomplete="off" maxlength="24" placeholder="${esc(t.kidName)}" value="${esc(SY.kid?SY.kidName:(childName||''))}"><button class="btn alt" id="syKidUse">${t.kidUse}</button></div>`}
-   <div class="row"><button class="btn" id="sySave">${t.save}</button><button class="btn alt" id="syTest">${t.test}</button><button class="btn alt" id="syNow">${t.now}</button></div>
+   <div class="row"><button class="btn" id="sySave">${t.save}</button><button class="btn alt" id="syTest">${t.test}</button><button class="btn alt" id="syNow"${syManual?' disabled':''}>${t.now}</button></div>
    <p class="pnote" id="syState" aria-live="polite">${esc(syStateTxt())}</p><p class="pnote" id="syMsg" aria-live="polite"></p>
    ${devs.length?`<h4 class="ch">${t.devsT}</h4><ul class="sydevs">${devs.map(d=>`<li>${d.role==='parent'?'👨':'👧'} <b>${esc(d.role==='parent'?(d.pname||d.name||'?'):kidName(d.kid))}</b> · ${esc(d.name||'?')} · ${d.role==='kid'&&d.active&&syServerAgo(d.lastSeen)<3*60e3?t.playing:t.seen(syAgoSrv(d.lastSeen))}${d.id===DEVID?' ✔️':SY.role==='parent'?` <button class="btn alt mini" data-sygone="${d.id}">${t.remove}</button>`:''}</li>`).join('')}</ul>`:''}
    ${SY.role==='parent'&&syKids().length?`<h4 class="ch">${t.kidsT}</h4><ul class="sydevs">${syKids().map(k=>`<li>👧 <b>${esc(k.name)}</b> ${k.archived?t.archived:''} <button class="btn alt mini" data-syarch="${k.id}">${k.archived?t.unarchive:t.archive}</button> <button class="btn alt mini" data-sydel="${k.id}">${t.del}</button></li>`).join('')}</ul>`:''}
@@ -4934,7 +4940,10 @@ function syncHandlers(){syBannerHandlers();const g=id=>document.getElementById(i
   g('syTest').onclick=async()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}if(!navigator.onLine){msg(t.stOff);return}msg(t.testing);
     try{const j=await syCall({action:'ping'});SY.lastErr='';sySave();msg(t.testOk(j.folder||''));syKick()}
     catch(e){const m=String((e&&e.message)||e);msg(t.stErr(syErrTxt(m)))}};
-  g('syNow').onclick=()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}syKick()};
+  g('syNow').onclick=async()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}if(!navigator.onLine){msg(t.stOff);return}
+    syManual=true;const bt=g('syNow');bt.disabled=true;msg('');syShowState();
+    try{syNext={};syRetry=0;while(syBusy)await new Promise(r=>setTimeout(r,50));await syTick()}finally{syManual=false}
+    const b2=g('syNow');if(b2)b2.disabled=false;syShowState();msg(SY.lastErr?'':t.syncDone)};
   const pick=g('syKidPick');if(pick)pick.onchange=()=>{const k=syKids().find(x=>x.id===pick.value);g('syKidName').value=k?k.name:(childName||'')};
   const use=g('syKidUse');if(use)use.onclick=async()=>{read();if(!navigator.onLine){msg(t.needNet);return}if(!SY.devName){msg(t.needName);return}
     const v=g('syKidPick').value,typed=g('syKidName').value.trim(),name=typed||(v==='new'?childName||t.kidDefault:'');
