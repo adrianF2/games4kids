@@ -3528,7 +3528,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=75; // se sube junto con la caché de sw.js
+const APP_VER=76; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4527,9 +4527,15 @@ async function syPullKid(){const [st,cf]=await Promise.all([syCall({action:'getS
 // crear un niño nuevo con los datos de este aparato (o vacío)
 async function syCreateKid(name,empty){if(empty){[...SY_TRACK].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});loadP();sessionNew={};resumeSess();SCR.hist={};SCR.lim={};SCR.used=0;SCR.extra=0;SCR.cx=[];SCR.free=false;saveScr()}
   const id='k'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-3);
+  // todo en una sola llamada (registro, carpeta, ajustes y estado); el script comprueba que el nombre no exista ya
+  const all=syCfgLs(),b=syPushBody(),data={app:'juegos-para-peques',v:1,t:Date.now(),ls:b.ls,kid:id,from:DEVID,fromName:SY.devName,epoch:0};
+  try{const r=await syCall({action:'kidNew',kid:{id,name},me:{id:DEVID,name:SY.devName,role:'kid',kid:id,pname:SY.parentName,active:true},changes:all,by:syMyName(),desc:SYT().dInit,data:JSON.stringify(data)});
+    const c=syJ(r.data)||{};SY.kid=id;SY.kidName=name;SY.seq=r.seq||1;SY.epoch=0;SY.reg=r.reg;SY.cfgVer=c.ver||1;SY.cfgSnap=all;SY.cfgFrom=null;SY.forcePush=false;syNorm();sySave();return}
+  catch(e){if(e.message==='dup'){const er=new Error('dup');er.kid=syJ(e.data);throw er}if(e.message!=='action')throw e}
+  // script anterior: pasos por separado
   await syCall({action:'kidSet',kid:{id,name}});
   SY.kid=id;SY.kidName=name;SY.seq=0;SY.epoch=0;SY.cfgVer=0;SY.forcePush=true;
-  const all=syCfgLs();SY.cfgSnap=all;SY.q.push({kid:id,changes:all,cmds:[],desc:SYT().dInit});sySave();
+  SY.cfgSnap=all;SY.q.push({kid:id,changes:all,cmds:[],desc:SYT().dInit});sySave();
   await syFlushQ();await syPushState(true);await syHello()}
 // seguir con un niño que ya existe (cambio o segundo aparato): se descargan sus datos
 async function syContinueKid(id,name){const [st,cf]=await Promise.all([syCall({action:'getState',kid:id}),syCall({action:'getConfig',kid:id})]);
@@ -4537,7 +4543,7 @@ async function syContinueKid(id,name){const [st,cf]=await Promise.all([syCall({a
   if(d&&d.ls){for(const k of SY_TRACK){if(k in d.ls)lsSet(k,d.ls[k]);else{try{localStorage.removeItem(k)}catch(e){}}}}
   syReload(true);SY.kid=id;SY.kidName=name;SY.seq=d?(d.seq||0):0;SY.epoch=d?(d.epoch||0):0;SY.cfgVer=0;SY.cfgSnap=null;sySave();
   if(c)syApplyCfg(c);else{SY.cfgSnap=syCfgLs();sySave()}
-  syReload(true);syNorm();sySave();await syHello()}
+  syReload(true);syNorm();sySave();syHello().catch(()=>{})}
 
 // ---------- 👨 dispositivo del padre ----------
 async function syParentLoad(id){if(!id)return;SY.sel=id;sySave();
@@ -4624,7 +4630,7 @@ const SY_T={
    stOff:'📴 Sin internet: la app sigue funcionando con normalidad y sincronizará cuando vuelva la conexión.',stErr:e=>`⚠️ No se pudo sincronizar (${e}). Se reintenta solo cada poco.`,
    errKey:'la clave no coincide con la del script',errResp:'el script no respondió bien',errApi:'Google Drive no está activado en el script: pega de nuevo «appsscript.json», guarda y crea una versión nueva de la implementación',errScope:'el script no tiene permiso: pega «appsscript.json», ejecuta «probar» en el editor para autorizar y crea una versión nueva de la implementación',
    testOk:f=>`✅ Conexión correcta con la carpeta «${f}».`,testing:'Probando…',saved:'Guardado.',missing:'Falta la dirección o la clave.',needName:'Escribe el nombre de este dispositivo.',needPName:'Escribe tu nombre.',
-   dupName:n=>`⚠️ Ya hay otro dispositivo llamado «${n}». Mejor usa otro nombre para no confundirlos.`,needNet:'Hace falta internet para esto.',del:'🗑️ Borrar',remove:'🗑️ Quitar',removeAsk:n=>`¿Quitar «${n}» de la lista? Hazlo si ese aparato ya no se usa (si vuelve a conectarse, aparecerá otra vez). Su niño queda libre.`,delOld:(n,d,a)=>`«${n}» estaba en «${d}», que no se conecta desde ${a}. ¿Borrarlo igualmente? Su carpeta va a la papelera de tu Drive (recuperable 30 días).`,delAsk:n=>`¿Borrar a «${n}»? Su progreso, sus ajustes y sus versiones van a la papelera de tu Drive: puedes recuperarlos desde allí durante 30 días.`,delInUse:(n,d)=>`«${n}» está en uso en «${d}»: primero elige allí otro niño.`,kidDup:n=>`Ya existe «${n}». Lo he elegido en la lista: toca «✔️ Usar» para seguir con su progreso, o escribe otro nombre.`,needKid:'👉 Elige el niño de este dispositivo (o «➕ Niño nuevo») y toca «✔️ Usar».',
+   dupName:n=>`⚠️ Ya hay otro dispositivo llamado «${n}». Mejor usa otro nombre para no confundirlos.`,needNet:'Hace falta internet para esto.',working:'⏳ Un momento…',del:'🗑️ Borrar',remove:'🗑️ Quitar',removeAsk:n=>`¿Quitar «${n}» de la lista? Hazlo si ese aparato ya no se usa (si vuelve a conectarse, aparecerá otra vez). Su niño queda libre.`,delOld:(n,d,a)=>`«${n}» estaba en «${d}», que no se conecta desde ${a}. ¿Borrarlo igualmente? Su carpeta va a la papelera de tu Drive (recuperable 30 días).`,delAsk:n=>`¿Borrar a «${n}»? Su progreso, sus ajustes y sus versiones van a la papelera de tu Drive: puedes recuperarlos desde allí durante 30 días.`,delInUse:(n,d)=>`«${n}» está en uso en «${d}»: primero elige allí otro niño.`,kidDup:n=>`Ya existe «${n}». Lo he elegido en la lista: toca «✔️ Usar» para seguir con su progreso, o escribe otro nombre.`,needKid:'👉 Elige el niño de este dispositivo (o «➕ Niño nuevo») y toca «✔️ Usar».',
    ago:m=>m<1?'hace un momento':m<60?`hace ${m} min`:m<1440?`hace ${Math.round(m/60)} h`:`hace ${Math.round(m/1440)} d`,
    pick:'☁️ Niño:',playing:'jugando ahora',seen:a=>`visto ${a}`,today:m=>`${m} min hoy`,noKids:'Todavía no hay niños: activa la sincronización en el dispositivo de un niño.',
    lastBy:(n,a,d)=>`Última actualización: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Ajustes recibidos de ${n} ${a}.`,stateFrom:(n,a)=>`Datos de ${n} ${a}`,
@@ -4648,7 +4654,7 @@ const SY_T={
    stOff:'📴 No internet: the app keeps working normally and will sync when the connection is back.',stErr:e=>`⚠️ Could not sync (${e}). It retries on its own.`,
    errKey:'the key doesn’t match the script’s',errResp:'the script didn’t answer properly',errApi:'Google Drive is not enabled in the script: paste “appsscript.json” again, save and create a new version of the deployment',errScope:'the script has no permission: paste “appsscript.json”, run “probar” in the editor to authorize and create a new version of the deployment',
    testOk:f=>`✅ Connected to the folder “${f}”.`,testing:'Testing…',saved:'Saved.',missing:'The address or the key is missing.',needName:'Type the name of this device.',needPName:'Type your name.',
-   dupName:n=>`⚠️ Another device is already called “${n}”. Better use another name so they aren’t confused.`,needNet:'This needs internet.',del:'🗑️ Delete',remove:'🗑️ Remove',removeAsk:n=>`Remove “${n}” from the list? Do it if that device is no longer used (if it connects again, it will reappear). Its child becomes free.`,delOld:(n,d,a)=>`“${n}” was on “${d}”, which hasn’t connected since ${a}. Delete them anyway? Their folder goes to your Drive trash (restorable for 30 days).`,delAsk:n=>`Delete “${n}”? Their progress, settings and versions go to your Drive trash: you can restore them from there for 30 days.`,delInUse:(n,d)=>`“${n}” is in use on “${d}”: first choose another child there.`,kidDup:n=>`“${n}” already exists. I picked them in the list: tap “✔️ Use” to continue with their progress, or type another name.`,needKid:'👉 Choose this device’s child (or “➕ New child”) and tap “✔️ Use”.',
+   dupName:n=>`⚠️ Another device is already called “${n}”. Better use another name so they aren’t confused.`,needNet:'This needs internet.',working:'⏳ One moment…',del:'🗑️ Delete',remove:'🗑️ Remove',removeAsk:n=>`Remove “${n}” from the list? Do it if that device is no longer used (if it connects again, it will reappear). Its child becomes free.`,delOld:(n,d,a)=>`“${n}” was on “${d}”, which hasn’t connected since ${a}. Delete them anyway? Their folder goes to your Drive trash (restorable for 30 days).`,delAsk:n=>`Delete “${n}”? Their progress, settings and versions go to your Drive trash: you can restore them from there for 30 days.`,delInUse:(n,d)=>`“${n}” is in use on “${d}”: first choose another child there.`,kidDup:n=>`“${n}” already exists. I picked them in the list: tap “✔️ Use” to continue with their progress, or type another name.`,needKid:'👉 Choose this device’s child (or “➕ New child”) and tap “✔️ Use”.',
    ago:m=>m<1?'just now':m<60?`${m} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`,
    pick:'☁️ Child:',playing:'playing now',seen:a=>`seen ${a}`,today:m=>`${m} min today`,noKids:'No children yet: turn sync on in a child’s device.',
    lastBy:(n,a,d)=>`Last update: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Settings received from ${n} ${a}.`,stateFrom:(n,a)=>`Data from ${n} ${a}`,
@@ -4672,7 +4678,7 @@ const SY_T={
    stOff:'📴 Pas d’internet : l’app continue de fonctionner normalement et se synchronisera au retour de la connexion.',stErr:e=>`⚠️ Synchronisation impossible (${e}). Elle réessaie toute seule.`,
    errKey:'la clé ne correspond pas à celle du script',errResp:'le script n’a pas bien répondu',errApi:'Google Drive n’est pas activé dans le script : collez à nouveau « appsscript.json », enregistrez et créez une nouvelle version du déploiement',errScope:'le script n’a pas l’autorisation : collez « appsscript.json », exécutez « probar » dans l’éditeur pour autoriser et créez une nouvelle version du déploiement',
    testOk:f=>`✅ Connexion correcte avec le dossier « ${f} ».`,testing:'Test…',saved:'Enregistré.',missing:'Il manque l’adresse ou la clé.',needName:'Tapez le nom de cet appareil.',needPName:'Tapez votre nom.',
-   dupName:n=>`⚠️ Un autre appareil s’appelle déjà « ${n} ». Mieux vaut un autre nom pour ne pas les confondre.`,needNet:'Il faut internet pour cela.',del:'🗑️ Supprimer',remove:'🗑️ Retirer',removeAsk:n=>`Retirer « ${n} » de la liste ? Faites-le si cet appareil n’est plus utilisé (s’il se reconnecte, il réapparaîtra). Son enfant devient libre.`,delOld:(n,d,a)=>`« ${n} » était sur « ${d} », qui ne s’est pas connecté depuis ${a}. Le supprimer quand même ? Son dossier va dans la corbeille de votre Drive (récupérable 30 jours).`,delAsk:n=>`Supprimer « ${n} » ? Sa progression, ses réglages et ses versions vont dans la corbeille de votre Drive : vous pouvez les récupérer pendant 30 jours.`,delInUse:(n,d)=>`« ${n} » est utilisé sur « ${d} » : choisissez d’abord un autre enfant sur cet appareil.`,kidDup:n=>`« ${n} » existe déjà. Je l’ai choisi dans la liste : touchez « ✔️ Utiliser » pour continuer avec sa progression, ou tapez un autre prénom.`,needKid:'👉 Choisissez l’enfant de cet appareil (ou « ➕ Nouvel enfant ») et touchez « ✔️ Utiliser ».',
+   dupName:n=>`⚠️ Un autre appareil s’appelle déjà « ${n} ». Mieux vaut un autre nom pour ne pas les confondre.`,needNet:'Il faut internet pour cela.',working:'⏳ Un instant…',del:'🗑️ Supprimer',remove:'🗑️ Retirer',removeAsk:n=>`Retirer « ${n} » de la liste ? Faites-le si cet appareil n’est plus utilisé (s’il se reconnecte, il réapparaîtra). Son enfant devient libre.`,delOld:(n,d,a)=>`« ${n} » était sur « ${d} », qui ne s’est pas connecté depuis ${a}. Le supprimer quand même ? Son dossier va dans la corbeille de votre Drive (récupérable 30 jours).`,delAsk:n=>`Supprimer « ${n} » ? Sa progression, ses réglages et ses versions vont dans la corbeille de votre Drive : vous pouvez les récupérer pendant 30 jours.`,delInUse:(n,d)=>`« ${n} » est utilisé sur « ${d} » : choisissez d’abord un autre enfant sur cet appareil.`,kidDup:n=>`« ${n} » existe déjà. Je l’ai choisi dans la liste : touchez « ✔️ Utiliser » pour continuer avec sa progression, ou tapez un autre prénom.`,needKid:'👉 Choisissez l’enfant de cet appareil (ou « ➕ Nouvel enfant ») et touchez « ✔️ Utiliser ».',
    ago:m=>m<1?'à l’instant':m<60?`il y a ${m} min`:m<1440?`il y a ${Math.round(m/60)} h`:`il y a ${Math.round(m/1440)} j`,
    pick:'☁️ Enfant :',playing:'joue en ce moment',seen:a=>`vu ${a}`,today:m=>`${m} min aujourd’hui`,noKids:'Pas encore d’enfant : activez la synchronisation sur l’appareil d’un enfant.',
    lastBy:(n,a,d)=>`Dernière mise à jour : ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Réglages reçus de ${n} ${a}.`,stateFrom:(n,a)=>`Données de ${n} ${a}`,
@@ -4696,7 +4702,8 @@ function doPost(e) { let p = {}; try { p = JSON.parse(e.postData.contents); } ca
 function doGet(e) { return salida(e.parameter || {}); }
 // Ejecútala una vez desde el editor (botón ▶ con «probar» elegido): pide la autorización y comprueba que todo funciona
 function probar() { const id = conBloqueo(() => { const i = base(); unificar(i); return i; }); Logger.log('✅ Todo bien: carpeta «' + NOMBRE_CARPETA + '» lista (' + id + ').'); }
-function salida(p) { let o; try { o = conBloqueo(() => responder(p)); } catch (err) { o = { ok: false, err: String((err && err.message) || err) }; }
+const ESCRIBEN = ['ping', 'hello', 'kidSet', 'kidDel', 'kidNew', 'putState', 'patchConfig'];
+function salida(p) { let o; try { o = ESCRIBEN.indexOf(p.action) >= 0 ? conBloqueo(() => responder(p)) : responder(p); } catch (err) { o = { ok: false, err: String((err && err.message) || err) }; }
   o.now = Date.now(); return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
 // ---------- acceso a Drive (solo archivos creados por este script) ----------
@@ -4728,7 +4735,8 @@ function existe(id) { try { const t = id && llamar('get', API + '/' + id + '?fie
 // ---------- carpetas (los identificadores se recuerdan para no buscarlas cada vez) ----------
 const props = PropertiesService.getScriptProperties();
 function base() { let id = props.getProperty('base'); if (existe(id)) return id;
-  id = crearCarpeta(NOMBRE_CARPETA, null); props.setProperty('base', id); props.deleteProperty('ninos'); return id; }
+  if (!bloqueado) return conBloqueo(base);
+  id = crearCarpeta(NOMBRE_CARPETA, null); props.setProperty('base', id); props.deleteProperty('ninos'); props.deleteProperty('reg'); return id; }
 function carpetaNinos(b) { let id = props.getProperty('ninos'); if (id && existe(id)) return id;
   const f = buscar(b, "name = 'ninos' and mimeType = '" + CARPETA_MIME + "'"); id = f.length ? f[0].id : crearCarpeta('ninos', b); props.setProperty('ninos', id); return id; }
 // la carpeta base solo se comprueba cuando hace falta (así cada petición hace pocas llamadas a Drive)
@@ -4774,12 +4782,18 @@ function mezclarCarpeta(de, a) { buscar(de).forEach(x => { const igual = buscar(
 function unificar(id) { const n = buscarTodo("name = '" + comillas(NOMBRE_CARPETA) + "' and mimeType = '" + CARPETA_MIME + "'").filter(f => f.id !== id);
   if (!n.length) return; n.forEach(o => { mezclarCarpeta(o.id, id); cambiar(o.id, { trashed: true }); }); props.deleteProperty('ninos'); }
 function borrarNino(r, id) { const d = carpetaNino(id, null, false); if (d) cambiar(d, { trashed: true }); props.deleteProperty('k:' + id); delete r.kids[id]; }
-function registro(b) { return leerJSON(b, 'dispositivos.json') || { devices: {}, kids: {} }; }
-function guardarRegistro(b, r) { const f = archivo(b, 'dispositivos.json'), t = JSON.stringify(r);
-  if (f) llamar('patch', SUBIR + '/' + f.id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8'); else crearArchivo(b, 'dispositivos.json', t); }
+// el registro se lee por su identificador recordado (una sola llamada a Drive)
+function registro(b) { const vacio = { devices: {}, kids: {} }; let id = props.getProperty('reg'), t = id ? contenido(id) : null;
+  if (t === null) { const f = archivo(b, 'dispositivos.json'); if (!f) return vacio; props.setProperty('reg', f.id); t = contenido(f.id); }
+  try { return JSON.parse(t) || vacio; } catch (e) { return vacio; } }
+function guardarRegistro(b, r) { const t = JSON.stringify(r), id = props.getProperty('reg');
+  if (id && llamar('patch', SUBIR + '/' + id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8') !== null) return;
+  const f = archivo(b, 'dispositivos.json'); if (f) { props.setProperty('reg', f.id); llamar('patch', SUBIR + '/' + f.id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8'); }
+  else props.setProperty('reg', crearArchivo(b, 'dispositivos.json', t)); }
 // cada petición se atiende de una en una (así nunca se crean dos carpetas iguales a la vez)
 const ya = fn => fn();
-function conBloqueo(fn) { const l = LockService.getScriptLock(); l.waitLock(25000); try { return fn(); } finally { l.releaseLock(); } }
+let bloqueado = false;
+function conBloqueo(fn) { if (bloqueado) return fn(); const l = LockService.getScriptLock(); l.waitLock(25000); bloqueado = true; try { return fn(); } finally { bloqueado = false; l.releaseLock(); } }
 
 function responder(p) {
   if (!p.key || p.key !== CLAVE) return { ok: false, err: 'key' };
@@ -4792,6 +4806,18 @@ function responder(p) {
     // niños marcados como borrados por una versión anterior de la app: se borran de verdad
     const viejos = Object.keys(r.kids).filter(k => r.kids[k].deleted); viejos.forEach(k => borrarNino(r, k)); if (viejos.length && !m.id) guardarRegistro(b(), r);
     if (m.id) { r.devices[m.id] = Object.assign(r.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(b(), r); } return { ok: true, reg: r }; });
+  // niño nuevo en una sola llamada: registro, carpeta, ajustes y estado (y no deja repetir nombre)
+  if (p.action === 'kidNew') { const k = p.kid || {}; if (!k.id || !k.name) return { ok: false, err: 'kid' };
+    const r = registro(b()), nm = x => String(x || '').trim().toLowerCase();
+    const dup = Object.keys(r.kids).map(i => r.kids[i]).filter(x => !x.deleted && nm(x.name) === nm(k.name))[0];
+    if (dup) return { ok: false, err: 'dup', data: JSON.stringify(dup) };
+    r.kids[k.id] = { id: k.id, name: k.name, created: Date.now() };
+    if (p.me && p.me.id) r.devices[p.me.id] = Object.assign(r.devices[p.me.id] || {}, p.me, { lastSeen: Date.now() });
+    guardarRegistro(b(), r); const dir = carpetaNino(k.id, k.name, true);
+    const c = { type: 'config', kid: k.id, ver: 1, ls: p.changes || {}, hist: [{ t: Date.now(), by: p.by || '?', dev: p.dev, desc: p.desc || '' }], cmds: [] };
+    crearArchivo(dir, 'config.json', JSON.stringify(c));
+    const d = JSON.parse(p.data); d.seq = 1; d.st = Date.now(); crearArchivo(dir, 'estado.json', JSON.stringify(d));
+    return { ok: true, reg: r, seq: 1, data: JSON.stringify(c) }; }
   if (p.action === 'kidSet') return ya(() => { const r = registro(b()), k = p.kid || {}; if (!k.id) return { ok: false, err: 'kid' };
     r.kids[k.id] = Object.assign(r.kids[k.id] || { created: Date.now() }, k); guardarRegistro(b(), r); carpetaNino(k.id, r.kids[k.id].name, true); return { ok: true, reg: r }; });
   const acciones = ['getState', 'getConfig', 'putState', 'patchConfig', 'versions', 'getVersion'];
@@ -4906,11 +4932,14 @@ function syncHandlers(){syBannerHandlers();const g=id=>document.getElementById(i
   const pick=g('syKidPick');if(pick)pick.onchange=()=>{const k=syKids().find(x=>x.id===pick.value);g('syKidName').value=k?k.name:(childName||'')};
   const use=g('syKidUse');if(use)use.onclick=async()=>{read();if(!navigator.onLine){msg(t.needNet);return}if(!SY.devName){msg(t.needName);return}
     const v=g('syKidPick').value,typed=g('syKidName').value.trim(),name=typed||(v==='new'?childName||t.kidDefault:'');
-    try{if(v==='new'){await syHello();const nm=x=>(x||'').trim().toLowerCase(),dk=syKids().find(k=>nm(k.name)===nm(name));
+    use.disabled=true;msg(t.working);
+    try{if(v==='new'){const nm=x=>(x||'').trim().toLowerCase(),dk=syKids().find(k=>nm(k.name)===nm(name));
         // no se crean dos niños con el mismo nombre: se propone elegir el que ya existe
         if(dk){g('syKidPick').value=dk.id;g('syKidName').value=dk.name;msg(t.kidDup(dk.name));return}
-        const empty=SY.prevRole==='parent';if(empty&&!confirm(t.askNewEmpty))return;await syCreateKid(name,empty);SY.prevRole='';sySave()}
-      else{const k=syKids().find(x=>x.id===v);if(v!==SY.kid){if(!confirm(t.askContinue(k?k.name:name)))return;await syContinueKid(v,k?k.name:name)}
+        const empty=SY.prevRole==='parent';if(empty&&!confirm(t.askNewEmpty)){use.disabled=false;msg('');return}
+        try{await syCreateKid(name,empty)}catch(e){if(e.message==='dup'&&e.kid){await syHello().catch(()=>{});syRefreshPanel(true);g('syKidPick').value=e.kid.id;g('syKidName').value=e.kid.name;msg(t.kidDup(e.kid.name));return}throw e}
+        SY.prevRole='';sySave()}
+      else{const k=syKids().find(x=>x.id===v);if(v!==SY.kid){if(!confirm(t.askContinue(k?k.name:name))){use.disabled=false;msg('');return}await syContinueKid(v,k?k.name:name)}
         if(k&&typed&&typed!==k.name){await syCall({action:'kidSet',kid:{id:v,name:typed}});SY.kidName=typed;sySave()}}
       msg(t.saved)}catch(e){msg(t.stErr(String(e.message||e)))}const m0=(document.getElementById('syMsg')||{}).textContent;syRefreshPanel(true);msg(m0)};
   // borrar un niño de la lista (sus datos se quedan en su carpeta del Drive); no se puede si un aparato lo está usando
