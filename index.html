@@ -442,6 +442,12 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .sgcard{background:#FFFFFF;border:4px solid var(--ink);border-radius:28px;padding:14px 18px 16px;box-shadow:0 10px 30px rgba(31,42,68,.3);text-align:center;position:relative}
 .sgpic{font-size:2.6rem;line-height:1;min-width:96px;min-height:76px;padding:6px 18px;border-radius:22px}.sgyes{background:#2EAD5B;color:#fff}.btn.alt.sgno{background:#FFE3DE}
 .bkbanner{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:80;width:min(94vw,620px);background:#E7F8EE;border:3px solid #2EAD5B;border-radius:18px;padding:10px 12px 10px 16px;display:flex;gap:10px;align-items:center;font:600 1rem Nunito,sans-serif;box-shadow:0 8px 24px rgba(31,42,68,.25)}.bkbanner.bad{background:#FFE9E4;border-color:#E4572E}.bkbanner span{flex:1}
+.agoff{opacity:.25!important;pointer-events:none!important;filter:grayscale(.7)}.aglock{opacity:.5;pointer-events:none!important}.agwait{pointer-events:none!important}
+.agshow{animation:agshow 1.1s ease-in-out infinite;box-shadow:0 0 0 6px #FFC93C,0 0 22px 6px rgba(255,201,60,.8)!important;position:relative;z-index:2}
+g.agoff{filter:none!important;opacity:.22!important}
+g.agshow,.czcard.agshow{box-shadow:none!important;animation:agglow 1.1s ease-in-out infinite}
+@keyframes agshow{50%{box-shadow:0 0 0 10px #FFC93C,0 0 34px 12px rgba(255,201,60,.95)}}@keyframes agglow{50%{filter:drop-shadow(0 0 12px #FFB020) drop-shadow(0 0 4px #FFB020)}}
+.fruits span.agcount{display:inline-block;transform:scale(1.3);filter:drop-shadow(0 0 8px #FFB020);transition:transform .25s}
 .sgowl{position:absolute;left:-14px;top:-30px;font-size:3.2rem}.sgq{font:800 1.35rem "Baloo 2",sans-serif;margin:4px 0 2px}.sgact{font-size:3.6rem;line-height:1.1;margin-bottom:8px}
 .sgrow{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:center;padding:5px 10px;border-radius:14px;background:var(--sky);margin:4px 0}
 .sgpr .mode{font-size:.82rem;padding:5px 9px}.sgmin{font-size:.9rem;white-space:nowrap}.sgmin select{font-size:.9rem;max-width:150px}.sgrest.off{opacity:.4;filter:grayscale(1)}.sgoffnote{font-weight:700}
@@ -654,6 +660,16 @@ const T={
 <li><b>Si lo que más necesita está oculto hoy o en 🚫:</b> propone otra actividad visible que trabaje lo mismo (por ejemplo Letras o Decir en lugar de Escribir ABC) y lo dice en el motivo. Algunas actividades se abren directamente en el juego o nivel que más necesita (Comparar, Componer, ¿Dónde está?).</li>
 <li><b>Qué configuras</b> (⚙️ Ajustes → 💡 Sugerencias): activarlas o no; si sugiere al abrir la app; el tiempo general; qué hacer cuando toca 👎; qué priorizar (🎈 / ⚖️ / 🎯); y en cada actividad su ⏱️ tiempo y si es ⭐ Reforzar, Normal o 🚫 No sugerir.</li>
 <li><b>Dónde ves el resultado:</b> en «📅 Actividad» están las últimas sugerencias con su motivo y si las aceptó, el total aceptado, lo que sugeriría ahora mismo y un aviso cuando algo que necesita refuerzo está oculto o en 🚫. Estos ajustes y el registro se guardan en la copia de seguridad.</li></ul>
+<h4>🧠 Ayuda cuando falla</h4>
+<ul><li><b>Para qué:</b> que no toque una opción tras otra hasta acertar (así casi no aprende) y ayudarle de verdad cuando no sabe la respuesta.</li>
+<li><b>Si no lo sabe</b> (según su seguimiento: letras, números, palabras o ejercicios que todavía falla, o algo nuevo): al primer fallo la respuesta correcta se ilumina, las demás se apagan y la voz dice una frase completa con el contexto. Por ejemplo: «Lola come un pescado», «Mira: uno, dos, tres. Hay 3 manzanas», «Esta es la letra B, como en banano» o «El gato está debajo de la mesa». Cuando termina la frase, toca la respuesta y sigue. Esa letra, número o palabra vuelve a salir dos preguntas después.</li>
+<li><b>Menos opciones</b> en lo que más le cuesta: 3 en vez de 4, o 2 si le cuesta mucho, hasta que empiece a acertar.</li>
+<li><b>Si lo sabe pero va con prisa</b> (falla algo que suele acertar y toca en menos de un segundo): las opciones se ponen grises un segundo, la voz dice «Escucha bien», repite la pregunta y las opciones cambian de sitio. Si vuelve a fallar, se le enseña la respuesta como arriba.</li>
+<li><b>La estrella ⭐ y el «¡Bravo!»</b> solo se ganan acertando a la primera. Si acierta después de fallar oye un «Eso es» tranquilo: sin reproches ni sonidos de error.</li>
+<li><b>El búho 🦉:</b> si adivina en 3 preguntas seguidas, dice con calma «Despacito: primero mira bien y luego toca». Si sigue adivinando, propone otra actividad (si las sugerencias están activadas).</li>
+<li><b>Dónde se aplica:</b> Contar, Orden, Escuchar, Colores, Formas, Objetos, Patrones, Letras, Cuentos, Componer (menos «Tantos como»), Comparar (menos ordenar del nivel difícil) y Dónde está (menos «Ponlo»). No cambia Poner, Decir, Parejas, Escribir 123, Escribir ABC, Trazos, Laberintos, Dibujar, Colorear ni Piano.</li>
+<li><b>Seguimiento:</b> como siempre, solo cuenta el primer intento. En «📅 Actividad» ves qué % de preguntas resuelve por descarte en cada actividad; en «🔢 Números y letras» y «🧸 Palabras», en qué adivina más (suele ser lo que todavía no sabe).</li>
+<li>Se activa o desactiva en «⚙️ Ajustes → 🗓️ Actividades». Se guarda en la copia de seguridad.</li></ul>
 <h4>📱 Pantalla encendida</h4>
 <p>La tablet oscurece y apaga la pantalla si nadie la toca durante un rato. En «⚙️ Ajustes → 📱 Pantalla» puedes evitarlo mientras se usa la app: «Sí, mientras juega» (recomendado) la mantiene encendida mientras el niño toca la pantalla y la suelta tras 2 minutos sin tocar, para no gastar batería si deja la tablet; «Siempre que la app esté abierta»; o «No», como el resto de la tablet. Solo funciona con la app abierta y a la vista (instalada o en Chrome, no dentro de la vista previa). Al salir de la app, o cuando se acaba el tiempo del día (pantalla 🌙), la tablet vuelve a su comportamiento normal y puede apagarse sola.</p>
 <h4>💾 Copia de seguridad</h4>
@@ -768,6 +784,16 @@ const T={
 <li><b>If what they need most is hidden today or set to 🚫:</b> it suggests another visible activity that practises the same (for example Letters or Say instead of Write ABC) and says so in the reason. Some activities open directly in the game or level they need most (Comparing, Number bonds, Where is it?).</li>
 <li><b>What you set</b> (⚙️ Settings → 💡 Suggestions): on or off; whether to suggest when the app opens; the general time; what to do when they tap 👎; what to prioritise (🎈 / ⚖️ / 🎯); and for each activity its ⏱️ time and whether it is ⭐ Practise, Normal or 🚫 Don’t suggest.</li>
 <li><b>Where you see the results:</b> “📅 Activity” shows the latest suggestions with their reason and whether they were accepted, the total accepted, what it would suggest right now and a warning when something needing practice is hidden or set to 🚫. These settings and the log are included in the backup.</li></ul>
+<h4>🧠 Help after a mistake</h4>
+<ul><li><b>Why:</b> so she doesn’t tap one option after another until it works (she hardly learns that way), and to really help her when she doesn’t know the answer.</li>
+<li><b>If she doesn’t know it</b> (from her tracking: letters, numbers, words or exercises she still gets wrong, or something new): after the first mistake the right answer lights up, the others fade and the voice says a full sentence with the context. For example: “Lola eats a fish”, “Look: one, two, three. There are 3 apples”, “This is the letter B, as in banana” or “The cat is under the table”. When the sentence ends she taps the answer and carries on. That letter, number or word comes back two questions later.</li>
+<li><b>Fewer options</b> for what she finds hardest: 3 instead of 4, or 2 if it is very hard, until she starts getting it right.</li>
+<li><b>If she knows it but rushes</b> (gets wrong something she usually gets right, tapping in under a second): the options go grey for a second, the voice says “Listen carefully”, repeats the question and the options move around. If she gets it wrong again, the answer is shown as above.</li>
+<li><b>The star ⭐ and “Well done!”</b> are only earned on the first try. If she gets it right after a mistake she hears a calm “That’s it”: no telling off, no error sounds.</li>
+<li><b>The owl 🦉:</b> if she guesses on 3 questions in a row, it calmly says “Slowly: look carefully first, then tap”. If she keeps guessing, it suggests another activity (if suggestions are on).</li>
+<li><b>Where it applies:</b> Count, Order, Listen, Colors, Shapes, Objects, Patterns, Letters, Stories, Bonds (except “As many as”), Compare (except ordering at the hard level) and Where is it (except “Put it”). Put, Say it, Pairs, Write 123, Write ABC, Lines, Mazes, Draw, Coloring and Piano don’t change.</li>
+<li><b>Tracking:</b> as always, only the first try counts. In “📅 Activity” you can see the % of questions solved by elimination in each activity; in “🔢 Numbers and letters” and “🧸 Words”, where she guesses most (usually what she doesn’t know yet).</li>
+<li>Turn it on or off in “⚙️ Settings → 🗓️ Activities”. It is saved in the backup.</li></ul>
 <h4>📱 Keep screen on</h4>
 <p>The tablet dims and turns off the screen if nobody touches it for a while. In “⚙️ Settings → 📱 Screen” you can prevent this while the app is in use: “Yes, while playing” (recommended) keeps it on while the child touches the screen and releases it after 2 minutes without touching, so the battery isn’t wasted if the tablet is left alone; “Whenever the app is open”; or “No”, like the rest of the tablet. It only works with the app open and on screen (installed or in Chrome, not inside the preview). When leaving the app, or when today’s time is over (🌙 screen), the tablet goes back to normal and can turn itself off.</p>
 <h4>💾 Backup</h4>
@@ -882,6 +908,16 @@ const T={
 <li><b>Si ce dont il a le plus besoin est masqué aujourd’hui ou sur 🚫 :</b> elle propose une autre activité visible qui travaille la même chose (par exemple Lettres ou Dis-le au lieu d’Écrire ABC) et l’indique dans la raison. Certaines activités s’ouvrent directement sur le jeu ou le niveau le plus utile (Comparer, Composer, Où est-il ?).</li>
 <li><b>Ce que vous réglez</b> (⚙️ Réglages → 💡 Suggestions) : activer ou non ; suggérer à l’ouverture ; le temps général ; que faire quand il touche 👎 ; quelle priorité (🎈 / ⚖️ / 🎯) ; et pour chaque activité son temps ⏱️ et si elle est ⭐ Renforcer, Normal ou 🚫 Ne pas suggérer.</li>
 <li><b>Où voir le résultat :</b> dans « 📅 Activité », les dernières suggestions avec leur raison et si elles ont été acceptées, le total accepté, ce que l’app suggérerait maintenant et un avertissement quand quelque chose qui a besoin de renforcement est masqué ou sur 🚫. Ces réglages et l’historique sont inclus dans la sauvegarde.</li></ul>
+<h4>🧠 Aide quand il se trompe</h4>
+<ul><li><b>Pourquoi :</b> pour qu’il ne touche pas un choix après l’autre jusqu’à trouver (il n’apprend presque rien ainsi), et pour vraiment l’aider quand il ne connaît pas la réponse.</li>
+<li><b>S’il ne la connaît pas</b> (d’après son suivi : lettres, nombres, mots ou exercices qu’il rate encore, ou quelque chose de nouveau) : dès la première erreur, la bonne réponse s’allume, les autres s’éteignent et la voix dit une phrase complète avec le contexte. Par exemple : « Lola mange un poisson », « Regarde : un, deux, trois. Il y a 3 pommes », « Voici la lettre B, comme dans banane » ou « Le chat est sous la table ». Quand la phrase est finie, il touche la réponse et continue. Cette lettre, ce nombre ou ce mot revient deux questions plus tard.</li>
+<li><b>Moins de choix</b> pour ce qui lui est le plus difficile : 3 au lieu de 4, ou 2 si c’est très difficile, jusqu’à ce qu’il commence à réussir.</li>
+<li><b>S’il la connaît mais va trop vite</b> (il rate ce qu’il réussit d’habitude en touchant en moins d’une seconde) : les choix deviennent gris une seconde, la voix dit « Écoute bien », répète la question et les choix changent de place. S’il se trompe encore, la réponse lui est montrée comme ci-dessus.</li>
+<li><b>L’étoile ⭐ et le « Bravo ! »</b> ne se gagnent que du premier coup. S’il trouve après une erreur, il entend un « C’est ça » calme : pas de reproches ni de sons d’erreur.</li>
+<li><b>Le hibou 🦉 :</b> s’il devine 3 questions de suite, il dit calmement « Doucement : regarde bien d’abord, puis touche ». S’il continue à deviner, il propose une autre activité (si les suggestions sont activées).</li>
+<li><b>Où ça s’applique :</b> Compter, Ordre, Écoute, Couleurs, Formes, Objets, Suites, Lettres, Histoires, Composer (sauf « Autant que »), Comparer (sauf ranger au niveau difficile) et Où est-il (sauf « Place-le »). Rien ne change dans Mettre, Dis-le, Paires, Écrire 123, Écrire ABC, Graphisme, Labyrinthes, Dessiner, Colorier et Piano.</li>
+<li><b>Suivi :</b> comme toujours, seul le premier essai compte. Dans « 📅 Activité », vous voyez le % de questions résolues par élimination dans chaque activité ; dans « 🔢 Nombres et lettres » et « 🧸 Mots », là où il devine le plus (en général ce qu’il ne sait pas encore).</li>
+<li>S’active ou se désactive dans « ⚙️ Réglages → 🗓️ Activités ». C’est enregistré dans la sauvegarde.</li></ul>
 <h4>📱 Écran allumé</h4>
 <p>La tablette assombrit puis éteint l’écran si personne ne le touche pendant un moment. Dans « ⚙️ Réglages → 📱 Écran », vous pouvez l’éviter pendant l’utilisation de l’app : « Oui, pendant le jeu » (recommandé) le garde allumé tant que l’enfant touche l’écran et le relâche après 2 minutes sans toucher, pour ne pas vider la batterie si la tablette est laissée de côté ; « Tant que l’app est ouverte » ; ou « Non », comme le reste de la tablette. Cela ne fonctionne qu’avec l’app ouverte et affichée (installée ou dans Chrome, pas dans l’aperçu). En quittant l’app, ou quand le temps du jour est terminé (écran 🌙), la tablette reprend son comportement normal et peut s’éteindre seule.</p>
 <h4>💾 Sauvegarde</h4>
@@ -930,10 +966,188 @@ function saySeq(items,o={}){if(sgShown)return;const id=++seqId;try{speechSynthes
   next(0)}
 function say(t,o={}){if(sgShown&&!o.sg)return;seqId++;try{if(!o.keep)speechSynthesis.cancel();try{speechSynthesis.resume()}catch(e){}const u=new SpeechSynthesisUtterance(t),v=voiceFor(lang);u.lang=v?v.lang:defLang[lang];if(v)u.voice=v;tune(u,lang,o.rate||.9,o.pitch);speechSynthesis.speak(u)}catch(e){}}
 
-function win(btn,next){noteAns(true);btn.classList.add('right');score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)],cele=trackRight(),m=stage.querySelector('.msg');
+// ===== Ayuda al fallar (evitar tocar al azar) =====
+// Si no lo sabe: al primer fallo se le enseña la respuesta con su contexto (frase completa) y se le vuelve a preguntar poco después.
+// Si lo sabe pero va con prisa (toca enseguida o encadena toques): pausa corta, «Escucha bien» y las opciones cambian de sitio.
+// Estrella y «¡Bravo!» solo a la primera; si acierta después, un «Eso es» tranquilo. El búho interviene si adivina varias seguidas.
+let AG_ON=true;try{AG_ON=localStorage.getItem('peques-ayuda')!=='0'}catch(e){}
+const AG_T={
+ es:{ok:'Eso es.',listen:'Escucha bien.',owl:'Despacito: primero mira bien y luego toca.',look:'Mira:',
+   count:(n,w)=>`Hay ${n} ${w}.`,
+   order:(seq,gi,n)=>gi>0?`Después del ${seq[gi-1]} viene el ${n}.`:`Antes del ${seq[1]} va el ${n}.`,
+   hear:(w,n)=>`Has oído «${w}». Es este: el ${n}.`,
+   color:(c,ex)=>`Este es el ${c}, como ${ex}.`,
+   shape:(art,name,d)=>`${art.trim()==='la'?'Esta es la':'Este es el'} ${name}: ${d}.`,
+   obj:(n,pl)=>pl?`Aquí están ${n}.`:`Aquí está ${n}.`,
+   pat:(u,l,a)=>`Se repite: ${u}. Después de ${l} viene ${a}.`,
+   letter:(l,w)=>w?`Esta es la letra ${l}, como en ${w}.`:`Esta es la letra ${l}.`,
+   seqOrd:['Primero','Después','Luego','Al final'],
+   dice:(a,b,n)=>`${a} y ${b} son ${n}.`,
+   hide:(n,v,h)=>`Hay ${n}. Ves ${v}, así que debajo del vaso hay ${h}: ${v} y ${h} son ${n}.`,
+   cmpMore:(x,y)=>`Aquí hay ${x} y allí ${y}. ${x} es más que ${y}.`,cmpLess:(x,y)=>`Aquí hay ${x} y allí ${y}. ${x} es menos que ${y}.`,cmpEq:a=>`Hay ${a} en cada plato: hay los mismos.`,
+   plus:(n,d,r)=>d>0?`Había ${n} y ${d===1?'llega uno más':`llegan ${d} más`}: ahora hay ${r}.`:`Había ${n} y ${d===-1?'se va uno':`se van ${-d}`}: quedan ${r}.`,
+   czSize:(nm,g,adj)=>`${g==='f'?'Esta':'Este'} ${nm} es ${g==='f'?'la':'el'} más ${adj}.`,czEq:'Son iguales.',
+   heavy:'Este pesa más: la balanza baja de su lado.',light:'Este pesa menos: la balanza sube de su lado.',wEq:'Pesan lo mismo: la balanza no se mueve.',
+   full:(nm,g)=>`${g==='f'?'Esta':'Este'} ${nm} está ${g==='f'?'llena':'lleno'}.`,empty:(nm,g)=>`${g==='f'?'Esta':'Este'} ${nm} está ${g==='f'?'vacía':'vacío'}.`,
+   fMore:l=>`Aquí hay más ${l}.`,fLess:l=>`Aquí hay menos ${l}.`,fEq:'Hay lo mismo en los dos.',
+   opp:(nm,g,v,w)=>`${g==='f'?'Esta':'Este'} ${nm} ${v||'es'} ${w}.`,oppQ:w=>`Es este: ${w}.`,opp3:(a,b)=>`Lo contrario de ${a} es ${b}.`,
+   set:'🧠 Ayuda cuando falla',setLbl:'Ayudar cuando falla y evitar que toque al azar',yes:'Sí (recomendado)',no:'No',
+   setNote:'Si no sabe la respuesta, al primer fallo la app se la enseña con una frase completa («Lola come un pescado») y se la vuelve a preguntar poco después; en lo que le cuesta pone menos opciones. Si sí lo sabe pero toca deprisa, hace una pausa corta y cambia las opciones de sitio. La estrella solo se gana acertando a la primera. Explicación completa en «ℹ️ ¿Cómo funciona…?» (🧠).',
+   actT:'🧠 Preguntas resueltas por descarte',actNote:'Porcentaje de preguntas en las que tocó varias opciones hasta acertar o tocó deprisa al azar (desde que se activó la ayuda). Si una actividad sube mucho, puede que ese nivel sea difícil para ella o que esté cansada.',
+   actRow:(g,q)=>`${g} de ${q}`,none:'Todavía no hay datos.',itT:'🧠 Donde más adivina',itNote:'Lo que más resuelve por descarte: suele ser lo que todavía no sabe.'},
+ en:{ok:'That’s it.',listen:'Listen carefully.',owl:'Slowly: look carefully first, then tap.',look:'Look:',
+   count:(n,w)=>n===1?`There is 1 ${w}.`:`There are ${n} ${w}.`,
+   order:(seq,gi,n)=>gi>0?`After ${seq[gi-1]} comes ${n}.`:`${n} comes before ${seq[1]}.`,
+   hear:(w,n)=>`You heard “${w}”. It’s this one: ${n}.`,
+   color:(c,ex)=>`This is ${c}, like ${ex}.`,
+   shape:(art,name,d)=>`This is the ${name}: ${d}.`,
+   obj:(n,pl)=>pl?`Here are ${n}.`:`Here is ${n}.`,
+   pat:(u,l,a)=>`It repeats: ${u}. After ${l} comes ${a}.`,
+   letter:(l,w)=>w?`This is the letter ${l}, as in ${w}.`:`This is the letter ${l}.`,
+   seqOrd:['First','Then','Next','At the end'],
+   dice:(a,b,n)=>`${a} and ${b} make ${n}.`,
+   hide:(n,v,h)=>`There are ${n}. You see ${v}, so under the cup there ${h===1?'is 1':`are ${h}`}: ${v} and ${h} make ${n}.`,
+   cmpMore:(x,y)=>`Here there are ${x} and there ${y}. ${x} is more than ${y}.`,cmpLess:(x,y)=>`Here there are ${x} and there ${y}. ${x} is less than ${y}.`,cmpEq:a=>`There are ${a} on each plate: the same.`,
+   plus:(n,d,r)=>d>0?`There were ${n} and ${d===1?'one more came':`${d} more came`}: now there are ${r}.`:`There were ${n} and ${d===-1?'one went away':`${-d} went away`}: ${r} ${r===1?'is':'are'} left.`,
+   czSize:(nm,g,adj)=>`This ${nm} is ${adj}.`,czEq:'They are the same.',
+   heavy:'This one is heavier: the scales go down on its side.',light:'This one is lighter: the scales go up on its side.',wEq:'They weigh the same: the scales don’t move.',
+   full:nm=>`This ${nm} is full.`,empty:nm=>`This ${nm} is empty.`,
+   fMore:l=>`There is more ${l} here.`,fLess:l=>`There is less ${l} here.`,fEq:'There is the same in both.',
+   opp:(nm,g,v,w)=>`This ${nm} is ${w}.`,oppQ:w=>`It’s this one: ${w}.`,opp3:(a,b)=>`The opposite of ${a} is ${b}.`,
+   set:'🧠 Help after a mistake',setLbl:'Help after a mistake and stop random tapping',yes:'Yes (recommended)',no:'No',
+   setNote:'If she doesn’t know the answer, after the first mistake the app shows it with a full sentence (“Lola eats a fish”) and asks it again a little later; for what she finds hard it shows fewer options. If she knows it but taps too fast, it pauses briefly and moves the options around. The star is only earned on the first try. Full explanation in “ℹ️ How does … work?” (🧠).',
+   actT:'🧠 Questions solved by elimination',actNote:'Share of questions where she tapped several options until right or tapped too fast at random (since the help was turned on). If an activity goes up a lot, that level may be too hard or she may be tired.',
+   actRow:(g,q)=>`${g} of ${q}`,none:'No data yet.',itT:'🧠 Where she guesses most',itNote:'What she most often solves by elimination: usually what she doesn’t know yet.'},
+ fr:{ok:'C’est ça.',listen:'Écoute bien.',owl:'Doucement : regarde bien d’abord, puis touche.',look:'Regarde :',
+   count:(n,w)=>`Il y a ${n} ${w}.`,
+   order:(seq,gi,n)=>gi>0?`Après le ${seq[gi-1]}, il y a le ${n}.`:`Avant le ${seq[1]}, il y a le ${n}.`,
+   hear:(w,n)=>`Tu as entendu « ${w} ». C’est celui-ci : le ${n}.`,
+   color:(c,ex)=>`Voici ${/^[aeiouy]/.test(c)?'l’':'le '}${c}, comme ${ex}.`,
+   shape:(art,name,d)=>`Voici ${art}${name} : ${d}.`,
+   obj:(n,pl)=>`Voici ${n}.`,
+   pat:(u,l,a)=>`Ça se répète : ${u}. Après ${l}, il y a ${a}.`,
+   letter:(l,w)=>w?`Voici la lettre ${l}, comme dans ${w}.`:`Voici la lettre ${l}.`,
+   seqOrd:['D’abord','Ensuite','Puis','À la fin'],
+   dice:(a,b,n)=>`${a} et ${b}, ça fait ${n}.`,
+   hide:(n,v,h)=>`Il y en a ${n}. Tu en vois ${v}, donc il y en a ${h} sous le gobelet : ${v} et ${h}, ça fait ${n}.`,
+   cmpMore:(x,y)=>`Ici, il y en a ${x}, et là ${y}. ${x}, c’est plus que ${y}.`,cmpLess:(x,y)=>`Ici, il y en a ${x}, et là ${y}. ${x}, c’est moins que ${y}.`,cmpEq:a=>`Il y en a ${a} dans chaque assiette : c’est pareil.`,
+   plus:(n,d,r)=>d>0?`Il y en avait ${n} et ${d===1?'il en est arrivé un de plus':`il en est arrivé ${d} de plus`} : maintenant il y en a ${r}.`:`Il y en avait ${n} et ${d===-1?'il y en a un qui est parti':`il y en a ${-d} qui sont partis`} : il en reste ${r}.`,
+   czSize:(nm,g,adj)=>`${agDem(nm,g)} ${nm} est ${g==='f'?'la':'le'} plus ${adj}.`,czEq:'Ils sont pareils.',
+   heavy:'Celui-ci est le plus lourd : la balance descend de son côté.',light:'Celui-ci est le plus léger : la balance monte de son côté.',wEq:'Ils pèsent pareil : la balance ne bouge pas.',
+   full:(nm,g)=>`${agDem(nm,g)} ${nm} est ${g==='f'?'pleine':'plein'}.`,empty:(nm,g)=>`${agDem(nm,g)} ${nm} est vide.`,
+   fMore:l=>`C’est ici qu’il y a le plus ${l}.`,fLess:l=>`C’est ici qu’il y a le moins ${l}.`,fEq:'Il y en a autant dans les deux.',
+   opp:(nm,g,v,w)=>`${agDem(nm,g)} ${nm} est ${w}.`,oppQ:w=>`C’est celui-ci : ${w}.`,opp3:(a,b)=>`Le contraire de ${a}, c’est ${b}.`,
+   set:'🧠 Aide quand il se trompe',setLbl:'Aider quand il se trompe et éviter qu’il touche au hasard',yes:'Oui (recommandé)',no:'Non',
+   setNote:'S’il ne connaît pas la réponse, dès la première erreur l’app la lui montre avec une phrase complète (« Lola mange un poisson ») et la lui redemande un peu plus tard ; pour ce qui lui est difficile, elle propose moins de choix. S’il la connaît mais touche trop vite, elle fait une courte pause et change les choix de place. L’étoile ne se gagne que du premier coup. Explication complète dans « ℹ️ Comment fonctionne… ? » (🧠).',
+   actT:'🧠 Questions résolues par élimination',actNote:'Part des questions où il a touché plusieurs choix jusqu’à trouver, ou touché trop vite au hasard (depuis l’activation de l’aide). Si une activité monte beaucoup, ce niveau est peut-être trop difficile ou il est fatigué.',
+   actRow:(g,q)=>`${g} sur ${q}`,none:'Pas encore de données.',itT:'🧠 Là où il devine le plus',itNote:'Ce qu’il résout le plus souvent par élimination : en général ce qu’il ne sait pas encore.'}};
+const AGT=()=>AG_T[lang];
+const agDem=(nm,g)=>g==='f'?'Cette':/^[aeiouyhéèêâîôû]/i.test(nm)?'Cet':'Ce';
+// Ejemplos para colores y descripciones de formas
+const AG_COLEX={red:['🍓','una fresa','a strawberry','une fraise'],yellow:['🐤','un pollito','a chick','un poussin'],green:['🐸','una rana','a frog','une grenouille'],blue:['🌊','el mar','the sea','la mer'],
+ purple:['🍇','las uvas','grapes','le raisin'],orange:['🥕','una zanahoria','a carrot','une carotte'],pink:['🐷','un cerdito','a piglet','un petit cochon'],brown:['🐻','un oso','a bear','un ours'],
+ black:['🌑','la noche','the night','la nuit'],white:['⛄','la nieve','snow','la neige'],gray:['🐘','un elefante','an elephant','un éléphant']};
+const AG_SHAPE={circle:['es redondo, como una pelota','it is round, like a ball','il est rond, comme un ballon'],square:['tiene 4 lados iguales','it has 4 equal sides','il a 4 côtés pareils'],
+ triangle:['tiene 3 lados y 3 puntas','it has 3 sides and 3 corners','il a 3 côtés et 3 pointes'],star:['tiene 5 puntas','it has 5 points','elle a 5 branches'],
+ heart:['tiene dos curvas arriba y una punta abajo','it has two bumps on top and a point at the bottom','il a deux bosses en haut et une pointe en bas']};
+const AG_PAT={'🔴':['rojo','red','rouge'],'🔵':['azul','blue','bleu'],'🟢':['verde','green','vert'],'🟡':['amarillo','yellow','jaune'],'🟣':['morado','purple','violet'],'🟠':['naranja','orange','orange'],
+ '🔺':['triángulo','triangle','triangle'],'🟦':['cuadrado','square','carré'],'⭐':['estrella','star','étoile'],'❤️':['corazón','heart','cœur'],'🔶':['rombo','diamond','losange'],
+ '🐶':['perro','dog','chien'],'🐱':['gato','cat','chat'],'🐰':['conejo','rabbit','lapin'],'🐸':['rana','frog','grenouille'],'🐷':['cerdo','pig','cochon'],'🐮':['vaca','cow','vache'],
+ '🍎':['manzana','apple','pomme'],'🍌':['banano','banana','banane'],'🍇':['uvas','grapes','raisin'],'🍓':['fresa','strawberry','fraise'],'🍊':['naranja','orange','orange'],'🍉':['sandía','watermelon','pastèque'],
+ '🚗':['carro','car','voiture'],'🚌':['bus','bus','bus'],'🚲':['bici','bike','vélo'],'✈️':['avión','plane','avion'],'🚂':['tren','train','train'],'⛵':['barco','boat','bateau']};
+const AG_FRUIT={'🍎':[['manzana','manzanas'],['apple','apples'],['pomme','pommes']],'🍌':[['banano','bananos'],['banana','bananas'],['banane','bananes']],
+ '🍓':[['fresa','fresas'],['strawberry','strawberries'],['fraise','fraises']],'🍊':[['naranja','naranjas'],['orange','oranges'],['orange','oranges']],
+ '🍇':[['racimo de uvas','racimos de uvas'],['bunch of grapes','bunches of grapes'],['grappe de raisin','grappes de raisin']],'🐤':[['pollito','pollitos'],['chick','chicks'],['poussin','poussins']],
+ '⭐':[['estrella','estrellas'],['star','stars'],['étoile','étoiles']],'🎈':[['globo','globos'],['balloon','balloons'],['ballon','ballons']]};
+const agLi=()=>({es:0,en:1,fr:2})[lang];
+const agFruit=(f,n)=>{const r=AG_FRUIT[f];return r?r[agLi()][n===1?0:1]:''};
+// Palabra de ejemplo para una letra (sale de la lista de objetos del idioma)
+const agLetCache={};
+function agLetWord(l){const k=lang+l;if(k in agLetCache)return agLetCache[k];const strip=s=>s.replace(/^\*/,'').replace(lang==='es'?/^(el|la|los|las) /:lang==='en'?/^the /:/^(le |la |les |l’|l')/,'');
+  const nrm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase();let r=null;
+  for(const o of objects){const w=strip(o[li[lang]]);if(nrm(w)[0]===l&&w.length<=10&&!/ /.test(w)){r=[w,o[1]];break}}
+  return agLetCache[k]=r}
+// ---- estado de la pregunta en curso ----
+let ag=null,agStreak=0,agQn=0;const agRQ={};
+function agReset(){ag={t0:now(),fails:0,cfg:null,rush:false,taught:false,done:false,last:0,item:null,known:false}}
+const agStK=s=>!!s&&s.a>=3&&s.f/s.a>=.7;
+// La actividad la llama al montar cada pregunta: right() = opción correcta, say() = frase con contexto, known() = si suele saberlo
+function agQ(cfg){if(!ag)agReset();ag.cfg=cfg;ag.t0=now();agQn++;const c=qCtx;
+  ag.item=c&&(c.kind==='num'||c.kind==='let')?{kind:c.kind,sk:c.sk,n:c.n}:c&&c.kind==='obj'?{kind:'obj',l:c.l,e:c.e}:null;
+  let k=false;try{if(cfg.known)k=!!cfg.known();else if(ag.item){const it=ag.item;if(it.kind==='obj')k=objRec(it.l,it.e).box>=2;else{const r=(it.kind==='let'?letRec(it.n):numRec(it.n))[it.sk];k=r.att>=3&&r.s>=70}}}catch(e){}
+  ag.known=k}
+const agOpts=()=>ag&&ag.cfg?[...stage.querySelectorAll(ag.cfg.opts||'.pick')]:[];
+const agOff=(e,on)=>{e.classList.toggle('agoff',on);if('disabled' in e&&e.tagName==='BUTTON')e.disabled=on};
+// ¿Ya falló en esta pregunta? (entonces no hay estrella)
+const agCalm=()=>AG_ON&&!!ag&&!!ag.cfg&&ag.fails>0;
+function agMiss(btn){if(!AG_ON||!ag||!ag.cfg||ag.done)return false;const t=now();ag.fails++;
+  const rush=t-ag.t0<1500||(ag.last&&t-ag.last<1000);ag.last=t;if(rush)ag.rush=true;
+  if(ag.fails===1&&rush&&ag.known&&!ag.taught)agSlow();else agTeach();return true}
+// Va con prisa en algo que sabe: pausa corta, «Escucha bien», opciones en otro sitio
+function agSlow(){const my=ag,els=agOpts();els.forEach(e=>{e.classList.add('aglock');if(e.tagName==='BUTTON')e.disabled=true});
+  if(!my.cfg.noShuffle)agShuffle(els);
+  const m=stage.querySelector('.msg');if(m)m.textContent='👂 '+AGT().listen;stopSpeech();say(AGT().listen);
+  setTimeout(()=>{if(ag!==my)return;els.forEach(e=>{e.classList.remove('aglock');if(e.tagName==='BUTTON'&&!e.classList.contains('agoff'))e.disabled=false});my.t0=now();
+    const b=['play','rq','hear'].map(id=>document.getElementById(id)).find(x=>x&&!x.hidden);if(b)b.click()},1100)}
+function agShuffle(els){if(els.length<2)return;const par=els[0].parentNode;if(!els.every(e=>e.parentNode===par))return;
+  let order=els,g=0;do{order=shuffle(els.slice())}while(order.every((e,i)=>e===els[i])&&g++<10);
+  const after=els[els.length-1].nextSibling;order.forEach(e=>par.insertBefore(e,after))}
+// No lo sabe: se le enseña la respuesta con su contexto; la correcta se puede tocar cuando termina la frase
+function agTeach(){const my=ag,c=my.cfg;my.taught=true;let right=null;try{right=c.right?c.right():null}catch(e){}
+  agOpts().forEach(e=>{if(e!==right)agOff(e,true)});
+  if(right){right.classList.add('agshow','agwait');if(right.tagName==='BUTTON')right.disabled=false}
+  let txt='';try{txt=c.say()||''}catch(e){}
+  const m=stage.querySelector('.msg');if(m&&txt){let e='';try{e=c.emoji?c.emoji():''}catch(x){}m.textContent=txt+(e?' '+e:'')}
+  stopSpeech();try{if(c.show)c.show()}catch(e){}
+  const unlock=()=>{if(ag===my&&right)right.classList.remove('agwait')};
+  let seq=null;try{seq=c.seq?c.seq(txt):null}catch(e){}
+  if(seq)saySeq(seq,{rate:.85,gap:250});else if(txt)say(txt,{rate:.85});
+  setTimeout(()=>afterSpeech(unlock,600,9000),300);
+  const it=my.item;if(it)agRQ[agRK(it)]={v:it.kind==='obj'?it.e:it.n,due:agQn+1}}
+// quita las marcas de ayuda (para preguntas con varios pasos, como ordenar la historia)
+function agClear(){stage.querySelectorAll('.agoff,.agshow,.agwait,.aglock').forEach(e=>{e.classList.remove('agoff','agshow','agwait','aglock');if(e.tagName==='BUTTON')e.disabled=false});if(ag)ag.taught=false}
+// ---- volver a preguntar lo enseñado (en la misma actividad) ----
+const agRK=it=>it.kind==='obj'?`obj:${it.l}:${current}`:`${it.kind}:${it.sk}:${current}`;
+function agTake(k,ok){const r=agRQ[k];if(!r||!AG_ON||agQn<r.due)return null;delete agRQ[k];return ok&&!ok(r.v)?null:r.v}
+// ---- menos opciones en lo que le cuesta ----
+function agN(kind,key,sk,def){if(!AG_ON)return def;let lv=0;try{
+  if(kind==='obj'){const o=objRec(lang,key),w=o.wrong||0;if(o.box===0&&w>=4)lv=2;else if(o.box===0&&w>=2)lv=1}
+  else{const r=(kind==='let'?letRec(key):numRec(key))[sk];if(r.att>=4&&r.s<30)lv=2;else if(r.att>=3&&r.s<50)lv=1}}catch(e){}
+  return Math.max(2,def-lv)}
+// ---- final de la pregunta: estadísticas y búho ----
+function agStats(){if(!P.ag)P.ag={a:{},it:{}};return P.ag}
+// devuelve 'owl' si toca el aviso del búho
+function agEnd(){if(!ag||!ag.cfg||ag.done)return null;ag.done=true;if(!AG_ON)return null;const g=ag.rush||ag.fails>=2;
+  if(!window.__guest){const s=agStats(),a=s.a[current]||(s.a[current]={q:0,g:0});a.q++;if(g){a.g++;if(ag.item){const it=ag.item,k=it.kind==='obj'?`obj:${it.l}:${it.e}`:`${it.kind}:${it.n}`;s.it[k]=(s.it[k]||0)+1}}}
+  agStreak=g?agStreak+1:0;
+  if(agStreak>=5){agStreak=0;let shown=false;try{shown=sgShow('guess')}catch(e){}if(!shown)return 'owl'}
+  else if(agStreak===3)return 'owl';
+  return null}
+// Mensaje al acertar después de fallar (sin estrella), o el aviso del búho
+function agCalmWin(m){const o=agEnd(),t=AGT(),txt=o==='owl'?'🦉 '+t.owl:t.ok;if(m)m.textContent=txt;say(o==='owl'?t.owl:t.ok);return o==='owl'?3600:1700}
+// ---- panel de padres ----
+function agSetSection(){const t=AGT();return `<h3>${t.set}</h3><div class="limdays sgset wkset"><label><span>${t.setLbl}</span><select id="agSel"><option value="1"${AG_ON?' selected':''}>${t.yes}</option><option value="0"${AG_ON?'':' selected'}>${t.no}</option></select></label></div><p class="pnote">${t.setNote}</p>`}
+function agHandlers(){const s=document.getElementById('agSel');if(s)s.onchange=()=>{AG_ON=s.value==='1';try{localStorage.setItem('peques-ayuda',AG_ON?'1':'0')}catch(e){}}}
+function agActSection(){const t=AGT(),a=(P.ag||{}).a||{},rows=Object.entries(a).filter(([id,x])=>x.q>0&&games[id]).sort((x,y)=>y[1].g/y[1].q-x[1].g/x[1].q);
+  return `<h3>${t.actT}</h3><p class="pnote">${t.actNote}</p>${rows.length?`<div class="pnlvs">${rows.map(([id,x])=>{const p=Math.round(x.g*100/x.q);
+    return `<div class="pnlv"><b>${esc(sgName(id))}</b><div class="lhbar"><i style="width:${p}%;background:${p>=40?'var(--red)':p>=20?'var(--yellow)':'var(--green)'}"></i></div><em>${p} %</em><em>${t.actRow(x.g,x.q)}</em></div>`}).join('')}</div>`:`<p class="pnote">${t.none}</p>`}`}
+function agItemsSection(kind){const t=AGT(),it=(P.ag||{}).it||{};let rows=Object.entries(it);
+  if(kind==='numlet')rows=rows.filter(([k])=>/^(num|let):/.test(k)).map(([k,v])=>[k.split(':')[1],v]);
+  else rows=rows.filter(([k])=>k.startsWith(`obj:${lang}:`)).map(([k,v])=>{const e=k.split(':')[2],o=objects.find(x=>x[1]===e);return [`${e} ${o?objName(o).name:''}`,v]});
+  rows.sort((a,b)=>b[1]-a[1]);if(!rows.length)return '';
+  return `<h3>${t.itT}</h3><p class="pnote">${t.itNote}</p><p>${rows.slice(0,10).map(([k,v])=>`<span class="chip">${esc(k)} ×${v}</span>`).join(' ')}</p>`}
+// Contar: la voz cuenta iluminando cada cosa y dice cuántas hay
+const agCountQ=(f,n)=>({say:()=>AGT().count(n,agFruit(f,n)),
+  seq:txt=>[[AGT().look,lang],...numWords[lang].slice(0,n).map((w,i)=>[w,lang,()=>{const s=stage.querySelectorAll('.fruits span')[i];if(s)s.classList.add('agcount')}]),[txt,lang]]});
+const agPatN=e=>(AG_PAT[e]||[e,e,e])[agLi()];
+function czAnsSize(dim,nm,g,more,eq){const T=AGT();if(eq)return T.czEq;const A=CZ_ADJ[dim],i=more?0:1;const adj=lang==='en'?A.en[i]:A[lang][i][g==='f'?1:0];return T.czSize(nm,g,adj)}
+
+function win(btn,next){const calm=agCalm();noteAns(true);btn.classList.add('right');
+  if(calm){trackRight();stage.querySelectorAll('.agwait').forEach(e=>e.classList.remove('agwait'));const d=agCalmWin(stage.querySelector('.msg'));stage.querySelectorAll('.pick').forEach(b=>b.disabled=true);setTimeout(()=>{if(current===next.name)next()},d);return}
+  agEnd();score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)],cele=trackRight(),m=stage.querySelector('.msg');
   if(cele){m.innerHTML=`${p} ⭐<br>🎉 ${cele}`;saySeq([[p,lang],[cele,lang]],{rate:.9,gap:250})}else{m.textContent=p+' ⭐';say(p)}stage.querySelectorAll('.pick').forEach(b=>b.disabled=true);setTimeout(()=>{if(current===next.name)next()},cele?3200:1400)}
-function miss(btn,ans){trackWrong(ans!==undefined?ans:(btn.dataset&&btn.dataset.v));btn.classList.remove('wrong');void btn.offsetWidth;btn.classList.add('wrong');stage.querySelector('.msg').textContent=L().miss;say(L().miss)}
-function frame(q,body){qCtx=null;qAns=false;stage.innerHTML=`<p class="q">${q}</p>${body}<p class="msg" aria-live="polite"></p><button class="btn alt" id="hear">${L().hear}</button>`;document.getElementById('hear').onclick=()=>say(q.replace(/<[^>]+>/g,''))}
+function miss(btn,ans){trackWrong(ans!==undefined?ans:(btn.dataset&&btn.dataset.v));btn.classList.remove('wrong');void btn.offsetWidth;btn.classList.add('wrong');if(agMiss(btn))return;stage.querySelector('.msg').textContent=L().miss;say(L().miss)}
+function frame(q,body){qCtx=null;qAns=false;agReset();stage.innerHTML=`<p class="q">${q}</p>${body}<p class="msg" aria-live="polite"></p><button class="btn alt" id="hear">${L().hear}</button>`;document.getElementById('hear').onclick=()=>say(q.replace(/<[^>]+>/g,''))}
 
 // Contar
 const fruits=['🍎','🍌','🍓','🍊','🍇','🐤','⭐','🎈'];
@@ -945,6 +1159,7 @@ function contarEscribir(){const n=pickNum('recog'),f=fruits[rand(fruits.length)]
   frame(L().qWrite,`<div class="fruits">${Array.from({length:n},()=>`<span>${f}</span>`).join('')}</div><input id="numIn" class="numbox" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="${L().qWrite}">`);
   trackStart({kind:'num',sk:'recog',n});
   const box=document.getElementById('numIn');
+  agQ(Object.assign(agCountQ(f,n),{right:null,opts:'#agNone',noShuffle:true,show:()=>{box.placeholder=String(n)}}));
   const check=()=>{if(done)return;const d=(box.value.match(/[1-9]/g)||[]).pop();if(!d){box.value='';return}box.value=d;
     if(+d===n){done=true;box.readOnly=true;win(box,contar)}else{miss(box,d);setTimeout(()=>{if(!done&&box.isConnected){box.value='';box.classList.remove('wrong');box.focus({preventScroll:true})}},800)}};
   box.addEventListener('input',check);
@@ -954,10 +1169,11 @@ document.addEventListener('keydown',e=>{const box=document.getElementById('numIn
   if(!box){const p=stage.querySelector(`.pick[data-v="${e.key}"]:not(:disabled)`);if(p){e.preventDefault();p.click()}return}
   if(document.activeElement===box)return;e.preventDefault();box.focus({preventScroll:true});box.value=e.key;box.dispatchEvent(new Event('input'))});
 function contarTocar(){const n=pickNum('recog'),f=fruits[rand(fruits.length)];
-  const opts=shuffle(numOptions(n,4));
+  const opts=shuffle(numOptions(n,agN('num',n,'recog',4)));
   frame(L().qCount,`<div class="fruits">${Array.from({length:n},()=>`<span>${f}</span>`).join('')}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);
   trackStart({kind:'num',sk:'recog',n});
-  stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>+b.dataset.v===n?win(b,contar):miss(b))}
+  stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>+b.dataset.v===n?win(b,contar):miss(b));
+  agQ(Object.assign(agCountQ(f,n),{right:()=>stage.querySelector(`.pick[data-v="${n}"]`)}))}
 
 // Poner: se muestra un número y hay que meter esa cantidad en la cesta
 function poner(){const n=pickNum('recog'),f=fruits[rand(fruits.length)];let k=0,done=false;
@@ -975,14 +1191,15 @@ function poner(){const n=pickNum('recog'),f=fruits[rand(fruits.length)];let k=0,
 
 // Orden: el número que falta
 function orden(){const n=pickNum('recog'),lo=Math.max(1,n-4),hi=Math.min(5,n),start=lo+rand(hi-lo+1),seq=[start,start+1,start+2,start+3,start+4],gi=n-start;
-  const opts=shuffle(numOptions(n,4));
+  const opts=shuffle(numOptions(n,agN('num',n,'recog',4)));
   frame(L().qMissing,`<div class="seq">${seq.map((v,i)=>i===gi?'<div class="tile gap" id="gap">?</div>':`<div class="tile">${v}</div>`).join('')}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);
   trackStart({kind:'num',sk:'recog',n});
-  stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{if(+b.dataset.v===n){const g=document.getElementById('gap');g.textContent=n;g.classList.add('filled');win(b,orden)}else miss(b)})}
+  stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{if(+b.dataset.v===n){const g=document.getElementById('gap');g.textContent=n;g.classList.add('filled');win(b,orden)}else miss(b)});
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().look+' '+seq.join(', ')+'. '+AGT().order(seq,gi,n)})}
 
 // Escuchar: se dice un número y hay que tocarlo
 const numWords={es:['uno','dos','tres','cuatro','cinco','seis','siete','ocho','nueve'],en:['one','two','three','four','five','six','seven','eight','nine'],fr:['un','deux','trois','quatre','cinq','six','sept','huit','neuf']};
-function sonidos(){const n=pickNum('recog'),set=numOptions(n,4,false).sort((a,b)=>a-b);
+function sonidos(){const n=pickNum('recog'),set=numOptions(n,agN('num',n,'recog',4),false).sort((a,b)=>a-b);
   // En inglés: inglés → francés → inglés → español, para unir la palabra nueva con las que ya conoce
   const play=()=>lang==='en'
     ?saySeq([[numWords.en[n-1],'en'],[numWords.fr[n-1],'fr'],[numWords.en[n-1],'en'],[numWords.es[n-1],'es']])
@@ -992,6 +1209,7 @@ function sonidos(){const n=pickNum('recog'),set=numOptions(n,4,false).sort((a,b)
   document.getElementById('play').onclick=play;
   trackStart({kind:'num',sk:'recog',n});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>+b.dataset.v===n?win(b,sonidos):miss(b));
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),noShuffle:true,say:()=>AGT().hear(numWords[lang][n-1],n)});
   later(play,300)}
 
 // Decir: se muestra un número y el niño lo dice en voz alta.
@@ -1044,6 +1262,7 @@ const colors={red:'var(--red)',yellow:'var(--yellow)',green:'var(--green)',blue:
 function colores(){const set=shuffle(Object.keys(colors)).slice(0,4),t=set[rand(4)];
   frame(L().qColor(L().colors[t]),`<div class="row">${set.map(c=>`<button class="pick color" aria-label="${L().colors[c]}" data-v="${c}" style="background:${colors[c]}"></button>`).join('')}</div>`);
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>b.dataset.v===t?win(b,colores):miss(b));
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${t}"]`),say:()=>AGT().color(L().colors[t],AG_COLEX[t][agLi()+1]),emoji:()=>AG_COLEX[t][0]});
   sayQuestion()}
 
 // Formas
@@ -1057,6 +1276,7 @@ const shapes={
 function formas(){const set=shuffle(Object.keys(shapes)).slice(0,3),t=set[rand(3)],[art,name]=L().shapes[t];
   frame(L().qShape(art,name),`<div class="row">${set.map(s=>`<button class="pick" aria-label="${L().shapes[s][1]}" data-v="${s}"><svg viewBox="0 0 56 56">${shapes[s]}</svg></button>`).join('')}</div>`);
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>b.dataset.v===t?win(b,formas):miss(b));
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${t}"]`),say:()=>AGT().shape(L().shapes[t][0],L().shapes[t][1],AG_SHAPE[t][agLi()])});
   sayQuestion()}
 
 // Objetos: se dice el nombre de un objeto y hay que tocarlo (para 5 años en adelante)
@@ -1577,12 +1797,13 @@ try{const v=localStorage.getItem('peques-objcat');if(objCats.some(c=>c[0]===v))o
 // nombre con artículo y si es plural (es: los/las, fr: les, en: marcado con *)
 function objName(o){const raw=o[li[lang]],pl=lang==='en'?raw.startsWith('*'):lang==='es'?/^(los|las) /.test(raw):/^les /.test(raw);return {name:raw.replace(/^\*/,''),pl}}
 function objetos(){const pool=objCat==='all'?objects:objects.filter(o=>o[0]===objCat);
-  const t=pickObject(pool,lang),set=objOptions(t,pool,lang),{name,pl}=objName(t);
+  const t=pickObject(pool,lang),set=objOptions(t,pool,lang,agN('obj',t[1],null,4)),{name,pl}=objName(t);
   frame(L().qObj(name,pl),`<div class="row">${set.map(o=>`<button class="pick obj" aria-label="${objName(o).name}" data-v="${o[1]}">${o[1]}</button>`).join('')}</div>`);
   trackStart({kind:'obj',l:lang,e:t[1],word:name});
   stage.insertAdjacentHTML('afterbegin',`<div class="modes catsel" role="group" aria-label="${L().catLabel}">${objCats.map(([k,ic])=>`<button class="mode" data-c="${k}" aria-pressed="${k===objCat}">${ic} ${L().cats[k]}</button>`).join('')}</div>`);
   stage.querySelectorAll('.catsel .mode').forEach(b=>b.onclick=()=>{objCat=b.dataset.c;try{localStorage.setItem('peques-objcat',objCat)}catch(e){}objetos()});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>b.dataset.v===t[1]?win(b,objetos):miss(b));
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${t[1]}"]`),say:()=>AGT().obj(name,pl),emoji:()=>t[1]});
   sayQuestion()}
 
 // Reconocedor de trazos a mano (números y letras).
@@ -1849,6 +2070,7 @@ function patrones(){const set=shuffle(patSets[rand(patSets.length)]),pat=patUnit
   stage.insertAdjacentHTML('afterbegin',`<div class="modes" role="group">${L().levelNames.map((n,i)=>`<button class="mode" data-lv="${i+1}" aria-pressed="${patLevel===i+1}">${n}</button>`).join('')}</div>`);
   stage.querySelectorAll('[data-lv]').forEach(b=>b.onclick=()=>{patLevel=+b.dataset.lv;try{localStorage.setItem('peques-patlevel',patLevel)}catch(e){}patrones()});
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{if(b.dataset.v===ans){const g=document.getElementById('gap');g.textContent=ans;g.classList.add('filled');win(b,patrones)}else miss(b)});
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${ans}"]`),say:()=>AGT().pat(unit.map(agPatN).join(', '),agPatN(seq[seq.length-1]),agPatN(ans))});
   sayQuestion()}
 
 // Letras: se dice una letra y hay que tocarla
@@ -1858,7 +2080,7 @@ const letterNames={
   fr:{A:'a',B:'bé',C:'cé',D:'dé',E:'e',F:'effe',G:'gé',H:'ache',I:'i',J:'ji',K:'ka',L:'elle',M:'emme',N:'enne',O:'o',P:'pé',Q:'ku',R:'erre',S:'esse',T:'té',U:'u',V:'vé',W:'double vé',X:'ixe',Y:'i grec',Z:'zède'}};
 let letCase='upper';
 try{const v=localStorage.getItem('peques-letcase');if(v==='lower'||v==='cursive')letCase=v}catch(e){}
-function letras(){const abc=Object.keys(letterNames[lang]),n=pickLetter('recog',abc),set=shuffle([...new Set([n,...letConfusions(n,abc,1),...shuffle(abc)])].slice(0,4));
+function letras(){const abc=Object.keys(letterNames[lang]),n=pickLetter('recog',abc),set=shuffle([...new Set([n,...letConfusions(n,abc,1),...shuffle(abc)])].slice(0,agN('let',n,'recog',4)));
   const show=c=>letCase==='upper'?c:c.toLowerCase();
   const play=()=>say(letterNames[lang][n],{rate:.75});
   frame(L().qLetter,`<button class="btn big" id="play">${L().playSound}</button><div class="row">${set.map(o=>`<button class="pick letter${letCase==='cursive'?' cursive':''}" data-v="${o}">${show(o)}</button>`).join('')}</div>`);
@@ -1868,6 +2090,7 @@ function letras(){const abc=Object.keys(letterNames[lang]),n=pickLetter('recog',
   document.getElementById('hear').hidden=true;
   document.getElementById('play').onclick=play;
   stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>b.dataset.v===n?win(b,letras):miss(b));
+  agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>{const w=agLetWord(n);return AGT().letter(n,w&&w[0])},seq:()=>{const w=agLetWord(n);return [[AGT().letter(letterNames[lang][n],w&&w[0]),lang]]},emoji:()=>{const w=agLetWord(n);return w?w[1]:''}});
   later(play,300)}
 // Con teclado: pulsar la letra también cuenta
 document.addEventListener('keydown',e=>{if(current!=='letras'||e.ctrlKey||e.metaKey||!/^[a-zñ]$/i.test(e.key))return;
@@ -1891,7 +2114,7 @@ const SKILLS=['recog','say','write'];
 function numRec(n){return P.num[n]||(P.num[n]={recog:{s:50,att:0},say:{s:50,att:0},write:{s:50,att:0},conf:{},weak:false})}
 const numScore=(n,sk)=>numRec(n)[sk].s;
 // Elige el número de la ronda: los que le cuestan salen más, nunca más de 2 veces seguidas el mismo
-function pickNum(sk){const last=P.recent[sk]||[];const w=[];
+function pickNum(sk){{const rq=agTake('num:'+sk+':'+current);if(rq!=null)return rq}const last=P.recent[sk]||[];const w=[];
   for(let n=1;n<=9;n++){const r=numRec(n)[sk];let x=r.att<3?3:1+(100-r.s)/25;
     if(last[0]===n&&last[1]===n)x=0;else if(last[0]===n)x*=0.4;w.push(x)}
   let t=Math.random()*w.reduce((a,b)=>a+b,0),n=1;for(;n<=9;n++){t-=w[n-1];if(t<=0)break}n=Math.min(n,9);
@@ -1923,7 +2146,7 @@ function writeOpen(){let n=Math.max(6,Math.min(26,P.letOpen||6));const ord=write
   while(n<26&&ord.slice(0,n).filter(writeLearning).length<=2)n++;
   if(n!==P.letOpen){P.letOpen=n;saveP()}return n}
 // Elige la letra de la ronda dentro de "pool": las que le cuestan salen más, nunca más de 2 veces seguidas
-function pickLetter(sk,pool){const rk='L'+sk,last=P.recent[rk]||[];
+function pickLetter(sk,pool){{const rq=agTake('let:'+sk+':'+current,v=>pool.includes(v));if(rq!=null)return rq}const rk='L'+sk,last=P.recent[rk]||[];
   const nl=nameLetters();
   const w=pool.map(l=>{const r=letRec(l)[sk];let x=r.att<3?3:1+(100-r.s)/25;if(sk!=='write'&&nl.includes(l))x*=2;if(last[0]===l&&last[1]===l)x=0;else if(last[0]===l)x*=0.4;return x});
   let t=Math.random()*w.reduce((a,b)=>a+b,0),i=0;for(;i<pool.length-1;i++){t-=w[i];if(t<=0)break}
@@ -1962,7 +2185,7 @@ const BOX_INT=[60e3,10*60e3,24*3600e3,3*24*3600e3,7*24*3600e3,21*24*3600e3];
 function objRec(l,e){const m=P.obj[l]||(P.obj[l]={});return m[e]||(m[e]={box:0,due:0,att:0,ok:0,seen:false})}
 const objState=(l,e)=>{const o=(P.obj[l]||{})[e];return !o||!o.seen?'new':o.box>=3?'known':'learning'};
 let sessionNew={};let lastObj=[];
-function pickObject(pool,l){const t=now(),st=e=>objState(l,e[1]);
+function pickObject(pool,l){{const rq=agTake('obj:'+l+':'+current,v=>pool.some(o=>o[1]===v));if(rq!=null)return pool.find(o=>o[1]===rq)}const t=now(),st=e=>objState(l,e[1]);
   const notRecent=pool.filter(o=>!lastObj.includes(o[1]));const P2=notRecent.length?notRecent:pool;
   const learning=P2.filter(o=>st(o)==='learning'),due=learning.filter(o=>objRec(l,o[1]).due<=t).sort((a,b)=>objRec(l,a[1]).due-objRec(l,b[1]).due);
   const review=P2.filter(o=>st(o)==='known'&&objRec(l,o[1]).due<=t),fresh=P2.filter(o=>st(o)==='new');
@@ -1976,11 +2199,11 @@ function pickObject(pool,l){const t=now(),st=e=>objState(l,e[1]);
   if(!pick&&canNew){pick=fresh[rand(fresh.length)];sessionNew[key]=introduced+1}
   if(!pick){const old=pool.filter(o=>st(o)!=='new'),old2=old.filter(o=>!lastObj.includes(o[1]));pick=(old2.length?old2:old.length?old:P2)[rand((old2.length?old2:old.length?old:P2).length)]}
   objRec(l,pick[1]).seen=true;lastObj=[pick[1],...lastObj].slice(0,2);return pick}
-function objOptions(target,pool,l){const conf=(P.objConf[l]||{})[target[1]]||{};
+function objOptions(target,pool,l,cnt=4){const conf=(P.objConf[l]||{})[target[1]]||{};
   const cs=Object.keys(conf).sort((a,b)=>conf[b]-conf[a]).map(e=>pool.find(o=>o[1]===e)||objects.find(o=>o[1]===e)).filter(Boolean).slice(0,2);
   const out=[target,...cs.filter(o=>o[1]!==target[1])];
-  for(const o of shuffle(pool))if(out.length<4&&!out.some(x=>x[1]===o[1]))out.push(o);
-  return shuffle(out)}
+  for(const o of shuffle(pool))if(out.length<cnt&&!out.some(x=>x[1]===o[1]))out.push(o);
+  return shuffle(out.slice(0,cnt))}
 
 // ---- Pantalla de progreso para padres (mantener pulsado 📊 dos segundos) ----
 function scoreColor(r){return r.att<3?'none':r.s>=75?'good':r.s>=45?'mid':'bad'}
@@ -2005,7 +2228,7 @@ const PTABS=['time','activity','numlet','words','settings'];
 const PSUBS=['kid','guest','acts','sugg','screen','data'],PSUB_T={es:['👧 Niño/a','👥 Invitado','🗓️ Actividades','💡 Sugerencias','📱 Pantalla','💾 Datos'],en:['👧 Child','👥 Guest','🗓️ Activities','💡 Suggestions','📱 Screen','💾 Data'],fr:['👧 Enfant','👥 Invité','🗓️ Activités','💡 Suggestions','📱 Écran','💾 Données']};
 let pSub='kid';try{const v=localStorage.getItem('peques-psub');if(PSUBS.includes(v))pSub=v}catch(e){}
 let pTab='time';try{const v=localStorage.getItem('peques-ptab');if(PTABS.includes(v))pTab=v}catch(e){}
-const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','📏':'numlet','📍':'numlet','🌀':'numlet','💾':'settings','🗓️':'settings','💡':'settings','📱':'settings','🧸':'words'};
+const HELP_TAB={'👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🧠':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','📏':'numlet','📍':'numlet','🌀':'numlet','💾':'settings','🗓️':'settings','💡':'settings','📱':'settings','🧸':'words'};
 function phelp(tab){const t=L(),parts=t.helpBody.split(/(?=<h4>)/).filter(s=>{const k=Object.keys(HELP_TAB).find(e=>s.startsWith('<h4>'+e));return k&&HELP_TAB[k]===tab});
   return parts.length?`<details class="phelp"${helpOpen?' open':''}><summary>${t.helpTitle}</summary><div class="phbody">${parts.join('')}</div></details>`:''}
 function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&document.getElementById('parents').hidden)pTab='time';
@@ -2040,7 +2263,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     <section class="ppane" data-pane="time"${pTab==='time'||window.__allPanes?'':' hidden'}>${phelp('time')}
     ${limitSection()}</section>
     <section class="ppane" data-pane="activity"${pTab==='activity'||window.__allPanes?'':' hidden'}>${phelp('activity')}
-    ${activitySection()}<div id="sgLogBox">${suggLogSection()}</div></section>
+    ${activitySection()}${agActSection()}<div id="sgLogBox">${suggLogSection()}</div></section>
     <section class="ppane" data-pane="numlet"${pTab==='numlet'||window.__allPanes?'':' hidden'}>${phelp('numlet')}
     <h3>${t.numbersTitle}</h3><p class="pnote">${t.legend}</p><div class="ptgrid">${numTiles}</div>
     <h3>${t.confTitle}</h3><p>${confs.length||nmir.length?[...confs.slice(0,6).map(([a,b,k])=>`<span class="chip">${t.askedGot(a,b)} ×${k}</span>`),...nmir.map(([n,k])=>`<span class="chip">${t.mirrorChip(n,k)}</span>`)].join(' '):t.nothingYet}</p>
@@ -2052,14 +2275,14 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     ${laberintoSection()}
     ${trazosSection()}
     ${pianoSection()}
-    </section>
+    ${agItemsSection('numlet')}</section>
     <section class="ppane" data-pane="words"${pTab==='words'||window.__allPanes?'':' hidden'}>${phelp('words')}
     <h3>${t.wordsTitle}</h3>
     <div class="modes" role="group">${['es','en','fr'].map(x=>`<button class="mode" data-pl="${x}" aria-pressed="${x===l}">${x==='es'?'Español':x==='en'?'English':'Français'}</button>`).join('')}</div>
     <p class="pnote">${t.tapCat}</p><div class="pcats">${cats}</div>
     <h3>${t.hardWords}</h3><p>${hard.length?hard.map(([o,r])=>`<span class="chip">${o[1]} ${o[li2[l]].replace(/^\*/,'')} ×${r.wrong}</span>`).join(' '):t.nothingYet}</p>
     <h3>${t.confTitle}</h3><p>${oc.length?oc.slice(0,6).map(([a,b2,k])=>`<span class="chip">${a} ${nameOf(a)} → ${b2} ${nameOf(b2)} ×${k}</span>`).join(' '):t.nothingYet}</p>
-    </section>
+    ${agItemsSection('words')}</section>
     <section class="ppane" data-pane="settings"${pTab==='settings'||window.__allPanes?'':' hidden'}>${phelp('settings')}
     <div class="modes psubs" role="tablist">${PSUBS.map((k,i)=>`<button class="mode" data-ps="${k}" aria-pressed="${k===pSub}">${PSUB_T[lang][i]}</button>`).join('')}</div>
     <div class="psub" data-psub="kid"${pSub==='kid'||window.__allPanes?'':' hidden'}><div class="pname"><label for="kidname">👧 ${t.nameLabel}</label><input id="kidname" maxlength="16" autocomplete="off" value="${childName.replace(/"/g,'&quot;')}"><button class="btn" id="namesave">${t.nameSave}</button><p class="pnote">${t.nameHint}</p></div></div>
@@ -2071,7 +2294,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     <h3>🗑️ ${t.resetBtn}</h3><div class="row" id="resetRow"><button class="btn alt" id="preset">🗑️ ${t.resetBtn}</button></div></div></section>
   </div>`;
   box.hidden=false;
-  limitHandlers(box);backupHandlers();accessHandlers();suggHandlers();wakeHandlers();
+  limitHandlers(box);backupHandlers();accessHandlers();suggHandlers();wakeHandlers();agHandlers();
   box.querySelectorAll('[data-ps]').forEach(b=>b.onclick=()=>{pSub=b.dataset.ps;try{localStorage.setItem('peques-psub',pSub)}catch(e){}
     box.querySelectorAll('[data-ps]').forEach(x=>x.setAttribute('aria-pressed',x===b));box.querySelectorAll('.psub').forEach(d=>d.hidden=d.dataset.psub!==pSub)});
   document.getElementById('namesave').onclick=()=>{childName=document.getElementById('kidname').value.trim().slice(0,16);try{localStorage.setItem('peques-name',childName)}catch(e){}nameIdx=0;if(!nameSeq().length){wMode='abc'}openParents();if(current==='escletras')escletras()};
@@ -2313,11 +2536,15 @@ function fitScene(){const sc=document.getElementById('sscene');if(!sc)return;sc.
   const de=document.documentElement,over=de.scrollHeight-window.innerHeight;
   if(over>0){const h=sc.getBoundingClientRect().height-over-6;sc.style.width=Math.max(220,h*1.6)+'px'}}
 let fitT=null;['resize','orientationchange'].forEach(ev=>window.addEventListener(ev,()=>{clearTimeout(fitT);fitT=setTimeout(fitScene,150)}));
+// Frase de respuesta de cada pregunta de los cuentos (se dice si falla, para que entienda la historia)
+const STORY_ANS={"0.0":{"es":"Lola es una gata.","en":"Lola is a cat.","fr":"Lola est une chatte."},"0.1":{"es":"Lola come un pescado.","en":"Lola eats a fish.","fr":"Lola mange un poisson."},"1.0":{"es":"Max es un perro.","en":"Max is a dog.","fr":"Max est un chien."},"1.1":{"es":"Max juega con una pelota roja.","en":"Max plays with a red ball.","fr":"Max joue avec une balle rouge."},"2.0":{"es":"Un conejo salta en el jardín.","en":"A rabbit hops in the garden.","fr":"Un lapin saute dans le jardin."},"2.1":{"es":"El conejo encuentra una zanahoria.","en":"The rabbit finds a carrot.","fr":"Le lapin trouve une carotte."},"3.0":{"es":"Hoy hace sol.","en":"Today it is sunny.","fr":"Aujourd’hui, il fait soleil."},"3.1":{"es":"Mia se pone su sombrero.","en":"Mia puts on her hat.","fr":"Mia met son chapeau."},"4.0":{"es":"Una rana verde vive en el lago.","en":"A green frog lives in the lake.","fr":"Une grenouille verte vit dans le lac."},"4.1":{"es":"La rana es verde.","en":"The frog is green.","fr":"La grenouille est verte."},"5.0":{"es":"Leo es un mono.","en":"Leo is a monkey.","fr":"Léo est un singe."},"5.1":{"es":"Leo encuentra un banano.","en":"Leo finds a banana.","fr":"Léo trouve une banane."},"6.0":{"es":"Hoy llueve mucho.","en":"Today it rains a lot.","fr":"Aujourd’hui, il pleut beaucoup."},"6.1":{"es":"Tom abre su paraguas azul.","en":"Tom opens his blue umbrella.","fr":"Tom ouvre son parapluie bleu."},"7.0":{"es":"Pepa es una gallina.","en":"Pepa is a hen.","fr":"Pépa est une poule."},"7.1":{"es":"Del huevo sale un pollito.","en":"A chick comes out of the egg.","fr":"Un poussin sort de l’œuf."},"8.0":{"es":"Nina tiene una torta grande.","en":"Nina has a big cake.","fr":"Nina a un grand gâteau."},"8.1":{"es":"Nina sopla las velas.","en":"Nina blows out the candles.","fr":"Nina souffle les bougies."},"9.0":{"es":"Un oso vive en el bosque.","en":"A bear lives in the forest.","fr":"Un ours vit dans la forêt."},"9.1":{"es":"El oso duerme en su cueva.","en":"The bear sleeps in his cave.","fr":"L’ours dort dans sa grotte."},"10.0":{"es":"Papá tiene un carro rojo.","en":"Dad has a red car.","fr":"Papa a une voiture rouge."},"10.1":{"es":"Van juntos a la playa.","en":"They go to the beach together.","fr":"Ils vont ensemble à la plage."},"11.0":{"es":"Nemo nada en el mar.","en":"Nemo swims in the sea.","fr":"Némo nage dans la mer."},"11.1":{"es":"El amigo de Nemo es un pulpo.","en":"Nemo’s friend is an octopus.","fr":"L’ami de Némo est une pieuvre."},"12.0":{"es":"Ana tiene un globo azul.","en":"Ana has a blue balloon.","fr":"Ana a un ballon bleu."},"12.1":{"es":"El globo es azul.","en":"The balloon is blue.","fr":"Le ballon est bleu."},"13.0":{"es":"Un elefante tiene calor.","en":"An elephant is hot.","fr":"Un éléphant a chaud."},"13.1":{"es":"El elefante va al río.","en":"The elephant goes to the river.","fr":"L’éléphant va à la rivière."},"14.0":{"es":"En el árbol hay una manzana roja.","en":"There is a red apple in the tree.","fr":"Dans l’arbre, il y a une pomme rouge."},"14.1":{"es":"Un gusano feliz se come la manzana.","en":"A happy worm eats the apple.","fr":"Un ver content mange la pomme."},"15.0":{"es":"Teo busca su osito.","en":"Teo is looking for his teddy bear.","fr":"Téo cherche son nounours."},"15.1":{"es":"El osito está debajo de la cama.","en":"The teddy bear is under the bed.","fr":"Le nounours est sous le lit."},"16.0":{"es":"Rosa es una vaca.","en":"Rosa is a cow.","fr":"Rosa est une vache."},"16.1":{"es":"Rosa nos da leche.","en":"Rosa gives us milk.","fr":"Rosa nous donne du lait."},"17.0":{"es":"Lucas hace un muñeco de nieve.","en":"Lucas makes a snowman.","fr":"Lucas fait un bonhomme de neige."},"17.1":{"es":"Lucas usa una zanahoria para la nariz.","en":"Lucas uses a carrot for the nose.","fr":"Lucas met une carotte pour le nez."},"18.0":{"es":"Una abeja vuela de flor en flor.","en":"A bee flies from flower to flower.","fr":"Une abeille vole de fleur en fleur."},"18.1":{"es":"La abeja hace miel.","en":"The bee makes honey.","fr":"L’abeille fait du miel."},"19.0":{"es":"El tren hace chu chu.","en":"The train goes choo choo.","fr":"Le train fait tchou tchou."},"19.1":{"es":"El tren llega a la ciudad.","en":"The train arrives in the city.","fr":"Le train arrive en ville."},"20.0":{"es":"Pipo es un pingüino.","en":"Pipo is a penguin.","fr":"Pipo est un pingouin."},"20.1":{"es":"Pipo vive en el hielo.","en":"Pipo lives on the ice.","fr":"Pipo vit sur la glace."},"21.0":{"es":"Mamá llena la tina de agua.","en":"Mom fills the bathtub with water.","fr":"Maman remplit la baignoire d’eau."},"21.1":{"es":"Mía juega con su pato de goma.","en":"Mia plays with her rubber duck.","fr":"Mia joue avec son canard en plastique."},"22.0":{"es":"El león es el rey de la selva.","en":"The lion is the king of the jungle.","fr":"Le lion est le roi de la jungle."},"22.1":{"es":"El león hace grrr.","en":"The lion goes grrr.","fr":"Le lion fait grrr."},"23.0":{"es":"Sofía planta una semilla.","en":"Sofia plants a seed.","fr":"Sofia plante une graine."},"23.1":{"es":"La flor es amarilla.","en":"The flower is yellow.","fr":"La fleur est jaune."},"24.0":{"es":"Por la mañana llega el bus.","en":"In the morning the bus arrives.","fr":"Le matin, le bus arrive."},"24.1":{"es":"Los niños van al colegio.","en":"The children go to school.","fr":"Les enfants vont à l’école."},"25.0":{"es":"Un caracol camina despacio.","en":"A snail walks slowly.","fr":"Un escargot avance lentement."},"25.1":{"es":"El caracol lleva su casa en la espalda.","en":"The snail carries its house on its back.","fr":"L’escargot porte sa maison sur son dos."},"26.0":{"es":"Ema recoge fresas rojas.","en":"Ema picks red strawberries.","fr":"Ema cueille des fraises rouges."},"26.1":{"es":"Ema come fresas con la abuela.","en":"Ema eats strawberries with Grandma.","fr":"Ema mange des fraises avec Mamie."},"27.0":{"es":"Es de noche.","en":"It is night.","fr":"C’est la nuit."},"27.1":{"es":"El búho está despierto.","en":"The owl is awake.","fr":"Le hibou est réveillé."},"28.0":{"es":"Hugo juega fútbol.","en":"Hugo plays soccer.","fr":"Hugo joue au foot."},"28.1":{"es":"Hugo patea el balón.","en":"Hugo kicks the ball.","fr":"Hugo tape dans le ballon."},"29.0":{"es":"La oruga come hojas.","en":"The caterpillar eats leaves.","fr":"La chenille mange des feuilles."},"29.1":{"es":"La oruga se convierte en una mariposa.","en":"The caterpillar becomes a butterfly.","fr":"La chenille devient un papillon."},"30.0":{"es":"Lía ve un caballo marrón.","en":"Lia sees a brown horse.","fr":"Lia voit un cheval marron."},"30.1":{"es":"Lía le da una zanahoria al caballo.","en":"Lia gives the horse a carrot.","fr":"Lia donne une carotte au cheval."},"31.0":{"es":"Papá lee un cuento.","en":"Dad reads a story.","fr":"Papa lit une histoire."},"31.1":{"es":"Nico cierra los ojos y se duerme.","en":"Nico closes his eyes and falls asleep.","fr":"Nico ferme les yeux et s’endort."},"32.0":{"es":"En el mar vive una ballena enorme.","en":"A huge whale lives in the sea.","fr":"Dans la mer vit une énorme baleine."},"32.1":{"es":"La ballena canta canciones.","en":"The whale sings songs.","fr":"La baleine chante des chansons."},"33.0":{"es":"Mamá compra un helado.","en":"Mom buys an ice cream.","fr":"Maman achète une glace."},"33.1":{"es":"Hace mucho calor.","en":"It is very hot.","fr":"Il fait très chaud."},"34.0":{"es":"Tina es una tortuga.","en":"Tina is a turtle.","fr":"Tina est une tortue."},"34.1":{"es":"Tina camina hasta el mar.","en":"Tina walks to the sea.","fr":"Tina marche jusqu’à la mer."},"35.0":{"es":"Primero Bruno pinta un sol amarillo.","en":"First Bruno paints a yellow sun.","fr":"En premier, Bruno peint un soleil jaune."},"35.1":{"es":"Después Bruno pinta una casa roja.","en":"Then Bruno paints a red house.","fr":"Ensuite, Bruno peint une maison rouge."},"36.0":{"es":"Lola juega con el ovillo de lana.","en":"Lola plays with the ball of yarn.","fr":"Lola joue avec la pelote de laine."},"36.1":{"es":"Mamá ayuda a Lola.","en":"Mom helps Lola.","fr":"Maman aide Lola."},"37.0":{"es":"Tom hace un castillo de arena.","en":"Tom builds a sandcastle.","fr":"Tom fait un château de sable."},"37.1":{"es":"Tom encuentra una concha bonita.","en":"Tom finds a pretty seashell.","fr":"Tom trouve un joli coquillage."},"38.0":{"es":"Max tiene un hueso.","en":"Max has a bone.","fr":"Max a un os."},"38.1":{"es":"Max guarda el hueso en un hoyo en el jardín.","en":"Max hides the bone in a hole in the garden.","fr":"Max cache l’os dans un trou dans le jardin."},"39.0":{"es":"Mía y papá hacen ponqués.","en":"Mia and Dad bake cupcakes.","fr":"Mia et papa font des petits gâteaux."},"39.1":{"es":"Ponen harina, huevos y leche en la mezcla.","en":"They put flour, eggs and milk in the mix.","fr":"Ils mettent la farine, les œufs et le lait dans le mélange."},"40.0":{"es":"El gato no puede bajar del árbol.","en":"The cat can’t get down from the tree.","fr":"Le chat ne peut pas descendre de l’arbre."},"40.1":{"es":"Los bomberos traen una escalera.","en":"The firefighters bring a ladder.","fr":"Les pompiers apportent une échelle."},"41.0":{"es":"Leo va al parque con la abuela.","en":"Leo goes to the park with Grandma.","fr":"Léo va au parc avec Mamie."},"41.1":{"es":"El paraguas es amarillo.","en":"The umbrella is yellow.","fr":"Le parapluie est jaune."},"42.0":{"es":"El conejo se duerme bajo un árbol.","en":"The rabbit falls asleep under a tree.","fr":"Le lapin s’endort sous un arbre."},"42.1":{"es":"La tortuga gana la carrera.","en":"The turtle wins the race.","fr":"La tortue gagne la course."},"43.0":{"es":"Primero compran tomates rojos.","en":"First they buy red tomatoes.","fr":"En premier, elles achètent des tomates rouges."},"43.1":{"es":"Sara quiere una manzana.","en":"Sara wants an apple.","fr":"Sara veut une pomme."},"44.0":{"es":"El pájaro pone tres huevos.","en":"The bird lays three eggs.","fr":"L’oiseau pond trois œufs."},"44.1":{"es":"Los huevos son azules.","en":"The eggs are blue.","fr":"Les œufs sont bleus."},"45.0":{"es":"Pablo hace el cohete con una caja.","en":"Pablo makes the rocket with a box.","fr":"Pablo fait la fusée avec un carton."},"45.1":{"es":"Pablo imagina que vuela hasta la luna.","en":"Pablo imagines he flies to the moon.","fr":"Pablo imagine qu’il vole jusqu’à la lune."},"46.0":{"es":"Nina visita la granja del abuelo.","en":"Nina visits Grandpa’s farm.","fr":"Nina va à la ferme de Papi."},"46.1":{"es":"Nina pasea en el tractor.","en":"Nina rides on the tractor.","fr":"Nina se promène en tracteur."},"47.0":{"es":"Dentro de la caja hay un tren de juguete.","en":"Inside the box there is a toy train.","fr":"Dans la boîte, il y a un petit train."},"47.1":{"es":"Teo le da las gracias a su tía.","en":"Teo says thank you to his aunt.","fr":"Téo dit merci à sa tante."},"48.0":{"es":"Llevan una caña de pescar.","en":"They bring a fishing rod.","fr":"Ils prennent une canne à pêche."},"48.1":{"es":"Lucas devuelve el pez al agua.","en":"Lucas puts the fish back in the water.","fr":"Lucas remet le poisson dans l’eau."},"49.0":{"es":"Ema pone un frijol en el vaso.","en":"Ema puts a bean in the cup.","fr":"Ema met un haricot dans le verre."},"49.1":{"es":"Ema deja el vaso cerca de la ventana.","en":"Ema leaves the cup near the window.","fr":"Ema laisse le verre près de la fenêtre."},"50.0":{"es":"El cerdito salta en un charco de barro.","en":"The piglet jumps in a mud puddle.","fr":"Le petit cochon saute dans une flaque de boue."},"50.1":{"es":"El cerdito se lava en el río.","en":"The piglet washes in the river.","fr":"Le petit cochon se lave dans la rivière."},"51.0":{"es":"Sofía viaja en un avión grande.","en":"Sofia travels on a big plane.","fr":"Sofia voyage dans un grand avion."},"51.1":{"es":"Por la ventana, Sofía ve las nubes.","en":"Through the window, Sofia sees the clouds.","fr":"Par la fenêtre, Sofia voit les nuages."},"52.0":{"es":"El zorro tiene hambre.","en":"The fox is hungry.","fr":"Le renard a faim."},"52.1":{"es":"El zorro quiere comer uvas.","en":"The fox wants to eat grapes.","fr":"Le renard veut manger des raisins."},"53.0":{"es":"Primero arman la carpa.","en":"First they set up the tent.","fr":"D’abord, ils montent la tente."},"53.1":{"es":"En el cielo miran las estrellas.","en":"They look at the stars in the sky.","fr":"Ils regardent les étoiles dans le ciel."},"54.0":{"es":"A Hugo se le cae un diente.","en":"Hugo’s tooth falls out.","fr":"La dent de Hugo tombe."},"54.1":{"es":"En la mañana, Hugo encuentra una moneda.","en":"In the morning, Hugo finds a coin.","fr":"Le matin, Hugo trouve une pièce."},"55.0":{"es":"La mariquita tiene cinco puntos.","en":"The ladybug has five spots.","fr":"La coccinelle a cinq points."},"55.1":{"es":"Una gota de lluvia cae en la hoja.","en":"A raindrop falls on the leaf.","fr":"Une goutte de pluie tombe sur la feuille."},"56.0":{"es":"Nico se pone su mochila nueva.","en":"Nico puts on his new backpack.","fr":"Nico met son nouveau cartable."},"56.1":{"es":"Nico juega con una niña llamada Ana.","en":"Nico plays with a girl named Ana.","fr":"Nico joue avec une fille qui s’appelle Ana."},"57.0":{"es":"A Coco le duele una muela.","en":"Coco has a toothache.","fr":"Coco a mal aux dents."},"57.1":{"es":"Coco tenía un caramelo pegado.","en":"A candy was stuck in Coco’s mouth.","fr":"Un bonbon était collé dans la bouche de Coco."},"58.0":{"es":"Hace mucho viento.","en":"It is very windy.","fr":"Il y a beaucoup de vent."},"58.1":{"es":"Ana sostiene la cuerda de la cometa.","en":"Ana holds the kite string.","fr":"Ana tient la ficelle du cerf-volant."},"59.0":{"es":"Pepe es un panda.","en":"Pepe is a panda.","fr":"Pépé est un panda."},"59.1":{"es":"Al final, Pepe se duerme otra vez.","en":"At the end, Pepe falls asleep again.","fr":"À la fin, Pépé se rendort."},"60.0":{"es":"Leo pone salsa de tomate.","en":"Leo puts on tomato sauce.","fr":"Léo met la sauce tomate."},"60.1":{"es":"Sara pone queso por encima.","en":"Sara puts cheese on top.","fr":"Sara met du fromage dessus."},"61.0":{"es":"El perro busca la oveja.","en":"The dog looks for the sheep.","fr":"Le chien cherche le mouton."},"61.1":{"es":"La oveja está detrás de una roca.","en":"The sheep is behind a rock.","fr":"Le mouton est derrière un rocher."},"62.0":{"es":"Mía toca el tambor.","en":"Mia plays the drum.","fr":"Mia joue du tambour."},"62.1":{"es":"Leo toca la guitarra.","en":"Leo plays the guitar.","fr":"Léo joue de la guitare."},"63.0":{"es":"Gina es una jirafa muy alta.","en":"Gina is a very tall giraffe.","fr":"Gina est une girafe très grande."},"63.1":{"es":"Gina baja hojas para sus amigos.","en":"Gina brings down leaves for her friends.","fr":"Gina fait descendre des feuilles pour ses amis."},"64.0":{"es":"Lucas busca su otra media roja.","en":"Lucas is looking for his other red sock.","fr":"Lucas cherche l’autre chaussette rouge."},"64.1":{"es":"El perro tiene la media en la boca.","en":"The dog has the sock in its mouth.","fr":"Le chien a la chaussette dans la bouche."},"65.0":{"es":"En el cielo aparece un arcoíris.","en":"A rainbow appears in the sky.","fr":"Un arc-en-ciel apparaît dans le ciel."},"65.1":{"es":"Ema mira por la ventana.","en":"Ema looks out the window.","fr":"Ema regarde par la fenêtre."},"66.0":{"es":"En la mesa hay un pedazo de queso.","en":"On the table there is a piece of cheese.","fr":"Sur la table, il y a un morceau de fromage."},"66.1":{"es":"El ratón comparte el queso con sus hijos.","en":"The mouse shares the cheese with his children.","fr":"La souris partage le fromage avec ses enfants."},"67.0":{"es":"Sara tiene una bicicleta nueva.","en":"Sara has a new bike.","fr":"Sara a un nouveau vélo."},"67.1":{"es":"Papá sostiene la bicicleta.","en":"Dad holds the bike.","fr":"Papa tient le vélo."},"68.0":{"es":"El erizo ve una manzana en el suelo.","en":"The hedgehog sees an apple on the ground.","fr":"Le hérisson voit une pomme par terre."},"68.1":{"es":"La manzana se queda pegada en las púas del erizo.","en":"The apple gets stuck on the hedgehog’s spikes.","fr":"La pomme reste accrochée aux piquants du hérisson."},"69.0":{"es":"Mamá lleva a Nina al médico.","en":"Mom takes Nina to the doctor.","fr":"Maman emmène Nina chez le médecin."},"69.1":{"es":"Al final, Nina se siente mejor.","en":"At the end, Nina feels better.","fr":"À la fin, Nina se sent mieux."},"70.0":{"es":"Max corre detrás de una ardilla.","en":"Max runs after a squirrel.","fr":"Max court derrière un écureuil."},"70.1":{"es":"Max se siente triste cuando está solo.","en":"Max feels sad when he is alone.","fr":"Max se sent triste quand il est tout seul."},"71.0":{"es":"Bruno toma leche tibia.","en":"Bruno drinks warm milk.","fr":"Bruno boit du lait chaud."},"71.1":{"es":"La canción suave de mamá lo ayuda a dormirse.","en":"Mom’s soft song helps him fall asleep.","fr":"La chanson douce de maman l’aide à s’endormir."},"72.0":{"es":"El paraguas se escapa porque sopla un viento muy fuerte.","en":"The umbrella flies away because a very strong wind blows.","fr":"Le parapluie s’envole parce qu’un vent très fort souffle."},"72.1":{"es":"El paraguas se queda colgado en un árbol.","en":"The umbrella gets stuck in a tree.","fr":"Le parapluie reste accroché dans un arbre."},"73.0":{"es":"La gallinita hace un pan delicioso.","en":"The little hen makes delicious bread.","fr":"La petite poule fait un pain délicieux."},"73.1":{"es":"La gallinita no comparte porque el gato no la ayuda.","en":"The little hen doesn’t share because the cat doesn’t help.","fr":"La petite poule ne partage pas parce que le chat ne l’aide pas."},"74.0":{"es":"La torta es de chocolate.","en":"It is a chocolate cake.","fr":"C’est un gâteau au chocolat."},"74.1":{"es":"Papá está feliz y abraza a todos.","en":"Dad is happy and hugs everyone.","fr":"Papa est content et fait un câlin à tout le monde."},"75.0":{"es":"A Tina le falta su caparazón.","en":"Tina is missing her shell.","fr":"Tina n’a plus sa carapace."},"75.1":{"es":"Tina tiene frío y miedo.","en":"Tina is cold and scared.","fr":"Tina a froid et peur."},"76.0":{"es":"Faltan tres galletas.","en":"Three cookies are missing.","fr":"Il manque trois biscuits."},"76.1":{"es":"El perro se comió las galletas.","en":"The dog ate the cookies.","fr":"Le chien a mangé les biscuits."},"77.0":{"es":"Un ratón despierta al león.","en":"A mouse wakes up the lion.","fr":"Une souris réveille le lion."},"77.1":{"es":"El ratón muerde la red y libera al león.","en":"The mouse bites the net and sets the lion free.","fr":"La souris ronge le filet et libère le lion."},"78.0":{"es":"Sofía juega con su hermano.","en":"Sofia plays with her brother.","fr":"Sofia joue avec son frère."},"78.1":{"es":"Entran a la casa porque tienen mucho frío.","en":"They go inside because they are very cold.","fr":"Ils rentrent à la maison parce qu’ils ont très froid."},"79.0":{"es":"Rita quiere volar como los pájaros.","en":"Rita wants to fly like the birds.","fr":"Rita veut voler comme les oiseaux."},"79.1":{"es":"Rita nada muy bien.","en":"Rita swims very well.","fr":"Rita nage très bien."},"80.0":{"es":"El lobo sopla las casas.","en":"The wolf blows the houses down.","fr":"Le loup souffle sur les maisons."},"80.1":{"es":"La casa de ladrillos no se cae.","en":"The brick house doesn’t fall.","fr":"La maison en briques ne tombe pas."},"81.0":{"es":"Pablo no quiere dormir porque le da miedo la oscuridad.","en":"Pablo doesn’t want to sleep because he is afraid of the dark.","fr":"Pablo ne veut pas dormir parce qu’il a peur du noir."},"81.1":{"es":"Pablo sueña con estrellas.","en":"Pablo dreams of stars.","fr":"Pablo rêve d’étoiles."},"82.0":{"es":"Bea encuentra un campo lleno de girasoles.","en":"Bea finds a field full of sunflowers.","fr":"Béa trouve un champ plein de tournesols."},"82.1":{"es":"Un pájaro le muestra el camino a Bea.","en":"A bird shows Bea the way.","fr":"Un oiseau montre le chemin à Béa."},"83.0":{"es":"El tren se cae y se rompe una rueda.","en":"The train falls and a wheel breaks.","fr":"Le train tombe et une roue se casse."},"83.1":{"es":"El abuelo ayuda a Teo.","en":"Grandpa helps Teo.","fr":"Papi aide Téo."},"84.0":{"es":"El último patito es gris.","en":"The last duckling is gray.","fr":"Le dernier caneton est gris."},"84.1":{"es":"El patito gris se convierte en un cisne precioso.","en":"The gray duckling becomes a beautiful swan.","fr":"Le caneton gris devient un magnifique cygne."},"85.0":{"es":"Lila recoge nueces.","en":"Lila gathers nuts.","fr":"Lila ramasse des noisettes."},"85.1":{"es":"El conejo no tiene comida porque prefiere jugar.","en":"The rabbit has no food because he would rather play.","fr":"Le lapin n’a rien à manger parce qu’il préfère jouer."},"86.0":{"es":"Mía llega a la luna.","en":"Mia lands on the moon.","fr":"Mia arrive sur la lune."},"86.1":{"es":"Mía estaba soñando en su cama.","en":"Mia was dreaming in her bed.","fr":"Mia rêvait dans son lit."},"87.0":{"es":"Muchos pájaros viven en el árbol.","en":"Many birds live in the tree.","fr":"Beaucoup d’oiseaux vivent dans l’arbre."},"87.1":{"es":"Nina y sus amigos hacen dibujos de los pájaros.","en":"Nina and her friends make drawings of the birds.","fr":"Nina et ses amis font des dessins des oiseaux."},"88.0":{"es":"El cuervo tiene un queso en el pico.","en":"The crow has a piece of cheese in his beak.","fr":"Le corbeau a un fromage dans son bec."},"88.1":{"es":"El queso se cae porque el cuervo abre el pico para cantar.","en":"The cheese falls because the crow opens his beak to sing.","fr":"Le fromage tombe parce que le corbeau ouvre le bec pour chanter."},"89.0":{"es":"Un dragón llega al castillo.","en":"A dragon comes to the castle.","fr":"Un dragon arrive au château."},"89.1":{"es":"El dragón llora porque tiene una espina en la pata.","en":"The dragon is crying because he has a thorn in his foot.","fr":"Le dragon pleure parce qu’il a une épine dans la patte."},"90.0":{"es":"Los dos quieren subir al rodadero.","en":"They both want to go on the slide.","fr":"Ils veulent tous les deux monter sur le toboggan."},"90.1":{"es":"Ema se siente triste.","en":"Ema feels sad.","fr":"Ema se sent triste."},"91.0":{"es":"Al final, Olga usa sus ocho brazos.","en":"At the end, Olga uses all eight arms.","fr":"À la fin, Olga utilise ses huit bras."},"91.1":{"es":"Dentro del cofre hay perlas brillantes.","en":"Inside the chest there are shiny pearls.","fr":"Dans le coffre, il y a des perles brillantes."},"92.0":{"es":"El abuelo siembra una semilla de ahuyama.","en":"Grandpa plants a pumpkin seed.","fr":"Papi plante une graine de citrouille."},"92.1":{"es":"Al final hacen sopa para todos.","en":"At the end they make soup for everyone.","fr":"À la fin, ils font de la soupe pour tout le monde."},"93.0":{"es":"Pipo viaja en un barco.","en":"Pipo travels on a boat.","fr":"Pipo voyage en bateau."},"93.1":{"es":"Pipo vuelve a casa porque en la playa hace mucho calor.","en":"Pipo goes back home because it is very hot at the beach.","fr":"Pipo rentre chez lui parce qu’il fait très chaud à la plage."},"94.0":{"es":"Lía olvida el osito en el tren.","en":"Lia forgets the teddy bear on the train.","fr":"Lia oublie le nounours dans le train."},"94.1":{"es":"Lía está feliz y abraza su osito.","en":"Lia is happy and hugs her teddy bear.","fr":"Lia est contente et fait un câlin à son nounours."},"95.0":{"es":"El caracol azul se queda dormido.","en":"The blue snail falls asleep.","fr":"L’escargot bleu s’endort."},"95.1":{"es":"El caracol verde llega primero y gana.","en":"The green snail gets there first and wins.","fr":"L’escargot vert arrive le premier et gagne."},"96.0":{"es":"La ola se lleva el castillo de arena.","en":"The wave washes the sandcastle away.","fr":"La vague emporte le château de sable."},"96.1":{"es":"Nico hace el nuevo castillo más lejos del agua.","en":"Nico builds the new castle farther from the water.","fr":"Nico fait le nouveau château plus loin de l’eau."},"97.0":{"es":"El búho sabio tiene la idea.","en":"The wise owl has the idea.","fr":"Le hibou savant a l’idée."},"97.1":{"es":"Usan el tronco caído para el puente.","en":"They use the fallen log for the bridge.","fr":"Ils utilisent le tronc tombé pour le pont."},"98.0":{"es":"Ana toca el violín.","en":"Ana plays the violin.","fr":"Ana joue du violon."},"98.1":{"es":"Ana piensa en su perro para calmarse.","en":"Ana thinks of her dog to calm down.","fr":"Ana pense à son chien pour se calmer."},"99.0":{"es":"El lunes, la oruga come una manzana.","en":"On Monday, the caterpillar eats one apple.","fr":"Le lundi, la chenille mange une pomme."},"99.1":{"es":"La oruga come una hoja verde y se siente mejor.","en":"The caterpillar eats a green leaf and feels better.","fr":"La chenille mange une feuille verte et se sent mieux."}};
 function storyItems(st){return [...st.q.map(q=>({type:'q',q})),...(st.seq?[{type:'seq'}]:[])]}
 function storyDots(st,k){const items=storyItems(st);return `<div class="sdots">${items.map((_,i)=>`<span class="${i<k?'ok':i===k?'cur':''}"></span>`).join('')}</div>`}
-function storyRight(btn,next){noteAns(true);btn.classList.add('right');score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
+function storyRight(btn,next){const calm=agCalm();noteAns(true);btn.classList.add('right');
+  if(calm){const d=agCalmWin(stage.querySelector('.msg'));stage.querySelectorAll('.pick,.card').forEach(b=>b.disabled=true);later(next,d);return}
+  agEnd();score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
   stage.querySelector('.msg').textContent=p+' ⭐';say(p);stage.querySelectorAll('.pick,.card').forEach(b=>b.disabled=true);later(next,1500)}
-function storyQuiz(st,k){qCtx=null;qAns=false;const items=storyItems(st);if(k>=items.length)return storyEnd(st);const it=items[k];
+function storyQuiz(st,k){qCtx=null;qAns=false;agReset();const items=storyItems(st);if(k>=items.length)return storyEnd(st);const it=items[k];
   const replay=()=>narrate(st,()=>{},null);
   if(it.type==='q'){const q=it.q,correct=q.o[0],opts=shuffle(q.o);
     stage.innerHTML=`${storyDots(st,k)}<div class="storypic small">${st.pic}</div><p class="q">${q.t[lang]}</p><div class="row">${opts.map(o=>`<button class="pick obj" data-v="${o}">${o}</button>`).join('')}</div><p class="msg" aria-live="polite"></p><div class="row"><button class="btn alt" id="rq">${L().repeatQ}</button><button class="btn alt" id="rs">${L().replayStory}</button></div>`;
@@ -2327,6 +2554,7 @@ function storyQuiz(st,k){qCtx=null;qAns=false;const items=storyItems(st);if(k>=i
     stage.querySelectorAll('.pick').forEach(b=>{const n=optName(si,b.dataset.v);if(n)b.setAttribute('aria-label',n)});
     document.getElementById('rq').onclick=ask;document.getElementById('rs').onclick=replay;
     stage.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{lit(null);b.dataset.v===correct?storyRight(b,()=>storyQuiz(st,k+1)):miss(b)});
+    agQ({right:()=>stage.querySelector(`.pick[data-v="${correct}"]`),say:()=>{const a=STORY_ANS[si+'.'+k];return a?a[lang]:''},emoji:()=>correct});
     later(ask,300)}
   else{const order=st.seq;let cards=shuffle(order);while(cards.join()===order.join())cards=shuffle(order);let got=0;
     stage.innerHTML=`${storyDots(st,k)}<p class="q">${L().seqQ}</p><div class="slots">${order.map((_,i)=>`<div class="slot" data-i="${i}"><span class="n">${i+1}</span></div>`).join('')}</div><div class="row">${cards.map(c=>`<button class="pick obj card" data-v="${c}">${c}</button>`).join('')}</div><p class="msg" aria-live="polite"></p><div class="row"><button class="btn alt" id="rq">${L().repeatQ}</button><button class="btn alt" id="rs">${L().replayStory}</button></div>`;
@@ -2336,9 +2564,11 @@ function storyQuiz(st,k){qCtx=null;qAns=false;const items=storyItems(st);if(k>=i
     const ask=()=>saySeq([[L().seqQ,lang,()=>lit(null)],...cards.filter(c=>desc(c)).map(c=>[desc(c),lang,()=>lit(c)])],{rate:.85,gap:350,done:()=>lit(null)});
     stage.querySelectorAll('.card').forEach(b=>{if(desc(b.dataset.v))b.setAttribute('aria-label',desc(b.dataset.v))});
     document.getElementById('rq').onclick=ask;document.getElementById('rs').onclick=replay;
-    stage.querySelectorAll('.card').forEach(b=>b.onclick=()=>{lit(null);if(b.dataset.v===order[got]){const slot=stage.querySelector(`.slot[data-i="${got}"]`);slot.textContent=b.dataset.v;slot.classList.add('filled');b.style.visibility='hidden';got++;
+    stage.querySelectorAll('.card').forEach(b=>b.onclick=()=>{lit(null);if(b.dataset.v===order[got]){const slot=stage.querySelector(`.slot[data-i="${got}"]`);slot.textContent=b.dataset.v;slot.classList.add('filled');b.style.visibility='hidden';got++;agClear();
         if(got===order.length)storyRight(slot,()=>storyQuiz(st,k+1));else say(numWords[lang][got-1])}
       else miss(b)});
+    agQ({opts:'.card',noShuffle:true,right:()=>stage.querySelector(`.card[data-v="${order[got]}"]`),emoji:()=>order[got],
+      say:()=>{const o=AGT().seqOrd,i=got===0?0:got===order.length-1?3:got===1?1:2,d=desc(order[got]);return d?`${o[i]}: ${d}.`:o[i]+'.'}});
     later(ask,300)}}
 function storyEnd(st){markHeard(st);score+=2;scoreEl.textContent=score;
   stage.innerHTML=`<div class="storypic">${st.pic}</div><p class="q">🎉 ${L().storyDone} ⭐⭐</p><div class="row"><button class="btn big" id="sNext">${L().anotherStory}</button><button class="btn alt" id="sAgain">${L().listenStory}</button></div>`;
@@ -3188,7 +3418,7 @@ const BK_T={
    save:'💾 Enregistrer une sauvegarde',load:'📂 Restaurer une sauvegarde',saved:n=>`✅ Sauvegarde enregistrée (${n} ${n===1?'dessin':'dessins'}). Elle est dans « Téléchargements ».`,bad:'⚠️ Ce fichier n’est pas une sauvegarde de cette app.',
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${x.days} jours de jeu · ${x.sess} sessions · ${x.ans} réponses · ${x.scr} jours de temps d’écran · ${x.trk} nombres/lettres suivis · ${x.gal} dessins`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres']);
-const APP_VER=60; // se sube junto con la caché de sw.js
+const APP_VER=61; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -3305,12 +3535,14 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
       const n=a+b,opts=cmpOpts(n,Math.max(max,n));
       frame(t.sumQ,`<div class="cdicerow">${diceSvg(a)}<b>+</b>${diceSvg(b)}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
       const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
-      stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===n){mark(true,decRec);win(bt,componer)}else{mark(false,decRec);miss(bt)}});bind();return}
+      stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===n){mark(true,decRec);win(bt,componer)}else{mark(false,decRec);miss(bt)}});
+      agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().dice(a,b,n),known:()=>agStK(rec.st[cmpMode])});bind();return}
     const [n,v]=fresh(()=>{const n=2+rand(max-1),v=1+rand(n-1);return [`h${n}-${v}`,[n,v]]}),h=n-v,opts=cmpOpts(h,n);
     frame(t.hideQ(n,v),`<div class="chide"><b class="cnum">${n}</b><b class="cop">=</b>${v?`<div class="cvis">${Array.from({length:v},()=>`<span>${it}</span>`).join('')}</div><b class="cop">+</b>`:''}<div class="cunder">${Array.from({length:h},()=>`<span>${it}</span>`).join('')}<div class="ccup">${CUP_SVG}</div></div></div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
     const under=stage.querySelector('.cunder');under.classList.add('show');setTimeout(()=>{if(under.isConnected)under.classList.remove('show')},1300);
     const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
-    stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===h){mark(true,decRec);under.classList.add('show');win(bt,componer)}else{mark(false,decRec);fails++;miss(bt);if(fails>=2)under.classList.add('peek')}});bind();return}
+    stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===h){mark(true,decRec);under.classList.add('show');win(bt,componer)}else{mark(false,decRec);fails++;miss(bt);if(fails>=2)under.classList.add('peek')}});
+    agQ({right:()=>stage.querySelector(`.pick[data-v="${h}"]`),say:()=>AGT().hide(n,v,h),show:()=>under.classList.add('peek'),known:()=>agStK(rec.st[cmpMode])});bind();return}
   if(cmpMode==='cmp'){
     // Más / menos / igual; en niveles 2-3 a veces la trampa: la colección menor más grande o más separada
     const eqOk=cmpLv>=2;let a,b;
@@ -3323,14 +3555,17 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
     frame(ask==='more'?t.moreQ:t.lessQ,`<div class="cplates">${plate(a,ea,'L')}${plate(b,eb,'R')}</div>${eqOk?`<div class="row"><button class="btn alt csame" data-side="=">${t.same}</button></div>`:''}<div class="chelp"></div>`);bar();
     const trapRec=ok=>{if(trap){rec.trap.a++;if(!ok)rec.trap.m++}};
     let over=false;stage.querySelectorAll('[data-side]').forEach(bt=>bt.onclick=()=>{if(over)return;if(bt.dataset.side===right){over=true;mark(true,trapRec);win(bt,componer)}
-      else{mark(false,trapRec);miss(bt,bt.dataset.side);fails++;const h=stage.querySelector('.chelp');h.innerHTML=`<p class="pnote">${t.pairNote}</p>${pairView(a,ea,b,eb)}`;}});bind();return}
+      else{mark(false,trapRec);miss(bt,bt.dataset.side);fails++;const h=stage.querySelector('.chelp');h.innerHTML=`<p class="pnote">${t.pairNote}</p>${pairView(a,ea,b,eb)}`;}});
+    agQ({opts:'[data-side]',noShuffle:true,right:()=>stage.querySelector(`[data-side="${right}"]`),known:()=>agStK(rec.st[cmpMode]),
+      say:()=>{const T=AGT();if(right==='=')return T.cmpEq(a);const x=right==='L'?a:b,y=right==='L'?b:a;return ask==='more'?T.cmpMore(x,y):T.cmpLess(x,y)}});bind();return}
   if(cmpMode==='plus'){
     const [n,d]=fresh(()=>{let d=Math.random()<.5?1:-1;if(cmpLv===3&&Math.random()<.4)d*=2;const n=d>0?1+rand(max-d):Math.max(1,-d)+rand(max-Math.max(1,-d)+1);return [`p${n}${d}`,[n,d]]});
     const r=n+d,hid=cmpLv>=2,opts=cmpOpts(r,max);
     frame(t.plusQ(n,d),`<div class="cbox${hid?' lid':''}"><div class="citems">${Array.from({length:n},(_,i)=>`<span class="${d<0&&i>=n+d?'go':''}">${it}</span>`).join('')}${d>0?Array.from({length:d},()=>`<span class="come">${it}</span>`).join(''):''}</div><div class="clid"></div>${hid?`<div class="cfly ${d>0?'in':'out'}">${it.repeat(Math.abs(d))}</div>`:''}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
     const box=stage.querySelector('.cbox');box.classList.add('start');
     setTimeout(()=>{if(!box.isConnected)return;box.classList.remove('start');if(hid)box.classList.add('closed');setTimeout(()=>{if(box.isConnected)box.classList.add('moved')},hid?700:200)},1500);
-    stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===r){mark(true);box.classList.remove('closed');win(bt,componer)}else{mark(false);fails++;miss(bt);if(fails>=2)box.classList.remove('closed')}});bind();return}
+    stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===r){mark(true);box.classList.remove('closed');win(bt,componer)}else{mark(false);fails++;miss(bt);if(fails>=2)box.classList.remove('closed')}});
+    agQ({right:()=>stage.querySelector(`.pick[data-v="${r}"]`),say:()=>AGT().plus(n,d,r),show:()=>box.classList.remove('closed'),known:()=>agStK(rec.st[cmpMode])});bind();return}
   // Tantos como: hace su plato con la misma cantidad que el modelo (sin número)
   const n=fresh(()=>{const n=1+rand(max);return [`s${n}`,n]}),e2=CMP_ITEMS[(CMP_ITEMS.indexOf(it)+1+rand(CMP_ITEMS.length-1))%CMP_ITEMS.length];let k=0,done=false;
   frame(t.sameQ,`<div class="cmodel${cmpLv===3?' scatter':''}">${Array.from({length:n},()=>`<span>${it}</span>`).join('')}</div><div class="basket" id="cbasket"></div><div class="row"><button class="btn big" id="cadd">➕ ${e2}</button><button class="btn alt" id="csub" aria-label="${L().remove}">➖</button><button class="btn" id="cok">${L().done}</button></div><div class="chelp"></div>`);bar();
@@ -3495,7 +3730,8 @@ function comparar(){const t=CZ_T[lang],rec=czRec(),lv=czLv;let first=true,fails=
   const pick=(arr,keyf)=>{let x,g=0;do{x=arr[rand(arr.length)]}while(keyf(x)===czLast&&g++<20);czLast=keyf(x);return x};
   const pulse=el=>{if(el){el.classList.remove('czhint');void el.getBoundingClientRect();el.classList.add('czhint')}};
   // elección entre varias opciones (elementos con data-i) + «iguales» opcional
-  const choose=(d,right,trap,onMiss)=>{window.__czAns=String(right);stage.querySelectorAll('[data-i]').forEach(el=>el.addEventListener('click',()=>{if(over)return;const v=el.dataset.i;
+  const choose=(d,right,trap,onMiss,ans)=>{window.__czAns=String(right);
+    agQ({opts:'[data-i]',noShuffle:true,right:()=>stage.querySelector(`[data-i="${right}"]`),say:()=>ans||'',known:()=>agStK(rec.st[d])});stage.querySelectorAll('[data-i]').forEach(el=>el.addEventListener('click',()=>{if(over)return;const v=el.dataset.i;
       if(v===String(right)){over=true;mark(d,true,trap);win(el,comparar)}else{mark(d,false,trap);fails++;miss(el,v);if(onMiss)onMiss(fails);if(fails>=2)pulse(stage.querySelector(`[data-i="${right}"]`))}}))};
   // ordenar: tocar en orden
   const orderGame=(d,vals)=>{const want=vals.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);let k=0;window.__czAns=want;
@@ -3527,7 +3763,7 @@ function comparar(){const t=CZ_T[lang],rec=czRec(),lv=czLv;let first=true,fails=
     else{const mx=vals.indexOf(Math.max(...vals)),mn=vals.indexOf(Math.min(...vals)),right=eq?'=':(more?mx:mn);
       choose(dim,right,trap,()=>{const h=stage.querySelector('.czhelp');
         if(trap&&dim==='len'){stage.querySelectorAll('.czshift').forEach(e=>e.style.transform='translateX(0)');h.textContent=t.alignNote}
-        if(trap&&dim==='height'){stage.querySelectorAll('.czobj').forEach(e=>e.style.transform='translateY(0)');stage.querySelectorAll('.czbox').forEach(e=>e.style.opacity=0);h.textContent=t.boxNote}})}
+        if(trap&&dim==='height'){stage.querySelectorAll('.czobj').forEach(e=>e.style.transform='translateY(0)');stage.querySelectorAll('.czbox').forEach(e=>e.style.opacity=0);h.textContent=t.boxNote}},czAnsSize(dim,nm,g,more,eq))}
     bind();return}
   // ======== ⚖️ Balanza ========
   if(czMode==='weight'){const heavyQ=Math.random()<.6;let A,B,wa,wb,fa=72,fb=72,trap=false,pre=false,eq=false;
@@ -3544,7 +3780,7 @@ function comparar(){const t=CZ_T[lang],rec=czRec(),lv=czLv;let first=true,fails=
       czTilt(svg,wa===wb?0:(wa>wb?-16:16),1200)};
     if(pre)setTimeout(()=>{if(svg.isConnected)weigh()},400);
     const wb2=document.getElementById('czWeigh');if(wb2)wb2.onclick=weigh;
-    choose('weight',right,trap,()=>{weigh();stage.querySelector('.czhelp').textContent=t.scaleNote});bind();return}
+    choose('weight',right,trap,()=>{weigh();stage.querySelector('.czhelp').textContent=t.scaleNote},right==='='?AGT().wEq:heavyQ?AGT().heavy:AGT().light);bind();return}
   // ======== 💧 Lleno o vacío ========
   if(czMode==='fill'){const c=pick(CZ_CONT,x=>x[0]),[nm,g]=czName(c),liq=c[0]==='tank'?CZ_LIQ[0]:CZ_LIQ[rand(CZ_LIQ.length)],ln=lang==='es'?liq[1][0]:lang==='fr'?liq[3][0]:liq[2];
     let n,vals,q,mode,eq=false;
@@ -3555,7 +3791,7 @@ function comparar(){const t=CZ_T[lang],rec=czRec(),lv=czLv;let first=true,fails=
     const svg=vals.map((v,i)=>{const x=i*w+w/2;return `<g class="czit" ${isOrd?`data-o="${i}"`:`data-i="${i}"`}><rect x="${i*w+4}" y="0" width="${w-8}" height="270" rx="14" fill="#FFFFFF" fill-opacity=".001"/>${czCont(c[0],x,base,v,liq[0])}${isOrd?`<g class="czbadge"><circle cx="${x}" cy="24" r="18"/><text data-badge="${i}" x="${x}" y="25" text-anchor="middle" dominant-baseline="central"></text></g>`:''}</g>`}).join('');
     frame(q,`<svg class="czscene" viewBox="0 0 600 270" role="img" aria-label="${esc(q)}">${svg}</svg>${lv===2&&n===2?eqBtn(t.sameF):''}`);bar();
     if(isOrd)orderGame('fill',vals);
-    else{const mx=vals.indexOf(Math.max(...vals)),mn=vals.indexOf(Math.min(...vals));const right=eq?'=':(mode==='full'||mode==='more')?mx:mn;choose('fill',right,false)}
+    else{const mx=vals.indexOf(Math.max(...vals)),mn=vals.indexOf(Math.min(...vals));const right=eq?'=':(mode==='full'||mode==='more')?mx:mn;choose('fill',right,false,null,eq?AGT().fEq:mode==='full'?AGT().full(nm,g):mode==='empty'?AGT().empty(nm,g):mode==='more'?AGT().fMore(ln):AGT().fLess(ln))}
     bind();return}
   // ======== 🔄 Contrarios ========
   const pool=lv===1?CZ_OPP.slice(0,16):CZ_OPP,p=pick(pool,x=>x[0]),side=Math.random()<.5?0:1,li=czLi();
@@ -3566,6 +3802,8 @@ function comparar(){const t=CZ_T[lang],rec=czRec(),lv=czLv;let first=true,fails=
     const q=qText(side),right=side===L0[1]?'L':'R';window.__czAns=right;
     frame(q,`<div class="czopp"><button class="czcard big" data-i="L">${L0[0]}<em class="czw">${word(L0[1])}</em></button><button class="czcard big" data-i="R">${R0[0]}<em class="czw">${word(R0[1])}</em></button></div>`);bar();
     stage.querySelectorAll('[data-i]').forEach(el=>el.addEventListener('click',()=>{if(over)return;const ok=el.dataset.i===right;mark('opp',ok,false,opRec);if(ok){over=true;stage.querySelector('.czopp').classList.add('reveal');win(el,comparar)}else{fails++;miss(el,el.dataset.i);if(fails>=2)pulse(stage.querySelector(`[data-i="${right}"]`))}}));
+    agQ({opts:'[data-i]',noShuffle:true,right:()=>stage.querySelector(`[data-i="${right}"]`),known:()=>agStK(rec.op[id]),
+      say:()=>{const T=AGT(),w=word(side);if(qs)return T.oppQ(w);return lang==='es'?T.opp(noun.es[0],gN,noun.es[2],w):lang==='fr'?T.opp(noun.fr[0],gN,null,w):T.opp(noun.en,gN,null,w)}});
     bind();return}
   // nivel 3: «lo contrario de…» entre 3 dibujos
   const others=shuffle(CZ_OPP.filter(x=>x[0]!==id&&x[1]!==imA&&x[2]!==imB&&x[1]!==imB&&x[2]!==imA)).slice(0,2),show=side===0?imA:imB,ans=side===0?imB:imA;
@@ -3573,6 +3811,7 @@ function comparar(){const t=CZ_T[lang],rec=czRec(),lv=czLv;let first=true,fails=
   const q=t.oppL3(word(side));window.__czAns='ok';
   frame(q,`<div class="czopp"><div class="czcard big shown">${show}<em class="czw">${word(side)}</em></div></div><div class="czopts">${opts.map(([k,im,w])=>`<button class="czcard" data-i="${k}">${im}${w?`<em class="czw">${w}</em>`:''}</button>`).join('')}</div>`);bar();
   stage.querySelectorAll('[data-i]').forEach(el=>el.addEventListener('click',()=>{if(over)return;const ok=el.dataset.i==='ok';mark('opp',ok,false,opRec);if(ok){over=true;stage.querySelector('.czopts').classList.add('reveal');win(el,comparar)}else{fails++;miss(el,el.dataset.i);if(fails>=2)pulse(stage.querySelector('[data-i="ok"]'))}}));
+  agQ({opts:'.czopts [data-i]',noShuffle:true,right:()=>stage.querySelector('[data-i="ok"]'),say:()=>AGT().opp3(word(side),word(1-side)),known:()=>agStK(rec.op[id])});
   bind()}
 // Sección de padres
 function compararSection(){const t=CZ_T[lang],tt=L(),r=P.cmz||{st:{},trap:{a:0,m:0},op:{}};
@@ -3708,7 +3947,9 @@ const dnItemSvg=(e,p,attrs='')=>`<g class="dnit" ${attrs}><text x="${p.x}" y="${
 function donde(){const t=DN_T[lang],rec=dnRec(),lv=dnLv;let over=false,first=true,fails=0;const msgEl=()=>stage.querySelector('.msg');
   const mark=(rels,ok,chosen)=>{if(!first)return;first=false;rels.forEach(r=>{const s=rec.st[r]||(rec.st[r]={a:0,f:0,m:0});s.a++;if(ok)s.f++;else s.m++});
     if(!ok&&chosen&&chosen!==rels[0]){const k=[rels[0],chosen].sort().join('>');rec.conf[k]=(rec.conf[k]||0)+1}saveP()};
-  const good=(el,sentence)=>{if(over)return;over=true;noteAns(true);if(el)el.classList.add('right');score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
+  const good=(el,sentence)=>{if(over)return;over=true;const calm=agCalm();noteAns(true);if(el)el.classList.add('right');
+    if(calm){const d=agCalmWin(msgEl());setTimeout(()=>{if(current==='donde')donde()},d);return}
+    agEnd();score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
     msgEl().innerHTML=`${p} ⭐<br><small>${esc(sentence)}</small>`;saySeq([[p,lang],[sentence,lang]],{gap:250});afterSpeech(()=>{if(current==='donde')donde()},1200,10000)};
   const bar=()=>stage.insertAdjacentHTML('afterbegin',`<div class="cmpbar"><div class="modes cmpmodes" role="group">${DN_MODES.map((m,i)=>`<button class="mode" data-dm="${m}" aria-pressed="${m===dnMode}">${t.modes[i]}</button>`).join('')}</div><div class="modes cmplv" role="group">${[1,2,3].map(v=>`<button class="mode" data-dl="${v}" aria-pressed="${v===dnLv}" aria-label="${L().pnLevels[v-1]}" title="${L().pnLevels[v-1]}">${L().pnLevels[v-1].split(' ')[0]}</button>`).join('')}</div></div>`);
   const bind=(speak=true)=>{if(speak)sayQuestion();stage.querySelectorAll('[data-dm]').forEach(b=>b.onclick=()=>{dnMode=b.dataset.dm;try{localStorage.setItem('peques-dnmode',dnMode)}catch(e){}stopSpeech();donde()});
@@ -3762,6 +4003,7 @@ function donde(){const t=DN_T[lang],rec=dnRec(),lv=dnLv;let over=false,first=tru
     const q=t.where(dnItem(item));
     frame(q,`${dnScene(refs,layerSvg([{p:posOf(rel),svg:dnItemSvg(item[0],posOf(rel))}]))}<div class="row dnopts">${opts.map(r=>`<button class="pick dnopt" data-v="${r}"><svg viewBox="0 0 64 48" aria-hidden="true">${DN_ICON[r]}</svg><span>${t.word[r]}</span></button>`).join('')}</div>`);bar();
     window.__dnAns=rel;
+    agQ({opts:'.dnopt',right:()=>stage.querySelector(`.dnopt[data-v="${rel}"]`),say:()=>sentence,known:()=>agStK(((P.pos||{}).st||{})[rel])});
     stage.querySelectorAll('.dnopt').forEach(b=>b.onclick=()=>{if(over)return;const v=b.dataset.v;if(v===rel){mark([rel],true);good(b,sentence)}else{mark([rel],false,v);fails++;miss(b,v);if(fails>=2){const c=stage.querySelector(`.dnopt[data-v="${rel}"]`);c.classList.remove('czhint');void c.offsetWidth;c.classList.add('czhint')}}});
     // la voz lee la pregunta y cada opción, iluminándola
     const lit=v=>stage.querySelectorAll('.dnopt').forEach(b=>b.classList.toggle('speaking',b.dataset.v===v));
@@ -3778,6 +4020,7 @@ function donde(){const t=DN_T[lang],rec=dnRec(),lv=dnLv;let over=false,first=tru
   const q=t.find(dnItem(item),dnRelText(rel,o.ref,refs[1]&&refs[1].ref));
   frame(q,dnScene(refs,layerSvg(all.map(x=>({p:x.p,svg:dnItemSvg(item[0],x.p,`data-v="${x.r}"`)})))));bar();
   window.__dnAns=rel;
+  agQ({opts:'.dnit[data-v]',noShuffle:true,right:()=>stage.querySelector(`.dnit[data-v="${rel}"]`),say:()=>sentence,known:()=>agStK(((P.pos||{}).st||{})[rel])});
   stage.querySelectorAll('.dnit[data-v]').forEach(g=>g.addEventListener('click',()=>{if(over)return;const v=g.dataset.v;if(v===rel){mark([rel],true);good(g,sentence)}else{mark([rel],false,DN_ICON[v]?v:null);fails++;miss(g,v);if(fails>=2){const c=stage.querySelector(`.dnit[data-v="${rel}"]`);c.classList.remove('czhint');void c.getBoundingClientRect();c.classList.add('czhint')}}}));
   bind()}
 // Sección de padres
@@ -4045,7 +4288,7 @@ function accInner(msg=''){const a=ACC_T[lang],t=L(),week=[1,2,3,4,5,6,0],d=today
     return `<div class="accrow ${st}" data-acc="${id}"><span class="accname">${em} ${esc(t.tabs[id])}</span><button class="accsw" data-sw="${id}">${lab}</button><button class="btn alt accdb" data-db="${id}" aria-expanded="${accOpen.has(id)}">${a.daysBtn}</button>
       <div class="accdays"${accOpen.has(id)?'':' hidden'}>${week.map(i=>`<button class="accday${allowedOn(id,i)?' on':''}${i===d?' today':''}" data-day="${i}" data-id="${id}" title="${wdName(i,'long')}">${wdName(i,'short')}</button>`).join('')}</div></div>`}).join('')).join('');
   return `<p class="pnote">${a.todayN(wdName(d,'long'),ALL_ACTS.filter(allowed).length,ALL_ACTS.length)}</p>${msg?`<p class="accmsg">${msg}</p>`:''}<div class="acclist">${rows}</div><div class="row"><button class="btn alt" id="accReset">${a.reset}</button></div>`}
-function accessSection(){return `<h3>${ACC_T[lang].title}</h3><p class="pnote">${ACC_T[lang].note}</p><div id="accBox">${accInner()}</div>`}
+function accessSection(){return `${agSetSection()}<h3>${ACC_T[lang].title}</h3><p class="pnote">${ACC_T[lang].note}</p><div id="accBox">${accInner()}</div>`}
 function accessHandlers(){const box=document.getElementById('accBox');if(!box)return;const a=ACC_T[lang];
   const redraw=msg=>{box.innerHTML=accInner(msg);accessHandlers()};
   // comprueba que cada día quede al menos una actividad; si no, deshace
@@ -4073,17 +4316,17 @@ const SG_MS={componer:1,trazos:1,donde:1,escletras:.85,letras:.85,comparar:.8,co
 const SG_SIM=[['letras','decir','escletras','trazos'],['contar','poner','componer','orden','sonidos','trazar'],['donde','laberinto','formas'],['comparar','formas'],['objetos','cuentos','memoria']];
 const SG_T={
  es:{ask:a=>`¿Jugamos a ${a}?`,yes:'¡Vale!',no:'Sigo aquí',how:'Toca el pulgar arriba para ir, o el pulgar abajo para seguir jugando.',hi:n=>n?`¡Hola, ${n}!`:'¡Hola!',
-   why:{need:d=>`le cuesta${d?': '+d:''}`,star:'la marcaste para reforzar',stale:n=>n>=99?'nunca la ha probado':`no la usa desde hace ${n} ${n===1?'día':'días'}`,bal:g=>`hoy ya hizo mucho de ${g}`,rest:'un descanso creativo tras mucho aprender',ms:'importante en moyenne section',sim:a=>`trabaja lo mismo que ${a}, que hoy no está disponible`},
+   why:{guess:'tocaba al azar varias preguntas seguidas: un cambio le vendrá bien',need:d=>`le cuesta${d?': '+d:''}`,star:'la marcaste para reforzar',stale:n=>n>=99?'nunca la ha probado':`no la usa desde hace ${n} ${n===1?'día':'días'}`,bal:g=>`hoy ya hizo mucho de ${g}`,rest:'un descanso creativo tras mucho aprender',ms:'importante en moyenne section',sim:a=>`trabaja lo mismo que ${a}, que hoy no está disponible`},
    title:'💡 Sugerencias',set:'Ajustes de las sugerencias',on:'Sugerir otra actividad',open:'Al abrir la app',after:'Tiempo general en la misma actividad',never:'nunca',general:m=>`General (${m})`,actTime:'Tiempo en esta actividad antes de sugerir',snooze:'Si toca 👎 (seguir en su juego)',snAct:'no volver a preguntar en esa actividad',offNote:'💤 Las sugerencias están desactivadas: la app no propone cambiar de actividad. Los ajustes de abajo se conservan y vuelven a funcionar al activarlas.',mode:'Qué priorizar',modes:{var:'🎈 Más variedad',bal:'⚖️ Equilibrado',ref:'🎯 Más refuerzo'},
    perAct:'Cada actividad',prNote:'⏱️ = cuánto tiempo seguido puede estar en esa actividad antes de que la app sugiera otra («General» usa el tiempo de arriba; «nunca» = en esa actividad no se sugiere cambiar). ⭐ Reforzar = la app la propone más a menudo · Normal = según su seguimiento · 🚫 No sugerir = sigue visible y puede jugarla, pero la app nunca la propone.',star:'⭐ Reforzar',normal:'Normal',ban:'🚫 No sugerir',yesL:'Sí',noL:'No',
    logTitle:'💡 Sugerencias recientes',logNone:'Todavía no hay sugerencias.',accepted:(a,n)=>`Aceptadas: ${a} de ${n}`,res:{ok:'✅ aceptó',no:'↩️ siguió',ign:'⏳ sin respuesta',shown:'· se cerró la app'},warnHidden:(a,why)=>`💡 ${a} necesita refuerzo (${why}), pero hoy no está visible.`,warnBan:(a,why)=>`💡 ${a} necesita refuerzo (${why}), pero está en «🚫 No sugerir».`,next:'Ahora mismo sugeriría:'},
  en:{ask:a=>`Shall we play ${a}?`,yes:'OK!',no:'Keep playing',how:'Tap thumbs up to go, or thumbs down to keep playing.',hi:n=>n?`Hello, ${n}!`:'Hello!',
-   why:{need:d=>`finds it hard${d?': '+d:''}`,star:'you marked it to practise',stale:n=>n>=99?'never tried it':`not played for ${n} ${n===1?'day':'days'}`,bal:g=>`already did a lot of ${g} today`,rest:'a creative break after lots of learning',ms:'important this school year',sim:a=>`practises the same as ${a}, which isn’t available today`},
+   why:{guess:'was tapping at random several questions in a row: a change will help',need:d=>`finds it hard${d?': '+d:''}`,star:'you marked it to practise',stale:n=>n>=99?'never tried it':`not played for ${n} ${n===1?'day':'days'}`,bal:g=>`already did a lot of ${g} today`,rest:'a creative break after lots of learning',ms:'important this school year',sim:a=>`practises the same as ${a}, which isn’t available today`},
    title:'💡 Suggestions',set:'Suggestion settings',on:'Suggest another activity',open:'When the app opens',after:'General time in the same activity',never:'never',general:m=>`General (${m})`,actTime:'Time in this activity before suggesting',snooze:'If they tap 👎 (keep playing)',snAct:'don’t ask again in that activity',offNote:'💤 Suggestions are off: the app won’t suggest changing activity. The settings below are kept and work again when you turn them back on.',mode:'What to prioritise',modes:{var:'🎈 More variety',bal:'⚖️ Balanced',ref:'🎯 More practice'},
    perAct:'Each activity',prNote:'⏱️ = how long they can stay in that activity before the app suggests another (“General” uses the time above; “never” = no suggestion to switch from that activity). ⭐ Practise = suggested more often · Normal = based on progress · 🚫 Don’t suggest = still visible and playable, but never suggested.',star:'⭐ Practise',normal:'Normal',ban:'🚫 Don’t suggest',yesL:'Yes',noL:'No',
    logTitle:'💡 Recent suggestions',logNone:'No suggestions yet.',accepted:(a,n)=>`Accepted: ${a} of ${n}`,res:{ok:'✅ accepted',no:'↩️ kept playing',ign:'⏳ no answer',shown:'· app was closed'},warnHidden:(a,why)=>`💡 ${a} needs practice (${why}), but it isn’t visible today.`,warnBan:(a,why)=>`💡 ${a} needs practice (${why}), but it is set to “🚫 Don’t suggest”.`,next:'Right now it would suggest:'},
  fr:{ask:a=>`On joue à ${a} ?`,yes:'D’accord !',no:'Je continue',how:'Touche le pouce en haut pour y aller, ou le pouce en bas pour continuer.',hi:n=>n?`Bonjour, ${n} !`:'Bonjour !',
-   why:{need:d=>`c’est difficile${d?' : '+d:''}`,star:'vous l’avez marquée à renforcer',stale:n=>n>=99?'jamais essayée':`pas utilisée depuis ${n} ${n===1?'jour':'jours'}`,bal:g=>`déjà beaucoup de ${g} aujourd’hui`,rest:'une pause créative après beaucoup d’apprentissage',ms:'important en moyenne section',sim:a=>`travaille la même chose que ${a}, indisponible aujourd’hui`},
+   why:{guess:'touchait au hasard plusieurs questions de suite : changer lui fera du bien',need:d=>`c’est difficile${d?' : '+d:''}`,star:'vous l’avez marquée à renforcer',stale:n=>n>=99?'jamais essayée':`pas utilisée depuis ${n} ${n===1?'jour':'jours'}`,bal:g=>`déjà beaucoup de ${g} aujourd’hui`,rest:'une pause créative après beaucoup d’apprentissage',ms:'important en moyenne section',sim:a=>`travaille la même chose que ${a}, indisponible aujourd’hui`},
    title:'💡 Suggestions',set:'Réglages des suggestions',on:'Suggérer une autre activité',open:'À l’ouverture de l’app',after:'Temps général dans la même activité',never:'jamais',general:m=>`Général (${m})`,actTime:'Temps dans cette activité avant de suggérer',snooze:'S’il touche 👎 (continuer son jeu)',snAct:'ne plus redemander dans cette activité',offNote:'💤 Les suggestions sont désactivées : l’app ne propose pas de changer d’activité. Les réglages ci-dessous sont conservés et refonctionnent quand vous les réactivez.',mode:'Priorité',modes:{var:'🎈 Plus de variété',bal:'⚖️ Équilibré',ref:'🎯 Plus de renforcement'},
    perAct:'Chaque activité',prNote:'⏱️ = combien de temps d’affilée il peut rester dans cette activité avant que l’app en propose une autre (« Général » utilise le temps ci-dessus ; « jamais » = pas de suggestion de changer depuis cette activité). ⭐ Renforcer = proposée plus souvent · Normal = selon son suivi · 🚫 Ne pas suggérer = reste visible et jouable, mais jamais proposée.',star:'⭐ Renforcer',normal:'Normal',ban:'🚫 Ne pas suggérer',yesL:'Oui',noL:'Non',
    logTitle:'💡 Suggestions récentes',logNone:'Pas encore de suggestions.',accepted:(a,n)=>`Acceptées : ${a} sur ${n}`,res:{ok:'✅ acceptée',no:'↩️ a continué',ign:'⏳ sans réponse',shown:'· app fermée'},warnHidden:(a,why)=>`💡 ${a} a besoin de renforcement (${why}), mais elle n’est pas visible aujourd’hui.`,warnBan:(a,why)=>`💡 ${a} a besoin de renforcement (${why}), mais elle est sur « 🚫 Ne pas suggérer ».`,next:'En ce moment, l’app suggérerait :'}};
@@ -4151,7 +4394,7 @@ function sgCanShow(){if(navigator.webdriver&&!window.__sgTest)return false; // e
   if(!SGC.on||window.__guest||lockEl||sgShown)return false;const par=document.getElementById('parents');if(!par.hidden)return false;
   const pin=document.getElementById('pinBox');if(pin&&!pin.hidden)return false;const gal=document.getElementById('gallery');if(gal&&!gal.hidden)return false;
   try{const r=remaining();if(r!==Infinity&&r<=180)return false}catch(e){}return now()>=sgSnoozeUntil}
-function sgShow(kind){if(!sgCanShow())return false;if(kind==='time'&&sgSnoozeAct===current)return false;const pk=sgPick(current);if(!pk)return false;const t=SG_T[lang],nm=sgName(pk.id);
+function sgShow(kind){if(!sgCanShow())return false;if(kind==='time'&&sgSnoozeAct===current)return false;const pk=sgPick(current);if(!pk)return false;if(kind==='guess')pk.why=SG_T[lang].why.guess;const t=SG_T[lang],nm=sgName(pk.id);
   const rec={t:now(),id:pk.id,from:current,why:pk.why,k:kind,r:'shown'};sgLog().log.push(rec);sgLog().log=sgLog().log.slice(-60);saveP();
   const el=document.createElement('div');el.className='sgbub';el.id='sgBubble';el.setAttribute('role','dialog');
   const hi=kind==='open'?t.hi(kidName())+' ':'';
