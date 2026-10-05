@@ -457,7 +457,10 @@ circle.agc{fill:#FF8C2B;transform:none;filter:none}
 .syrest.off{opacity:.45}.syfield{flex-wrap:wrap}.syfield label{flex-basis:100%}.syfield input{flex:1 1 260px;width:auto!important;max-width:none!important;min-width:0}
 .syguide{margin-top:10px;background:#F4F8FF;border-radius:14px;padding:8px 12px}.syguide summary{cursor:pointer;font-weight:800}.syguide li{margin:6px 0}
 .syguide textarea{white-space:pre;overflow:auto;width:100%;box-sizing:border-box;font:12px/1.35 ui-monospace,Menlo,monospace;border-radius:10px;border:2px solid #C9D6EA;padding:8px;margin-top:6px}
-.synotice{background:#E6F2FF;border-color:#3A86FF}
+.synotice{background:#E6F2FF;border-color:#3A86FF}.synotice>div{margin-top:4px}
+.sydevs{margin:4px 0 8px;padding-left:18px}.sydevs li{margin:4px 0;line-height:1.5}.btn.mini{padding:4px 10px;font-size:14px;min-height:0;margin-left:6px}
+.sykid{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-weight:800}.sykid select{flex:1 1 220px;font-size:16px;padding:6px;border-radius:10px;max-width:100%}
+#syKidPick{font-size:16px;padding:6px;border-radius:10px}
 .sgowl{position:absolute;left:-14px;top:-30px;font-size:3.2rem}.sgq{font:800 1.35rem "Baloo 2",sans-serif;margin:4px 0 2px}.sgact{font-size:3.6rem;line-height:1.1;margin-bottom:8px}
 .sgrow{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:center;padding:5px 10px;border-radius:14px;background:var(--sky);margin:4px 0}
 .sgpr .mode{font-size:.82rem;padding:5px 9px}.sgmin{font-size:.9rem;white-space:nowrap}.sgmin select{font-size:.9rem;max-width:150px}.sgrest.off{opacity:.4;filter:grayscale(1)}.sgoffnote{font-weight:700}
@@ -682,12 +685,17 @@ const T={
 <li><b>Seguimiento:</b> como siempre, solo cuenta el primer intento. En «📅 Actividad» ves qué % de preguntas resuelve por descarte en cada actividad; en «🔢 Números y letras» y «🧸 Palabras», en qué adivina más (suele ser lo que todavía no sabe).</li>
 <li>Se activa o desactiva en «⚙️ Ajustes → 🗓️ Actividades». Se guarda en la copia de seguridad.</li></ul>
 <h4>☁️ Sincronizar con Google Drive</h4>
-<ul><li><b>Para qué:</b> ver el seguimiento de la tablet y cambiar los ajustes desde tu teléfono u ordenador, sin coger la tablet. Se activa o desactiva en «⚙️ Ajustes → ☁️ Sincronizar»; desactivada, la app funciona solo con sus datos, como siempre.</li>
-<li><b>Se configura una sola vez:</b> un pequeño script de Google en tu cuenta (la app te da el código y los pasos) y una carpeta de tu Drive. Dentro, la app crea «desde-padre» (tus ajustes) y «desde-tablet» (el estado de la tablet) y guarda las 5 últimas versiones de cada archivo.</li>
-<li><b>👧 Modo niño (la tablet):</b> al abrir la app y cada pocos minutos mira si hay ajustes nuevos tuyos y los aplica entre preguntas, nunca en medio de una: límites de tiempo y PIN, actividades por día, sugerencias, pantalla, ayuda cuando falla y nombre. Nunca toca el seguimiento. Cada 5 minutos (y al salir de la app) guarda en el Drive su estado completo.</li>
-<li><b>👨 Modo padre:</b> lee el estado de la tablet (seguimiento, actividad, tiempo en pantalla y ajustes) cada minuto mientras la app está abierta y te avisa arriba de cuándo lo recibió. Cuando cambias un ajuste se envía solo; los botones de «+ / − minutos» y «Sin límite hoy» se envían como órdenes para hoy y la tablet las aplica una sola vez. En este dispositivo no cuenta el tiempo de pantalla ni se bloquea.</li>
-<li><b>Sin bucles ni choques:</b> cada dispositivo escribe solo su archivo y leer nunca provoca escribir. Si un ajuste se cambia en los dos sitios, gana el cambio más reciente.</li>
-<li><b>Sin internet:</b> la app sigue funcionando con normalidad; los cambios se envían y se reciben cuando vuelve la conexión. En «☁️ Sincronizar» ves cuándo fue la última sincronización.</li>
+<ul><li><b>Para qué:</b> ver el seguimiento y cambiar los ajustes desde tu teléfono u ordenador, con <b>varios niños y varios padres</b>, y que un niño pueda seguir jugando en otro aparato. Se activa o desactiva en «⚙️ Ajustes → ☁️ Sincronizar»; desactivada, la app funciona solo con sus datos, como siempre.</li>
+<li><b>Se configura una vez por familia:</b> un pequeño script de Google en tu cuenta (la app te da el código, ya con tu clave, y los pasos) y una carpeta de tu Drive. Todos los aparatos de la familia usan la misma dirección y la misma clave. Para otra familia con la misma cuenta, crea otro proyecto de script con otra carpeta y otra clave. Si vienes de la versión anterior, vuelve a pegar el script y publícalo de nuevo (la app te avisa).</li>
+<li><b>Cada aparato tiene un nombre</b> (por ejemplo «Tablet salón») y se elige si es <b>👧 de un niño</b> (y de qué niño) o <b>👨 de un padre</b> (y tu nombre). Si dos aparatos tienen el mismo nombre, la app avisa. Por dentro cada aparato y cada niño llevan un identificador oculto, así que los nombres solo sirven para que los reconozcas.</li>
+<li><b>👧 Aparato de un niño:</b> la primera vez eliges «➕ Niño nuevo» (empieza con los datos de este aparato) o un niño que ya existe (este aparato pasa a usar su progreso y sus ajustes). Al abrir la app y cada pocos minutos recibe los ajustes que cambies y los aplica entre preguntas, nunca en medio de una: límites y PIN, actividades por día, sugerencias, pantalla, ayuda cuando falla y nombre. Cada 5 minutos y al salir guarda su estado completo (el mismo contenido que la copia de seguridad).</li>
+<li><b>Relevo entre aparatos:</b> si el niño juega por la mañana en la tablet y por la tarde en el móvil, el móvil sigue desde lo que guardó la tablet. Si jugó en los dos sin internet, al volver la conexión se suman las dos partes (minutos, respuestas, tiempo de pantalla) sin contar nada dos veces. Si el niño está jugando ahora en otro aparato, se avisa: mejor no jugar en dos a la vez.</li>
+<li><b>👨 Aparato de un padre:</b> arriba eliges el niño y ves sus gráficos, de qué aparato vienen los datos y quién hizo el último cambio. Cada cambio que hagas se envía solo y <b>firmado con tu nombre</b>; solo se envía lo que cambiaste, así dos padres pueden cambiar cosas distintas a la vez sin pisarse. «+ / − minutos» y «Sin límite hoy» se envían como órdenes para hoy y se aplican una sola vez. Aquí no cuenta el tiempo de pantalla ni se bloquea la app: no lo uses para que juegue un niño.</li>
+<li><b>Cambiar de modo:</b> al pasar un aparato de niño a padre, antes se envía lo último jugado (sin internet, se guarda y se envía al volver). Un aparato que era de padre y pasa a «niño nuevo» empieza vacío.</li>
+<li><b>Borrar progreso y copias:</b> «🗑️ Borrar progreso» o «📂 Recuperar copia» en un aparato sincronizado se convierte en el estado de ese niño en todos sus aparatos (en el de un padre, del niño elegido); no se mezcla con lo anterior.</li>
+<li><b>Versiones en el Drive:</b> se guardan las 5 últimas y una por día durante 30 días. En «🕘 Ver versiones» puedes recuperar una; pasa a ser el estado actual del niño en todos sus aparatos. Los niños que ya no usan la app se pueden archivar (y recuperar).</li>
+<li><b>Sin bucles:</b> leer nunca provoca escribir, y un aparato que no ha cambiado nada no vuelve a enviar.</li>
+<li><b>Sin internet:</b> la app sigue funcionando con normalidad; los cambios quedan en cola y se envían y reciben cuando vuelve la conexión. En «☁️ Sincronizar» ves cuándo fue la última sincronización y los últimos cambios de ajustes.</li>
 <li>Los ajustes de sincronización no entran en la copia de seguridad, y los dibujos de la galería no se sincronizan.</li></ul>
 <h4>📱 Pantalla encendida</h4>
 <p>La tablet oscurece y apaga la pantalla si nadie la toca durante un rato. En «⚙️ Ajustes → 📱 Pantalla» puedes evitarlo mientras se usa la app: «Sí, mientras juega» (recomendado) la mantiene encendida mientras el niño toca la pantalla y la suelta tras 2 minutos sin tocar, para no gastar batería si deja la tablet; «Siempre que la app esté abierta»; o «No», como el resto de la tablet. Solo funciona con la app abierta y a la vista (instalada o en Chrome, no dentro de la vista previa). Al salir de la app, o cuando se acaba el tiempo del día (pantalla 🌙), la tablet vuelve a su comportamiento normal y puede apagarse sola.</p>
@@ -815,13 +823,18 @@ const T={
 <li><b>Tracking:</b> as always, only the first try counts. In “📅 Activity” you can see the % of questions solved by elimination in each activity; in “🔢 Numbers and letters” and “🧸 Words”, where she guesses most (usually what she doesn’t know yet).</li>
 <li>Turn it on or off in “⚙️ Settings → 🗓️ Activities”. It is saved in the backup.</li></ul>
 <h4>☁️ Sync with Google Drive</h4>
-<ul><li><b>Why:</b> to see the tablet’s tracking and change settings from your phone or computer without picking up the tablet. Turn it on or off in “⚙️ Settings → ☁️ Sync”; when off, the app only uses its own data, as always.</li>
-<li><b>Set up only once:</b> a small Google script in your account (the app gives you the code and the steps) and a folder in your Drive. Inside it, the app creates “desde-padre” (your settings) and “desde-tablet” (the tablet’s state) and keeps the last 5 versions of each file.</li>
-<li><b>👧 Child mode (the tablet):</b> when the app opens and every few minutes it checks for new settings from you and applies them between questions, never in the middle of one: time limits and PIN, activities per day, suggestions, screen, help after a mistake and name. It never touches the tracking. Every 5 minutes (and when leaving the app) it saves its full state to Drive.</li>
-<li><b>👨 Parent mode:</b> reads the tablet’s state (tracking, activity, screen time and settings) every minute while the app is open and tells you at the top when it was received. When you change a setting it is sent automatically; the “+ / − minutes” and “No limit today” buttons are sent as orders for today and the tablet applies each one only once. On this device screen time is not counted and it never locks.</li>
-<li><b>No loops or clashes:</b> each device only writes its own file and reading never causes writing. If a setting is changed in both places, the most recent change wins.</li>
-<li><b>Without internet:</b> the app keeps working normally; changes are sent and received when the connection is back. “☁️ Sync” shows when the last sync was.</li>
-<li>Sync settings are not part of the backup, and gallery drawings are not synced.</li></ul>
+<ul><li><b>Why:</b> to see the tracking and change settings from your phone or computer, with <b>several children and several parents</b>, and so a child can keep playing on another device. Turn it on or off in “⚙️ Settings → ☁️ Sync”; when off, the app only uses its own data, as always.</li>
+<li><b>Set up once per family:</b> a small Google script in your account (the app gives you the code, already with your key, and the steps) and a folder in your Drive. All the family’s devices use the same address and the same key. For another family with the same account, create another script project with another folder and another key. If you come from the previous version, paste the script again and redeploy it (the app tells you).</li>
+<li><b>Each device has a name</b> (e.g. “Living-room tablet”) and you choose whether it belongs to <b>👧 a child</b> (and which one) or <b>👨 a parent</b> (and your name). If two devices have the same name, the app warns you. Internally every device and child has a hidden id, so names are only there for you to recognise them.</li>
+<li><b>👧 A child’s device:</b> the first time, choose “➕ New child” (starts with this device’s data) or an existing child (this device then uses their progress and settings). When the app opens and every few minutes it receives the settings you change and applies them between questions, never in the middle of one: limits and PIN, activities per day, suggestions, screen, help after a mistake and name. Every 5 minutes and when leaving it saves its full state (the same content as the backup).</li>
+<li><b>Relay between devices:</b> if the child plays on the tablet in the morning and on the phone in the afternoon, the phone continues from what the tablet saved. If they played on both without internet, when the connection is back both parts are added up (minutes, answers, screen time) without counting anything twice. If the child is playing right now on another device, you are warned: better not to play on two at once.</li>
+<li><b>👨 A parent’s device:</b> at the top you choose the child and see their charts, which device the data comes from and who made the last change. Every change you make is sent on its own and <b>signed with your name</b>; only what you changed is sent, so two parents can change different things at the same time without overwriting each other. “+ / − minutes” and “No limit today” are sent as orders for today and applied only once. Screen time isn’t counted here and the app never locks: don’t use it for a child to play.</li>
+<li><b>Changing mode:</b> when a device goes from child to parent, the last play is sent first (without internet, it is kept and sent when back online). A device that was a parent’s and becomes a “new child” starts empty.</li>
+<li><b>Erasing progress and backups:</b> “🗑️ Reset progress” or “📂 Restore backup” on a synced device becomes that child’s state on all their devices (on a parent’s device, the selected child’s); it isn’t mixed with what was there.</li>
+<li><b>Versions in Drive:</b> the last 5 are kept, plus one per day for 30 days. In “🕘 See versions” you can restore one; it becomes the child’s current state on all their devices. Children who no longer use the app can be archived (and restored).</li>
+<li><b>No loops:</b> reading never causes writing, and a device that hasn’t changed anything doesn’t send again.</li>
+<li><b>Without internet:</b> the app keeps working normally; changes are queued and sent and received when the connection is back. In “☁️ Sync” you see when the last sync happened and the latest settings changes.</li>
+<li>Sync settings are not part of the backup, and the gallery drawings are not synced.</li></ul>
 <h4>📱 Keep screen on</h4>
 <p>The tablet dims and turns off the screen if nobody touches it for a while. In “⚙️ Settings → 📱 Screen” you can prevent this while the app is in use: “Yes, while playing” (recommended) keeps it on while the child touches the screen and releases it after 2 minutes without touching, so the battery isn’t wasted if the tablet is left alone; “Whenever the app is open”; or “No”, like the rest of the tablet. It only works with the app open and on screen (installed or in Chrome, not inside the preview). When leaving the app, or when today’s time is over (🌙 screen), the tablet goes back to normal and can turn itself off.</p>
 <h4>💾 Backup</h4>
@@ -948,12 +961,17 @@ const T={
 <li><b>Suivi :</b> comme toujours, seul le premier essai compte. Dans « 📅 Activité », vous voyez le % de questions résolues par élimination dans chaque activité ; dans « 🔢 Nombres et lettres » et « 🧸 Mots », là où il devine le plus (en général ce qu’il ne sait pas encore).</li>
 <li>S’active ou se désactive dans « ⚙️ Réglages → 🗓️ Activités ». C’est enregistré dans la sauvegarde.</li></ul>
 <h4>☁️ Synchroniser avec Google Drive</h4>
-<ul><li><b>Pourquoi :</b> voir le suivi de la tablette et changer les réglages depuis votre téléphone ou ordinateur, sans prendre la tablette. S’active ou se désactive dans « ⚙️ Réglages → ☁️ Synchro » ; désactivée, l’app n’utilise que ses propres données, comme toujours.</li>
-<li><b>Se configure une seule fois :</b> un petit script Google dans votre compte (l’app vous donne le code et les étapes) et un dossier de votre Drive. Dedans, l’app crée « desde-padre » (vos réglages) et « desde-tablet » (l’état de la tablette) et garde les 5 dernières versions de chaque fichier.</li>
-<li><b>👧 Mode enfant (la tablette) :</b> à l’ouverture et toutes les quelques minutes, elle regarde s’il y a de nouveaux réglages et les applique entre deux questions, jamais au milieu : limites de temps et code, activités par jour, suggestions, écran, aide quand il se trompe et prénom. Elle ne touche jamais au suivi. Toutes les 5 minutes (et en quittant l’app), elle enregistre son état complet sur le Drive.</li>
-<li><b>👨 Mode parent :</b> lit l’état de la tablette (suivi, activité, temps d’écran et réglages) chaque minute pendant que l’app est ouverte et indique en haut quand il a été reçu. Quand vous changez un réglage, il est envoyé tout seul ; les boutons « + / − minutes » et « Sans limite aujourd’hui » sont envoyés comme des ordres pour aujourd’hui et la tablette applique chacun une seule fois. Sur cet appareil, le temps d’écran n’est pas compté et l’app ne se bloque jamais.</li>
-<li><b>Ni boucles ni conflits :</b> chaque appareil n’écrit que son propre fichier et lire ne provoque jamais d’écriture. Si un réglage est changé aux deux endroits, le changement le plus récent l’emporte.</li>
-<li><b>Sans internet :</b> l’app continue de fonctionner normalement ; les changements sont envoyés et reçus au retour de la connexion. « ☁️ Synchro » indique la dernière synchronisation.</li>
+<ul><li><b>Pourquoi :</b> voir le suivi et changer les réglages depuis votre téléphone ou ordinateur, avec <b>plusieurs enfants et plusieurs parents</b>, et qu’un enfant puisse continuer à jouer sur un autre appareil. S’active ou se désactive dans « ⚙️ Réglages → ☁️ Synchro » ; désactivée, l’app n’utilise que ses propres données, comme toujours.</li>
+<li><b>Se configure une fois par famille :</b> un petit script Google dans votre compte (l’app vous donne le code, déjà avec votre clé, et les étapes) et un dossier de votre Drive. Tous les appareils de la famille utilisent la même adresse et la même clé. Pour une autre famille avec le même compte, créez un autre projet de script avec un autre dossier et une autre clé. Si vous venez de la version précédente, collez à nouveau le script et redéployez-le (l’app vous prévient).</li>
+<li><b>Chaque appareil a un nom</b> (par ex. « Tablette salon ») et on choisit s’il est celui <b>👧 d’un enfant</b> (et lequel) ou <b>👨 d’un parent</b> (et votre nom). Si deux appareils ont le même nom, l’app prévient. En interne, chaque appareil et chaque enfant ont un identifiant caché : les noms servent seulement à les reconnaître.</li>
+<li><b>👧 Appareil d’un enfant :</b> la première fois, choisissez « ➕ Nouvel enfant » (il commence avec les données de cet appareil) ou un enfant existant (cet appareil utilise alors sa progression et ses réglages). À l’ouverture et toutes les quelques minutes, il reçoit les réglages que vous changez et les applique entre deux questions, jamais au milieu : limites et code, activités par jour, suggestions, écran, aide quand il se trompe et prénom. Toutes les 5 minutes et en quittant, il enregistre son état complet (le même contenu que la sauvegarde).</li>
+<li><b>Relais entre appareils :</b> si l’enfant joue le matin sur la tablette et l’après-midi sur le téléphone, le téléphone reprend là où la tablette s’est arrêtée. S’il a joué sur les deux sans internet, au retour de la connexion les deux parties s’additionnent (minutes, réponses, temps d’écran) sans rien compter deux fois. Si l’enfant joue en ce moment sur un autre appareil, l’app prévient : mieux vaut ne pas jouer sur deux à la fois.</li>
+<li><b>👨 Appareil d’un parent :</b> en haut, vous choisissez l’enfant et voyez ses graphiques, de quel appareil viennent les données et qui a fait le dernier changement. Chaque changement est envoyé tout seul et <b>signé de votre nom</b> ; seul ce que vous avez changé est envoyé, ainsi deux parents peuvent changer des choses différentes en même temps sans s’écraser. « + / − minutes » et « Sans limite aujourd’hui » sont envoyés comme des ordres pour aujourd’hui et appliqués une seule fois. Ici, le temps d’écran n’est pas compté et l’app ne se bloque jamais : ne l’utilisez pas pour faire jouer un enfant.</li>
+<li><b>Changer de mode :</b> quand un appareil passe d’enfant à parent, la dernière partie est d’abord envoyée (sans internet, elle est gardée et envoyée au retour). Un appareil de parent qui devient « nouvel enfant » commence vide.</li>
+<li><b>Effacer la progression et sauvegardes :</b> « 🗑️ Effacer la progression » ou « 📂 Restaurer une sauvegarde » sur un appareil synchronisé devient l’état de cet enfant sur tous ses appareils (sur celui d’un parent, de l’enfant choisi) ; ce n’est pas mélangé avec l’existant.</li>
+<li><b>Versions sur le Drive :</b> les 5 dernières sont gardées, plus une par jour pendant 30 jours. Dans « 🕘 Voir les versions », vous pouvez en restaurer une ; elle devient l’état actuel de l’enfant sur tous ses appareils. Les enfants qui n’utilisent plus l’app peuvent être archivés (et récupérés).</li>
+<li><b>Pas de boucles :</b> lire n’entraîne jamais d’écriture, et un appareil qui n’a rien changé ne renvoie rien.</li>
+<li><b>Sans internet :</b> l’app continue de fonctionner normalement ; les changements sont mis en attente, puis envoyés et reçus au retour de la connexion. Dans « ☁️ Synchro », vous voyez la dernière synchronisation et les derniers changements de réglages.</li>
 <li>Les réglages de synchronisation ne font pas partie de la sauvegarde, et les dessins de la galerie ne sont pas synchronisés.</li></ul>
 <h4>📱 Écran allumé</h4>
 <p>La tablette assombrit puis éteint l’écran si personne ne le touche pendant un moment. Dans « ⚙️ Réglages → 📱 Écran », vous pouvez l’éviter pendant l’utilisation de l’app : « Oui, pendant le jeu » (recommandé) le garde allumé tant que l’enfant touche l’écran et le relâche après 2 minutes sans toucher, pour ne pas vider la batterie si la tablette est laissée de côté ; « Tant que l’app est ouverte » ; ou « Non », comme le reste de la tablette. Cela ne fonctionne qu’avec l’app ouverte et affichée (installée ou dans Chrome, pas dans l’aperçu). En quittant l’app, ou quand le temps du jour est terminé (écran 🌙), la tablette reprend son comportement normal et peut s’éteindre seule.</p>
@@ -2365,7 +2383,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     row.innerHTML=`<span class="pnote">${t.resetAsk}</span><button class="btn" id="pyes">${t.resetYes}</button><button class="btn alt" id="pno">${t.resetNo}</button>`;
     document.getElementById('pno').onclick=openParents;
     document.getElementById('pyes').onclick=()=>{bumpGen();[PKEY,'peques-heard','peques-colored'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});heardStories=[];
-      loadP();sessionNew={};resumeSess();SCR.hist={};SCR.lim={};SCR.used=0;SCR.extra=0;SCR.warn=0;SCR.free=false;saveScr();openParents()}}}
+      loadP();sessionNew={};resumeSess();SCR.hist={};SCR.lim={};SCR.hd={};SCR.cx=[];SCR.used=0;SCR.extra=0;SCR.warn=0;SCR.free=false;saveScr();syOnReset();openParents()}}}
 (function(){const b=document.getElementById('statsBtn');let tmr=null;
   const start=e=>{e.preventDefault();b.classList.add('holding');tmr=setTimeout(()=>{b.classList.remove('holding');tmr=null;askPin(openParents)},1800)};
   // si se suelta antes de tiempo, aparece un aviso para los padres
@@ -2390,9 +2408,10 @@ const saveSoon=()=>{if(!saveTmr)saveTmr=setTimeout(()=>{saveTmr=null;saveP()},40
 // Al abrir de nuevo la app poco después, se sigue la misma sesión
 function resumeSess(){ensureAct();const s=P.sess[P.sess.length-1];if(s&&now()-s.e<SESS_GAP){curSess=s;lastTouch=s.e;lastKey=null}else{curSess=null;lastTouch=0}}
 function credit(key,from,ms){if(!key||ms<=0||!curSess)return;const sec=ms/1000;
-  curSess.a[key]=(curSess.a[key]||0)+sec;const d=dayRec(from);d.m[key]=(d.m[key]||0)+sec;d.h[new Date(from).getHours()]+=sec}
-function onTouch(){if(!document.getElementById('parents').hidden)return;ensureAct();const t=now();
-  if(!curSess||t-lastTouch>SESS_GAP){curSess={s:t,e:t,a:{},n:0,k:0};P.sess.push(curSess);P.sess=P.sess.slice(-200)}
+  curSess.a[key]=(curSess.a[key]||0)+sec;const d=dayRec(from),hr=new Date(from).getHours();d.m[key]=(d.m[key]||0)+sec;d.h[hr]+=sec;
+  const v=dayDv(d);v.m[key]=(v.m[key]||0)+sec;v.h[hr]+=sec}
+function onTouch(){if(!document.getElementById('parents').hidden||syParent())return;ensureAct();const t=now();
+  if(!curSess||t-lastTouch>SESS_GAP){curSess={s:t,e:t,a:{},n:0,k:0,dv:DEVID};P.sess.push(curSess);P.sess=P.sess.slice(-200)}
   else credit(lastKey,lastTouch,Math.min(t-lastTouch,TOUCH_CAP));
   curSess.e=t;lastTouch=t;lastKey=actKey();
   // borra los días de hace más de 120 días
@@ -2400,9 +2419,9 @@ function onTouch(){if(!document.getElementById('parents').hidden)return;ensureAc
   saveSoon()}
 const noteKey=()=>{lastKey=actKey()};
 // Respuesta (solo el primer intento de cada pregunta, en todas las actividades con preguntas)
-function noteAns(ok){window.__lastAns=Date.now();try{sgAfterAnswer()}catch(e){}if(qAns)return;qAns=true;ensureAct();const t=now();
+function noteAns(ok){window.__lastAns=Date.now();try{sgAfterAnswer()}catch(e){}if(qAns||syParent())return;qAns=true;ensureAct();const t=now();
   if(!curSess)onTouch();if(curSess){curSess.n++;if(ok)curSess.k++}
-  const d=dayRec(t);d.n++;if(ok)d.k++;d.s=snapshot();saveSoon()}
+  const d=dayRec(t),v=dayDv(d);d.n++;v.n++;if(ok){d.k++;v.k++}d.s=snapshot();saveSoon()}
 // Foto del día: cuántas cosas domina (🟢)
 function snapshot(){const g=r=>r.att>=3&&r.s>=75;let n=0,l=0;
   for(let i=1;i<=9;i++){const r=P.num[i];if(r)for(const sk of SKILLS)if(g(r[sk]))n++}
@@ -3107,7 +3126,8 @@ const saveLim=()=>{if(window.__bkRestored)return;try{localStorage.setItem(LKEY,J
 const saveScr=()=>{if(window.__bkRestored)return;try{localStorage.setItem(SKEY,JSON.stringify(SCR))}catch(e){}};
 // A medianoche empieza un día nuevo
 function rollDay(){const k=dayKey(now());if(SCR.day!==k){SCR.day=k;SCR.used=0;SCR.extra=0;SCR.free=false;SCR.warn=0;
-  for(const o of [SCR.hist,SCR.lim]){const ks=Object.keys(o).sort();if(ks.length>60)ks.slice(0,ks.length-60).forEach(x=>delete o[x])}saveScr()}}
+  SCR.cx=(SCR.cx||[]).filter(c=>c.day===k);
+  for(const o of [SCR.hist,SCR.lim,...Object.values(SCR.hd||{})]){const ks=Object.keys(o).sort();if(ks.length>60)ks.slice(0,ks.length-60).forEach(x=>delete o[x])}saveScr()}}
 const dayLimitMin=()=>LIM.days[new Date(now()).getDay()]||0;
 const TS=()=>window.__guest?GUEST:SCR; // contador activo: el del niño o el del invitado
 const todayLimit=()=>{if(window.__guest)return !GUEST.free&&GUEST.limit>0?GUEST.limit*60+GUEST.extra:0;const m=dayLimitMin();return m>0&&!SCR.free?m*60+SCR.extra:0}; // segundos; 0 = sin límite
@@ -3127,7 +3147,7 @@ function limTick(){rollDay();if(syParent()){lastTick=now();try{drawDisc()}catch(
   const counting=document.visibilityState==='visible'&&par.hidden&&(!pin||pin.hidden)&&!lockEl;
   if(GUEST.on&&now()>=GUEST.until){setGuest(false);limWarnText(L().guestEnded)}
   const S=TS();
-  if(counting&&dt>0){const before=Math.floor(S.used/10);S.used+=dt/1000;if(!window.__guest){SCR.hist[SCR.day]=Math.round(SCR.used);SCR.lim[SCR.day]=todayLimit()}if(Math.floor(S.used/10)!==before)saveT()}
+  if(counting&&dt>0){const before=Math.floor(S.used/10);S.used+=dt/1000;if(!window.__guest){SCR.hist[SCR.day]=Math.round(SCR.used);SCR.lim[SCR.day]=todayLimit();const hd=SCR.hd||(SCR.hd={}),mine=hd[DEVID]||(hd[DEVID]={});mine[SCR.day]=(mine[SCR.day]||0)+dt/1000}if(Math.floor(S.used/10)!==before)saveT()}
   const r=remaining();drawDisc();
   if(r===Infinity){if(lockEl)unlockScreen();return}
   if(r<=0){if(!lockEl)lockScreen();return}
@@ -3182,9 +3202,9 @@ function limitHandlers(box){const re=()=>{const sc=box.scrollTop;limTick();openP
   const g=id=>document.getElementById(id);
   g('limReset').onclick=()=>{const S=TS();S.used=0;S.extra=0;S.warn=0;saveT();re()};
   // Quitar tiempo: nunca deja el restante por debajo de 0 (si llega a 0, se bloquea)
-  box.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const S=TS(),r=remaining();if(r===Infinity)return;const q=Math.min(r,(+b.dataset.sub)*60);S.extra-=q;S.warn=0;saveT();syCmd('extra',-q);re()});
-  box.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const S=TS();S.extra+=(+b.dataset.add)*60;S.warn=0;saveT();syCmd('extra',(+b.dataset.add)*60);re()});
-  g('limFree').onclick=()=>{const S=TS();S.free=!S.free;S.warn=0;saveT();syCmd('free',S.free);re()};
+  box.querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const S=TS(),r=remaining();if(r===Infinity)return;const q=Math.min(r,(+b.dataset.sub)*60);S.extra-=q;S.warn=0;saveT();scrLocalCmd('extra',-q);re()});
+  box.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{const S=TS();S.extra+=(+b.dataset.add)*60;S.warn=0;saveT();scrLocalCmd('extra',(+b.dataset.add)*60);re()});
+  g('limFree').onclick=()=>{const S=TS();S.free=!S.free;S.warn=0;saveT();scrLocalCmd('free',S.free);re()};
   // modo invitado
   const gt=g('guestToggle');if(gt)gt.onclick=()=>{setGuest(!GUEST.on);re()};
   const gs=g('gnamesave');if(gs)gs.onclick=()=>{GUEST.name=g('gname').value.trim().slice(0,16);window.__gName=GUEST.name;saveGuest();if(window.__guest){nameIdx=0;if(!nameSeq().length&&wMode==='name')wMode='abc';if(current==='escletras')escletras()}re()};
@@ -3473,8 +3493,8 @@ const BK_T={
    save:'💾 Enregistrer une sauvegarde',load:'📂 Restaurer une sauvegarde',saved:n=>`✅ Sauvegarde enregistrée (${n} ${n===1?'dessin':'dessins'}). Elle est dans « Téléchargements ».`,bad:'⚠️ Ce fichier n’est pas une sauvegarde de cette app.',
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
-const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync']);
-const APP_VER=66; // se sube junto con la caché de sw.js
+const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
+const APP_VER=67; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -3506,7 +3526,7 @@ async function bkRestore(d){window.__bkRestored=true;
   for(const k in d.ls)if(!BK_SKIP.has(k))lsSet(k,d.ls[k]);lsSet('peques-lastbk',String(d.t));
   lsSet('peques-bkcheck',JSON.stringify({t:d.t,exp:bkSummary(d.ls,gal.length)}));myGen=String(Date.now());lsSet(GEN_K,myGen);
   const tmo=(pr,ms)=>Promise.race([pr,new Promise(res=>setTimeout(res,ms))]);
-  await tmo((async()=>{try{await Gal.clear();for(const r of gal)await tmo(Gal.put({t:r.t||Date.now(),kind:r.kind||'draw',blob:await dataToBlob(r.img)}),4000)}catch(e){}})(),25000)}
+  await tmo((async()=>{try{await Gal.clear();for(const r of gal)await tmo(Gal.put({t:r.t||Date.now(),kind:r.kind||'draw',blob:await dataToBlob(r.img)}),4000)}catch(e){}})(),25000);try{syOnReset()}catch(e){}}
 // Al arrancar tras recuperar una copia: se compara lo que hay con lo que tenía el archivo y se avisa
 async function bkVerify(){let c=null;try{c=JSON.parse(localStorage.getItem('peques-bkcheck')||'null')}catch(e){}if(!c)return;
   try{localStorage.removeItem('peques-bkcheck')}catch(e){}
@@ -4299,41 +4319,114 @@ function wakeSection(){const t=WK_T[lang];
 function wakeHandlers(){const s=document.getElementById('wkSel');if(!s)return;s.onchange=async()=>{wkMode=s.value;try{localStorage.setItem('peques-wake',wkMode)}catch(e){}wkTouch=Date.now();await wkSync();const st=document.getElementById('wkState');if(st)st.textContent=wkState()}}
 
 
-// ===== ☁️ Sincronizar con Google Drive (a través de un pequeño script de Google en la cuenta del padre) =====
-// 👧 Niño (tablet): lee la configuración del padre (desde-padre/config.json) y escribe su estado completo (desde-tablet/estado.json).
-// 👨 Padre: lee el estado de la tablet (seguimiento + configuración) y escribe su configuración cuando la cambia.
-// Cada dispositivo escribe solo su propio archivo y leer nunca provoca escribir: así no hay bucles.
-const SY_KEY='peques-sync';
-// configuración que viaja del padre a la tablet (nada de seguimiento)
+// ===== ☁️ Sincronizar con Google Drive: varios niños, varios padres y relevo entre dispositivos =====
+// Carpeta base del Drive (gestionada por un script de Google en la cuenta del padre):
+//   dispositivos.json            registro común: dispositivos (nombre, modo, niño, visto por última vez) y niños
+//   ninos/<Nombre (id)>/estado.json   seguimiento completo del niño (mismo formato que la copia de seguridad); lo escribe el dispositivo donde juega
+//   ninos/<Nombre (id)>/config.json   ajustes del niño + historial de cambios firmados; los padres envían solo sus cambios
+// Reglas: cada estado lo escribe solo el dispositivo donde juega el niño; los padres solo envían cambios hechos por una persona;
+// leer nunca provoca escribir (sin bucles). El script numera las versiones (seq/ver), así no influye la hora de cada aparato.
+const SY_KEY='peques-sync',DEV_KEY='peques-devid',SY_FINAL='peques-sync-final';
+var DEVID=null;try{DEVID=localStorage.getItem(DEV_KEY)}catch(e){}
+if(!DEVID){DEVID='d'+Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3);try{lsSet(DEV_KEY,DEVID)}catch(e){}}
+// ajustes de un niño (viajan por config.json) y seguimiento (viaja por estado.json)
 const SY_CFG=['peques-limit','peques-access','peques-sugg','peques-wake','peques-ayuda','peques-name'];
-// preferencias propias de cada dispositivo que el padre no toma de la tablet
-const SY_LOCAL=new Set(['peques-lang','peques-menu','peques-ptab','peques-psub','peques-cat','peques-catlast','peques-fold','peques-lastbk','peques-gen','peques-sync','peques-guest','peques-bkcheck','peques-bkres']);
-let SY=null;
-function syLoad(){try{SY=JSON.parse(localStorage.getItem(SY_KEY)||'null')}catch(e){SY=null}
-  if(!SY||typeof SY!=='object')SY={};
-  SY=Object.assign({on:false,role:'kid',url:'',key:'',dev:Math.random().toString(36).slice(2,10),cfgVer:0,cfgApplied:0,stApplied:0,cfgHash:'',stHash:'',cmds:[],done:[],lastOk:0,lastPull:0,lastPush:0,lastErr:'',pushCfg:false},SY)}
+const SY_TRACK=['peques-progress','peques-screen','peques-heard','peques-colored'];
+// preferencias propias de cada aparato: no viajan
+const SY_LOCAL=new Set(['peques-lang','peques-menu','peques-ptab','peques-psub','peques-cat','peques-catlast','peques-fold','peques-lastbk','peques-gen','peques-sync','peques-guest','peques-bkcheck','peques-bkres','peques-devid','peques-sync-final']);
+const SY_DEF={v:2,on:false,role:'kid',url:'',key:'',devName:'',parentName:'',kid:'',kidName:'',sel:'',seq:0,epoch:0,selSeq:0,cfgVer:0,cfgSnap:null,cfgFrom:null,trackHash:'',pushHash:'',q:[],reg:null,regNow:0,regAt:0,lastOk:0,lastPull:0,lastPush:0,lastErr:'',forcePush:false,prevRole:'',auto:false};
+var SY=null;
+function syLoad(){let o=null;try{o=JSON.parse(localStorage.getItem(SY_KEY)||'null')}catch(e){}if(!o||typeof o!=='object')o={};
+  // de la versión anterior (un solo niño y un solo padre): se conserva la conexión y el modo; la tablet crea su niño sola
+  if(o.on&&o.v!==2){o={on:true,url:o.url||'',key:o.key||'',role:o.role==='parent'?'parent':'kid',auto:o.role!=='parent'}}
+  SY=Object.assign({},SY_DEF,o);if(!Array.isArray(SY.q))SY.q=[]}
 syLoad();
 const sySave=()=>{try{lsSet(SY_KEY,JSON.stringify(SY))}catch(e){}};
-const syOn=()=>!!(SY.on&&SY.url&&SY.key);
-const syParent=()=>syOn()&&SY.role==='parent';
+function syOn(){return !!(SY&&SY.on&&SY.url&&SY.key)}
+function syParent(){return syOn()&&SY.role==='parent'}
+function syKidMode(){return syOn()&&SY.role==='kid'}
+const syJ=s=>{try{return typeof s==='string'?JSON.parse(s):s}catch(e){return null}};
 const syHash=s=>{let h=5381;for(let i=0;i<s.length;i++)h=(h*33+s.charCodeAt(i))|0;return String(h)};
 const syCfgLs=()=>{const o={};SY_CFG.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)o[k]=v});return o};
-const syCfgHash=()=>syHash(JSON.stringify(syCfgLs()));
-// al activar o cambiar de modo: el padre toma primero la configuración de la tablet; la tablet no pisa la del padre
-function syInit(){SY.cfgHash=syCfgHash();SY.cfgVer=SY.role==='parent'?-1:1;SY.cfgApplied=0;SY.stApplied=0;SY.stHash='';SY.pushCfg=false;SY.lastErr='';sySave();syKick()}
-async function syCall(p){const ctl=typeof AbortController!=='undefined'?new AbortController():null,tm=ctl?setTimeout(()=>ctl.abort(),25000):0;
-  try{const r=await fetch(SY.url.trim(),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({key:SY.key.trim()},p)),redirect:'follow',cache:'no-store',signal:ctl?ctl.signal:undefined});
+const syTrackLs=()=>{const o={};SY_TRACK.forEach(k=>{const v=localStorage.getItem(k);if(v!=null)o[k]=v});return o};
+const syTrackHash=()=>syHash(JSON.stringify(syTrackLs()));
+const syMyName=()=>(SY.role==='parent'?(SY.parentName||SY.devName):(SY.devName||SY.kidName))||'?';
+async function syCall(p){const ctl=typeof AbortController!=='undefined'?new AbortController():null,tm=ctl?setTimeout(()=>ctl.abort(),30000):0;
+  try{const r=await fetch(SY.url.trim(),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({key:SY.key.trim(),dev:DEVID},p)),redirect:'follow',cache:'no-store',signal:ctl?ctl.signal:undefined});
     let j=null;try{j=await r.json()}catch(e){throw new Error('resp')}
-    if(!j||!j.ok)throw new Error((j&&j.err)||'resp');return j}finally{if(tm)clearTimeout(tm)}}
-// cambios hechos en este dispositivo (en cualquier ajuste de configuración): se detectan comparando con la última versión conocida
-function syWatch(){const h=syCfgHash();if(h===SY.cfgHash)return;SY.cfgHash=h;SY.cfgVer=Date.now();if(SY.role==='parent')SY.pushCfg=true;sySave()}
-// órdenes puntuales del padre para hoy («+15 min», «sin límite hoy»): se aplican una sola vez cada una
-function syCmd(type,val){if(!syParent()||window.__guest)return;SY.cmds.push({id:SY.dev+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),type,val,day:dayKey(now())});SY.cmds=SY.cmds.slice(-30);SY.pushCfg=true;sySave();syKick()}
-function syApplyCmds(cmds){let ch=false;const today=dayKey(now());
-  for(const c of cmds||[]){if(!c||!c.id||SY.done.includes(c.id))continue;SY.done.push(c.id);if(c.day!==today)continue;
-    if(c.type==='extra'){SCR.extra+=+c.val||0;SCR.warn=0;ch=true}else if(c.type==='free'){SCR.free=!!c.val;SCR.warn=0;ch=true}}
-  SY.done=SY.done.slice(-100);if(ch)saveScr();sySave()}
-// vuelve a leer la configuración (y en el padre también el seguimiento) después de aplicar datos recibidos
+    if(!j||!j.ok){const er=new Error((j&&j.err)||'resp');if(j&&j.data)er.data=j.data;throw er}
+    if(j.now){SY.regNow=j.now;SY.regAt=Date.now()}return j}finally{if(tm)clearTimeout(tm)}}
+
+// ---------- datos por dispositivo (para poder sumar sin contar dos veces) ----------
+// cada día guarda también lo que aportó cada aparato (d.dv) y el tiempo de pantalla por aparato (SCR.hd)
+function dayDv(d){const dv=d.dv||(d.dv={});return dv[DEVID]||(dv[DEVID]={m:{},h:Array(24).fill(0),n:0,k:0})}
+// órdenes de tiempo de hoy («+15 min», «sin límite hoy»): una lista con identificador, así nunca se aplican dos veces
+function scrCx(){if(!Array.isArray(SCR.cx))SCR.cx=SCR.extra&&SCR.day?[{id:'old-'+DEVID+'-'+SCR.day,day:SCR.day,type:'extra',val:SCR.extra,t:0}]:[];return SCR.cx}
+function scrRecalc(){const d=dayKey(now()),cx=scrCx().filter(c=>c.day===d);SCR.cx=cx;
+  SCR.extra=cx.filter(c=>c.type==='extra').reduce((a,c)=>a+(+c.val||0),0);
+  const fr=cx.filter(c=>c.type==='free').sort((a,b)=>a.t-b.t).pop();SCR.free=fr?!!fr.val:false}
+function scrLocalCmd(type,val){if(window.__guest)return null;const c={id:DEVID+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6),day:dayKey(now()),type,val,t:Date.now()};
+  scrCx().push(c);saveScr();if(syParent()&&SY.sel){SY.q.push({kid:SY.sel,changes:{},cmds:[c],desc:syCmdDesc(c)});sySave();syKick()}return c}
+function scrApplyCmds(cmds){const d=dayKey(now()),have=new Set(scrCx().map(c=>c.id));let ch=false;
+  for(const c of cmds||[]){if(!c||!c.id||have.has(c.id)||c.day!==d)continue;scrCx().push(c);ch=true}
+  if(ch){scrRecalc();SCR.warn=0;saveScr()}}
+
+// ---------- combinar dos estados del mismo niño (si se jugó en dos aparatos sin poder sincronizar) ----------
+const syTot=r=>r?Object.values(r.m||{}).reduce((a,b)=>a+b,0)+(r.n||0):0;
+function syContribs(rec){const out={},dv=rec.dv||{};let m={},h=Array(24).fill(0),n=rec.n||0,k=rec.k||0;
+  for(const key in rec.m||{})m[key]=rec.m[key];(rec.h||[]).forEach((v,i)=>h[i]=v||0);
+  for(const id in dv){const x=dv[id];out[id]=x;for(const key in x.m||{})m[key]=(m[key]||0)-x.m[key];(x.h||[]).forEach((v,i)=>h[i]-=v||0);n-=x.n||0;k-=x.k||0}
+  for(const key in m)if(m[key]<=0.5)delete m[key];h=h.map(v=>Math.max(0,v));
+  if(Object.keys(m).length||n>0)out._=({m,h,n:Math.max(0,n),k:Math.max(0,k)});return out}
+function syMergeDay(a,b){if(!a)return b;if(!b)return a;
+  const ca=syContribs(a),cb=syContribs(b),ids=new Set([...Object.keys(ca),...Object.keys(cb)]),out={m:{},h:Array(24).fill(0),n:0,k:0,dv:{}};
+  for(const id of ids){const x=syTot(ca[id])>=syTot(cb[id])?ca[id]:cb[id];if(!x)continue;
+    for(const key in x.m||{})out.m[key]=(out.m[key]||0)+x.m[key];(x.h||[]).forEach((v,i)=>out.h[i]+=v||0);out.n+=x.n||0;out.k+=x.k||0;if(id!=='_')out.dv[id]=x}
+  out.s=(syTot(a)>=syTot(b)?a.s:b.s)||a.s||b.s;return out}
+const syLast=r=>r?(r.last||0):0;
+function syDeepMax(a,b){if(a==null)return b;if(b==null)return a;
+  if(typeof a==='number'&&typeof b==='number')return Math.max(a,b);
+  if(Array.isArray(a)&&Array.isArray(b)){if(a.length&&a[0]&&typeof a[0]==='object'&&'t' in a[0]){const m=new Map();[...a,...b].forEach(x=>m.set(x.t+'|'+(x.id||''),x));return [...m.values()].sort((x,y)=>x.t-y.t).slice(-200)}return b.length>a.length?b:a}
+  if(typeof a==='object'&&typeof b==='object'){const o={};for(const k of new Set([...Object.keys(a),...Object.keys(b)]))o[k]=syDeepMax(a[k],b[k]);return o}
+  return a}
+function syMergeP(a,b){if(!a)return b;if(!b)return a;const o=Object.assign({},b,a);
+  // sesiones: se juntan sin repetir
+  const ss=new Map();[...(b.sess||[]),...(a.sess||[])].forEach(x=>{const p=ss.get(x.s);if(!p||x.e>p.e)ss.set(x.s,x)});o.sess=[...ss.values()].sort((x,y)=>x.s-y.s).slice(-200);
+  // días: se suma lo que aportó cada aparato
+  o.days={};for(const d of new Set([...Object.keys(a.days||{}),...Object.keys(b.days||{})]))o.days[d]=syMergeDay((a.days||{})[d],(b.days||{})[d]);
+  // números y letras: en cada habilidad gana el dato más reciente
+  for(const g of ['num','let']){const A=a[g]||{},B=b[g]||{},R={};
+    for(const it of new Set([...Object.keys(A),...Object.keys(B)])){const x=A[it],y=B[it];if(!x||!y){R[it]=x||y;continue}
+      const r=Object.assign({},syLast(x.recog)+syLast(x.say)+syLast(x.write)>=syLast(y.recog)+syLast(y.say)+syLast(y.write)?x:y);
+      for(const sk of ['recog','say','write'])if(x[sk]||y[sk])r[sk]=syLast(x[sk])>=syLast(y[sk])?x[sk]:y[sk];
+      r.conf=syDeepMax(x.conf,y.conf);if(x.wconf||y.wconf)r.wconf=syDeepMax(x.wconf,y.wconf);R[it]=r}o[g]=R}
+  // palabras: el registro más reciente de cada una
+  const OA=a.obj||{},OB=b.obj||{};o.obj={};for(const l of new Set([...Object.keys(OA),...Object.keys(OB)])){const x=OA[l]||{},y=OB[l]||{},R={};
+    for(const e of new Set([...Object.keys(x),...Object.keys(y)]))R[e]=!x[e]?y[e]:!y[e]?x[e]:(syLast(x[e])>=syLast(y[e])?x[e]:y[e]);o.obj[l]=R}
+  o.objConf=syDeepMax(a.objConf,b.objConf);
+  const hs=new Map();[...(b.hist||[]),...(a.hist||[])].forEach(x=>hs.set(JSON.stringify(x),x));o.hist=[...hs.values()].sort((x,y)=>x[0]-y[0]).slice(-300);
+  o.letOpen=Math.max(a.letOpen||0,b.letOpen||0)||undefined;o.recent=a.recent||b.recent;
+  // resto de actividades (contadores): el mayor de cada contador
+  for(const k of new Set([...Object.keys(a),...Object.keys(b)]))if(!['v','sess','days','num','let','obj','objConf','hist','letOpen','recent'].includes(k))o[k]=syDeepMax(a[k],b[k]);
+  o.v=1;return o}
+function syMergeScr(a,b){if(!a)return b;if(!b)return a;const o=Object.assign({},b,a),today=dayKey(now());
+  const hd={};for(const s of [a.hd||{},b.hd||{}])for(const id in s){hd[id]=hd[id]||{};for(const d in s[id])hd[id][d]=Math.max(hd[id][d]||0,s[id][d])}o.hd=hd;
+  const days=new Set([...Object.keys(a.hist||{}),...Object.keys(b.hist||{})]);o.hist={};
+  for(const d of days){const per=id=>(hd[id]||{})[d]||0,sumIn=s=>Object.keys(s.hd||{}).reduce((t,id)=>t+((s.hd[id]||{})[d]||0),0);
+    const legA=Math.max(0,((a.hist||{})[d]||0)-sumIn(a)),legB=Math.max(0,((b.hist||{})[d]||0)-sumIn(b));
+    o.hist[d]=Math.round(Object.keys(hd).reduce((t,id)=>t+per(id),0)+Math.max(legA,legB))}
+  o.lim=Object.assign({},b.lim||{},a.lim||{});
+  const cx=new Map();[...(b.cx||[]),...(a.cx||[])].forEach(c=>cx.set(c.id,c));o.cx=[...cx.values()].filter(c=>c.day===today);
+  o.day=today;o.used=o.hist[today]||0;
+  o.extra=o.cx.filter(c=>c.type==='extra').reduce((s,c)=>s+(+c.val||0),0);const fr=o.cx.filter(c=>c.type==='free').sort((x,y)=>x.t-y.t).pop();o.free=fr?!!fr.val:false;
+  return o}
+function syMergeLs(L,R){const o=Object.assign({},R,L);
+  try{o['peques-progress']=JSON.stringify(syMergeP(syJ(L['peques-progress']),syJ(R['peques-progress'])))}catch(e){}
+  try{o['peques-screen']=JSON.stringify(syMergeScr(syJ(L['peques-screen']),syJ(R['peques-screen'])))}catch(e){}
+  for(const k of ['peques-heard','peques-colored']){const u=[...new Set([...(syJ(L[k])||[]),...(syJ(R[k])||[])])];if(u.length)o[k]=JSON.stringify(u)}
+  return o}
+
+// ---------- vuelve a leer en memoria lo recibido ----------
 function syReload(full){try{
   if(full){loadP();sessionNew={};resumeSess();try{heardStories=JSON.parse(localStorage.getItem('peques-heard')||'[]')}catch(e){}}
   loadLim();
@@ -4342,166 +4435,380 @@ function syReload(full){try{
   try{const v=localStorage.getItem('peques-wake');wkMode=['play','always','off'].includes(v)?v:'play';wkSync()}catch(e){}
   AG_ON=localStorage.getItem('peques-ayuda')!=='0';childName=localStorage.getItem('peques-name')||'';
   try{renderMenu()}catch(e){}
-  const par=document.getElementById('parents');
-  if(par&&!par.hidden){const a=document.activeElement;if(!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&par.contains(a))){const sc=par.scrollTop;openParents();par.scrollTop=sc}}}catch(e){}}
-// ---- 👧 tablet ----
-let syPending=null;
-// momento adecuado para aplicar la configuración: no en medio de una pregunta ni con la pantalla de padres abierta
-function sySafe(){const par=document.getElementById('parents');if(par&&!par.hidden)return false;if(document.hidden)return true;
+  syRefreshPanel()}catch(e){}}
+function syRefreshPanel(force){const par=document.getElementById('parents');
+  if(par&&!par.hidden){const a=document.activeElement;if(force||!(a&&/INPUT|SELECT|TEXTAREA/.test(a.tagName)&&par.contains(a))){const sc=par.scrollTop;openParents();par.scrollTop=sc}}}
+
+// ---------- ajustes: cambios firmados ----------
+const syDayName=i=>new Date(2024,0,7+i).toLocaleDateString(locOf(),{weekday:'long'});
+function syDesc(changes,old){const t=SYT(),out=[];
+  for(const k in changes){const nv=changes[k],ov=old?old[k]:undefined;
+    if(k==='peques-limit'){const a=syJ(ov)||{days:[],pin:null},b=syJ(nv)||{days:[],pin:null};
+      for(let i=0;i<7;i++)if((a.days||[])[i]!==(b.days||[])[i])out.push(t.dLimit(syDayName(i),(b.days||[])[i]||0));
+      if((a.pin||null)!==(b.pin||null))out.push(b.pin?t.dPin:t.dPinOff)}
+    else if(k==='peques-name')out.push(t.dName(nv||''));
+    else if(k==='peques-ayuda')out.push(t.dHelp(nv!=='0'));
+    else if(k==='peques-wake')out.push(t.dWake);
+    else if(k==='peques-access')out.push(t.dAcc);
+    else if(k==='peques-sugg')out.push(t.dSugg)}
+  return [...new Set(out)].join(' · ')||t.dOther}
+function syCmdDesc(c){const t=SYT();return c.type==='extra'?t.dExtra(Math.round((+c.val||0)/60)):t.dFree(!!c.val)}
+// detecta cambios hechos aquí (en cualquier ajuste) y los pone en la cola para enviarlos firmados
+function syWatch(){const kid=SY.role==='parent'?SY.sel:SY.kid;if(!kid||!SY.cfgSnap)return;
+  const cur=syCfgLs(),snap=SY.cfgSnap,ch={};for(const k of new Set([...Object.keys(cur),...Object.keys(snap)]))if(cur[k]!==snap[k])ch[k]=k in cur?cur[k]:null;
+  if(!Object.keys(ch).length)return;SY.q.push({kid,changes:ch,cmds:[],desc:syDesc(ch,snap)});SY.cfgSnap=cur;sySave()}
+// aplica unos ajustes recibidos (sin volver a enviarlos)
+function syApplyCfg(cfg){for(const k of SY_CFG)if(cfg.ls&&k in cfg.ls&&localStorage.getItem(k)!==cfg.ls[k])lsSet(k,cfg.ls[k]);
+  SY.cfgSnap=syCfgLs();SY.cfgVer=cfg.ver||0;const h=(cfg.hist||[]).slice(-1)[0];SY.cfgFrom=h||SY.cfgFrom;
+  if(SY.role==='kid')scrApplyCmds(cfg.cmds);sySave();syReload(false)}
+async function syFlushQ(){while(SY.q.length){const it=SY.q[0];
+  const r=await syCall({action:'patchConfig',kid:it.kid,changes:it.changes,cmds:it.cmds||[],by:syMyName(),desc:it.desc});
+  SY.q.shift();const cfg=syJ(r.data);const cur=SY.role==='parent'?SY.sel:SY.kid;
+  if(cfg&&it.kid===cur){if(SY.role==='parent')syApplyCfg(cfg);else syPendCfg=cfg}SY.lastPush=Date.now();sySave()}}
+
+// ---------- 👧 dispositivo del niño ----------
+let syPendCfg=null,syPendRelay=null,syBusyOther='',syBusyShown='';
+// momento adecuado: no en medio de una pregunta ni con el panel de padres abierto (o al abrir la app, antes de jugar)
+function sySafe(){const par=document.getElementById('parents');if(par&&!par.hidden)return false;if(document.hidden||syFirst)return true;
   return Date.now()-sgLastPtr>6000||Date.now()-(window.__lastAns||0)<2500}
-function syApplyPending(){if(!syPending||!sySafe())return;const d=syPending;syPending=null;
-  try{saveScr()}catch(e){}
-  for(const k of SY_CFG){if(k in d.ls)lsSet(k,d.ls[k]);else{try{localStorage.removeItem(k)}catch(e){}}}
-  SY.cfgApplied=d.ver;SY.cfgVer=d.ver;SY.cfgHash=syCfgHash();SY.stHash='';sySave();syReload(false)}
-async function syPullCfg(){const j=await syCall({action:'get',which:'padre'});SY.lastPull=Date.now();if(!j.data)return;
-  let d=null;try{d=JSON.parse(j.data)}catch(e){return}if(!d||d.type!=='config'||!d.ls)return;
-  syApplyCmds(d.cmds);
-  if(d.ver>SY.cfgApplied){if(d.ver>SY.cfgVer)syPending=d;else{SY.cfgApplied=d.ver;sySave()}}}
-async function syPushSt(force){if(!window.__guest){try{saveP()}catch(e){}}try{saveScr()}catch(e){}
-  const ls={};bkKeys().forEach(k=>{if(!SY_LOCAL.has(k)||k==='peques-lang')ls[k]=localStorage.getItem(k)});
-  const body=JSON.stringify(ls),h=syHash(body+'|'+SY.cfgVer);if(!force&&h===SY.stHash)return;
-  const data={app:'juegos-para-peques',type:'estado',t:Date.now(),from:SY.dev,cfgVer:SY.cfgVer,ls};
-  await syCall({action:'put',which:'tablet',data:JSON.stringify(data)});SY.stHash=h;SY.lastPush=Date.now();sySave()}
-// ---- 👨 padre ----
-async function syPushCfg(){const data={app:'juegos-para-peques',type:'config',ver:SY.cfgVer,from:SY.dev,ls:syCfgLs(),cmds:SY.cmds.slice(-30)};
-  await syCall({action:'put',which:'padre',data:JSON.stringify(data)});SY.pushCfg=false;SY.lastPush=Date.now();sySave()}
-async function syPullSt(){const j=await syCall({action:'get',which:'tablet'});SY.lastPull=Date.now();if(!j.data)return;
-  let d=null;try{d=JSON.parse(j.data)}catch(e){return}if(!d||d.type!=='estado'||!d.ls||!(d.t>SY.stApplied))return;
-  // la configuración de la tablet solo gana si es más reciente que la de este dispositivo
-  const takeCfg=d.cfgVer>SY.cfgVer;
-  for(const k in d.ls){if(!k.startsWith('peques-')||SY_LOCAL.has(k))continue;if(SY_CFG.includes(k)&&!takeCfg)continue;if(typeof d.ls[k]==='string')lsSet(k,d.ls[k])}
-  if(takeCfg){for(const k of SY_CFG)if(!(k in d.ls)){try{localStorage.removeItem(k)}catch(e){}}SY.cfgVer=d.cfgVer}
-  SY.cfgHash=syCfgHash();SY.stApplied=d.t;SY.stT=d.t;sySave();syReload(true)}
-// ---- reloj de la sincronización ----
-let syBusy=false,syNextPull=0,syNextPush=0,syRetry=0;
-async function syTick(){if(!syOn()||syBusy)return;syWatch();if(SY.role==='kid')syApplyPending();
+let syFirst=true;
+function syApplyPend(){if(!sySafe())return;
+  if(syPendCfg){const c=syPendCfg;syPendCfg=null;if((c.ver||0)>SY.cfgVer||!SY.cfgSnap)syApplyCfg(c);else scrApplyCmds(c.cmds)}
+  if(syPendRelay&&!window.__guest){const d=syPendRelay;syPendRelay=null;syRelayApply(d)}}
+// relevo: otro aparato jugó con este niño después; se adopta su estado o, si aquí también se jugó, se combinan
+function syRelayApply(d){try{saveP()}catch(e){}try{saveScr()}catch(e){}
+  const changed=syTrackHash()!==SY.trackHash,adopt=(d.epoch||0)>SY.epoch||!changed;
+  const ls=adopt?d.ls:syMergeLs(syTrackLs(),d.ls);
+  for(const k of SY_TRACK){if(k in ls)lsSet(k,ls[k]);else if(adopt){try{localStorage.removeItem(k)}catch(e){}}}
+  SY.seq=d.seq||SY.seq;SY.epoch=Math.max(SY.epoch,d.epoch||0);syReload(true);syNorm();if(!adopt){SY.pushHash='';SY.forcePush=true}sySave()}
+// tras cargar datos recibidos se guardan una vez tal cual quedan en memoria; así un aparato sin cambios nunca vuelve a enviarlos (sin bucles)
+function syNorm(){try{saveP()}catch(e){}try{saveScr()}catch(e){}SY.trackHash=syTrackHash();SY.pushHash=syPushBody().h}
+function syPushBody(){const ls={};bkKeys().forEach(k=>{if(!SY_LOCAL.has(k))ls[k]=localStorage.getItem(k)});const s=JSON.stringify(ls);return {ls,h:syHash(s)}}
+async function syPushState(force){if(!SY.kid||window.__guest)return;try{saveP()}catch(e){}try{saveScr()}catch(e){}
+  const b=syPushBody(),f=!!(force||SY.forcePush);if(!f&&b.h===SY.pushHash)return;
+  const data={app:'juegos-para-peques',v:1,t:Date.now(),ls:b.ls,kid:SY.kid,from:DEVID,fromName:SY.devName,epoch:SY.epoch};
+  try{const r=await syCall({action:'putState',kid:SY.kid,data:JSON.stringify(data),base:SY.seq,force:f});SY.seq=r.seq;SY.pushHash=b.h;SY.trackHash=syTrackHash();SY.forcePush=false;SY.lastPush=Date.now();sySave()}
+  catch(e){if(e.message==='conflict'&&e.data){const d=syJ(e.data);if(d&&d.ls){syPendRelay=d;return}}throw e}}
+async function syPullKid(){const [st,cf]=await Promise.all([syCall({action:'getState',kid:SY.kid}),syCall({action:'getConfig',kid:SY.kid})]);SY.lastPull=Date.now();
+  const d=syJ(st.data);if(d&&d.ls&&(d.seq||0)>SY.seq&&(d.from!==DEVID||(d.epoch||0)>SY.epoch))syPendRelay=d;else if(d&&d.from===DEVID&&(d.seq||0)>SY.seq){SY.seq=d.seq}
+  const c=syJ(cf.data);if(c){if((c.ver||0)>SY.cfgVer)syPendCfg=c;else scrApplyCmds(c.cmds)}}
+// crear un niño nuevo con los datos de este aparato (o vacío)
+async function syCreateKid(name,empty){if(empty){[...SY_TRACK].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});loadP();sessionNew={};resumeSess();SCR.hist={};SCR.lim={};SCR.used=0;SCR.extra=0;SCR.cx=[];SCR.free=false;saveScr()}
+  const id='k'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-3);
+  await syCall({action:'kidSet',kid:{id,name}});
+  SY.kid=id;SY.kidName=name;SY.seq=0;SY.epoch=0;SY.cfgVer=0;SY.forcePush=true;
+  const all=syCfgLs();SY.cfgSnap=all;SY.q.push({kid:id,changes:all,cmds:[],desc:SYT().dInit});sySave();
+  await syFlushQ();await syPushState(true);await syHello()}
+// seguir con un niño que ya existe (cambio o segundo aparato): se descargan sus datos
+async function syContinueKid(id,name){const [st,cf]=await Promise.all([syCall({action:'getState',kid:id}),syCall({action:'getConfig',kid:id})]);
+  const d=syJ(st.data),c=syJ(cf.data);
+  if(d&&d.ls){for(const k of SY_TRACK){if(k in d.ls)lsSet(k,d.ls[k]);else{try{localStorage.removeItem(k)}catch(e){}}}}
+  syReload(true);SY.kid=id;SY.kidName=name;SY.seq=d?(d.seq||0):0;SY.epoch=d?(d.epoch||0):0;SY.cfgVer=0;SY.cfgSnap=null;sySave();
+  if(c)syApplyCfg(c);else{SY.cfgSnap=syCfgLs();sySave()}
+  syReload(true);syNorm();sySave();await syHello()}
+
+// ---------- 👨 dispositivo del padre ----------
+async function syParentLoad(id){if(!id)return;SY.sel=id;sySave();
+  const [st,cf]=await Promise.all([syCall({action:'getState',kid:id}),syCall({action:'getConfig',kid:id})]);SY.lastPull=Date.now();
+  const d=syJ(st.data),c=syJ(cf.data);
+  if(d&&d.ls)for(const k of SY_TRACK){if(k in d.ls)lsSet(k,d.ls[k]);else{try{localStorage.removeItem(k)}catch(e){}}}
+  else for(const k of SY_TRACK){try{localStorage.removeItem(k)}catch(e){}}
+  SY.selSeq=d?(d.seq||0):0;SY.selFrom=d?(d.fromName||''):'';SY.selT=d?(d.t||0):0;SY.cfgVer=0;
+  if(c)syApplyCfg(c);else{SY.cfgSnap=syCfgLs();sySave();syReload(true)}
+  syReload(true)}
+// en el aparato de un padre, «Borrar progreso» o recuperar una copia afecta al niño elegido: se envía como su nuevo estado
+async function syParentPush(){const id=SY.sel;if(!id){SY.forcePush=false;return}
+  const cur=syJ((await syCall({action:'getState',kid:id})).data),ep=Math.max(cur?(cur.epoch||0):0,SY.epoch||0)+1,b=syPushBody();
+  const r=await syCall({action:'putState',kid:id,data:JSON.stringify({app:'juegos-para-peques',v:1,t:Date.now(),ls:b.ls,kid:id,from:DEVID,fromName:syMyName(),epoch:ep}),base:0,force:true});
+  SY.selSeq=r.seq;SY.epoch=ep;SY.selFrom=syMyName();SY.selT=Date.now();SY.forcePush=false;SY.lastPush=Date.now();sySave()}
+async function syPullParent(){const id=SY.sel;const [st,cf]=await Promise.all([syCall({action:'getState',kid:id}),syCall({action:'getConfig',kid:id})]);SY.lastPull=Date.now();
+  if(id!==SY.sel)return;const d=syJ(st.data),c=syJ(cf.data);
+  if(d&&d.ls&&(d.seq||0)>SY.selSeq){for(const k of SY_TRACK){if(k in d.ls)lsSet(k,d.ls[k])}SY.selSeq=d.seq||0;SY.selFrom=d.fromName||'';SY.selT=d.t||0;sySave();syReload(true)}
+  if(c&&(c.ver||0)>SY.cfgVer)syApplyCfg(c)}
+
+// ---------- registro común ----------
+async function syHello(){const kidM=SY.role==='kid';const active=kidM&&!document.hidden&&Date.now()-sgLastPtr<120e3;
+  const sum=kidM&&SY.kid?{min:Math.round(((SCR.hist||{})[dayKey(now())]||0)/60),day:dayKey(now())}:null;
+  const r=await syCall({action:'hello',me:{id:DEVID,name:SY.devName,role:SY.role,kid:kidM?SY.kid:'',pname:SY.parentName,active,sum}});
+  const rk=g=>g?JSON.stringify([g.kids,Object.values(g.devices||{}).map(d=>[d.id,d.name,d.role,d.kid,d.pname])]):'',chg=rk(SY.reg)!==rk(r.reg);
+  SY.reg=r.reg;sySave();if(chg)setTimeout(()=>syRefreshPanel(),0);
+  if(kidM&&SY.kid){const o=Object.values((SY.reg||{}).devices||{}).find(x=>x.id!==DEVID&&x.kid===SY.kid&&x.role==='kid'&&x.active&&syServerAgo(x.lastSeen)<3*60e3);syBusyOther=o?o.name||'?':''}
+  if(SY.role==='parent'){const kids=syKids();if(!SY.sel||!kids.some(k=>k.id===SY.sel)){const k=kids.find(x=>!x.archived)||kids[0];if(k)await syParentLoad(k.id)}}}
+const syServerAgo=t=>t?(SY.regNow+(Date.now()-SY.regAt))-t:Infinity;
+const syKids=()=>Object.values(((SY.reg||{}).kids)||{}).sort((a,b)=>(a.created||0)-(b.created||0));
+const syDevs=()=>Object.values(((SY.reg||{}).devices)||{});
+// datos que no se pudieron enviar al cambiar de niño a padre: se guardan y se envían al volver internet
+function sySaveFinal(){try{const b=syPushBody();lsSet(SY_FINAL,JSON.stringify({kid:SY.kid,seq:SY.seq,epoch:SY.epoch,data:{app:'juegos-para-peques',v:1,t:Date.now(),ls:b.ls,kid:SY.kid,from:DEVID,fromName:SY.devName,epoch:SY.epoch}}))}catch(e){}}
+async function syFlushFinal(){let f=null;try{f=JSON.parse(localStorage.getItem(SY_FINAL)||'null')}catch(e){}if(!f)return;
+  try{await syCall({action:'putState',kid:f.kid,data:JSON.stringify(f.data),base:f.seq,force:false})}
+  catch(e){if(e.message!=='conflict')throw e;
+    // otro aparato escribió entretanto: se combinan (salvo si allí se borró o se recuperó una copia, que manda)
+    const cur=syJ(e.data);if(cur&&cur.ls&&(cur.epoch||0)<=(f.data.epoch||0)){const d=Object.assign({},f.data,{t:Date.now(),ls:syMergeLs(f.data.ls,cur.ls)});
+      await syCall({action:'putState',kid:f.kid,data:JSON.stringify(d),base:cur.seq||0,force:true})}}
+  try{localStorage.removeItem(SY_FINAL)}catch(e){}}
+
+// ---------- reloj de la sincronización ----------
+let syBusy=false,syNext={},syRetry=0;
+const syDue=(k,ms)=>{const t=Date.now();if(!syNext[k]||t>=syNext[k]){syNext[k]=t+ms;return true}return false};
+async function syTick(){if(!syOn()||syBusy)return;syWatch();if(SY.role==='kid')syApplyPend();
   if(!navigator.onLine){if(SY.lastErr!=='offline'){SY.lastErr='offline';sySave();syShowState()}return}
-  const t=Date.now();if(t<syRetry)return;syBusy=true;
-  try{if(SY.role==='parent'){if(SY.pushCfg)await syPushCfg();if(t>=syNextPull){syNextPull=t+60e3;await syPullSt()}}
-    else{if(t>=syNextPull){syNextPull=t+3*60e3;await syPullCfg();syApplyPending()}if(t>=syNextPush){syNextPush=t+5*60e3;await syPushSt()}}
-    SY.lastOk=Date.now();SY.lastErr='';sySave()}
-  catch(e){SY.lastErr=navigator.onLine?String((e&&e.message)||e):'offline';syRetry=Date.now()+30e3;sySave()}
-  finally{syBusy=false;syShowState()}}
-function syKick(){syNextPull=0;syNextPush=0;syRetry=0;setTimeout(syTick,50)}
+  if(Date.now()<syRetry)return;syBusy=true;
+  try{await syFlushFinal();
+    if(SY.role==='kid'){
+      if(!SY.kid&&SY.auto){SY.auto=false;sySave();await syCreateKid(childName||SYT().kidDefault,false)}
+      if(syDue('hello',120e3))await syHello();
+      if(SY.kid){await syFlushQ();if(syDue('pull',180e3)){await syPullKid();syApplyPend()}if(syDue('push',300e3)||SY.forcePush)await syPushState()}}
+    else{if(SY.forcePush)await syParentPush();if(syDue('hello',60e3))await syHello();await syFlushQ();if(SY.sel&&syDue('pull',60e3))await syPullParent()}
+    SY.lastOk=Date.now();SY.lastErr='';sySave();syFirst=false}
+  catch(e){const m=String((e&&e.message)||e);SY.lastErr=navigator.onLine?(m==='action'?'old':m):'offline';syRetry=Date.now()+30e3;sySave()}
+  finally{syBusy=false;syShowState();syWarnOther()}}
+function syKick(){syNext={};syRetry=0;setTimeout(syTick,50)}
+function syWarnOther(){if(SY.role!=='kid'||!syBusyOther||syBusyShown===syBusyOther)return;syBusyShown=syBusyOther;
+  try{bkBanner(SYT().busy(SY.kidName||childName||'',syBusyOther),false)}catch(e){}}
 setInterval(syTick,3000);
 window.addEventListener('online',syKick);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){syKick();return}
-  if(syOn()&&SY.role==='kid'&&navigator.onLine&&!syBusy)syPushSt().catch(()=>{})});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){syFirst=true;syKick();return}
+  if(syKidMode()&&SY.kid&&navigator.onLine&&!syBusy){syPushState().catch(()=>{});syHello().catch(()=>{})}});
 setTimeout(()=>{if(syOn())syKick()},2500);
-// ---- textos ----
+// borrar progreso o recuperar una copia en un aparato del niño: es el nuevo estado (no se combina con el anterior)
+function syOnReset(){if(!syOn())return;if(SY.role==='kid'){SY.epoch++;SY.forcePush=true}else if(SY.sel)SY.forcePush=true;sySave();syKick()}
+
+// ---------- textos ----------
 const SY_T={
- es:{title:'☁️ Sincronizar con Google Drive',note:'Para ver el seguimiento y cambiar los ajustes desde tu teléfono u ordenador sin coger la tablet. Usa un pequeño script de Google en tu cuenta (se configura una sola vez) y una carpeta de tu Drive. Sin internet la app funciona igual y sincroniza al volver la conexión.',
-   on:'Sincronización',yes:'Activada',no:'Desactivada',role:'Este dispositivo es',kid:'👧 Niño (la tablet)',parent:'👨 Padre (mi teléfono u ordenador)',
-   roleNote:{kid:'Lee tus ajustes del Drive y los aplica entre preguntas (nunca el seguimiento). Cada 5 minutos guarda en el Drive su estado completo para que lo veas.',parent:'Lee el estado de la tablet (seguimiento, actividad y ajustes) y envía tus cambios de ajustes. Aquí no cuenta el tiempo de pantalla ni se bloquea la app.'},
-   url:'Dirección del script (termina en /exec)',key:'Clave (la misma en el script y en los dos dispositivos)',gen:'🎲 Generar',save:'💾 Guardar',test:'🔌 Probar conexión',now:'☁️ Sincronizar ahora',
+ es:{title:'☁️ Sincronizar con Google Drive',note:'Para ver el seguimiento y cambiar los ajustes desde otro teléfono u ordenador, con varios niños y varios padres. Usa un pequeño script de Google en tu cuenta (se configura una vez por familia). Sin internet la app funciona igual y sincroniza al volver la conexión.',
+   on:'Sincronización',yes:'Activada',no:'Desactivada',role:'Este dispositivo es',kid:'👧 de un niño (para jugar)',parent:'👨 de un padre o madre (para ver y ajustar)',
+   roleNote:{kid:'Lee los ajustes del niño y los aplica entre preguntas (nunca el seguimiento). Cada 5 minutos y al salir guarda su estado completo. Si el niño juega en otro aparato, continúa desde ahí (relevo).',parent:'Ves a todos los niños de la familia, sus gráficos y sus ajustes, y tus cambios se envían firmados con tu nombre. Aquí no cuenta el tiempo de pantalla ni se bloquea la app: no lo uses para que juegue un niño.'},
+   devName:'Nombre de este dispositivo',devPh:'Ej.: Tablet salón',pName:'Tu nombre (se ve en los cambios que hagas)',pPh:'Ej.: Mamá',
+   kidSel:'Niño de este dispositivo',kidNew:'➕ Niño nuevo',kidName:'Nombre del niño',kidUse:'✔️ Usar',kidNow:n=>`Este dispositivo es de: 👧 ${n}`,
+   askContinue:n=>`Este dispositivo pasará a usar el progreso y los ajustes de ${n} (lo que hay aquí se reemplaza). ¿Seguir?`,askNewEmpty:'Este dispositivo era de un padre: el niño nuevo empezará con el progreso vacío. ¿Seguir?',
+   url:'Dirección del script (termina en /exec)',key:'Clave (la misma en el script y en todos los dispositivos de la familia)',gen:'🎲 Generar',save:'💾 Guardar',test:'🔌 Probar conexión',now:'☁️ Sincronizar ahora',
    offNote:'💤 Sincronización desactivada: la app funciona solo con los datos de este dispositivo.',
    stNever:'Todavía no se ha sincronizado.',stOk:(a,r,w)=>`✅ Conectado. Última sincronización: ${a}.${r?' Última lectura: '+r+'.':''}${w?' Último envío: '+w+'.':''}`,
-   stOff:'📴 Sin internet: la app sigue funcionando con normalidad y sincronizará cuando vuelva la conexión.',stErr:e=>`⚠️ No se pudo sincronizar (${e}). Se reintenta solo cada poco; revisa la dirección y la clave.`,
-   errKey:'la clave no coincide con la del script',errResp:'el script no respondió bien',testOk:f=>`✅ Conexión correcta con la carpeta «${f}».`,testing:'Probando…',saved:'Guardado.',missing:'Falta la dirección o la clave.',
-   ago:m=>m<1?'hace un momento':m<60?`hace ${m} min`:`a las ${new Date(Date.now()-m*60e3).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}`,
-   banner:a=>`☁️ Modo padre: ves el seguimiento de la tablet${a?' (recibido '+a+')':''}. Los cambios de ajustes se envían solos a la tablet.`,
-   guideT:'📜 Cómo configurarlo (una sola vez)',copy:'📋 Copiar el script',copied:'¡Copiado!',
-   guide:['En este dispositivo, pon una clave (o toca «🎲 Generar»). Esa misma clave irá en el script y en el otro dispositivo.','En tu ordenador, abre <b>script.google.com</b> con tu cuenta de Google y crea un «Nuevo proyecto».','Borra lo que hay y pega el script de abajo (ya lleva tu clave). Si quieres usar una carpeta concreta de tu Drive, pega su enlace en <code>CARPETA</code>; si la dejas vacía, el script crea «Juegos para Peques».','Pulsa «Implementar → Nueva implementación», tipo «Aplicación web», «Ejecutar como: yo» y «Quién tiene acceso: cualquier usuario». Autoriza el acceso a tu Drive cuando te lo pida.','Copia la «URL de la aplicación web» (termina en /exec) y pégala aquí, en «Dirección del script».','Elige el modo: 👧 Niño en la tablet y 👨 Padre en tu teléfono u ordenador. Activa la sincronización y toca «🔌 Probar conexión».','La app crea dentro de la carpeta las subcarpetas «desde-padre» (tus ajustes) y «desde-tablet» (el estado de la tablet), y guarda las 5 últimas versiones de cada archivo.']},
- en:{title:'☁️ Sync with Google Drive',note:'To see the tracking and change settings from your phone or computer without picking up the tablet. It uses a small Google script in your account (set up only once) and a folder in your Drive. Without internet the app works the same and syncs when the connection is back.',
-   on:'Sync',yes:'On',no:'Off',role:'This device is',kid:'👧 Child (the tablet)',parent:'👨 Parent (my phone or computer)',
-   roleNote:{kid:'Reads your settings from Drive and applies them between questions (never the tracking). Every 5 minutes it saves its full state to Drive so you can see it.',parent:'Reads the tablet’s state (tracking, activity and settings) and sends your settings changes. Screen time is not counted here and the app never locks.'},
-   url:'Script address (ends in /exec)',key:'Key (the same in the script and on both devices)',gen:'🎲 Generate',save:'💾 Save',test:'🔌 Test connection',now:'☁️ Sync now',
+   stOff:'📴 Sin internet: la app sigue funcionando con normalidad y sincronizará cuando vuelva la conexión.',stErr:e=>`⚠️ No se pudo sincronizar (${e}). Se reintenta solo cada poco.`,
+   errKey:'la clave no coincide con la del script',errResp:'el script no respondió bien',errOld:'el script es de la versión anterior: vuelve a pegarlo y publícalo de nuevo',
+   testOk:f=>`✅ Conexión correcta con la carpeta «${f}».`,testing:'Probando…',saved:'Guardado.',missing:'Falta la dirección o la clave.',needName:'Escribe el nombre de este dispositivo.',needPName:'Escribe tu nombre.',
+   dupName:n=>`⚠️ Ya hay otro dispositivo llamado «${n}». Mejor usa otro nombre para no confundirlos.`,needNet:'Hace falta internet para esto.',needKid:'👉 Elige el niño de este dispositivo (o «➕ Niño nuevo») y toca «✔️ Usar».',
+   ago:m=>m<1?'hace un momento':m<60?`hace ${m} min`:m<1440?`hace ${Math.round(m/60)} h`:`hace ${Math.round(m/1440)} d`,
+   pick:'☁️ Niño:',playing:'jugando ahora',seen:a=>`visto ${a}`,today:m=>`${m} min hoy`,noKids:'Todavía no hay niños: activa la sincronización en el dispositivo de un niño.',
+   lastBy:(n,a,d)=>`Última actualización: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Ajustes recibidos de ${n} ${a}.`,stateFrom:(n,a)=>`Datos de ${n} ${a}`,
+   busy:(k,d)=>`⚠️ ${k||'Este niño'} está jugando ahora en «${d}». Mejor no jugar en dos aparatos a la vez.`,
+   devsT:'📱 Dispositivos de la familia',kidsT:'👧 Niños',archive:'Archivar',unarchive:'Recuperar',archived:'(archivado)',histT:'🕘 Últimos cambios de ajustes',noHist:'Todavía no hay cambios.',
+   versT:'🗂️ Versiones guardadas en el Drive',versBtn:'🕘 Ver versiones',versNone:'No hay versiones guardadas todavía.',versUse:'Recuperar',versAsk:(d,s)=>`¿Recuperar la versión del ${d}? Contiene: ${s}. Será el estado actual de este niño en todos sus dispositivos.`,versDone:'✅ Versión recuperada.',
+   dLimit:(d,m)=>`límite del ${d}: ${m?m+' min':'sin límite'}`,dPin:'PIN cambiado',dPinOff:'PIN quitado',dName:n=>`nombre: ${n}`,dHelp:on=>`ayuda cuando falla: ${on?'sí':'no'}`,dWake:'pantalla encendida',dAcc:'actividades visibles',dSugg:'sugerencias',dOther:'ajustes',dInit:'configuración inicial',
+   dExtra:m=>m>=0?`+${m} min hoy`:`−${-m} min hoy`,dFree:on=>on?'sin límite hoy':'con límite hoy',kidDefault:'Niño',
+   banner:'☁️ Modo padre: no lo uses para que juegue un niño (aquí no cuenta el tiempo).',
+   guideT:'📜 Cómo configurarlo (una vez por familia)',copy:'📋 Copiar el script',copied:'¡Copiado!',
+   guide:['En un dispositivo, pon una clave (o toca «🎲 Generar»). Esa misma clave irá en el script y en todos los dispositivos de la familia.','En tu ordenador, abre <b>script.google.com</b> con tu cuenta de Google y crea un «Nuevo proyecto» (uno por familia).','Borra lo que hay y pega el script de abajo (ya lleva tu clave). Si quieres usar una carpeta concreta de tu Drive, pega su enlace en <code>CARPETA</code>; si la dejas vacía, el script crea «Juegos para Peques».','Pulsa «Implementar → Nueva implementación», tipo «Aplicación web», «Ejecutar como: yo» y «Quién tiene acceso: cualquier usuario». Autoriza el acceso a tu Drive (si avisa de «app no verificada», entra en «Configuración avanzada → Ir a…»).','Copia la «URL de la aplicación web» (termina en /exec) y pégala en «Dirección del script» en cada dispositivo, con la misma clave.','En cada dispositivo pon su nombre y elige si es 👧 de un niño (y qué niño) o 👨 de un padre (y tu nombre). Activa la sincronización y toca «🔌 Probar conexión».','En la carpeta se crean «dispositivos.json» y «ninos/<nombre>/» con el estado y los ajustes de cada niño, y se guardan versiones: las 5 últimas y una por día durante 30 días.']},
+ en:{title:'☁️ Sync with Google Drive',note:'To see the tracking and change settings from another phone or computer, with several children and several parents. It uses a small Google script in your account (set up once per family). Without internet the app works the same and syncs when the connection is back.',
+   on:'Sync',yes:'On',no:'Off',role:'This device belongs to',kid:'👧 a child (to play)',parent:'👨 a parent (to watch and adjust)',
+   roleNote:{kid:'Reads the child’s settings and applies them between questions (never the tracking). Every 5 minutes and when leaving it saves its full state. If the child plays on another device, it continues from there (relay).',parent:'You see all the family’s children, their charts and their settings, and your changes are sent signed with your name. Screen time is not counted here and the app never locks: don’t use it for a child to play.'},
+   devName:'Name of this device',devPh:'E.g.: Living-room tablet',pName:'Your name (shown on the changes you make)',pPh:'E.g.: Mum',
+   kidSel:'Child of this device',kidNew:'➕ New child',kidName:'Child’s name',kidUse:'✔️ Use',kidNow:n=>`This device belongs to: 👧 ${n}`,
+   askContinue:n=>`This device will use ${n}’s progress and settings (what is here is replaced). Continue?`,askNewEmpty:'This device was a parent’s: the new child will start with empty progress. Continue?',
+   url:'Script address (ends in /exec)',key:'Key (the same in the script and on all the family’s devices)',gen:'🎲 Generate',save:'💾 Save',test:'🔌 Test connection',now:'☁️ Sync now',
    offNote:'💤 Sync is off: the app only uses this device’s data.',
    stNever:'Not synced yet.',stOk:(a,r,w)=>`✅ Connected. Last sync: ${a}.${r?' Last read: '+r+'.':''}${w?' Last sent: '+w+'.':''}`,
-   stOff:'📴 No internet: the app keeps working normally and will sync when the connection is back.',stErr:e=>`⚠️ Could not sync (${e}). It retries on its own; check the address and the key.`,
-   errKey:'the key doesn’t match the script’s',errResp:'the script didn’t answer properly',testOk:f=>`✅ Connected to the folder “${f}”.`,testing:'Testing…',saved:'Saved.',missing:'The address or the key is missing.',
-   ago:m=>m<1?'just now':m<60?`${m} min ago`:`at ${new Date(Date.now()-m*60e3).toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'})}`,
-   banner:a=>`☁️ Parent mode: you see the tablet’s tracking${a?' (received '+a+')':''}. Settings changes are sent to the tablet automatically.`,
-   guideT:'📜 How to set it up (only once)',copy:'📋 Copy the script',copied:'Copied!',
-   guide:['On this device, type a key (or tap “🎲 Generate”). The same key goes in the script and on the other device.','On your computer, open <b>script.google.com</b> with your Google account and create a “New project”.','Delete what is there and paste the script below (it already has your key). To use a specific folder of your Drive, paste its link in <code>CARPETA</code>; if you leave it empty, the script creates “Juegos para Peques”.','Click “Deploy → New deployment”, type “Web app”, “Execute as: Me” and “Who has access: Anyone”. Allow access to your Drive when asked.','Copy the “Web app URL” (it ends in /exec) and paste it here, in “Script address”.','Choose the mode: 👧 Child on the tablet and 👨 Parent on your phone or computer. Turn sync on and tap “🔌 Test connection”.','Inside the folder the app creates the subfolders “desde-padre” (your settings) and “desde-tablet” (the tablet’s state), and keeps the last 5 versions of each file.']},
- fr:{title:'☁️ Synchroniser avec Google Drive',note:'Pour voir le suivi et changer les réglages depuis votre téléphone ou votre ordinateur sans prendre la tablette. Utilise un petit script Google dans votre compte (à configurer une seule fois) et un dossier de votre Drive. Sans internet, l’app fonctionne pareil et se synchronise au retour de la connexion.',
-   on:'Synchronisation',yes:'Activée',no:'Désactivée',role:'Cet appareil est',kid:'👧 Enfant (la tablette)',parent:'👨 Parent (mon téléphone ou ordinateur)',
-   roleNote:{kid:'Lit vos réglages sur le Drive et les applique entre deux questions (jamais le suivi). Toutes les 5 minutes, enregistre son état complet sur le Drive pour que vous le voyiez.',parent:'Lit l’état de la tablette (suivi, activité et réglages) et envoie vos changements de réglages. Ici, le temps d’écran n’est pas compté et l’app ne se bloque jamais.'},
-   url:'Adresse du script (finit par /exec)',key:'Clé (la même dans le script et sur les deux appareils)',gen:'🎲 Générer',save:'💾 Enregistrer',test:'🔌 Tester la connexion',now:'☁️ Synchroniser maintenant',
+   stOff:'📴 No internet: the app keeps working normally and will sync when the connection is back.',stErr:e=>`⚠️ Could not sync (${e}). It retries on its own.`,
+   errKey:'the key doesn’t match the script’s',errResp:'the script didn’t answer properly',errOld:'the script is the old version: paste it again and redeploy it',
+   testOk:f=>`✅ Connected to the folder “${f}”.`,testing:'Testing…',saved:'Saved.',missing:'The address or the key is missing.',needName:'Type the name of this device.',needPName:'Type your name.',
+   dupName:n=>`⚠️ Another device is already called “${n}”. Better use another name so they aren’t confused.`,needNet:'This needs internet.',needKid:'👉 Choose this device’s child (or “➕ New child”) and tap “✔️ Use”.',
+   ago:m=>m<1?'just now':m<60?`${m} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`,
+   pick:'☁️ Child:',playing:'playing now',seen:a=>`seen ${a}`,today:m=>`${m} min today`,noKids:'No children yet: turn sync on in a child’s device.',
+   lastBy:(n,a,d)=>`Last update: ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Settings received from ${n} ${a}.`,stateFrom:(n,a)=>`Data from ${n} ${a}`,
+   busy:(k,d)=>`⚠️ ${k||'This child'} is playing now on “${d}”. Better not to play on two devices at once.`,
+   devsT:'📱 Family devices',kidsT:'👧 Children',archive:'Archive',unarchive:'Restore',archived:'(archived)',histT:'🕘 Latest settings changes',noHist:'No changes yet.',
+   versT:'🗂️ Versions saved in Drive',versBtn:'🕘 See versions',versNone:'No saved versions yet.',versUse:'Restore',versAsk:(d,s)=>`Restore the version from ${d}? It contains: ${s}. It will become this child’s current state on all their devices.`,versDone:'✅ Version restored.',
+   dLimit:(d,m)=>`${d} limit: ${m?m+' min':'no limit'}`,dPin:'PIN changed',dPinOff:'PIN removed',dName:n=>`name: ${n}`,dHelp:on=>`help after a mistake: ${on?'yes':'no'}`,dWake:'keep screen on',dAcc:'visible activities',dSugg:'suggestions',dOther:'settings',dInit:'initial settings',
+   dExtra:m=>m>=0?`+${m} min today`:`−${-m} min today`,dFree:on=>on?'no limit today':'limit back today',kidDefault:'Child',
+   banner:'☁️ Parent mode: don’t use it for a child to play (time isn’t counted here).',
+   guideT:'📜 How to set it up (once per family)',copy:'📋 Copy the script',copied:'Copied!',
+   guide:['On one device, type a key (or tap “🎲 Generate”). The same key goes in the script and on all the family’s devices.','On your computer, open <b>script.google.com</b> with your Google account and create a “New project” (one per family).','Delete what is there and paste the script below (it already has your key). To use a specific folder of your Drive, paste its link in <code>CARPETA</code>; if you leave it empty, the script creates “Juegos para Peques”.','Click “Deploy → New deployment”, type “Web app”, “Execute as: Me” and “Who has access: Anyone”. Allow access to your Drive (if it warns “app not verified”, go to “Advanced → Go to…”).','Copy the “Web app URL” (it ends in /exec) and paste it in “Script address” on each device, with the same key.','On each device type its name and choose 👧 a child’s (and which child) or 👨 a parent’s (and your name). Turn sync on and tap “🔌 Test connection”.','The folder gets “dispositivos.json” and “ninos/<name>/” with each child’s state and settings, and versions are kept: the last 5 and one per day for 30 days.']},
+ fr:{title:'☁️ Synchroniser avec Google Drive',note:'Pour voir le suivi et changer les réglages depuis un autre téléphone ou ordinateur, avec plusieurs enfants et plusieurs parents. Utilise un petit script Google dans votre compte (à configurer une fois par famille). Sans internet, l’app fonctionne pareil et se synchronise au retour de la connexion.',
+   on:'Synchronisation',yes:'Activée',no:'Désactivée',role:'Cet appareil est',kid:'👧 celui d’un enfant (pour jouer)',parent:'👨 celui d’un parent (pour voir et régler)',
+   roleNote:{kid:'Lit les réglages de l’enfant et les applique entre deux questions (jamais le suivi). Toutes les 5 minutes et en quittant, enregistre son état complet. Si l’enfant joue sur un autre appareil, il reprend à partir de là (relais).',parent:'Vous voyez tous les enfants de la famille, leurs graphiques et leurs réglages, et vos changements sont envoyés signés de votre nom. Ici, le temps d’écran n’est pas compté et l’app ne se bloque jamais : ne l’utilisez pas pour faire jouer un enfant.'},
+   devName:'Nom de cet appareil',devPh:'Ex. : Tablette salon',pName:'Votre nom (visible sur vos changements)',pPh:'Ex. : Maman',
+   kidSel:'Enfant de cet appareil',kidNew:'➕ Nouvel enfant',kidName:'Prénom de l’enfant',kidUse:'✔️ Utiliser',kidNow:n=>`Cet appareil est celui de : 👧 ${n}`,
+   askContinue:n=>`Cet appareil va utiliser la progression et les réglages de ${n} (ce qu’il y a ici est remplacé). Continuer ?`,askNewEmpty:'Cet appareil était celui d’un parent : le nouvel enfant commencera avec une progression vide. Continuer ?',
+   url:'Adresse du script (finit par /exec)',key:'Clé (la même dans le script et sur tous les appareils de la famille)',gen:'🎲 Générer',save:'💾 Enregistrer',test:'🔌 Tester la connexion',now:'☁️ Synchroniser maintenant',
    offNote:'💤 Synchronisation désactivée : l’app n’utilise que les données de cet appareil.',
    stNever:'Pas encore synchronisé.',stOk:(a,r,w)=>`✅ Connecté. Dernière synchronisation : ${a}.${r?' Dernière lecture : '+r+'.':''}${w?' Dernier envoi : '+w+'.':''}`,
-   stOff:'📴 Pas d’internet : l’app continue de fonctionner normalement et se synchronisera au retour de la connexion.',stErr:e=>`⚠️ Synchronisation impossible (${e}). Elle réessaie toute seule ; vérifiez l’adresse et la clé.`,
-   errKey:'la clé ne correspond pas à celle du script',errResp:'le script n’a pas bien répondu',testOk:f=>`✅ Connexion correcte avec le dossier « ${f} ».`,testing:'Test…',saved:'Enregistré.',missing:'Il manque l’adresse ou la clé.',
-   ago:m=>m<1?'à l’instant':m<60?`il y a ${m} min`:`à ${new Date(Date.now()-m*60e3).toLocaleTimeString('fr',{hour:'2-digit',minute:'2-digit'})}`,
-   banner:a=>`☁️ Mode parent : vous voyez le suivi de la tablette${a?' (reçu '+a+')':''}. Les changements de réglages sont envoyés tout seuls à la tablette.`,
-   guideT:'📜 Comment le configurer (une seule fois)',copy:'📋 Copier le script',copied:'Copié !',
-   guide:['Sur cet appareil, tapez une clé (ou touchez « 🎲 Générer »). La même clé ira dans le script et sur l’autre appareil.','Sur votre ordinateur, ouvrez <b>script.google.com</b> avec votre compte Google et créez un « Nouveau projet ».','Effacez le contenu et collez le script ci-dessous (il contient déjà votre clé). Pour utiliser un dossier précis de votre Drive, collez son lien dans <code>CARPETA</code> ; si vous le laissez vide, le script crée « Juegos para Peques ».','Cliquez sur « Déployer → Nouveau déploiement », type « Application Web », « Exécuter en tant que : moi » et « Qui a accès : tout le monde ». Autorisez l’accès à votre Drive quand il le demande.','Copiez l’« URL de l’application Web » (elle finit par /exec) et collez-la ici, dans « Adresse du script ».','Choisissez le mode : 👧 Enfant sur la tablette et 👨 Parent sur votre téléphone ou ordinateur. Activez la synchronisation et touchez « 🔌 Tester la connexion ».','Dans le dossier, l’app crée les sous-dossiers « desde-padre » (vos réglages) et « desde-tablet » (l’état de la tablette), et garde les 5 dernières versions de chaque fichier.']}};
+   stOff:'📴 Pas d’internet : l’app continue de fonctionner normalement et se synchronisera au retour de la connexion.',stErr:e=>`⚠️ Synchronisation impossible (${e}). Elle réessaie toute seule.`,
+   errKey:'la clé ne correspond pas à celle du script',errResp:'le script n’a pas bien répondu',errOld:'le script est l’ancienne version : collez-le à nouveau et redéployez-le',
+   testOk:f=>`✅ Connexion correcte avec le dossier « ${f} ».`,testing:'Test…',saved:'Enregistré.',missing:'Il manque l’adresse ou la clé.',needName:'Tapez le nom de cet appareil.',needPName:'Tapez votre nom.',
+   dupName:n=>`⚠️ Un autre appareil s’appelle déjà « ${n} ». Mieux vaut un autre nom pour ne pas les confondre.`,needNet:'Il faut internet pour cela.',needKid:'👉 Choisissez l’enfant de cet appareil (ou « ➕ Nouvel enfant ») et touchez « ✔️ Utiliser ».',
+   ago:m=>m<1?'à l’instant':m<60?`il y a ${m} min`:m<1440?`il y a ${Math.round(m/60)} h`:`il y a ${Math.round(m/1440)} j`,
+   pick:'☁️ Enfant :',playing:'joue en ce moment',seen:a=>`vu ${a}`,today:m=>`${m} min aujourd’hui`,noKids:'Pas encore d’enfant : activez la synchronisation sur l’appareil d’un enfant.',
+   lastBy:(n,a,d)=>`Dernière mise à jour : ${n}, ${a}${d?' ('+d+')':''}`,recvFrom:(n,a)=>`Réglages reçus de ${n} ${a}.`,stateFrom:(n,a)=>`Données de ${n} ${a}`,
+   busy:(k,d)=>`⚠️ ${k||'Cet enfant'} joue en ce moment sur « ${d} ». Mieux vaut ne pas jouer sur deux appareils à la fois.`,
+   devsT:'📱 Appareils de la famille',kidsT:'👧 Enfants',archive:'Archiver',unarchive:'Récupérer',archived:'(archivé)',histT:'🕘 Derniers changements de réglages',noHist:'Pas encore de changements.',
+   versT:'🗂️ Versions enregistrées sur le Drive',versBtn:'🕘 Voir les versions',versNone:'Pas encore de versions enregistrées.',versUse:'Restaurer',versAsk:(d,s)=>`Restaurer la version du ${d} ? Contenu : ${s}. Ce sera l’état actuel de cet enfant sur tous ses appareils.`,versDone:'✅ Version restaurée.',
+   dLimit:(d,m)=>`limite du ${d} : ${m?m+' min':'sans limite'}`,dPin:'code changé',dPinOff:'code supprimé',dName:n=>`prénom : ${n}`,dHelp:on=>`aide quand il se trompe : ${on?'oui':'non'}`,dWake:'écran allumé',dAcc:'activités visibles',dSugg:'suggestions',dOther:'réglages',dInit:'réglages initiaux',
+   dExtra:m=>m>=0?`+${m} min aujourd’hui`:`−${-m} min aujourd’hui`,dFree:on=>on?'sans limite aujourd’hui':'limite rétablie aujourd’hui',kidDefault:'Enfant',
+   banner:'☁️ Mode parent : ne l’utilisez pas pour faire jouer un enfant (le temps n’est pas compté ici).',
+   guideT:'📜 Comment le configurer (une fois par famille)',copy:'📋 Copier le script',copied:'Copié !',
+   guide:['Sur un appareil, tapez une clé (ou touchez « 🎲 Générer »). La même clé ira dans le script et sur tous les appareils de la famille.','Sur votre ordinateur, ouvrez <b>script.google.com</b> avec votre compte Google et créez un « Nouveau projet » (un par famille).','Effacez le contenu et collez le script ci-dessous (il contient déjà votre clé). Pour utiliser un dossier précis de votre Drive, collez son lien dans <code>CARPETA</code> ; si vous le laissez vide, le script crée « Juegos para Peques ».','Cliquez sur « Déployer → Nouveau déploiement », type « Application Web », « Exécuter en tant que : moi » et « Qui a accès : tout le monde ». Autorisez l’accès à votre Drive (s’il indique « application non validée », allez dans « Paramètres avancés → Accéder à… »).','Copiez l’« URL de l’application Web » (elle finit par /exec) et collez-la dans « Adresse du script » sur chaque appareil, avec la même clé.','Sur chaque appareil, tapez son nom et choisissez 👧 celui d’un enfant (et lequel) ou 👨 celui d’un parent (et votre nom). Activez la synchronisation et touchez « 🔌 Tester la connexion ».','Le dossier reçoit « dispositivos.json » et « ninos/<prénom>/ » avec l’état et les réglages de chaque enfant, et des versions sont gardées : les 5 dernières et une par jour pendant 30 jours.']}};
 const SYT=()=>SY_T[lang];
-// El script de Google que el padre pega en script.google.com
-const SY_SCRIPT=key=>`// Juegos para Peques: sincronización con Google Drive
-// Pega este código en script.google.com y publícalo como «Aplicación web».
+// ---------- el script de Google (uno por familia) ----------
+const SY_SCRIPT=key=>`// Juegos para Peques · sincronización con Google Drive (versión 2: varios niños y varios padres)
+// Pega este código en script.google.com (un proyecto por familia) y publícalo como «Aplicación web».
 const CLAVE = '${key||'PON-AQUI-TU-CLAVE'}';
 const CARPETA = ''; // enlace o id de la carpeta base de tu Drive (vacío = se crea «Juegos para Peques»)
 
-function doPost(e) { let p = {}; try { p = JSON.parse(e.postData.contents); } catch (x) {} return responder(p); }
-function doGet(e) { return responder(e.parameter || {}); }
-function salida(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
-function carpetaBase() {
-  const props = PropertiesService.getScriptProperties();
+function doPost(e) { let p = {}; try { p = JSON.parse(e.postData.contents); } catch (x) {} return salida(p); }
+function doGet(e) { return salida(e.parameter || {}); }
+function salida(p) { let o; try { o = responder(p); } catch (err) { o = { ok: false, err: String((err && err.message) || err) }; }
+  o.now = Date.now(); return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+function base() { const props = PropertiesService.getScriptProperties();
   let id = (CARPETA.match(/[-\\w]{25,}/) || [])[0] || props.getProperty('base');
   if (id) { try { return DriveApp.getFolderById(id); } catch (x) {} }
-  const f = DriveApp.createFolder('Juegos para Peques'); props.setProperty('base', f.getId()); return f;
-}
-function sub(base, nombre) { const it = base.getFoldersByName(nombre); return it.hasNext() ? it.next() : base.createFolder(nombre); }
+  const f = DriveApp.createFolder('Juegos para Peques'); props.setProperty('base', f.getId()); return f; }
+function sub(dir, n) { const it = dir.getFoldersByName(n); return it.hasNext() ? it.next() : dir.createFolder(n); }
+function archivo(dir, n) { const it = dir.getFilesByName(n); return it.hasNext() ? it.next() : null; }
+function leer(dir, n) { const f = archivo(dir, n); return f ? f.getBlob().getDataAsString() : null; }
+function leerJSON(dir, n) { try { return JSON.parse(leer(dir, n) || 'null'); } catch (e) { return null; } }
+function fecha() { return Utilities.formatDate(new Date(), 'UTC', 'yyyyMMdd-HHmmss') + '-' + ('00' + (Date.now() % 1000)).slice(-3); }
+// guarda el archivo nuevo y conserva versiones: las 5 últimas y una por día durante 30 días
+function guardar(dir, n, texto) { const f = archivo(dir, n), pre = n.replace('.json', '-');
+  if (f) f.setName(pre + fecha() + '.json');
+  dir.createFile(n, texto, 'application/json');
+  const vs = []; const it = dir.getFiles(); while (it.hasNext()) { const x = it.next(); if (x.getName().indexOf(pre) === 0) vs.push(x); }
+  vs.sort((a, b) => b.getDateCreated() - a.getDateCreated());
+  const dias = {}, limite = Date.now() - 30 * 864e5;
+  vs.forEach((x, i) => { if (i < 5) return; const t = x.getDateCreated().getTime(), d = Utilities.formatDate(x.getDateCreated(), 'UTC', 'yyyyMMdd');
+    if (t >= limite && !dias[d]) { dias[d] = 1; return; } x.setTrashed(true); }); }
+function registro(b) { return leerJSON(b, 'dispositivos.json') || { devices: {}, kids: {} }; }
+function guardarRegistro(b, r) { const f = archivo(b, 'dispositivos.json'); const t = JSON.stringify(r); if (f) f.setContent(t); else b.createFile('dispositivos.json', t, 'application/json'); }
+function carpetaNino(b, id, nombre, crear) { const ns = sub(b, 'ninos'), it = ns.getFolders(), fin = '(' + id + ')';
+  while (it.hasNext()) { const f = it.next(); if (f.getName().slice(-fin.length) === fin) { if (nombre && f.getName() !== nombre + ' ' + fin) f.setName(nombre + ' ' + fin); return f; } }
+  if (!crear) return null;
+  const r = registro(b), n = nombre || ((r.kids[id] || {}).name) || 'Niño'; return ns.createFolder(n + ' ' + fin); }
+function conBloqueo(fn) { const l = LockService.getScriptLock(); l.waitLock(25000); try { return fn(); } finally { l.releaseLock(); } }
 function responder(p) {
-  if (!p.key || p.key !== CLAVE) return salida({ ok: false, err: 'key' });
-  const base = carpetaBase();
-  if (p.action === 'ping') return salida({ ok: true, folder: base.getName() });
-  const padre = p.which === 'padre', dir = sub(base, padre ? 'desde-padre' : 'desde-tablet'), nombre = padre ? 'config.json' : 'estado.json';
-  if (p.action === 'get') {
-    const it = dir.getFilesByName(nombre); if (!it.hasNext()) return salida({ ok: true, data: null });
-    const f = it.next(); return salida({ ok: true, data: f.getBlob().getDataAsString(), t: f.getLastUpdated().getTime() });
-  }
-  if (p.action === 'put' && typeof p.data === 'string') {
-    const lock = LockService.getScriptLock(); lock.waitLock(20000);
-    try {
-      const it = dir.getFilesByName(nombre);
-      while (it.hasNext()) { const f = it.next(); f.setName(nombre.replace('.json', '-' + Utilities.formatDate(new Date(), 'UTC', 'yyyyMMdd-HHmmss') + '.json')); }
-      dir.createFile(nombre, p.data, 'application/json');
-      // guarda solo las 5 últimas versiones anteriores
-      const viejos = []; const it2 = dir.getFiles();
-      while (it2.hasNext()) { const f = it2.next(); if (f.getName() !== nombre) viejos.push(f); }
-      viejos.sort((a, b) => b.getDateCreated() - a.getDateCreated()).slice(5).forEach(f => f.setTrashed(true));
-    } finally { lock.releaseLock(); }
-    return salida({ ok: true });
-  }
-  return salida({ ok: false, err: 'action' });
+  if (!p.key || p.key !== CLAVE) return { ok: false, err: 'key' };
+  const b = base();
+  if (p.action === 'ping') return { ok: true, v: 2, folder: b.getName() };
+  if (p.action === 'hello') return conBloqueo(() => { const r = registro(b); const m = p.me || {};
+    if (m.id) { r.devices[m.id] = Object.assign(r.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(b, r); } return { ok: true, reg: r }; });
+  if (p.action === 'kidSet') return conBloqueo(() => { const r = registro(b), k = p.kid || {}; if (!k.id) return { ok: false, err: 'kid' };
+    r.kids[k.id] = Object.assign(r.kids[k.id] || { created: Date.now() }, k); guardarRegistro(b, r); carpetaNino(b, k.id, r.kids[k.id].name, true); return { ok: true, reg: r }; });
+  const acciones = ['getState', 'getConfig', 'putState', 'patchConfig', 'versions', 'getVersion'];
+  if (acciones.indexOf(p.action) < 0) return { ok: false, err: 'action' };
+  if (!p.kid || typeof p.kid !== 'string') return { ok: false, err: 'kid' };
+  const escribe = p.action === 'putState' || p.action === 'patchConfig', dir = carpetaNino(b, p.kid, null, escribe);
+  if (!dir) return p.action === 'versions' ? { ok: true, list: [] } : { ok: true, data: null };
+  if (p.action === 'getState') return { ok: true, data: leer(dir, 'estado.json') };
+  if (p.action === 'getConfig') return { ok: true, data: leer(dir, 'config.json') };
+  if (p.action === 'putState') return conBloqueo(() => { const cur = leerJSON(dir, 'estado.json'), seq = cur ? (cur.seq || 0) : 0;
+    if (!p.force && cur && p.base !== seq && cur.from !== p.dev) return { ok: false, err: 'conflict', data: JSON.stringify(cur) };
+    const d = JSON.parse(p.data); d.seq = seq + 1; d.st = Date.now(); guardar(dir, 'estado.json', JSON.stringify(d)); return { ok: true, seq: d.seq }; });
+  if (p.action === 'patchConfig') return conBloqueo(() => { const c = leerJSON(dir, 'config.json') || { type: 'config', kid: p.kid, ver: 0, ls: {}, hist: [], cmds: [] };
+    const ch = p.changes || {}; Object.keys(ch).forEach(k => { if (ch[k] === null) delete c.ls[k]; else c.ls[k] = ch[k]; });
+    const ids = {}; c.cmds.forEach(x => ids[x.id] = 1); (p.cmds || []).forEach(x => { if (x && x.id && !ids[x.id]) c.cmds.push(x); }); c.cmds = c.cmds.slice(-60);
+    if (p.desc) c.hist.push({ t: Date.now(), by: p.by || '?', dev: p.dev, desc: p.desc }); c.hist = c.hist.slice(-30);
+    c.ver = (c.ver || 0) + 1; guardar(dir, 'config.json', JSON.stringify(c)); return { ok: true, data: JSON.stringify(c) }; });
+  if (p.action === 'versions') { const out = [], it = dir.getFiles();
+    while (it.hasNext()) { const f = it.next(), n = f.getName(); if (n.indexOf('estado') === 0) out.push({ name: n, t: f.getDateCreated().getTime(), size: f.getSize() }); }
+    out.sort((a, c) => c.t - a.t); return { ok: true, list: out }; }
+  return { ok: true, data: /^estado[-.][-\\w.]*json$/.test(String(p.name || '')) ? leer(dir, String(p.name)) : null };
 }
 `;
-// ---- pantalla de padres: sub-pestaña «☁️ Sincronizar» ----
+
+// ---------- pantalla de padres ----------
 function syAgoTxt(t){return t?SYT().ago(Math.floor((Date.now()-t)/60e3)):''}
+const syAgoSrv=t=>t?SYT().ago(Math.floor(syServerAgo(t)/60e3)):'';
 function syStateTxt(){const t=SYT();if(!syOn())return '';if(SY.lastErr==='offline'||!navigator.onLine)return t.stOff;
-  if(SY.lastErr)return t.stErr(SY.lastErr==='key'?t.errKey:SY.lastErr==='resp'?t.errResp:SY.lastErr);
+  if(SY.lastErr)return t.stErr(SY.lastErr==='key'?t.errKey:SY.lastErr==='resp'?t.errResp:SY.lastErr==='old'?t.errOld:SY.lastErr);
+  if(SY.role==='kid'&&!SY.kid&&!SY.auto)return t.needKid;
   return SY.lastOk?t.stOk(syAgoTxt(SY.lastOk),syAgoTxt(SY.lastPull),syAgoTxt(SY.lastPush)):t.stNever}
 function syShowState(){const el=document.getElementById('syState');if(el)el.textContent=syStateTxt()}
-function syBanner(){return syParent()?`<div class="gnotice synotice">${esc(SYT().banner(syAgoTxt(SY.stT||0)))}</div>`:''}
-function syncSection(){const t=SYT(),on=!!SY.on;
+function syKidLabel(k){const t=SYT(),devs=syDevs().filter(d=>d.role==='kid'&&d.kid===k.id).sort((a,b)=>b.lastSeen-a.lastSeen),d=devs[0];
+  const play=d&&d.active&&syServerAgo(d.lastSeen)<3*60e3,sum=d&&d.sum&&d.sum.day===dayKey(now())?d.sum.min:0;
+  return `${k.name}${k.archived?' '+t.archived:''}${d?` · ${d.name||'?'} · ${play?t.playing:t.seen(syAgoSrv(d.lastSeen))}`:''}${sum?' · '+t.today(sum):''}`}
+// arriba del panel: en un aparato de padre, selector de niño y quién hizo el último cambio; en el del niño, avisos
+function syBanner(){if(!syOn())return '';const t=SYT();
+  if(SY.role==='parent'){const kids=syKids().filter(k=>!k.archived||k.id===SY.sel);
+    const last=SY.cfgFrom?t.lastBy(esc(SY.cfgFrom.by),syAgoSrv(SY.cfgFrom.t),esc(SY.cfgFrom.desc||'')):'';
+    return `<div class="gnotice synotice">${kids.length?`<label class="sykid">${t.pick} <select id="syKidSel">${kids.map(k=>`<option value="${k.id}"${k.id===SY.sel?' selected':''}>${esc(syKidLabel(k))}</option>`).join('')}</select></label>`:esc(t.noKids)}
+      ${SY.selT?`<div><small>${esc(t.stateFrom(SY.selFrom||'?',syAgoTxt(SY.selT)))}</small></div>`:''}${last?`<div><small>${last}</small></div>`:''}<div><small>${esc(t.banner)}</small></div></div>`}
+  const bits=[];if(syBusyOther)bits.push(esc(t.busy(SY.kidName,syBusyOther)));
+  if(SY.cfgFrom)bits.push(esc(t.recvFrom(SY.cfgFrom.by,syAgoSrv(SY.cfgFrom.t))));
+  return bits.length?`<div class="gnotice synotice">${bits.map(b=>`<div><small>${b}</small></div>`).join('')}</div>`:''}
+function syBannerHandlers(){const s=document.getElementById('syKidSel');if(s)s.onchange=async()=>{if(!navigator.onLine){alert(SYT().needNet);s.value=SY.sel;return}
+  try{await syParentLoad(s.value)}catch(e){SY.lastErr=String(e.message||e);sySave()}syRefreshPanel(true)}}
+function syncSection(){const t=SYT(),on=!!SY.on,kids=syKids().filter(k=>!k.archived);
+  const devs=syDevs().sort((a,b)=>(a.role>b.role?1:-1)||b.lastSeen-a.lastSeen);
+  const kidName=id=>((syKids().find(k=>k.id===id)||{}).name)||'?';
   return `<h3>${t.title}</h3><p class="pnote">${t.note}</p>
    <div class="limdays sgset wkset"><label><span>${t.on}</span><select id="syOn"><option value="1"${on?' selected':''}>${t.yes}</option><option value="0"${on?'':' selected'}>${t.no}</option></select></label></div>
    <p class="pnote syoffnote"${on?' hidden':''}>${t.offNote}</p>
    <div class="syrest${on?'':' off'}">
-   <div class="limdays sgset wkset"><label><span>${t.role}</span><select id="syRole"><option value="kid"${SY.role==='kid'?' selected':''}>${t.kid}</option><option value="parent"${SY.role==='parent'?' selected':''}>${t.parent}</option></select></label></div>
-   <p class="pnote" id="syRoleNote">${t.roleNote[SY.role]}</p>
    <div class="pname syfield"><label for="syUrl">${t.url}</label><input id="syUrl" autocomplete="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(SY.url)}"></div>
    <div class="pname syfield"><label for="syKey">${t.key}</label><input id="syKey" autocomplete="off" spellcheck="false" value="${esc(SY.key)}"><button class="btn alt" id="syGen">${t.gen}</button></div>
+   <div class="pname syfield"><label for="syDev">${t.devName}</label><input id="syDev" autocomplete="off" maxlength="30" placeholder="${esc(t.devPh)}" value="${esc(SY.devName)}"></div>
+   <div class="limdays sgset wkset"><label><span>${t.role}</span><select id="syRole"><option value="kid"${SY.role==='kid'?' selected':''}>${t.kid}</option><option value="parent"${SY.role==='parent'?' selected':''}>${t.parent}</option></select></label></div>
+   <p class="pnote" id="syRoleNote">${t.roleNote[SY.role]}</p>
+   ${SY.role==='parent'?`<div class="pname syfield"><label for="syPName">${t.pName}</label><input id="syPName" autocomplete="off" maxlength="24" placeholder="${esc(t.pPh)}" value="${esc(SY.parentName)}"></div>`
+    :`${SY.kid?`<p class="pnote"><b>${esc(t.kidNow(SY.kidName||kidName(SY.kid)))}</b></p>`:''}
+     <div class="pname syfield"><label for="syKidPick">${t.kidSel}</label><select id="syKidPick"><option value="new">${t.kidNew}</option>${kids.map(k=>`<option value="${k.id}"${k.id===SY.kid?' selected':''}>${esc(k.name)}</option>`).join('')}</select>
+      <input id="syKidName" autocomplete="off" maxlength="24" placeholder="${esc(t.kidName)}" value="${esc(SY.kid?SY.kidName:(childName||''))}"><button class="btn alt" id="syKidUse">${t.kidUse}</button></div>`}
    <div class="row"><button class="btn" id="sySave">${t.save}</button><button class="btn alt" id="syTest">${t.test}</button><button class="btn alt" id="syNow">${t.now}</button></div>
-   <p class="pnote" id="syState" aria-live="polite">${esc(syStateTxt())}</p>
+   <p class="pnote" id="syState" aria-live="polite">${esc(syStateTxt())}</p><p class="pnote" id="syMsg" aria-live="polite"></p>
+   ${devs.length?`<h4 class="ch">${t.devsT}</h4><ul class="sydevs">${devs.map(d=>`<li>${d.role==='parent'?'👨':'👧'} <b>${esc(d.role==='parent'?(d.pname||d.name||'?'):kidName(d.kid))}</b> · ${esc(d.name||'?')} · ${d.role==='kid'&&d.active&&syServerAgo(d.lastSeen)<3*60e3?t.playing:t.seen(syAgoSrv(d.lastSeen))}${d.id===DEVID?' ✔️':''}</li>`).join('')}</ul>`:''}
+   ${SY.role==='parent'&&syKids().length?`<h4 class="ch">${t.kidsT}</h4><ul class="sydevs">${syKids().map(k=>`<li>👧 <b>${esc(k.name)}</b> ${k.archived?t.archived:''} <button class="btn alt mini" data-syarch="${k.id}">${k.archived?t.unarchive:t.archive}</button></li>`).join('')}</ul>`:''}
+   ${(SY.role==='parent'&&SY.sel)||(SY.role==='kid'&&SY.kid)?`<h4 class="ch">${t.histT}</h4><div id="syHist" class="pnote">${t.noHist}</div>
+     <h4 class="ch">${t.versT}</h4><div class="row"><button class="btn alt" id="syVers">${t.versBtn}</button></div><div id="syVersList"></div>`:''}
    <details class="syguide"><summary>${t.guideT}</summary><ol>${t.guide.map(x=>`<li>${x}</li>`).join('')}</ol>
     <div class="row"><button class="btn alt" id="syCopy">${t.copy}</button></div><textarea id="syScript" readonly rows="10" spellcheck="false" wrap="off">${esc(SY_SCRIPT(SY.key))}</textarea></details></div>`}
 function syLock(box){const r=box.querySelector('.syrest');if(!r)return;r.classList.toggle('off',!SY.on);r.querySelectorAll('select,button,input').forEach(x=>x.disabled=!SY.on);
   const n=box.querySelector('.syoffnote');if(n)n.hidden=!!SY.on}
-function syncHandlers(){const g=id=>document.getElementById(id),box=g('syOn')&&g('syOn').closest('.psub');if(!box)return;const t=SYT();syLock(box);
-  const st=m=>{const el=g('syState');if(el)el.textContent=m};
-  const read=()=>{const u=g('syUrl').value.trim(),k=g('syKey').value.trim(),ch=u!==SY.url||k!==SY.key;SY.url=u;SY.key=k;return ch};
-  g('syOn').onchange=()=>{SY.on=g('syOn').value==='1';read();syLock(box);if(SY.on)syInit();else sySave();st(syStateTxt())};
-  g('syRole').onchange=()=>{SY.role=g('syRole').value;g('syRoleNote').textContent=t.roleNote[SY.role];syInit();st(syStateTxt())};
+async function syShowHist(){const el=document.getElementById('syHist');if(!el)return;const kid=SY.role==='parent'?SY.sel:SY.kid;if(!kid||!navigator.onLine)return;
+  try{const c=syJ((await syCall({action:'getConfig',kid})).data);const h=((c&&c.hist)||[]).slice(-10).reverse();
+    if(h.length&&document.getElementById('syHist'))document.getElementById('syHist').innerHTML='<ul class="sydevs">'+h.map(x=>`<li><b>${esc(x.by||'?')}</b> · ${esc(syAgoSrv(x.t))} · ${esc(x.desc||'')}</li>`).join('')+'</ul>'}catch(e){}}
+function syncHandlers(){syBannerHandlers();const g=id=>document.getElementById(id),box=g('syOn')&&g('syOn').closest('.psub');if(!box)return;const t=SYT();syLock(box);
+  const msg=m=>{const el=g('syMsg');if(el)el.textContent=m};
+  const dup=()=>{const n=(SY.devName||'').trim().toLowerCase();const o=syDevs().find(d=>d.id!==DEVID&&(d.name||'').trim().toLowerCase()===n);return n&&o?t.dupName(SY.devName):''};
+  const read=()=>{SY.url=g('syUrl').value.trim();SY.key=g('syKey').value.trim();SY.devName=g('syDev').value.trim();if(g('syPName'))SY.parentName=g('syPName').value.trim();sySave()};
+  g('syOn').onchange=()=>{SY.on=g('syOn').value==='1';read();syLock(box);sySave();if(SY.on)syKick();syShowState()};
+  g('syRole').onchange=async()=>{const nr=g('syRole').value,old=SY.role;if(nr===old)return;read();
+    // de niño a padre: antes se envía el último estado (si no hay internet, se guarda y se envía al volver)
+    if(old==='kid'&&SY.kid){try{if(!navigator.onLine)throw 0;await syPushState(true)}catch(e){sySaveFinal()}}
+    SY.prevRole=old;SY.role=nr;SY.kid='';SY.kidName='';SY.sel='';SY.seq=0;SY.epoch=0;SY.selSeq=0;SY.cfgVer=0;SY.cfgSnap=null;SY.cfgFrom=null;SY.q=[];sySave();syKick();syRefreshPanel(true)};
   g('syGen').onclick=()=>{const a=new Uint8Array(18);crypto.getRandomValues(a);g('syKey').value=[...a].map(x=>'abcdefghijkmnpqrstuvwxyz23456789'[x%32]).join('');g('syScript').value=SY_SCRIPT(g('syKey').value)};
   g('syKey').oninput=()=>{g('syScript').value=SY_SCRIPT(g('syKey').value.trim())};
-  g('sySave').onclick=()=>{const ch=read();if(ch&&SY.on)syInit();else sySave();st(SY.url&&SY.key?t.saved:t.missing)};
-  g('syTest').onclick=async()=>{read();sySave();if(!SY.url||!SY.key){st(t.missing);return}if(!navigator.onLine){st(t.stOff);return}st(t.testing);
-    try{const j=await syCall({action:'ping'});SY.lastErr='';sySave();st(t.testOk(j.folder||''))}catch(e){const m=String((e&&e.message)||e);st(t.stErr(m==='key'?t.errKey:m==='resp'?t.errResp:m))}};
-  g('syNow').onclick=()=>{read();sySave();if(!SY.url||!SY.key){st(t.missing);return}syKick()};
-  g('syCopy').onclick=async()=>{const ta=g('syScript');try{await navigator.clipboard.writeText(ta.value)}catch(e){ta.select();try{document.execCommand('copy')}catch(x){}}g('syCopy').textContent=t.copied;setTimeout(()=>{const b=g('syCopy');if(b)b.textContent=t.copy},1500)}}
+  g('sySave').onclick=()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}if(!SY.devName){msg(t.needName);return}if(SY.role==='parent'&&!SY.parentName){msg(t.needPName);return}
+    msg(dup()||t.saved);syKick()};
+  g('syTest').onclick=async()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}if(!navigator.onLine){msg(t.stOff);return}msg(t.testing);
+    try{const j=await syCall({action:'ping'});if(j.v!==2){SY.lastErr='old';sySave();msg(t.stErr(t.errOld));return}SY.lastErr='';sySave();msg(t.testOk(j.folder||''));syKick()}
+    catch(e){const m=String((e&&e.message)||e);msg(t.stErr(m==='key'?t.errKey:m==='resp'?t.errResp:m))}};
+  g('syNow').onclick=()=>{read();if(!SY.url||!SY.key){msg(t.missing);return}syKick()};
+  const pick=g('syKidPick');if(pick)pick.onchange=()=>{const k=syKids().find(x=>x.id===pick.value);g('syKidName').value=k?k.name:(childName||'')};
+  const use=g('syKidUse');if(use)use.onclick=async()=>{read();if(!navigator.onLine){msg(t.needNet);return}if(!SY.devName){msg(t.needName);return}
+    const v=g('syKidPick').value,typed=g('syKidName').value.trim(),name=typed||(v==='new'?childName||t.kidDefault:'');
+    try{if(v==='new'){const empty=SY.prevRole==='parent';if(empty&&!confirm(t.askNewEmpty))return;await syCreateKid(name,empty);SY.prevRole='';sySave()}
+      else{const k=syKids().find(x=>x.id===v);if(v!==SY.kid){if(!confirm(t.askContinue(k?k.name:name)))return;await syContinueKid(v,k?k.name:name)}
+        if(k&&typed&&typed!==k.name){await syCall({action:'kidSet',kid:{id:v,name:typed}});SY.kidName=typed;sySave()}}
+      msg(t.saved)}catch(e){msg(t.stErr(String(e.message||e)))}const m0=(document.getElementById('syMsg')||{}).textContent;syRefreshPanel(true);msg(m0)};
+  box.querySelectorAll('[data-syarch]').forEach(b=>b.onclick=async()=>{const k=syKids().find(x=>x.id===b.dataset.syarch);if(!k)return;
+    try{const r=await syCall({action:'kidSet',kid:{id:k.id,archived:!k.archived}});SY.reg=r.reg;sySave()}catch(e){msg(t.needNet)}syRefreshPanel()});
+  const vb=g('syVers');if(vb)vb.onclick=async()=>{const kid=SY.role==='parent'?SY.sel:SY.kid,list=g('syVersList');if(!navigator.onLine){msg(t.needNet);return}
+    try{const r=await syCall({action:'versions',kid});if(!r.list||!r.list.length){list.textContent=t.versNone;return}
+      list.innerHTML='<ul class="sydevs">'+r.list.slice(0,40).map(v=>`<li>${esc(bkDate(v.t))} · ${Math.round(v.size/1024)} KB <button class="btn alt mini" data-syver="${esc(v.name)}">${t.versUse}</button></li>`).join('')+'</ul>';
+      list.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(kid,b.dataset.syver))}catch(e){msg(t.stErr(String(e.message||e)))}};
+  g('syCopy').onclick=async()=>{const ta=g('syScript');try{await navigator.clipboard.writeText(ta.value)}catch(e){ta.select();try{document.execCommand('copy')}catch(x){}}g('syCopy').textContent=t.copied;setTimeout(()=>{const b=g('syCopy');if(b)b.textContent=t.copy},1500)};
+  syShowHist()}
+// recuperar una versión guardada en el Drive: pasa a ser el estado actual del niño en todos sus aparatos
+async function syRestoreVersion(kid,name){const t=SYT();try{const r=await syCall({action:'getVersion',kid,name});const d=syJ(r.data);if(!d||!d.ls)return;
+  if(!confirm(t.versAsk(bkDate(d.t||Date.now()),b2s(d))))return;
+  const cur=syJ((await syCall({action:'getState',kid})).data);const ep=Math.max(cur?(cur.epoch||0):0,SY.epoch)+1;
+  const data=Object.assign({},d,{t:Date.now(),from:DEVID,fromName:syMyName(),epoch:ep});delete data.seq;delete data.st;
+  const pr=await syCall({action:'putState',kid,data:JSON.stringify(data),base:0,force:true});
+  // los ajustes de esa versión se envían como un cambio firmado
+  const ch={};for(const k of SY_CFG)if(k in d.ls&&d.ls[k]!==localStorage.getItem(k))ch[k]=d.ls[k];
+  if(Object.keys(ch).length)SY.q.push({kid,changes:ch,cmds:[],desc:syDesc(ch,syCfgLs())+' · '+bkDate(d.t||Date.now())});
+  if(SY.role==='kid'){for(const k of [...SY_TRACK,...SY_CFG]){if(k in d.ls)lsSet(k,d.ls[k])}SY.seq=pr.seq;SY.epoch=ep;SY.cfgSnap=syCfgLs();syReload(true);syNorm();sySave()}
+  else{SY.selSeq=0;sySave();await syParentLoad(kid)}
+  await syFlushQ();syRefreshPanel(true);const m=document.getElementById('syMsg');if(m)m.textContent=t.versDone}catch(e){alert(t.stErr(String(e.message||e)))}}
+const b2s=d=>{try{return BK_T[lang].sum(bkSummary(d.ls,'–'))}catch(e){return ''}};
 
 const games={laberinto,cuentos,contar,poner,componer,comparar,donde,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano};
 
