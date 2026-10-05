@@ -442,6 +442,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .sgcard{background:#FFFFFF;border:4px solid var(--ink);border-radius:28px;padding:14px 18px 16px;box-shadow:0 10px 30px rgba(31,42,68,.3);text-align:center;position:relative}
 .sgpic{font-size:2.6rem;line-height:1;min-width:96px;min-height:76px;padding:6px 18px;border-radius:22px}.sgyes{background:#2EAD5B;color:#fff}.btn.alt.sgno{background:#FFE3DE}
 .bkbanner{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:80;width:min(94vw,620px);background:#E7F8EE;border:3px solid #2EAD5B;border-radius:18px;padding:10px 12px 10px 16px;display:flex;gap:10px;align-items:center;font:600 1rem Nunito,sans-serif;box-shadow:0 8px 24px rgba(31,42,68,.25)}.bkbanner.bad{background:#FFE9E4;border-color:#E4572E}.bkbanner span{flex:1}
+.agoff.agnofade{opacity:1!important;filter:none!important}
 .agoff{opacity:.25!important;pointer-events:none!important;filter:grayscale(.7)}.aglock{opacity:.5;pointer-events:none!important}.agwait{pointer-events:none!important}
 .agshow{animation:agshow .8s ease-in-out infinite;box-shadow:0 0 0 6px #FFC93C,0 0 22px 6px rgba(255,201,60,.8)!important;position:relative;z-index:2}
 g.agoff{filter:none!important;opacity:.22!important}
@@ -449,6 +450,9 @@ g.agshow,.czcard.agshow{box-shadow:none!important;animation:agglow .8s ease-in-o
 .msg .agfin{display:inline-block;margin-top:4px;font-size:.85em;opacity:.85}
 @keyframes agshow{0%,100%{box-shadow:0 0 0 4px #FFC93C;background-color:#FFFFFF}50%{box-shadow:0 0 0 12px #FF8C2B,0 0 38px 14px rgba(255,140,43,.9);background-color:#FFE7A8}}@keyframes agglow{0%,100%{filter:drop-shadow(0 0 3px #FFB020)}50%{filter:drop-shadow(0 0 16px #FF8C2B) drop-shadow(0 0 6px #FF8C2B);opacity:.6}}
 .pseq .ptile.agcount{transform:scale(1.18);box-shadow:0 0 0 5px #FFB020,0 0 18px 4px rgba(255,176,32,.8);transition:transform .2s,box-shadow .2s;position:relative;z-index:2}
+.agc{display:inline-block;transform:scale(1.28);filter:drop-shadow(0 0 8px #FFB020) drop-shadow(0 0 3px #FF8C2B);transition:transform .2s}
+circle.agc{fill:#FF8C2B;transform:none;filter:none}
+.cpair .xtra.agc{background:#FFB020;transform:none}
 .fruits span.agcount{display:inline-block;transform:scale(1.3);filter:drop-shadow(0 0 8px #FFB020);transition:transform .25s}
 .sgowl{position:absolute;left:-14px;top:-30px;font-size:3.2rem}.sgq{font:800 1.35rem "Baloo 2",sans-serif;margin:4px 0 2px}.sgact{font-size:3.6rem;line-height:1.1;margin-bottom:8px}
 .sgrow{display:grid;grid-template-columns:1fr auto auto;gap:6px 10px;align-items:center;padding:5px 10px;border-radius:14px;background:var(--sky);margin:4px 0}
@@ -665,6 +669,7 @@ const T={
 <h4>🧠 Ayuda cuando falla</h4>
 <ul><li><b>Para qué:</b> que no toque una opción tras otra hasta acertar (así casi no aprende) y ayudarle de verdad cuando no sabe la respuesta.</li>
 <li><b>Si no lo sabe</b> (según su seguimiento: letras, números, palabras o ejercicios que todavía falla, o algo nuevo): al primer fallo la respuesta correcta se ilumina, las demás se apagan y la voz dice una frase completa con el contexto. Por ejemplo: «Lola come un pescado», «Mira: uno, dos, tres. Hay 3 manzanas», «Esta es la letra B, como en banano» o «El gato está debajo de la mesa». Cuando termina la frase, toca la respuesta y sigue. Esa letra, número o palabra vuelve a salir dos preguntas después.</li>
+<li><b>En Componer, la explicación se hace contando</b>, iluminando cada cosa mientras la voz cuenta: en «Uno más» cuenta las que hay, enseña las que llegan o se van y cuenta el resultado («una, dos, tres, cuatro: ahora hay 4 manzanas»); en «Escondidos» cuenta las que se ven, levanta el vaso y sigue contando las de debajo (o cuenta los puntos de los dos dados); en «Más o menos» cuenta cada plato, las pone una con una y señala las que sobran.</li>
 <li><b>Menos opciones</b> en lo que más le cuesta: 3 en vez de 4, o 2 si le cuesta mucho, hasta que empiece a acertar.</li>
 <li><b>Si lo sabe pero va con prisa</b> (falla algo que suele acertar y toca en menos de un segundo): las opciones se ponen grises un segundo, la voz dice «Escucha bien», repite la pregunta y las opciones cambian de sitio. Si vuelve a fallar, se le enseña la respuesta como arriba.</li>
 <li><b>La estrella ⭐ y el «¡Bravo!»</b> solo se ganan acertando a la primera. Si acierta después de fallar oye un «Eso es» tranquilo: sin reproches ni sonidos de error.</li>
@@ -789,6 +794,7 @@ const T={
 <h4>🧠 Help after a mistake</h4>
 <ul><li><b>Why:</b> so she doesn’t tap one option after another until it works (she hardly learns that way), and to really help her when she doesn’t know the answer.</li>
 <li><b>If she doesn’t know it</b> (from her tracking: letters, numbers, words or exercises she still gets wrong, or something new): after the first mistake the right answer lights up, the others fade and the voice says a full sentence with the context. For example: “Lola eats a fish”, “Look: one, two, three. There are 3 apples”, “This is the letter B, as in banana” or “The cat is under the table”. When the sentence ends she taps the answer and carries on. That letter, number or word comes back two questions later.</li>
+<li><b>In Bonds, the explanation is done by counting</b>, lighting up each thing as the voice counts: in “One more” it counts what is there, shows what arrives or goes away and counts the result (“one, two, three, four: now there are 4 apples”); in “Hidden” it counts what can be seen, lifts the cup and keeps counting the ones underneath (or counts the dots on both dice); in “More or less” it counts each plate, matches them one with one and points out the ones left over.</li>
 <li><b>Fewer options</b> for what she finds hardest: 3 instead of 4, or 2 if it is very hard, until she starts getting it right.</li>
 <li><b>If she knows it but rushes</b> (gets wrong something she usually gets right, tapping in under a second): the options go grey for a second, the voice says “Listen carefully”, repeats the question and the options move around. If she gets it wrong again, the answer is shown as above.</li>
 <li><b>The star ⭐ and “Well done!”</b> are only earned on the first try. If she gets it right after a mistake she hears a calm “That’s it”: no telling off, no error sounds.</li>
@@ -913,6 +919,7 @@ const T={
 <h4>🧠 Aide quand il se trompe</h4>
 <ul><li><b>Pourquoi :</b> pour qu’il ne touche pas un choix après l’autre jusqu’à trouver (il n’apprend presque rien ainsi), et pour vraiment l’aider quand il ne connaît pas la réponse.</li>
 <li><b>S’il ne la connaît pas</b> (d’après son suivi : lettres, nombres, mots ou exercices qu’il rate encore, ou quelque chose de nouveau) : dès la première erreur, la bonne réponse s’allume, les autres s’éteignent et la voix dit une phrase complète avec le contexte. Par exemple : « Lola mange un poisson », « Regarde : un, deux, trois. Il y a 3 pommes », « Voici la lettre B, comme dans banane » ou « Le chat est sous la table ». Quand la phrase est finie, il touche la réponse et continue. Cette lettre, ce nombre ou ce mot revient deux questions plus tard.</li>
+<li><b>Dans Composer, l’explication se fait en comptant</b>, en allumant chaque objet pendant que la voix compte : dans « Un de plus », elle compte ce qu’il y a, montre ce qui arrive ou s’en va et compte le résultat (« une, deux, trois, quatre : maintenant il y a 4 pommes ») ; dans « Cachés », elle compte ce qu’on voit, soulève le gobelet et continue à compter ceux du dessous (ou compte les points des deux dés) ; dans « Plus ou moins », elle compte chaque assiette, les met un avec un et montre ceux qui restent en trop.</li>
 <li><b>Moins de choix</b> pour ce qui lui est le plus difficile : 3 au lieu de 4, ou 2 si c’est très difficile, jusqu’à ce qu’il commence à réussir.</li>
 <li><b>S’il la connaît mais va trop vite</b> (il rate ce qu’il réussit d’habitude en touchant en moins d’une seconde) : les choix deviennent gris une seconde, la voix dit « Écoute bien », répète la question et les choix changent de place. S’il se trompe encore, la réponse lui est montrée comme ci-dessus.</li>
 <li><b>L’étoile ⭐ et le « Bravo ! »</b> ne se gagnent que du premier coup. S’il trouve après une erreur, il entend un « C’est ça » calme : pas de reproches ni de sons d’erreur.</li>
@@ -1103,7 +1110,7 @@ function agShuffle(els){if(els.length<2)return;const par=els[0].parentNode;if(!e
   const after=els[els.length-1].nextSibling;order.forEach(e=>par.insertBefore(e,after))}
 // No lo sabe: se le enseña la respuesta con su contexto; la correcta se puede tocar cuando termina la frase
 function agTeach(){const my=ag,c=my.cfg;my.taught=true;let right=null;try{right=c.right?c.right():null}catch(e){}
-  agOpts().forEach(e=>{if(e!==right)agOff(e,true)});
+  agOpts().forEach(e=>{if(e!==right){agOff(e,true);if(c.noFade)e.classList.add('agnofade')}});
   if(right){right.classList.add('agshow','agwait');if(right.tagName==='BUTTON')right.disabled=false}
   let txt='';try{txt=c.say()||''}catch(e){}
   let fin=null;try{fin=c.fin?c.fin():null}catch(e){}if(!fin)fin=[AGT().tapIt,AGT().tapIt];
@@ -1118,7 +1125,7 @@ function agTeach(){const my=ag,c=my.cfg;my.taught=true;let right=null;try{right=
   setTimeout(unlock,Math.min(16000,1800+seq.reduce((a,x)=>a+String(x[0]).length*80+300,0)));
   const it=my.item;if(it)agRQ[agRK(it)]={v:it.kind==='obj'?it.e:it.n,due:agQn+1}}
 // quita las marcas de ayuda (para preguntas con varios pasos, como ordenar la historia)
-function agClear(){stage.querySelectorAll('.agoff,.agshow,.agwait,.aglock').forEach(e=>{e.classList.remove('agoff','agshow','agwait','aglock');if(e.tagName==='BUTTON')e.disabled=false});if(ag)ag.taught=false}
+function agClear(){stage.querySelectorAll('.agoff,.agshow,.agwait,.aglock').forEach(e=>{e.classList.remove('agoff','agnofade','agshow','agwait','aglock');if(e.tagName==='BUTTON')e.disabled=false});if(ag)ag.taught=false}
 // ---- volver a preguntar lo enseñado (en la misma actividad) ----
 const agRK=it=>it.kind==='obj'?`obj:${it.l}:${current}`:`${it.kind}:${it.sk}:${current}`;
 function agTake(k,ok){const r=agRQ[k];if(!r||!AG_ON||agQn<r.due)return null;delete agRQ[k];return ok&&!ok(r.v)?null:r.v}
@@ -3438,7 +3445,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres']);
-const APP_VER=64; // se sube junto con la caché de sw.js
+const APP_VER=65; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -3539,6 +3546,45 @@ const diceSvg=n=>`<svg class="cdice" viewBox="0 0 100 100" aria-label="${n}"><re
 const cmpOpts=(ans,max)=>{const s=new Set([ans]);let g=0;while(s.size<Math.min(4,max+1)&&g++<50){const v=ans+[-2,-1,1,2,3][rand(5)];if(v>=0&&v<=max)s.add(v)}return shuffle([...s])};
 // Vista «uno con uno»: dos filas alineadas, lo que sobra en rojo
 const pairView=(a,ea,b,eb)=>{const n=Math.max(a,b);return `<div class="cpair" style="--n:${n}">${Array.from({length:n},(_,i)=>`<span class="${i<a?(i<b?'ok':'xtra'):'gap'}">${i<a?ea:''}</span>`).join('')}${Array.from({length:n},(_,i)=>`<i class="${i<Math.min(a,b)?'ln':''}"></i>`).join('')}${Array.from({length:n},(_,i)=>`<span class="${i<b?(i<a?'ok':'xtra'):'gap'}">${i<b?eb:''}</span>`).join('')}</div>`};
+// ===== Ayuda en Componer: contar uno por uno (con nombres, género y número) para que entienda el cálculo =====
+const AG_THING={'🍎':[['manzana','manzanas','f'],['apple','apples'],['pomme','pommes','f']],'🐞':[['mariquita','mariquitas','f'],['ladybug','ladybugs'],['coccinelle','coccinelles','f']],
+ '🍓':[['fresa','fresas','f'],['strawberry','strawberries'],['fraise','fraises','f']],'⭐':[['estrella','estrellas','f'],['star','stars'],['étoile','étoiles','f']],
+ '🐟':[['pez','peces','m'],['fish','fish'],['poisson','poissons','m']],'🎈':[['globo','globos','m'],['balloon','balloons'],['ballon','ballons','m']],
+ '🍪':[['galleta','galletas','f'],['cookie','cookies'],['biscuit','biscuits','m']],'🐤':[['pollito','pollitos','m'],['chick','chicks'],['poussin','poussins','m']],
+ '🌸':[['flor','flores','f'],['flower','flowers'],['fleur','fleurs','f']],'🚗':[['carro','carros','m'],['car','cars'],['voiture','voitures','f']],
+ '🍉':[['sandía','sandías','f'],['watermelon','watermelons'],['pastèque','pastèques','f']],'🐘':[['elefante','elefantes','m'],['elephant','elephants'],['éléphant','éléphants','m']],
+ '🐭':[['ratón','ratones','m'],['mouse','mice'],['souris','souris','f']],'🎃':[['calabaza','calabazas','f'],['pumpkin','pumpkins'],['citrouille','citrouilles','f']],
+ '🫐':[['arándano','arándanos','m'],['blueberry','blueberries'],['myrtille','myrtilles','f']],'🏀':[['pelota','pelotas','f'],['ball','balls'],['ballon','ballons','m']],
+ '⚪':[['bolita','bolitas','f'],['little ball','little balls'],['petite boule','petites boules','f']],'🍍':[['piña','piñas','f'],['pineapple','pineapples'],['ananas','ananas','m']],
+ '🍒':[['cereza','cerezas','f'],['cherry','cherries'],['cerise','cerises','f']],'•':[['punto','puntos','m'],['dot','dots'],['point','points','m']]};
+function agTh(e){const r=AG_THING[e]||AG_THING['•'],x=r[agLi()];return {sg:x[0],pl:x[1],g:x[2]||'m'}}
+// «una manzana», «3 manzanas», «one apple», «une pomme»
+function agQty(n,e){const t=agTh(e);if(n===1)return (lang==='es'?(t.g==='f'?'una':'un'):lang==='fr'?(t.g==='f'?'une':'un'):'one')+' '+t.sg;return n+' '+t.pl}
+const agCap=x=>x.charAt(0).toUpperCase()+x.slice(1);
+const agNumW=i=>i<=9?numWords[lang][i-1]:({es:'diez',en:'ten',fr:'dix'})[lang];
+// palabras de contar de «from» a «to», iluminando cada cosa (el «una/une» concuerda con lo que se cuenta)
+function agCountSteps(from,to,els,e,clear){const out=[];for(let i=from;i<=to;i++){const el=els[i-from],first=i===from;let w=agNumW(i);if(i===1&&agTh(e).g==='f')w=lang==='es'?'una':lang==='fr'?'une':w;out.push([w,lang,()=>{if(clear&&first)agUnlight();if(el)el.classList.add('agc')}])}return out}
+const agUnlight=()=>stage.querySelectorAll('.agc').forEach(x=>x.classList.remove('agc'));
+const AG_CT={
+ es:{had:(n,e)=>`Había ${agQty(n,e)}.`,come:(d,e)=>d===1?`Y llega ${agQty(1,e)} más.`:`Y llegan ${agQty(d,e)} más.`,go:(d,e)=>d===1?`Se va ${agQty(1,e)}.`:`Se van ${agQty(d,e)}.`,
+   now:(r,e)=>`Ahora hay ${agQty(r,e)}.`,left:(r,e)=>r===0?`No queda ${agTh(e).g==='f'?'ninguna':'ningún'} ${agTh(e).sg}.`:`${r===1?'Queda':'Quedan'} ${agQty(r,e)}.`,
+   total:(n,e)=>`Hay ${agQty(n,e)}.`,lift:'Miramos debajo del vaso:',under:(h,v,n,e)=>`Debajo del vaso hay ${agQty(h,e)}: ${v} y ${h} son ${n}.`,
+   here:(n,e)=>`Aquí hay ${agQty(n,e)}.`,here2:(n,e)=>`Y aquí hay ${agQty(n,e)}.`,pair:e=>agTh(e).g==='f'?'Ahora las ponemos una con una.':'Ahora los ponemos uno con uno.',
+   more:(k,e)=>`${k===1?'Sobra':'Sobran'} ${agQty(k,e)}: aquí hay más.`,less:(k,e)=>`En el otro plato ${k===1?'sobra':'sobran'} ${agQty(k,e)}: aquí hay menos.`,
+   same:e=>agTh(e).g==='f'?'No sobra ninguna: hay las mismas.':'No sobra ninguno: hay los mismos.'},
+ en:{had:(n,e)=>`There ${n===1?'was':'were'} ${agQty(n,e)}.`,come:(d,e)=>d===1?`And one more ${agTh(e).sg} comes.`:`And ${d} more ${agTh(e).pl} come.`,go:(d,e)=>d===1?`One ${agTh(e).sg} goes away.`:`${d} ${agTh(e).pl} go away.`,
+   now:(r,e)=>`Now there ${r===1?'is':'are'} ${agQty(r,e)}.`,left:(r,e)=>r===0?`There are no ${agTh(e).pl} left.`:`${agCap(agQty(r,e))} ${r===1?'is':'are'} left.`,
+   total:(n,e)=>`There ${n===1?'is':'are'} ${agQty(n,e)}.`,lift:'Let’s look under the cup:',under:(h,v,n,e)=>`Under the cup there ${h===1?'is':'are'} ${agQty(h,e)}: ${v} and ${h} make ${n}.`,
+   here:(n,e)=>`Here there ${n===1?'is':'are'} ${agQty(n,e)}.`,here2:(n,e)=>`And here there ${n===1?'is':'are'} ${agQty(n,e)}.`,pair:()=>'Now we match them one with one.',
+   more:(k,e)=>`${agCap(agQty(k,e))} ${k===1?'is':'are'} left over: there are more here.`,less:(k,e)=>`The other plate has ${agQty(k,e)} left over: there are fewer here.`,
+   same:()=>'None left over: they are the same.'},
+ fr:{had:(n,e)=>`Il y avait ${agQty(n,e)}.`,come:(d,e)=>`Et il arrive ${agQty(d,e)} de plus.`,go:(d,e)=>`Il part ${agQty(d,e)}.`,
+   now:(r,e)=>`Maintenant, il y a ${agQty(r,e)}.`,left:(r,e)=>r===0?`Il ne reste ${agTh(e).g==='f'?'aucune':'aucun'} ${agTh(e).sg}.`:`Il reste ${agQty(r,e)}.`,
+   total:(n,e)=>`Il y a ${agQty(n,e)}.`,lift:'On regarde sous le gobelet :',under:(h,v,n,e)=>`Sous le gobelet, il y a ${agQty(h,e)} : ${v} et ${h}, ça fait ${n}.`,
+   here:(n,e)=>`Ici, il y a ${agQty(n,e)}.`,here2:(n,e)=>`Et ici, il y a ${agQty(n,e)}.`,pair:e=>agTh(e).g==='f'?'Maintenant, on les met une avec une.':'Maintenant, on les met un avec un.',
+   more:(k,e)=>`Il reste ${agQty(k,e)} en trop : ici, il y en a plus.`,less:(k,e)=>`Dans l’autre assiette, il reste ${agQty(k,e)} en trop : ici, il y en a moins.`,
+   same:e=>agTh(e).g==='f'?'Il n’en reste aucune : c’est pareil.':'Il n’en reste aucun : c’est pareil.'}};
+const ACT=()=>AG_CT[lang];
 function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_ITEMS[rand(CMP_ITEMS.length)];
   const st=()=>rec.st[cmpMode]||(rec.st[cmpMode]={a:0,f:0,m:0});let first=true,fails=0;
   // primer intento: guarda el resultado en sus estadísticas
@@ -3556,13 +3602,17 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
       frame(t.sumQ,`<div class="cdicerow">${diceSvg(a)}<b>+</b>${diceSvg(b)}</div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
       const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
       stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===n){mark(true,decRec);win(bt,componer)}else{mark(false,decRec);miss(bt)}});
-      agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().dice(a,b,n),fin:()=>agFinN(n),known:()=>agStK(rec.st[cmpMode])});bind();return}
+      agQ({right:()=>stage.querySelector(`.pick[data-v="${n}"]`),say:()=>AGT().dice(a,b,n),fin:()=>agFinN(n),
+        seq:txt=>{const dc=[...stage.querySelectorAll('.cdice')],c1=[...dc[0].querySelectorAll('circle')],c2=[...dc[1].querySelectorAll('circle')];
+          return [[AGT().look,lang,agUnlight],...agCountSteps(1,a,c1,'•'),...agCountSteps(a+1,n,c2,'•'),[txt,lang]]},known:()=>agStK(rec.st[cmpMode])});bind();return}
     const [n,v]=fresh(()=>{const n=2+rand(max-1),v=1+rand(n-1);return [`h${n}-${v}`,[n,v]]}),h=n-v,opts=cmpOpts(h,n);
     frame(t.hideQ(n,v),`<div class="chide"><b class="cnum">${n}</b><b class="cop">=</b>${v?`<div class="cvis">${Array.from({length:v},()=>`<span>${it}</span>`).join('')}</div><b class="cop">+</b>`:''}<div class="cunder">${Array.from({length:h},()=>`<span>${it}</span>`).join('')}<div class="ccup">${CUP_SVG}</div></div></div><div class="row">${opts.map(o=>`<button class="pick" data-v="${o}">${o}</button>`).join('')}</div>`);bar();
     const under=stage.querySelector('.cunder');under.classList.add('show');setTimeout(()=>{if(under.isConnected)under.classList.remove('show')},1300);
     const decRec=ok=>{const d=rec.dec[n]||(rec.dec[n]={a:0,f:0});d.a++;if(ok)d.f++};
     stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===h){mark(true,decRec);under.classList.add('show');win(bt,componer)}else{mark(false,decRec);fails++;miss(bt);if(fails>=2)under.classList.add('peek')}});
-    agQ({right:()=>stage.querySelector(`.pick[data-v="${h}"]`),say:()=>AGT().hide(n,v,h),fin:()=>agFinN(h),show:()=>under.classList.add('peek'),known:()=>agStK(rec.st[cmpMode])});bind();return}
+    agQ({right:()=>stage.querySelector(`.pick[data-v="${h}"]`),say:()=>ACT().total(n,it)+' '+ACT().under(h,v,n,it),fin:()=>agFinN(h),
+    seq:()=>{const vis=[...stage.querySelectorAll('.cvis span')],hid=[...stage.querySelectorAll('.cunder span')];
+      return [[AGT().look,lang,()=>{agUnlight();under.classList.remove('show','peek')}],...agCountSteps(1,v,vis,it),[ACT().lift,lang,()=>under.classList.add('show')],...agCountSteps(v+1,n,hid,it),[ACT().under(h,v,n,it),lang]]},known:()=>agStK(rec.st[cmpMode])});bind();return}
   if(cmpMode==='cmp'){
     // Más / menos / igual; en niveles 2-3 a veces la trampa: la colección menor más grande o más separada
     const eqOk=cmpLv>=2;let a,b;
@@ -3576,8 +3626,14 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
     const trapRec=ok=>{if(trap){rec.trap.a++;if(!ok)rec.trap.m++}};
     let over=false;stage.querySelectorAll('[data-side]').forEach(bt=>bt.onclick=()=>{if(over)return;if(bt.dataset.side===right){over=true;mark(true,trapRec);win(bt,componer)}
       else{mark(false,trapRec);miss(bt,bt.dataset.side);fails++;const h=stage.querySelector('.chelp');h.innerHTML=`<p class="pnote">${t.pairNote}</p>${pairView(a,ea,b,eb)}`;}});
-    agQ({opts:'[data-side]',noShuffle:true,right:()=>stage.querySelector(`[data-side="${right}"]`),known:()=>agStK(rec.st[cmpMode]),
-      say:()=>{const T=AGT();if(right==='=')return T.cmpEq(a);const x=right==='L'?a:b,y=right==='L'?b:a;return ask==='more'?T.cmpMore(x,y):T.cmpLess(x,y)}});bind();return}
+    agQ({opts:'[data-side]',noShuffle:true,noFade:true,right:()=>stage.querySelector(`[data-side="${right}"]`),known:()=>agStK(rec.st[cmpMode]),
+      say:()=>{const T=AGT();if(right==='=')return T.cmpEq(a);const x=right==='L'?a:b,y=right==='L'?b:a;return ask==='more'?T.cmpMore(x,y):T.cmpLess(x,y)},
+      seq:()=>{const C=ACT(),sp=sd=>[...stage.querySelectorAll(`.cplate[data-side="${sd}"] span`)],help=()=>stage.querySelector('.chelp'),k=Math.abs(a-b),eBig=a>b?ea:eb;
+        const fin=right==='='?C.same(ea):ask==='more'?C.more(k,eBig):C.less(k,eBig);
+        return [[AGT().look,lang,()=>{agUnlight();const h=help();if(h)h.innerHTML=''}],...agCountSteps(1,a,sp('L'),ea),[C.here(a,ea),lang],
+          ...agCountSteps(1,b,sp('R'),eb,true),[C.here2(b,eb),lang],
+          [C.pair(ea),lang,()=>{agUnlight();const h=help();if(h)h.innerHTML=pairView(a,ea,b,eb)}],
+          [fin,lang,()=>stage.querySelectorAll('.cpair .xtra').forEach(x=>x.classList.add('agc'))]]}});bind();return}
   if(cmpMode==='plus'){
     const [n,d]=fresh(()=>{let d=Math.random()<.5?1:-1;if(cmpLv===3&&Math.random()<.4)d*=2;const n=d>0?1+rand(max-d):Math.max(1,-d)+rand(max-Math.max(1,-d)+1);return [`p${n}${d}`,[n,d]]});
     const r=n+d,hid=cmpLv>=2,opts=cmpOpts(r,max);
@@ -3585,7 +3641,13 @@ function componer(){const t=CMP_T[lang],max=CMP_MAX[cmpLv],rec=cmpRec(),it=CMP_I
     const box=stage.querySelector('.cbox');box.classList.add('start');
     setTimeout(()=>{if(!box.isConnected)return;box.classList.remove('start');if(hid)box.classList.add('closed');setTimeout(()=>{if(box.isConnected)box.classList.add('moved')},hid?700:200)},1500);
     stage.querySelectorAll('.pick').forEach(bt=>bt.onclick=()=>{if(+bt.dataset.v===r){mark(true);box.classList.remove('closed');win(bt,componer)}else{mark(false);fails++;miss(bt);if(fails>=2)box.classList.remove('closed')}});
-    agQ({right:()=>stage.querySelector(`.pick[data-v="${r}"]`),say:()=>AGT().plus(n,d,r),fin:()=>agFinN(r),show:()=>box.classList.remove('closed'),known:()=>agStK(rec.st[cmpMode])});bind();return}
+    agQ({right:()=>stage.querySelector(`.pick[data-v="${r}"]`),say:()=>ACT().had(n,it)+' '+(d>0?ACT().come(d,it)+' '+ACT().now(r,it):ACT().go(-d,it)+' '+ACT().left(r,it)),fin:()=>agFinN(r),
+    seq:()=>{const all=[...stage.querySelectorAll('.citems span')],fly=stage.querySelector('.cfly'),C=ACT();
+      const start=[AGT().look,lang,()=>{agUnlight();box.classList.remove('closed','moved','start');if(fly)fly.style.display='none'}];
+      if(d>0){const old=all.filter(x=>!x.classList.contains('come')),nw=all.filter(x=>x.classList.contains('come'));
+        return [start,...agCountSteps(1,n,old,it),[C.come(d,it),lang,()=>{agUnlight();box.classList.add('moved');nw.forEach(x=>x.classList.add('agc'))}],...agCountSteps(1,r,[...old,...nw],it,true),[C.now(r,it),lang]]}
+      const stay=all.filter(x=>!x.classList.contains('go')),gone=all.filter(x=>x.classList.contains('go'));
+      return [start,...agCountSteps(1,n,all,it),[C.go(-d,it),lang,()=>{agUnlight();gone.forEach(x=>x.classList.add('agc'));setTimeout(()=>box.classList.add('moved'),500)}],...agCountSteps(1,r,stay,it,true),[C.left(r,it),lang]]},known:()=>agStK(rec.st[cmpMode])});bind();return}
   // Tantos como: hace su plato con la misma cantidad que el modelo (sin número)
   const n=fresh(()=>{const n=1+rand(max);return [`s${n}`,n]}),e2=CMP_ITEMS[(CMP_ITEMS.indexOf(it)+1+rand(CMP_ITEMS.length-1))%CMP_ITEMS.length];let k=0,done=false;
   frame(t.sameQ,`<div class="cmodel${cmpLv===3?' scatter':''}">${Array.from({length:n},()=>`<span>${it}</span>`).join('')}</div><div class="basket" id="cbasket"></div><div class="row"><button class="btn big" id="cadd">➕ ${e2}</button><button class="btn alt" id="csub" aria-label="${L().remove}">➖</button><button class="btn" id="cok">${L().done}</button></div><div class="chelp"></div>`);bar();
