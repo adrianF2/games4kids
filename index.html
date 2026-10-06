@@ -461,7 +461,7 @@ circle.agc{fill:#FF8C2B;transform:none;filter:none}
 .syrest.off{opacity:.45}.syfield{flex-wrap:wrap}.syfield label{flex-basis:100%}.syfield input{flex:1 1 260px;width:auto!important;max-width:none!important;min-width:0}
 .syguide{margin-top:10px;background:#F4F8FF;border-radius:14px;padding:8px 12px}.syguide summary{cursor:pointer;font-weight:800}.syguide li{margin:6px 0}
 .syguide textarea{white-space:pre;overflow:auto;width:100%;box-sizing:border-box;font:12px/1.35 ui-monospace,Menlo,monospace;border-radius:10px;border:2px solid #C9D6EA;padding:8px;margin-top:6px}
-.synotice{background:#E6F2FF;border-color:#3A86FF}.sycard{background:#F7FAFF;border:2px solid #DCE7F7;border-radius:16px;padding:10px 12px;margin:10px 0}.sycard>summary{cursor:pointer;font-weight:800}.sycx[open]>summary{margin-bottom:8px}.symsg:empty{display:none}.syind{color:inherit;font-weight:700}.synotice>div{margin-top:4px}
+.synotice{background:#E6F2FF;border-color:#3A86FF}.sycard{background:#F7FAFF;border:2px solid #DCE7F7;border-radius:16px;padding:10px 12px;margin:10px 0}.sycard>summary{cursor:pointer;font-weight:800}.sycx[open]>summary{margin-bottom:8px}.symsg:empty{display:none}.sybusy{opacity:.55;cursor:progress}.syind{color:inherit;font-weight:700}.synotice>div{margin-top:4px}
 .sydevs{margin:4px 0 8px;padding-left:18px}.sydevs li{margin:4px 0;line-height:1.5}.btn.mini{padding:4px 10px;font-size:14px;min-height:0;margin-left:6px}
 .sykid{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-weight:800}.sykid select{flex:1 1 220px;font-size:16px;padding:6px;border-radius:10px;max-width:100%}
 #syKidPick{font-size:16px;padding:6px;border-radius:10px}
@@ -2410,7 +2410,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     <h3>🗑️ ${t.resetBtn}</h3><div class="row" id="resetRow"><button class="btn alt" id="preset">🗑️ ${t.resetBtn}</button></div></div></section>
   </div>`);
   box.hidden=false;
-  limitHandlers(box);backupHandlers();accessHandlers();suggHandlers();wakeHandlers();agHandlers();syncHandlers();
+  limitHandlers(box);backupHandlers();accessHandlers();suggHandlers();wakeHandlers();agHandlers();syncHandlers();try{syWrapBusy(box);syApplyBusy()}catch(e){}
   box.querySelectorAll('[data-ps]').forEach(b=>b.onclick=()=>{pSub=b.dataset.ps;try{localStorage.setItem('peques-psub',pSub)}catch(e){}
     box.querySelectorAll('[data-ps]').forEach(x=>x.setAttribute('aria-pressed',x===b));box.querySelectorAll('.psub').forEach(d=>d.hidden=d.dataset.psub!==pSub)});
   document.getElementById('namesave').onclick=()=>{const nn=document.getElementById('kidname').value.trim().slice(0,16);{const er=syNameCheck(nn);if(er){const m=document.getElementById('kidNameMsg');if(m)m.textContent=er;document.getElementById('kidname').value=childName;return}}
@@ -3539,7 +3539,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=87; // se sube junto con la caché de sw.js
+const APP_VER=88; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4491,7 +4491,7 @@ function syRefreshPanel(force){const par=document.getElementById('parents');
     // lo que se estaba escribiendo y aún no se guardó tampoco se pierde
     fids=['syDev','syPName','syNewName','syUrl','syKey'],fv=fids.map(i=>{const x=document.getElementById(i);return x?x.value:null}),vl=document.getElementById('syVersList'),vh=vl?vl.innerHTML:'';openParents();par.scrollTop=sc;ids.forEach((i,n)=>{if(keep[n])syMsgAt(i,keep[n])});fids.forEach((i,n)=>{const x=document.getElementById(i);if(x&&fv[n]!=null)x.value=fv[n]});
     // se conserva el último mensaje y la lista de versiones abierta
-    const v2=document.getElementById('syVersList');if(v2&&vh&&!v2.innerHTML){v2.innerHTML=vh;v2.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(SY.role==='parent'?SY.sel:SY.kid,b.dataset.syver))}}}}
+    const v2=document.getElementById('syVersList');if(v2&&vh&&!v2.innerHTML){v2.innerHTML=vh;v2.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(SY.role==='parent'?SY.sel:SY.kid,b.dataset.syver));syWrapBusy(v2);syApplyBusy()}}}}
 
 // ---------- ajustes: cambios firmados ----------
 const syDayName=i=>new Date(2024,0,7+i).toLocaleDateString(locOf(),{weekday:'long'});
@@ -4996,6 +4996,13 @@ function syncSection(){const t=SYT(),on=!!SY.on,conn=syConnected(),role=syUIRole
     <div class="row"><button class="btn alt" id="syCopy">${t.copy}</button></div><textarea id="syScript" readonly rows="10" spellcheck="false" wrap="off">${esc(SY_SCRIPT(SY.key))}</textarea>
     <p class="pnote"><b>${t.manT}</b></p><div class="row"><button class="btn alt" id="syCopyMan">${t.copyMan}</button></div><textarea id="syMan" readonly rows="6" spellcheck="false" wrap="off">${esc(SY_MANIFEST)}</textarea></details></details>`;
   return head+status+'</div>'+dev+cx}
+// mientras se procesa una acción (conectar, guardar, sincronizar, borrar…) todos estos botones quedan desactivados,
+// también los que aparezcan si el panel se redibuja a mitad
+let syUIBusy=0;
+const SY_BTNS='#sySave,#syConnect,#syNow,#syGen,#syRole,#syKidPick,#syOn,[data-sydel],[data-syarch],[data-sygone],#syVers,[data-syver],#syKidSel';
+function syApplyBusy(){document.querySelectorAll(SY_BTNS).forEach(x=>{if(syUIBusy){if(!x.disabled){x.disabled=true;x.classList.add('sybusy')}}else if(x.classList.contains('sybusy')){x.disabled=false;x.classList.remove('sybusy')}})}
+async function syBusyDo(fn){syUIBusy++;syApplyBusy();try{return await fn()}finally{syUIBusy=Math.max(0,syUIBusy-1);syApplyBusy()}}
+function syWrapBusy(root){if(!root)return;root.querySelectorAll(SY_BTNS).forEach(x=>{for(const ev of ['onclick','onchange']){const f=x[ev];if(f&&!f.__w){const w=function(e){if(syUIBusy)return;return syBusyDo(()=>f.call(this,e))};w.__w=true;x[ev]=w}}})}
 const syMsgAt=(id,m)=>{const el=document.getElementById(id);if(el)el.textContent=m};
 function syncHandlers(){syBannerHandlers();familyHandlers();versHandlers();const g=id=>document.getElementById(id),box=g('syOn')&&g('syOn').closest('.psub');if(!box)return;const t=SYT();
   const msg=m=>syMsgAt('syMsg',m),cmsg=m=>syMsgAt('syConnMsg',m);
@@ -5108,7 +5115,7 @@ function versHandlers(){const t=SYT(),vb=document.getElementById('syVers');if(!v
     try{const r=await syCall({action:'versions',kid});if(!r.list||!r.list.length){list.textContent=t.versNone;return}
       // la primera es el estado actual; las demás, copias anteriores que se pueden recuperar
       list.innerHTML='<ul class="sydevs">'+r.list.slice(0,40).map(v=>`<li>${esc(bkDate(v.t))} · ${Math.round(v.size/1024)} KB ${v.name==='estado.json'?`<b>${t.versNow}</b>`:`<button class="btn alt mini" data-syver="${esc(v.name)}">${t.versUse}</button>`}</li>`).join('')+'</ul>';
-      list.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(kid,b.dataset.syver))}catch(e){list.textContent='';syMsgAt('syVersMsg',t.stErr(syErrTxt(String(e.message||e))))}finally{vb.disabled=false}}}
+      list.querySelectorAll('[data-syver]').forEach(b=>b.onclick=()=>syRestoreVersion(kid,b.dataset.syver));syWrapBusy(list);syApplyBusy()}catch(e){list.textContent='';syMsgAt('syVersMsg',t.stErr(syErrTxt(String(e.message||e))))}finally{vb.disabled=false}}}
 // recuperar una versión guardada en el Drive: pasa a ser el estado actual del niño en todos sus aparatos
 async function syRestoreVersion(kid,name){const t=SYT(),sm=x=>syMsgAt('syVersMsg',x);sm(t.working);try{const r=await syCall({action:'getVersion',kid,name});const d=syJ(r.data);sm('');if(!d||!d.ls)return;
   if(!confirm(t.versAsk(bkDate(d.t||Date.now()),b2s(d))))return;sm(t.working);document.querySelectorAll('[data-syver],#syVers').forEach(x=>x.disabled=true);
