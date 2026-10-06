@@ -708,7 +708,7 @@ const T={
 <li><b>Borrar progreso y copias:</b> «🗑️ Borrar progreso» o «📂 Recuperar copia» en un aparato sincronizado se convierte en el estado de ese peque en todos sus aparatos (en el de un padre, del peque elegido); no se mezcla con lo anterior.</li>
 <li><b>Si un intento falla:</b> el script de Google atiende los cambios de uno en uno, así que a veces un aparato tiene que esperar su turno. La app lo reintenta sola en unos segundos y no lo marca como problema; solo avisa con ⚠️ si falla varias veces seguidas, lleva más de 10 minutos sin sincronizar o el error necesita que hagas algo (clave, permisos, script antiguo). Justo después de publicar una versión nueva del script, Google puede tardar unos minutos en usarla en todos sus servidores: mientras tanto algún intento puede fallar y se reintenta solo. En «☁️ Sincronizar» puedes ver los «🕘 Últimos problemas».</li>
 <li><b>Versiones en el Drive:</b> se guardan las 5 últimas y una por día durante 30 días. En «⚙️ Ajustes → 💾 Datos → 🕘 Ver versiones» puedes recuperar una; pasa a ser el estado actual del peque en todos sus aparatos. Los peques que ya no usan la app se pueden archivar (y recuperar) o borrar: su carpeta (progreso, ajustes y versiones) va a la papelera de tu Drive y se puede recuperar desde allí durante 30 días. Al desactivar la sincronización en un aparato, este sale de la lista y deja libre a su peque; un aparato perdido o roto se puede quitar con «🗑️ Quitar» desde el aparato de un padre, y si un aparato lleva más de 30 días sin conectarse, la app permite borrar a su peque tras avisar. No se pueden crear dos peques con el mismo nombre: si ya existe, la app lo propone para seguir con su progreso.</li>
-<li><b>Sin bucles:</b> leer nunca provoca escribir, y un aparato que no ha cambiado nada no vuelve a enviar.</li>
+<li><b>Sin bucles:</b> leer nunca provoca escribir, y un aparato que no ha cambiado nada no vuelve a enviar. Con la app oculta (otra app, la pantalla apagada o una pestaña que no estás mirando) no pregunta nada a Google: solo termina de enviar lo pendiente, y al volver a la app sincroniza enseguida. Además, el script guarda una copia rápida de los datos en la memoria de Google, así las consultas frecuentes no tocan el Drive ni gastan el límite diario que Google pone a los scripts.</li>
 <li><b>Sin internet:</b> la app sigue funcionando con normalidad; los cambios quedan en cola y se envían y reciben cuando vuelve la conexión. En «☁️ Sincronizar» ves cuándo fue la última sincronización, y arriba del panel un aviso pequeño (☁️, 📴 o ⚠️) que lleva allí al tocarlo.</li>
 <li>Los ajustes de sincronización no entran en la copia de seguridad, y los dibujos de la galería no se sincronizan.</li></ul>
 <h4>📱 Pantalla encendida</h4>
@@ -850,7 +850,7 @@ const T={
 <li><b>Erasing progress and backups:</b> “🗑️ Reset progress” or “📂 Restore backup” on a synced device becomes that child’s state on all their devices (on a parent’s device, the selected child’s); it isn’t mixed with what was there.</li>
 <li><b>If an attempt fails:</b> the Google script handles changes one at a time, so sometimes a device has to wait its turn. The app retries on its own within seconds and doesn’t flag it as a problem; it only shows ⚠️ if it fails several times in a row, hasn’t synced for more than 10 minutes, or the error needs you to do something (key, permissions, old script). Right after deploying a new version of the script, Google may take a few minutes to use it on all its servers: meanwhile an attempt may fail and is retried on its own. In “☁️ Sync” you can see the “🕘 Latest problems”.</li>
 <li><b>Versions in Drive:</b> the last 5 are kept, plus one per day for 30 days. In “⚙️ Settings → 💾 Data → 🕘 See versions” you can restore one; it becomes the child’s current state on all their devices. Children who no longer use the app can be archived (and restored) or deleted: their folder (progress, settings and versions) goes to your Drive trash and can be restored from there for 30 days. When sync is turned off on a device, it leaves the list and frees its child; a lost or broken device can be removed with “🗑️ Remove” from a parent’s device, and if a device hasn’t connected for more than 30 days, the app lets you delete its child after a warning. Two children can’t have the same name: if it already exists, the app offers it so you continue with their progress.</li>
-<li><b>No loops:</b> reading never causes writing, and a device that hasn’t changed anything doesn’t send again.</li>
+<li><b>No loops:</b> reading never causes writing, and a device that hasn’t changed anything doesn’t send again. While the app is hidden (another app, the screen off or a tab you’re not looking at) it asks Google nothing: it only finishes sending what’s pending, and syncs right away when you come back. The script also keeps a quick copy of the data in Google’s memory, so frequent checks don’t touch Drive or use up the daily limit Google sets for scripts.</li>
 <li><b>Without internet:</b> the app keeps working normally; changes are queued and sent and received when the connection is back. In “☁️ Sync” you see when the last sync happened, and at the top of the panel a small notice (☁️, 📴 or ⚠️) takes you there when tapped.</li>
 <li>Sync settings are not part of the backup, and the gallery drawings are not synced.</li></ul>
 <h4>📱 Keep screen on</h4>
@@ -992,7 +992,7 @@ const T={
 <li><b>Effacer la progression et sauvegardes :</b> « 🗑️ Effacer la progression » ou « 📂 Restaurer une sauvegarde » sur un appareil synchronisé devient l’état de cet enfant sur tous ses appareils (sur celui d’un parent, de l’enfant choisi) ; ce n’est pas mélangé avec l’existant.</li>
 <li><b>Si une tentative échoue :</b> le script Google traite les changements un par un, donc un appareil doit parfois attendre son tour. L’app réessaie toute seule en quelques secondes et ne le signale pas comme un problème ; elle n’affiche ⚠️ que si cela échoue plusieurs fois de suite, s’il n’y a pas eu de synchronisation depuis plus de 10 minutes ou si l’erreur demande une action de votre part (clé, autorisations, ancien script). Dans « ☁️ Synchroniser », vous pouvez voir les « 🕘 Derniers problèmes ». Juste après avoir déployé une nouvelle version du script, Google peut mettre quelques minutes à l’utiliser sur tous ses serveurs : en attendant, une tentative peut échouer et se relance toute seule.</li>
 <li><b>Versions sur le Drive :</b> les 5 dernières sont gardées, plus une par jour pendant 30 jours. Dans « ⚙️ Réglages → 💾 Données → 🕘 Voir les versions », vous pouvez en restaurer une ; elle devient l’état actuel de l’enfant sur tous ses appareils. Les enfants qui n’utilisent plus l’app peuvent être archivés (et récupérés) ou supprimés : leur dossier (progression, réglages et versions) va dans la corbeille de votre Drive et peut y être récupéré pendant 30 jours. Quand la synchronisation est désactivée sur un appareil, il sort de la liste et libère son enfant ; un appareil perdu ou cassé peut être retiré avec « 🗑️ Retirer » depuis l’appareil d’un parent, et si un appareil ne s’est pas connecté depuis plus de 30 jours, l’app permet de supprimer son enfant après un avertissement. Deux enfants ne peuvent pas avoir le même prénom : s’il existe déjà, l’app le propose pour continuer avec sa progression.</li>
-<li><b>Pas de boucles :</b> lire n’entraîne jamais d’écriture, et un appareil qui n’a rien changé ne renvoie rien.</li>
+<li><b>Pas de boucles :</b> lire n’entraîne jamais d’écriture, et un appareil qui n’a rien changé ne renvoie rien. Quand l’app est cachée (autre app, écran éteint ou onglet que vous ne regardez pas), elle ne demande rien à Google : elle finit seulement d’envoyer ce qui est en attente, et se synchronise tout de suite à votre retour. Le script garde aussi une copie rapide des données dans la mémoire de Google : les vérifications fréquentes ne touchent pas le Drive et n’épuisent pas la limite quotidienne que Google impose aux scripts.</li>
 <li><b>Sans internet :</b> l’app continue de fonctionner normalement ; les changements sont mis en attente, puis envoyés et reçus au retour de la connexion. Dans « ☁️ Synchro », vous voyez la dernière synchronisation, et en haut du panneau un petit indicateur (☁️, 📴 ou ⚠️) y mène quand on le touche.</li>
 <li>Les réglages de synchronisation ne font pas partie de la sauvegarde, et les dessins de la galerie ne sont pas synchronisés.</li></ul>
 <h4>📱 Écran allumé</h4>
@@ -3573,7 +3573,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=93; // se sube junto con la caché de sw.js
+const APP_VER=94; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4696,8 +4696,12 @@ const syDue=(k,ms)=>{const t=Date.now();if(!syNext[k]||t>=syNext[k]){syNext[k]=t
 async function syBye(){if(syBusy)return;syBusy=true;try{await syCall({action:'hello',me:{id:DEVID,name:SY.devName,role:'gone',kid:'',active:false}});SY.bye=false;sySave()}catch(e){}finally{syBusy=false}}
 async function syTick(){if(!syOn()){if(SY&&SY.bye&&SY.url&&SY.key&&navigator.onLine)await syBye();return}if(syBusy)return;syWatch();if(SY.role==='kid')syApplyPend();
   if(!navigator.onLine){if(SY.lastErr!=='offline'){SY.lastErr='offline';sySave();syShowState()}return}
-  if(Date.now()<syRetry)return;syBusy=true;
+  if(Date.now()<syRetry)return;
+  // con la app oculta (otra app, pantalla apagada, pestaña sin mirar) no se pregunta nada a Google: solo se termina de enviar lo pendiente
+  const hid=document.hidden;if(hid&&!syOutPending())return;
+  syBusy=true;
   try{await syFlushFinal();
+    if(hid){await syFlushQ();if(SY.role==='kid'){if(SY.kid)await syPushState()}else if(SY.forcePush)await syParentPush();syHideAt=0;SY.lastOk=Date.now();SY.lastErr='';SY.errCount=0;sySave();return}
     // el registro de la familia se pide a la vez que lo demás (una espera menos)
     const hw=(ms)=>syDue('hello',ms)?syHello().then(()=>null,e=>e):null;
     if(SY.role==='kid'){
@@ -4715,12 +4719,16 @@ async function syTick(){if(!syOn()){if(SY&&SY.bye&&SY.url&&SY.key&&navigator.onL
     if(m!=='offline'&&navigator.onLine)SY.errLog=[{t:Date.now(),m,d:(e&&e.det)||''}].concat(SY.errLog||[]).slice(0,6);sySave()}
   finally{syBusy=false;syShowState();syWarnOther()}}
 function syKick(){syNext={};syRetry=0;setTimeout(syTick,50)}
+// ¿queda algo por enviar? (cambios de ajustes en cola, el último estado del peque, un borrado o una copia recuperada)
+let syHideAt=0;
+function syOutPending(){if((SY.q||[]).length||SY.forcePush)return true;try{if(localStorage.getItem(SY_FINAL))return true}catch(e){}
+  if(syHideAt&&SY.role==='kid'&&SY.kid&&!window.__guest){if((SY.lastPush||0)<syHideAt&&syPushBody().h!==SY.pushHash)return true;syHideAt=0}return false}
 function syWarnOther(){if(SY.role!=='kid'||!syBusyOther||syBusyShown===syBusyOther)return;syBusyShown=syBusyOther;
   try{bkBanner(SYT().busy(SY.kidName||childName||'',syBusyOther),false)}catch(e){}}
 setInterval(syTick,3000);
 window.addEventListener('online',syKick);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){syFirst=true;syKick();return}
-  try{if(syOn())syWatch(true)}catch(e){}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){syHideAt=0;syFirst=true;syKick();return}
+  syHideAt=Date.now();try{if(syOn())syWatch(true)}catch(e){}
   if(syKidMode()&&SY.kid&&navigator.onLine&&!syBusy){syPushState().catch(()=>{});syHello().catch(()=>{})}
   if(syParent()&&SY.q.length&&navigator.onLine&&!syBusy){syBusy=true;syFlushQ().catch(()=>{}).finally(()=>{syBusy=false})}});
 setTimeout(()=>{if(syOn())syKick()},2500);
@@ -4812,13 +4820,13 @@ const NOMBRE_CARPETA = 'Juegos para Peques';
 function doPost(e) { let p = {}; try { p = JSON.parse(e.postData.contents) || {}; } catch (x) {} return salida(p); }
 function doGet(e) { return salida(e.parameter || {}); }
 // Ejecútala una vez desde el editor (botón ▶ con «probar» elegido): pide la autorización y comprueba que todo funciona
-function probar() { const id = conBloqueo(() => { const i = base(); unificar(i); return i; }); Logger.log('✅ Todo bien: carpeta «' + NOMBRE_CARPETA + '» lista (' + id + ').'); }
+function probar() { cacheVaciar(); const id = conBloqueo(() => { const i = base(); unificar(i); return i; }); Logger.log('✅ Todo bien: carpeta «' + NOMBRE_CARPETA + '» lista (' + id + ').'); }
 // solo esperan turno las peticiones que escriben; «hello» y «ping» lo piden únicamente si de verdad tienen que escribir
 const ESCRIBEN = ['kidSet', 'kidDel', 'kidNew', 'putState', 'patchConfig'];
 // huella corta de un texto (para comprobar que la clave llegó entera sin tener que devolverla)
 function huella(s) { return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(s), Utilities.Charset.UTF_8).slice(0, 4).map(x => ((x + 256) % 256).toString(16).padStart(2, '0')).join(''); }
 function salida(p) { let o; try { if (!p.key && !p.action) o = { ok: false, err: 'empty' }; else o = ESCRIBEN.indexOf(p.action) >= 0 ? conBloqueo(() => responder(p)) : responder(p); } catch (err) { const m = String((err && err.message) || err); o = { ok: false, err: /lock|bloqueo|verrou/i.test(m) ? 'busy' : m }; }
-  o.now = Date.now(); o.sv = 5; return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+  o.now = Date.now(); o.sv = 6; return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
 // ---------- acceso a Drive (solo archivos creados por este script) ----------
 const API = 'https://www.googleapis.com/drive/v3/files', SUBIR = 'https://www.googleapis.com/upload/drive/v3/files', CARPETA_MIME = 'application/vnd.google-apps.folder';
@@ -4848,9 +4856,28 @@ function existe(id) { try { const t = id && llamar('get', API + '/' + id + '?fie
 
 // ---------- carpetas (los identificadores se recuerdan para no buscarlas cada vez) ----------
 const props = PropertiesService.getScriptProperties();
+
+// ---------- copia rápida en la memoria de Google (CacheService) ----------
+// las lecturas frecuentes (registro, ajustes y estado de cada niño) salen de aquí sin tocar el Drive, así no se gasta el límite diario de Google;
+// cada escritura actualiza la copia (y si algo falla, la borra: entonces se lee del Drive). «probar» la vacía.
+const memoria = CacheService.getScriptCache(), TROZO = 24000, DURA = 21600;
+const cclave = k => 'g' + (props.getProperty('cgen') || '0') + ':' + k;
+function cacheLeer(k) { try { const kk = cclave(k), n = memoria.get(kk); if (n === null) return null;
+    const c = +n, ks = []; for (let i = 0; i < c; i++) ks.push(kk + ':' + i);
+    const m = c ? memoria.getAll(ks) : {}; let t = ''; for (let i = 0; i < c; i++) { if (typeof m[ks[i]] !== 'string') return null; t += m[ks[i]]; } return t; } catch (e) { return null; } }
+function cacheGuardar(k, t) { const kk = cclave(k); try { if (t === null || t === undefined) { memoria.remove(kk); return; }
+    const o = {}; let c = 0; for (let i = 0; i < t.length; i += TROZO) o[kk + ':' + c++] = t.slice(i, i + TROZO);
+    if (c) memoria.putAll(o, DURA); memoria.put(kk, String(c), DURA); } catch (e) { try { memoria.remove(kk); } catch (x) {} } }
+function cacheBorrar(k) { try { memoria.remove(cclave(k)); } catch (e) {} }
+function cacheVaciar() { props.setProperty('cgen', String(Date.now())); }
+// lee del Drive y deja la copia, pero solo si nadie está escribiendo en ese momento (así la copia nunca queda con un dato viejo)
+function conCopia(k, leerDrive) { const dejar = () => { const t = leerDrive(); if (t !== null) cacheGuardar(k, t); return t; };
+  if (bloqueado) return dejar();
+  const l = LockService.getScriptLock(); if (!l.tryLock(0)) return leerDrive();
+  bloqueado = true; try { return dejar(); } finally { bloqueado = false; l.releaseLock(); } }
 function base() { let id = props.getProperty('base'); if (existe(id)) return id;
   if (!bloqueado) return conBloqueo(base);
-  id = crearCarpeta(NOMBRE_CARPETA, null); props.setProperty('base', id); props.deleteProperty('ninos'); props.deleteProperty('reg'); return id; }
+  id = crearCarpeta(NOMBRE_CARPETA, null); props.setProperty('base', id); cacheVaciar(); props.deleteProperty('ninos'); props.deleteProperty('reg'); return id; }
 function carpetaNinos(b) { let id = props.getProperty('ninos'); if (id && existe(id)) return id;
   const f = buscar(b, "name = 'ninos' and mimeType = '" + CARPETA_MIME + "'"); id = f.length ? f[0].id : crearCarpeta('ninos', b); props.setProperty('ninos', id); return id; }
 // la carpeta base solo se comprueba cuando hace falta (así cada petición hace pocas llamadas a Drive)
@@ -4861,7 +4888,7 @@ function carpetaNino(id, nombre, crear) { const fin = '(' + id + ')', k = 'k:' +
   if (!f) { ns = carpetaNinos(b()); f = buscar(ns, "mimeType = '" + CARPETA_MIME + "'").filter(x => x.name.slice(-fin.length) === fin)[0] || null; if (f) props.setProperty(k, f.id); }
   if (f) { if (nombre && f.name !== nombre + ' ' + fin) cambiar(f.id, { name: nombre + ' ' + fin }); return f.id; }
   if (!crear) return null;
-  const r = registro(b()), nid = crearCarpeta((nombre || (r.kids[id] || {}).name || 'Peque') + ' ' + fin, ns); props.setProperty(k, nid); return nid; }
+  const r = registro(), nid = crearCarpeta((nombre || (r.kids[id] || {}).name || 'Peque') + ' ' + fin, ns); props.setProperty(k, nid); return nid; }
 function archivo(dir, n) { const f = buscar(dir, "name = '" + n + "'"); return f.length ? f[0] : null; }
 function leer(dir, n) { const f = archivo(dir, n); return f ? contenido(f.id) : null; }
 function leerJSON(dir, n) { try { return JSON.parse(leer(dir, n) || 'null'); } catch (e) { return null; } }
@@ -4894,16 +4921,19 @@ function mezclarCarpeta(de, a) { buscar(de).forEach(x => { const igual = buscar(
   const xGana = nx !== ni ? nx > ni : Date.parse(x.createdTime) > Date.parse(igual.createdTime), viejo = xGana ? igual : x, nuevo = xGana ? x : igual;
   cambiar(viejo.id, { name: viejo.name.replace('.json', '-') + fecha() + '.json' }); mover(x.id, de, a); }); }
 function unificar(id) { const n = buscarTodo("name = '" + comillas(NOMBRE_CARPETA) + "' and mimeType = '" + CARPETA_MIME + "'").filter(f => f.id !== id);
-  if (!n.length) return; n.forEach(o => { mezclarCarpeta(o.id, id); cambiar(o.id, { trashed: true }); }); props.deleteProperty('ninos'); }
-function borrarNino(r, id) { const d = carpetaNino(id, null, false); if (d) cambiar(d, { trashed: true }); props.deleteProperty('k:' + id); delete r.kids[id]; }
-// el registro se lee por su identificador recordado (una sola llamada a Drive)
-function registro(b) { const vacio = { devices: {}, kids: {} }; let id = props.getProperty('reg'), t = id ? contenido(id) : null;
-  if (t === null) { const f = archivo(b, 'dispositivos.json'); if (!f) return vacio; props.setProperty('reg', f.id); t = contenido(f.id); }
+  if (!n.length) return; cacheVaciar(); n.forEach(o => { mezclarCarpeta(o.id, id); cambiar(o.id, { trashed: true }); }); props.deleteProperty('ninos'); cacheVaciar(); }
+function borrarNino(r, id) { cacheBorrar(id + '/estado.json'); cacheBorrar(id + '/config.json'); const d = carpetaNino(id, null, false); if (d) cambiar(d, { trashed: true }); props.deleteProperty('k:' + id); delete r.kids[id]; }
+// el registro se lee de la copia rápida o, si no está, por su identificador recordado (una sola llamada a Drive)
+function registro() { const vacio = { devices: {}, kids: {} }; let t = cacheLeer('reg');
+  if (t === null) t = conCopia('reg', () => { const id = props.getProperty('reg'); let x = id ? contenido(id) : null;
+    if (x === null) { const f = archivo(b(), 'dispositivos.json'); if (!f) return null; props.setProperty('reg', f.id); x = contenido(f.id); } return x; });
+  if (t === null) return vacio;
   try { return JSON.parse(t) || vacio; } catch (e) { return vacio; } }
-function guardarRegistro(b, r) { const t = JSON.stringify(r), id = props.getProperty('reg');
-  if (id && llamar('patch', SUBIR + '/' + id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8') !== null) return;
-  const f = archivo(b, 'dispositivos.json'); if (f) { props.setProperty('reg', f.id); llamar('patch', SUBIR + '/' + f.id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8'); }
-  else props.setProperty('reg', crearArchivo(b, 'dispositivos.json', t)); }
+function guardarRegistro(r) { const t = JSON.stringify(r), id = props.getProperty('reg'); cacheBorrar('reg');
+  if (id && llamar('patch', SUBIR + '/' + id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8') !== null) return cacheGuardar('reg', t);
+  const f = archivo(b(), 'dispositivos.json'); if (f) { props.setProperty('reg', f.id); llamar('patch', SUBIR + '/' + f.id + '?uploadType=media&fields=id', t, 'application/json; charset=UTF-8'); }
+  else props.setProperty('reg', crearArchivo(b(), 'dispositivos.json', t));
+  cacheGuardar('reg', t); }
 // cada petición se atiende de una en una (así nunca se crean dos carpetas iguales a la vez)
 const ya = fn => fn();
 let bloqueado = false;
@@ -4914,45 +4944,50 @@ function responder(p) {
   B = null;
   if (p.action === 'ping') { const id = b(); if (buscarTodo("name = '" + comillas(NOMBRE_CARPETA) + "' and mimeType = '" + CARPETA_MIME + "'").some(f => f.id !== id)) conBloqueo(() => unificar(id)); return { ok: true, v: 3, folder: NOMBRE_CARPETA }; }
   // borrar un niño: su carpeta (progreso, ajustes y versiones) va a la papelera del Drive y sale del registro
-  if (p.action === 'kidDel') return ya(() => { const r = registro(b()); if (!p.kid || typeof p.kid !== 'string') return { ok: false, err: 'kid' };
-    borrarNino(r, p.kid); guardarRegistro(b(), r); return { ok: true, reg: r }; });
+  if (p.action === 'kidDel') return ya(() => { const r = registro(); if (!p.kid || typeof p.kid !== 'string') return { ok: false, err: 'kid' };
+    borrarNino(r, p.kid); guardarRegistro(r); return { ok: true, reg: r }; });
   // «sigo aquí» de cada aparato: solo se escribe si cambió algo importante o hace más de 4 min que no se anotaba (así casi nunca hay cola)
-  if (p.action === 'hello') { const m = p.me || {}, r = registro(b()); if (!m.id) return { ok: true, reg: r };
+  if (p.action === 'hello') { const m = p.me || {}, r = registro(); if (!m.id) return { ok: true, reg: r };
     const d = r.devices[m.id] || {}, cambio = ['name', 'role', 'kid', 'pname'].some(k => (m[k] || '') !== (d[k] || '')) || !!m.active !== !!d.active;
     if (!cambio && d.lastSeen && Date.now() - d.lastSeen < 240000) { r.devices[m.id] = Object.assign({}, d, m, { lastSeen: d.lastSeen }); return { ok: true, reg: r }; }
-    return conBloqueo(() => { const r2 = registro(b()); r2.devices[m.id] = Object.assign(r2.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(b(), r2); return { ok: true, reg: r2 }; }); }
+    return conBloqueo(() => { const r2 = registro(); r2.devices[m.id] = Object.assign(r2.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(r2); return { ok: true, reg: r2 }; }); }
   // niño nuevo en una sola llamada: registro, carpeta, ajustes y estado (y no deja repetir nombre)
   if (p.action === 'kidNew') { const k = p.kid || {}; if (!k.id || !k.name) return { ok: false, err: 'kid' };
-    const r = registro(b()), nm = x => String(x || '').trim().toLowerCase();
+    const r = registro(), nm = x => String(x || '').trim().toLowerCase();
     const dup = Object.keys(r.kids).map(i => r.kids[i]).filter(x => !x.deleted && nm(x.name) === nm(k.name))[0];
     if (dup) return { ok: false, err: 'dup', data: JSON.stringify(dup) };
     r.kids[k.id] = { id: k.id, name: k.name, created: Date.now() };
     if (p.me && p.me.id) r.devices[p.me.id] = Object.assign(r.devices[p.me.id] || {}, p.me, { lastSeen: Date.now() });
-    guardarRegistro(b(), r); const dir = carpetaNino(k.id, k.name, true);
+    guardarRegistro(r); const dir = carpetaNino(k.id, k.name, true);
     const c = { type: 'config', kid: k.id, ver: 1, ls: p.changes || {}, hist: [{ t: Date.now(), by: p.by || '?', dev: p.dev, desc: p.desc || '' }], cmds: [] };
-    crearArchivo(dir, 'config.json', JSON.stringify(c));
-    const d = JSON.parse(p.data); d.seq = 1; d.st = Date.now(); crearArchivo(dir, 'estado.json', JSON.stringify(d));
-    return { ok: true, reg: r, seq: 1, data: JSON.stringify(c) }; }
-  if (p.action === 'kidSet') return ya(() => { const r = registro(b()), k = p.kid || {}; if (!k.id) return { ok: false, err: 'kid' };
-    r.kids[k.id] = Object.assign(r.kids[k.id] || { created: Date.now() }, k); guardarRegistro(b(), r); carpetaNino(k.id, r.kids[k.id].name, true); return { ok: true, reg: r }; });
+    const tc = JSON.stringify(c); crearArchivo(dir, 'config.json', tc); cacheGuardar(k.id + '/config.json', tc);
+    const d = JSON.parse(p.data); d.seq = 1; d.st = Date.now(); const td = JSON.stringify(d); crearArchivo(dir, 'estado.json', td); cacheGuardar(k.id + '/estado.json', td);
+    return { ok: true, reg: r, seq: 1, data: tc }; }
+  if (p.action === 'kidSet') return ya(() => { const r = registro(), k = p.kid || {}; if (!k.id) return { ok: false, err: 'kid' };
+    r.kids[k.id] = Object.assign(r.kids[k.id] || { created: Date.now() }, k); guardarRegistro(r); carpetaNino(k.id, r.kids[k.id].name, true); return { ok: true, reg: r }; });
   const acciones = ['getState', 'getConfig', 'putState', 'patchConfig', 'versions', 'getVersion'];
   if (acciones.indexOf(p.action) < 0) return { ok: false, err: 'action' };
   if (!p.kid || typeof p.kid !== 'string') return { ok: false, err: 'kid' };
   const escribe = p.action === 'putState' || p.action === 'patchConfig';
   // no se escribe nada de un niño que ya no está en el registro (por ejemplo, si lo borraron desde otro aparato)
-  if (escribe && !registro(b()).kids[p.kid]) return { ok: false, err: 'nokid' };
+  if (escribe && !registro().kids[p.kid]) return { ok: false, err: 'nokid' };
+  const nombre = { getState: 'estado.json', putState: 'estado.json', getConfig: 'config.json', patchConfig: 'config.json' }[p.action], ck = p.kid + '/' + nombre;
+  // leer: primero la copia rápida (sin tocar el Drive)
+  if (!escribe && nombre) { const t = cacheLeer(ck); if (t !== null) return { ok: true, data: t }; }
   const dir = carpetaNino(p.kid, null, escribe);
+  // texto actual de un archivo del niño (copia rápida o Drive) y guardar uno nuevo (Drive y copia)
+  const actual = () => { const t = cacheLeer(ck); return t !== null ? t : conCopia(ck, () => leer(dir, nombre)); };
+  const nuevo = t => { cacheBorrar(ck); guardar(dir, nombre, t); cacheGuardar(ck, t); };
   if (!dir) return p.action === 'versions' ? { ok: true, list: [] } : { ok: true, data: null };
-  if (p.action === 'getState') return { ok: true, data: leer(dir, 'estado.json') };
-  if (p.action === 'getConfig') return { ok: true, data: leer(dir, 'config.json') };
-  if (p.action === 'putState') return ya(() => { const cur = leerJSON(dir, 'estado.json'), seq = cur ? (cur.seq || 0) : 0;
+  if (p.action === 'getState' || p.action === 'getConfig') return { ok: true, data: actual() };
+  if (p.action === 'putState') return ya(() => { let cur = null; try { cur = JSON.parse(actual() || 'null'); } catch (e) {} const seq = cur ? (cur.seq || 0) : 0;
     if (!p.force && cur && p.base !== seq && cur.from !== p.dev) return { ok: false, err: 'conflict', data: JSON.stringify(cur) };
-    const d = JSON.parse(p.data); d.seq = seq + 1; d.st = Date.now(); guardar(dir, 'estado.json', JSON.stringify(d)); return { ok: true, seq: d.seq }; });
-  if (p.action === 'patchConfig') return ya(() => { const c = leerJSON(dir, 'config.json') || { type: 'config', kid: p.kid, ver: 0, ls: {}, hist: [], cmds: [] };
+    const d = JSON.parse(p.data); d.seq = seq + 1; d.st = Date.now(); nuevo(JSON.stringify(d)); return { ok: true, seq: d.seq }; });
+  if (p.action === 'patchConfig') return ya(() => { let c = null; try { c = JSON.parse(actual() || 'null'); } catch (e) {} c = c || { type: 'config', kid: p.kid, ver: 0, ls: {}, hist: [], cmds: [] };
     const ch = p.changes || {}; Object.keys(ch).forEach(k => { if (ch[k] === null) delete c.ls[k]; else c.ls[k] = ch[k]; });
     const ids = {}; c.cmds.forEach(x => ids[x.id] = 1); (p.cmds || []).forEach(x => { if (x && x.id && !ids[x.id]) c.cmds.push(x); }); c.cmds = c.cmds.slice(-60);
     if (p.desc) c.hist.push({ t: Date.now(), by: p.by || '?', dev: p.dev, desc: p.desc }); c.hist = c.hist.slice(-30);
-    c.ver = (c.ver || 0) + 1; guardar(dir, 'config.json', JSON.stringify(c)); return { ok: true, data: JSON.stringify(c) }; });
+    c.ver = (c.ver || 0) + 1; const tc = JSON.stringify(c); nuevo(tc); return { ok: true, data: tc }; });
   if (p.action === 'versions') return { ok: true, list: buscar(dir, "name contains 'estado'").filter(f => f.name.indexOf('estado') === 0)
     .map(f => ({ name: f.name, t: Date.parse(f.createdTime), size: +f.size || 0 })).sort((a, c) => c.t - a.t) };
   const nv = String(p.name || ''); return { ok: true, data: /^estado[-.][-\\w.]*json$/.test(nv) ? leer(dir, nv) : null };
