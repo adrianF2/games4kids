@@ -56,9 +56,15 @@ body.menu-closed .tabs{display:none}
 .dot{font:800 .72rem "Nunito",sans-serif;width:26px;text-align:center;border-radius:999px;padding:1px 0;color:#FFFFFF}
 .dot.good{background:var(--green)}.dot.mid{background:var(--yellow);color:var(--ink)}.dot.bad{background:var(--red)}.dot.none{background:#D5DCE8;color:var(--soft)}
 .chip{display:inline-block;background:var(--sky);border-radius:999px;padding:3px 10px;margin:2px;font-size:.9rem}
-.phelp{background:#FFF7E0;border:2px solid var(--yellow);border-radius:14px;padding:8px 12px;margin:8px 0}
-.phelp summary{cursor:pointer;font-weight:800;list-style:none}.phelp summary::-webkit-details-marker{display:none}
-.phelp summary::before{content:'▸ ';color:var(--soft)}.phelp[open] summary::before{content:'▾ '}
+.hint{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;margin:0 0 0 8px;padding:0;border-radius:50%;border:2px solid #3A86FF;background:#E6F2FF;color:#1D5FD1;font:italic 800 16px/1 Georgia,serif;vertical-align:middle;cursor:pointer;flex:none}
+.hint:active{background:#3A86FF;color:#fff}
+#hintSheet{position:fixed;inset:0;z-index:95}#hintSheet[hidden]{display:none}
+#hintSheet .hsback{position:absolute;inset:0;background:rgba(20,30,50,.45)}
+#hintSheet .hsbox{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:760px;max-height:78vh;display:flex;flex-direction:column;background:var(--card);color:var(--ink);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.25);animation:hsUp .2s ease-out}
+@keyframes hsUp{from{transform:translate(-50%,40px)}to{transform:translate(-50%,0)}}
+#hintSheet .hshead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px 8px;border-bottom:2px solid #EEF2F8}
+#hintSheet .hsbody{overflow-y:auto;padding:4px 16px 18px;-webkit-overflow-scrolling:touch}
+#hintSheet .hsindex{margin:10px 0}#hintSheet .hsindex .chip{border:0;cursor:pointer;background:var(--sky)}#hintSheet .hsmore{margin-top:14px}
 .phbody{font-size:.95rem;line-height:1.45}.phbody h4{margin:14px 0 4px;font-size:1rem}.phbody p{margin:4px 0}.phbody ul{margin:4px 0;padding-left:22px}
 .kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:10px 0}
 .kpis div{background:var(--sky);border-radius:12px;padding:8px 4px;text-align:center;display:flex;flex-direction:column;gap:2px}
@@ -573,7 +579,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)genStale()
 const T={
  es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',componer:'Componer',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',comparar:'Comparar',donde:'Dónde está',objetos:'Objetos',memoria:'Parejas',laberinto:'Laberintos',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano'},
   tap:'👆 Tocar',type:'⌨️ Escribir',qCount:'¿Cuántos hay?',qWrite:'¿Cuántos hay? Escribe el número',qMissing:'¿Qué número falta?',
-  qColor:c=>`Toca el color <u>${c}</u>`,qShape:(a,s)=>`¿Dónde está ${a}<u>${s}</u>?`,qPairs:'Encuentra las parejas',storyLevels:['🌱 Fácil','🌿 Medio','🌳 Difícil'],listenStory:'🔊 Escuchar el cuento',toQuestions:'➡️ Preguntas',questionsNow:'¡Ahora, las preguntas!',replayStory:'📖 Escuchar el cuento otra vez',repeatQ:'🔊 Repetir la pregunta',seqQ:'¿Qué pasó primero, después y al final? Tócalos en orden.',storyDone:'¡Terminaste el cuento!',anotherStory:'📚 Otro cuento',storyOf:(i,n)=>`Cuento ${i} de ${n}`,imgOn:'🖼️ Con imágenes',imgOff:'🙈 Sin imágenes',mastered:n=>`¡Ya sabes el ${n}!`,masteredWord:w=>`¡Ya sabes «${w}»!`,parentsTitle:'Progreso',numbersTitle:'Números',legend:'R = reconocer · D = decir · E = escribir — 🟢 lo domina · 🟡 aprendiendo · 🔴 le cuesta · gris: pocos intentos',skillNames:{recog:'Reconocer',say:'Decir',write:'Escribir'},skillShort:{recog:'R',say:'D',write:'E'},confTitle:'Confusiones frecuentes',askedGot:(a,b)=>`pedía ${a}, eligió ${b}`,nothingYet:'Todavía no hay datos.',wordsTitle:'Palabras de Objetos',hardWords:'Palabras que más le cuestan',resetBtn:'Borrar progreso',stKnown:'Las sabe',stLearning:'Está aprendiendo (× = errores)',stNew:'Todavía no han salido',tapCat:'Toca una categoría para ver las palabras.',resetAsk:'¿Seguro? Se borrará todo el seguimiento, la actividad y el tiempo en pantalla de los últimos días. Se conservan los ajustes, los límites, el PIN y la galería.',resetYes:'Sí, borrar',resetNo:'Cancelar',holdHint:'👆 Para padres: mantén pulsado 📊 2 segundos para ver el progreso',qPattern:'¿Qué sigue?',levelNames:['Fácil','Medio','Difícil'],qLetter:'Escucha y toca la letra',qObj:(n,pl)=>pl?`¿Dónde están <u>${n}</u>?`:`¿Dónde está <u>${n}</u>?`,catLabel:'Categoría',cats:{all:'Todo',fruit:'Frutas',veg:'Verduras',body:'Cuerpo',animal:'Animales',home:'Casa',music:'Música',build:'Construcción',school:'Escuela',transport:'Transporte',nature:'Naturaleza',toys:'Juguetes',clothes:'Ropa',food:'Comida',sport:'Deportes',place:'Lugares',people:'Personas',face:'Caras'},qDrawL:l=>`Escribe la letra <u>${l}</u>`,qDrawLsay:nm=>`Escribe la letra ${nm}`,drawEmptyL:'Primero escribe la letra con el lápiz',showMe:'👀 Mira cómo',mirrorMsgN:'¡Casi! El número quedó al revés. Mira cómo se hace.',mirrorMsg:'¡Casi! La letra quedó al revés. Mira cómo se hace.',masteredLetter:l=>`¡Ya sabes la ${l}!`,qSayL:'Di esta letra en voz alta',lettersTitle:'Letras',lettersLegend:'R = reconocer (Letras) · D = decir · E = escribir (🔒 aún no abierta) — mismos colores que los números',writeOpenTxt:n=>`Escribir ABC: ${n} de 26 letras abiertas. Se abre una nueva cuando quedan 2 o menos por dominar.`,wroteLike:(a,b)=>`pedía ${a}, escribió algo como ${b}`,mirrorChip:(a,k)=>`${a} al revés ×${k}`,helpTitle:'ℹ️ ¿Cómo funciona el seguimiento?',helpBody:`<h4>⏱️ Tiempo de pantalla y PIN</h4>
+  qColor:c=>`Toca el color <u>${c}</u>`,qShape:(a,s)=>`¿Dónde está ${a}<u>${s}</u>?`,qPairs:'Encuentra las parejas',storyLevels:['🌱 Fácil','🌿 Medio','🌳 Difícil'],listenStory:'🔊 Escuchar el cuento',toQuestions:'➡️ Preguntas',questionsNow:'¡Ahora, las preguntas!',replayStory:'📖 Escuchar el cuento otra vez',repeatQ:'🔊 Repetir la pregunta',seqQ:'¿Qué pasó primero, después y al final? Tócalos en orden.',storyDone:'¡Terminaste el cuento!',anotherStory:'📚 Otro cuento',storyOf:(i,n)=>`Cuento ${i} de ${n}`,imgOn:'🖼️ Con imágenes',imgOff:'🙈 Sin imágenes',mastered:n=>`¡Ya sabes el ${n}!`,masteredWord:w=>`¡Ya sabes «${w}»!`,parentsTitle:'Progreso',numbersTitle:'Números',legend:'R = reconocer · D = decir · E = escribir — 🟢 lo domina · 🟡 aprendiendo · 🔴 le cuesta · gris: pocos intentos',skillNames:{recog:'Reconocer',say:'Decir',write:'Escribir'},skillShort:{recog:'R',say:'D',write:'E'},confTitle:'Confusiones frecuentes',askedGot:(a,b)=>`pedía ${a}, eligió ${b}`,nothingYet:'Todavía no hay datos.',wordsTitle:'Palabras de Objetos',hardWords:'Palabras que más le cuestan',resetBtn:'Borrar progreso',stKnown:'Las sabe',stLearning:'Está aprendiendo (× = errores)',stNew:'Todavía no han salido',tapCat:'Toca una categoría para ver las palabras.',resetAsk:'¿Seguro? Se borrará todo el seguimiento, la actividad y el tiempo en pantalla de los últimos días. Se conservan los ajustes, los límites, el PIN y la galería.',resetYes:'Sí, borrar',resetNo:'Cancelar',holdHint:'👆 Para padres: mantén pulsado 📊 2 segundos para ver el progreso',qPattern:'¿Qué sigue?',levelNames:['Fácil','Medio','Difícil'],qLetter:'Escucha y toca la letra',qObj:(n,pl)=>pl?`¿Dónde están <u>${n}</u>?`:`¿Dónde está <u>${n}</u>?`,catLabel:'Categoría',cats:{all:'Todo',fruit:'Frutas',veg:'Verduras',body:'Cuerpo',animal:'Animales',home:'Casa',music:'Música',build:'Construcción',school:'Escuela',transport:'Transporte',nature:'Naturaleza',toys:'Juguetes',clothes:'Ropa',food:'Comida',sport:'Deportes',place:'Lugares',people:'Personas',face:'Caras'},qDrawL:l=>`Escribe la letra <u>${l}</u>`,qDrawLsay:nm=>`Escribe la letra ${nm}`,drawEmptyL:'Primero escribe la letra con el lápiz',showMe:'👀 Mira cómo',mirrorMsgN:'¡Casi! El número quedó al revés. Mira cómo se hace.',mirrorMsg:'¡Casi! La letra quedó al revés. Mira cómo se hace.',masteredLetter:l=>`¡Ya sabes la ${l}!`,qSayL:'Di esta letra en voz alta',lettersTitle:'Letras',lettersLegend:'R = reconocer (Letras) · D = decir · E = escribir (🔒 aún no abierta) — mismos colores que los números',writeOpenTxt:n=>`Escribir ABC: ${n} de 26 letras abiertas. Se abre una nueva cuando quedan 2 o menos por dominar.`,wroteLike:(a,b)=>`pedía ${a}, escribió algo como ${b}`,mirrorChip:(a,k)=>`${a} al revés ×${k}`,helpTitle:'📖 Guía completa',guideBtn:'📖 Guía',hintLbl:'Cómo funciona',helpBody:`<h4>⏱️ Tiempo de pantalla y PIN</h4>
 <ul><li><b>Qué cuenta:</b> el tiempo que la app está abierta y visible en pantalla, juegue o no (también escuchando un cuento). Se pausa si la tablet se bloquea o se apaga la pantalla, si se cambia de app y mientras la pantalla de padres está abierta. Cada día empieza de cero a medianoche.</li>
 <li><b>Límites:</b> en «⏱️ Tiempo de pantalla» se elige un límite para cada día de la semana (por ejemplo 20 min de lunes a viernes y 40 min el fin de semana) o «Sin límite».</li>
 <li><b>Reloj visual:</b> cuando hay límite, arriba se ve un disco que se vacía como una tarta (verde, luego amarillo y naranja al final), para que el peque vea cuánto le queda sin necesidad de entender los minutos; en el centro se ven los minutos que quedan. En el último minuto parpadea.</li>
@@ -654,7 +660,7 @@ const T={
 <li>El tiempo de pantalla cuenta para el invitado con su propio límite (o sin límite), no para el peque. Si el invitado llega a su límite, aparece la pantalla de fin y se desbloquea igual que siempre.</li>
 <li>Se desactiva solo tras 1, 2 o 3 horas o a medianoche, por si se olvida. Los dibujos del invitado se guardan en la galería.</li></ul>
 <h4>🔒 Los datos</h4>
-<p>Todo se queda en esta tablet (no se envía a ningún sitio) y se conserva al cerrar la página o la app. No se comparte entre aparatos. Se borra si se borran los datos del navegador o con el botón «Borrar progreso» de abajo.</p>
+<p>Todo se queda en esta tablet (no se envía a ningún sitio) y se conserva al cerrar la página o la app. No se comparte entre aparatos, salvo si activas «☁️ Sincronizar» (entonces se guarda también en tu Google Drive). Se borra si se borran los datos del navegador o con el botón «Borrar progreso» de abajo.</p>
 <h4>🗓️ Actividades visibles</h4>
 <p>Las actividades están agrupadas en 5 categorías (🔢 Números, 🔤 Letras, 🧭 Descubrir, 🎨 Crear, 🎲 Jugar); la app recuerda la última categoría y actividad. Tocar otra vez la pestaña de la categoría elegida pliega o despliega la caja de actividades, para dejar más sitio al juego. En «🗓️ Actividades visibles» se elige qué actividades aparecen cada día de la semana: el interruptor las muestra u oculta toda la semana y «📅 Días» permite elegir días sueltos (por ejemplo, Piano solo el fin de semana). Las ocultas no aparecen en el menú pero conservan su progreso; una categoría sin actividades ese día tampoco aparece. El cambio de día se aplica solo a medianoche. Siempre tiene que quedar al menos una actividad cada día.</p>
 <h4>💡 Sugerencias</h4>
@@ -715,7 +721,7 @@ const T={
   shapes:{circle:['el ','círculo'],square:['el ','cuadrado'],triangle:['el ','triángulo'],star:['la ','estrella'],heart:['el ','corazón']},},
  en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',componer:'Bonds',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',comparar:'Compare',donde:'Where is it',objetos:'Objects',memoria:'Pairs',laberinto:'Mazes',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano'},
   tap:'👆 Tap',type:'⌨️ Type',qCount:'How many are there?',qWrite:'How many? Type the number',qMissing:'Which number is missing?',
-  qColor:c=>`Tap the color <u>${c}</u>`,qShape:(a,s)=>`Where is ${a}<u>${s}</u>?`,qPairs:'Find the pairs',storyLevels:['🌱 Easy','🌿 Medium','🌳 Hard'],listenStory:'🔊 Listen to the story',toQuestions:'➡️ Questions',questionsNow:'Now, the questions!',replayStory:'📖 Listen to the story again',repeatQ:'🔊 Repeat the question',seqQ:'What happened first, next and last? Tap them in order.',storyDone:'You finished the story!',anotherStory:'📚 Another story',storyOf:(i,n)=>`Story ${i} of ${n}`,imgOn:'🖼️ With pictures',imgOff:'🙈 No pictures',mastered:n=>`You know ${n} now!`,masteredWord:w=>`You know “${w}” now!`,parentsTitle:'Progress',numbersTitle:'Numbers',legend:'R = recognize · S = say · W = write — 🟢 mastered · 🟡 learning · 🔴 struggling · gray: few tries',skillNames:{recog:'Recognize',say:'Say',write:'Write'},skillShort:{recog:'R',say:'S',write:'W'},confTitle:'Frequent mix-ups',askedGot:(a,b)=>`asked ${a}, chose ${b}`,nothingYet:'No data yet.',wordsTitle:'Words in Objects',hardWords:'Hardest words',resetBtn:'Reset progress',stKnown:'Knows',stLearning:'Learning (× = mistakes)',stNew:'Not shown yet',tapCat:'Tap a category to see the words.',resetAsk:'Are you sure? All tracking, activity and recent screen time will be deleted. Settings, limits, PIN and gallery are kept.',resetYes:'Yes, delete',resetNo:'Cancel',holdHint:'👆 For parents: press and hold 📊 for 2 seconds to see progress',qPattern:'What comes next?',levelNames:['Easy','Medium','Hard'],qLetter:'Listen and tap the letter',qObj:(n,pl)=>pl?`Where are <u>${n}</u>?`:`Where is <u>${n}</u>?`,catLabel:'Category',cats:{all:'All',fruit:'Fruits',veg:'Vegetables',body:'Body',animal:'Animals',home:'Home',music:'Music',build:'Building',school:'School',transport:'Transport',nature:'Nature',toys:'Toys',clothes:'Clothes',food:'Food',sport:'Sports',place:'Places',people:'People',face:'Faces'},qDrawL:l=>`Write the letter <u>${l}</u>`,qDrawLsay:nm=>`Write the letter ${nm}`,drawEmptyL:'First write the letter with the pen',showMe:'👀 Show me',mirrorMsgN:'Almost! The number is backwards. Watch how to write it.',mirrorMsg:'Almost! The letter is backwards. Watch how to write it.',masteredLetter:l=>`You know ${l} now!`,qSayL:'Say this letter out loud',lettersTitle:'Letters',lettersLegend:'R = recognize (Letters) · S = say · W = write (🔒 not open yet) — same colors as numbers',writeOpenTxt:n=>`Write ABC: ${n} of 26 letters open. A new one opens when 2 or fewer are still being learned.`,wroteLike:(a,b)=>`asked ${a}, wrote something like ${b}`,mirrorChip:(a,k)=>`${a} backwards ×${k}`,helpTitle:'ℹ️ How does tracking work?',helpBody:`<h4>⏱️ Screen time and PIN</h4>
+  qColor:c=>`Tap the color <u>${c}</u>`,qShape:(a,s)=>`Where is ${a}<u>${s}</u>?`,qPairs:'Find the pairs',storyLevels:['🌱 Easy','🌿 Medium','🌳 Hard'],listenStory:'🔊 Listen to the story',toQuestions:'➡️ Questions',questionsNow:'Now, the questions!',replayStory:'📖 Listen to the story again',repeatQ:'🔊 Repeat the question',seqQ:'What happened first, next and last? Tap them in order.',storyDone:'You finished the story!',anotherStory:'📚 Another story',storyOf:(i,n)=>`Story ${i} of ${n}`,imgOn:'🖼️ With pictures',imgOff:'🙈 No pictures',mastered:n=>`You know ${n} now!`,masteredWord:w=>`You know “${w}” now!`,parentsTitle:'Progress',numbersTitle:'Numbers',legend:'R = recognize · S = say · W = write — 🟢 mastered · 🟡 learning · 🔴 struggling · gray: few tries',skillNames:{recog:'Recognize',say:'Say',write:'Write'},skillShort:{recog:'R',say:'S',write:'W'},confTitle:'Frequent mix-ups',askedGot:(a,b)=>`asked ${a}, chose ${b}`,nothingYet:'No data yet.',wordsTitle:'Words in Objects',hardWords:'Hardest words',resetBtn:'Reset progress',stKnown:'Knows',stLearning:'Learning (× = mistakes)',stNew:'Not shown yet',tapCat:'Tap a category to see the words.',resetAsk:'Are you sure? All tracking, activity and recent screen time will be deleted. Settings, limits, PIN and gallery are kept.',resetYes:'Yes, delete',resetNo:'Cancel',holdHint:'👆 For parents: press and hold 📊 for 2 seconds to see progress',qPattern:'What comes next?',levelNames:['Easy','Medium','Hard'],qLetter:'Listen and tap the letter',qObj:(n,pl)=>pl?`Where are <u>${n}</u>?`:`Where is <u>${n}</u>?`,catLabel:'Category',cats:{all:'All',fruit:'Fruits',veg:'Vegetables',body:'Body',animal:'Animals',home:'Home',music:'Music',build:'Building',school:'School',transport:'Transport',nature:'Nature',toys:'Toys',clothes:'Clothes',food:'Food',sport:'Sports',place:'Places',people:'People',face:'Faces'},qDrawL:l=>`Write the letter <u>${l}</u>`,qDrawLsay:nm=>`Write the letter ${nm}`,drawEmptyL:'First write the letter with the pen',showMe:'👀 Show me',mirrorMsgN:'Almost! The number is backwards. Watch how to write it.',mirrorMsg:'Almost! The letter is backwards. Watch how to write it.',masteredLetter:l=>`You know ${l} now!`,qSayL:'Say this letter out loud',lettersTitle:'Letters',lettersLegend:'R = recognize (Letters) · S = say · W = write (🔒 not open yet) — same colors as numbers',writeOpenTxt:n=>`Write ABC: ${n} of 26 letters open. A new one opens when 2 or fewer are still being learned.`,wroteLike:(a,b)=>`asked ${a}, wrote something like ${b}`,mirrorChip:(a,k)=>`${a} backwards ×${k}`,helpTitle:'📖 Full guide',guideBtn:'📖 Guide',hintLbl:'How it works',helpBody:`<h4>⏱️ Screen time and PIN</h4>
 <ul><li><b>What counts:</b> the time the app is open and visible on screen, playing or not (also listening to a story). It pauses when the tablet locks or the screen turns off, in another app, and while the parents’ screen is open. Each day starts from zero at midnight.</li>
 <li><b>Limits:</b> in “⏱️ Screen time”, choose a limit for each day of the week (e.g. 20 min on weekdays and 40 min at weekends) or “No limit”.</li>
 <li><b>Visual clock:</b> when there is a limit, a disc at the top empties like a pie (green, then yellow and orange at the end), so the child can see how much is left without understanding minutes; the minutes left are shown in the middle. It blinks in the last minute.</li>
@@ -796,7 +802,7 @@ const T={
 <li>Screen time counts for the guest with its own limit (or no limit), not for the child. If the guest reaches the limit, the end screen appears and is unlocked as usual.</li>
 <li>It turns off by itself after 1, 2 or 3 hours or at midnight, in case you forget. The guest’s drawings are kept in the gallery.</li></ul>
 <h4>🔒 The data</h4>
-<p>Everything stays on this tablet (nothing is sent anywhere) and is kept when the page or app is closed. It is not shared between devices. It is erased if the browser data is cleared, or with the “Reset progress” button below.</p>
+<p>Everything stays on this tablet (nothing is sent anywhere) and is kept when the page or app is closed. It is not shared between devices, unless you turn on “☁️ Sync” (then it is also saved in your Google Drive). It is erased if the browser data is cleared, or with the “Reset progress” button below.</p>
 <h4>🗓️ Visible activities</h4>
 <p>Activities are grouped into 5 categories (🔢 Numbers, 🔤 Letters, 🧭 Discover, 🎨 Create, 🎲 Play); the app remembers the last category and activity. Tapping the selected category’s tab again folds or unfolds the activity box, to leave more room for the game. In “🗓️ Visible activities” you choose which activities appear on each day of the week: the switch shows or hides them all week and “📅 Days” lets you pick single days (for example, Piano only at weekends). Hidden activities don’t appear in the menu but keep their progress; a category with no activities that day doesn’t appear either. The day changes automatically at midnight. At least one activity must stay visible every day.</p>
 <h4>💡 Suggestions</h4>
@@ -857,7 +863,7 @@ const T={
   shapes:{circle:['the ','circle'],square:['the ','square'],triangle:['the ','triangle'],star:['the ','star'],heart:['the ','heart']},},
  fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',componer:'Composer',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',comparar:'Comparer',donde:'Où est-il',objetos:'Objets',memoria:'Paires',laberinto:'Labyrinthes',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano'},
   tap:'👆 Toucher',type:'⌨️ Écrire',qCount:'Combien y en a-t-il ?',qWrite:'Combien ? Écris le chiffre',qMissing:'Quel nombre manque ?',
-  qColor:c=>`Touche la couleur <u>${c}</u>`,qShape:(a,s)=>`Où est ${a}<u>${s}</u> ?`,qPairs:'Trouve les paires',storyLevels:['🌱 Facile','🌿 Moyen','🌳 Difficile'],listenStory:'🔊 Écouter l’histoire',toQuestions:'➡️ Questions',questionsNow:'Maintenant, les questions !',replayStory:'📖 Réécouter l’histoire',repeatQ:'🔊 Répéter la question',seqQ:'Qu’est-ce qui s’est passé en premier, ensuite et à la fin ? Touche-les dans l’ordre.',storyDone:'Tu as fini l’histoire !',anotherStory:'📚 Une autre histoire',storyOf:(i,n)=>`Histoire ${i} sur ${n}`,imgOn:'🖼️ Avec images',imgOff:'🙈 Sans images',mastered:n=>`Tu connais le ${n} !`,masteredWord:w=>`Tu connais « ${w} » !`,parentsTitle:'Progrès',numbersTitle:'Nombres',legend:'R = reconnaître · D = dire · É = écrire — 🟢 acquis · 🟡 en cours · 🔴 difficile · gris : peu d’essais',skillNames:{recog:'Reconnaître',say:'Dire',write:'Écrire'},skillShort:{recog:'R',say:'D',write:'É'},confTitle:'Confusions fréquentes',askedGot:(a,b)=>`demandé ${a}, choisi ${b}`,nothingYet:'Pas encore de données.',wordsTitle:'Mots des Objets',hardWords:'Mots les plus difficiles',resetBtn:'Effacer la progression',stKnown:'Les connaît',stLearning:'En cours (× = erreurs)',stNew:'Pas encore vus',tapCat:'Touche une catégorie pour voir les mots.',resetAsk:'Vraiment ? Tout le suivi, l’activité et le temps d’écran des derniers jours seront effacés. Les réglages, les limites, le code et la galerie sont conservés.',resetYes:'Oui, effacer',resetNo:'Annuler',holdHint:'👆 Pour les parents : reste appuyé 2 secondes sur 📊 pour voir la progression',qPattern:'Qu’est-ce qui vient après ?',levelNames:['Facile','Moyen','Difficile'],qLetter:'Écoute et touche la lettre',qObj:(n,pl)=>pl?`Où sont <u>${n}</u> ?`:`Où est <u>${n}</u> ?`,catLabel:'Catégorie',cats:{all:'Tout',fruit:'Fruits',veg:'Légumes',body:'Corps',animal:'Animaux',home:'Maison',music:'Musique',build:'Chantier',school:'École',transport:'Transports',nature:'Nature',toys:'Jouets',clothes:'Vêtements',food:'Nourriture',sport:'Sports',place:'Lieux',people:'Personnes',face:'Visages'},qDrawL:l=>`Écris la lettre <u>${l}</u>`,qDrawLsay:nm=>`Écris la lettre ${nm}`,drawEmptyL:'Écris d’abord la lettre avec le stylet',showMe:'👀 Montre-moi',mirrorMsgN:'Presque ! Le chiffre est à l’envers. Regarde comment on fait.',mirrorMsg:'Presque ! La lettre est à l’envers. Regarde comment on fait.',masteredLetter:l=>`Tu connais le ${l} !`,qSayL:'Dis cette lettre à voix haute',lettersTitle:'Lettres',lettersLegend:'R = reconnaître (Lettres) · D = dire · É = écrire (🔒 pas encore ouverte) — mêmes couleurs que les nombres',writeOpenTxt:n=>`Écrire ABC : ${n} lettres sur 26 ouvertes. Une nouvelle s’ouvre quand il en reste 2 ou moins à apprendre.`,wroteLike:(a,b)=>`demandé ${a}, écrit comme ${b}`,mirrorChip:(a,k)=>`${a} à l’envers ×${k}`,helpTitle:'ℹ️ Comment fonctionne le suivi ?',helpBody:`<h4>⏱️ Temps d’écran et code</h4>
+  qColor:c=>`Touche la couleur <u>${c}</u>`,qShape:(a,s)=>`Où est ${a}<u>${s}</u> ?`,qPairs:'Trouve les paires',storyLevels:['🌱 Facile','🌿 Moyen','🌳 Difficile'],listenStory:'🔊 Écouter l’histoire',toQuestions:'➡️ Questions',questionsNow:'Maintenant, les questions !',replayStory:'📖 Réécouter l’histoire',repeatQ:'🔊 Répéter la question',seqQ:'Qu’est-ce qui s’est passé en premier, ensuite et à la fin ? Touche-les dans l’ordre.',storyDone:'Tu as fini l’histoire !',anotherStory:'📚 Une autre histoire',storyOf:(i,n)=>`Histoire ${i} sur ${n}`,imgOn:'🖼️ Avec images',imgOff:'🙈 Sans images',mastered:n=>`Tu connais le ${n} !`,masteredWord:w=>`Tu connais « ${w} » !`,parentsTitle:'Progrès',numbersTitle:'Nombres',legend:'R = reconnaître · D = dire · É = écrire — 🟢 acquis · 🟡 en cours · 🔴 difficile · gris : peu d’essais',skillNames:{recog:'Reconnaître',say:'Dire',write:'Écrire'},skillShort:{recog:'R',say:'D',write:'É'},confTitle:'Confusions fréquentes',askedGot:(a,b)=>`demandé ${a}, choisi ${b}`,nothingYet:'Pas encore de données.',wordsTitle:'Mots des Objets',hardWords:'Mots les plus difficiles',resetBtn:'Effacer la progression',stKnown:'Les connaît',stLearning:'En cours (× = erreurs)',stNew:'Pas encore vus',tapCat:'Touche une catégorie pour voir les mots.',resetAsk:'Vraiment ? Tout le suivi, l’activité et le temps d’écran des derniers jours seront effacés. Les réglages, les limites, le code et la galerie sont conservés.',resetYes:'Oui, effacer',resetNo:'Annuler',holdHint:'👆 Pour les parents : reste appuyé 2 secondes sur 📊 pour voir la progression',qPattern:'Qu’est-ce qui vient après ?',levelNames:['Facile','Moyen','Difficile'],qLetter:'Écoute et touche la lettre',qObj:(n,pl)=>pl?`Où sont <u>${n}</u> ?`:`Où est <u>${n}</u> ?`,catLabel:'Catégorie',cats:{all:'Tout',fruit:'Fruits',veg:'Légumes',body:'Corps',animal:'Animaux',home:'Maison',music:'Musique',build:'Chantier',school:'École',transport:'Transports',nature:'Nature',toys:'Jouets',clothes:'Vêtements',food:'Nourriture',sport:'Sports',place:'Lieux',people:'Personnes',face:'Visages'},qDrawL:l=>`Écris la lettre <u>${l}</u>`,qDrawLsay:nm=>`Écris la lettre ${nm}`,drawEmptyL:'Écris d’abord la lettre avec le stylet',showMe:'👀 Montre-moi',mirrorMsgN:'Presque ! Le chiffre est à l’envers. Regarde comment on fait.',mirrorMsg:'Presque ! La lettre est à l’envers. Regarde comment on fait.',masteredLetter:l=>`Tu connais le ${l} !`,qSayL:'Dis cette lettre à voix haute',lettersTitle:'Lettres',lettersLegend:'R = reconnaître (Lettres) · D = dire · É = écrire (🔒 pas encore ouverte) — mêmes couleurs que les nombres',writeOpenTxt:n=>`Écrire ABC : ${n} lettres sur 26 ouvertes. Une nouvelle s’ouvre quand il en reste 2 ou moins à apprendre.`,wroteLike:(a,b)=>`demandé ${a}, écrit comme ${b}`,mirrorChip:(a,k)=>`${a} à l’envers ×${k}`,helpTitle:'📖 Guide complet',guideBtn:'📖 Guide',hintLbl:'Comment ça marche',helpBody:`<h4>⏱️ Temps d’écran et code</h4>
 <ul><li><b>Ce qui compte :</b> le temps où l’app est ouverte et affichée, que l’enfant joue ou non (aussi en écoutant une histoire). Le compteur s’arrête quand la tablette se verrouille ou que l’écran s’éteint, dans une autre app et quand l’écran parents est ouvert. Chaque jour repart de zéro à minuit.</li>
 <li><b>Limites :</b> dans « ⏱️ Temps d’écran », choisissez une limite pour chaque jour de la semaine (par ex. 20 min en semaine et 40 min le week-end) ou « Sans limite ».</li>
 <li><b>Horloge visuelle :</b> quand il y a une limite, un disque en haut se vide comme une tarte (vert, puis jaune et orange à la fin) : l’enfant voit ce qui reste sans comprendre les minutes ; au centre s’affichent les minutes restantes. Il clignote pendant la dernière minute.</li>
@@ -938,7 +944,7 @@ const T={
 <li>Le temps d’écran compte pour l’invité avec sa propre limite (ou sans limite), pas pour l’enfant. Si l’invité atteint sa limite, l’écran de fin apparaît et se débloque comme d’habitude.</li>
 <li>Il s’arrête tout seul après 1, 2 ou 3 heures ou à minuit, au cas où on oublie. Les dessins de l’invité restent dans la galerie.</li></ul>
 <h4>🔒 Les données</h4>
-<p>Tout reste sur cette tablette (rien n’est envoyé) et est conservé à la fermeture de la page ou de l’app. Rien n’est partagé entre appareils. Tout s’efface si les données du navigateur sont supprimées, ou avec le bouton « Effacer la progression » ci-dessous.</p>
+<p>Tout reste sur cette tablette (rien n’est envoyé) et est conservé à la fermeture de la page ou de l’app. Rien n’est partagé entre appareils, sauf si vous activez « ☁️ Synchro » (les données sont alors aussi enregistrées dans votre Google Drive). Tout s’efface si les données du navigateur sont supprimées, ou avec le bouton « Effacer la progression » ci-dessous.</p>
 <h4>🗓️ Activités visibles</h4>
 <p>Les activités sont regroupées en 5 catégories (🔢 Nombres, 🔤 Lettres, 🧭 Découvrir, 🎨 Créer, 🎲 Jouer) ; l’app se souvient de la dernière catégorie et activité. Toucher à nouveau l’onglet de la catégorie choisie replie ou déplie la boîte des activités, pour laisser plus de place au jeu. Dans « 🗓️ Activités visibles », on choisit les activités qui apparaissent chaque jour de la semaine : l’interrupteur les affiche ou les masque toute la semaine et « 📅 Jours » permet de choisir des jours précis (par exemple, Piano seulement le week-end). Les activités masquées n’apparaissent plus dans le menu mais gardent leur progression ; une catégorie sans activité ce jour-là n’apparaît pas non plus. Le changement de jour se fait tout seul à minuit. Il faut toujours garder au moins une activité par jour.</p>
 <h4>💡 Suggestions</h4>
@@ -1063,7 +1069,7 @@ const AG_T={
    fMore:l=>`Aquí hay más ${l}.`,fLess:l=>`Aquí hay menos ${l}.`,fEq:'Hay lo mismo en los dos.',
    opp:(nm,g,v,w)=>`${g==='f'?'Esta':'Este'} ${nm} ${v||'es'} ${w}.`,oppQ:w=>`Es este: ${w}.`,opp3:(a,b)=>`Lo contrario de ${a} es ${b}.`,
    set:'🧠 Ayuda cuando falla',setLbl:'Ayudar cuando falla y evitar que toque al azar',yes:'Sí (recomendado)',no:'No',
-   setNote:'Si no sabe la respuesta, al primer fallo la app se la enseña con una frase completa («Lola come un pescado») y se la vuelve a preguntar poco después; en lo que le cuesta pone menos opciones. Si sí lo sabe pero toca deprisa, hace una pausa corta y cambia las opciones de sitio. La estrella solo se gana acertando a la primera. Explicación completa en «ℹ️ ¿Cómo funciona…?» (🧠).',
+   setNote:'Si no sabe la respuesta, al primer fallo la app se la enseña con una frase completa («Lola come un pescado») y se la vuelve a preguntar poco después; en lo que le cuesta pone menos opciones. Si sí lo sabe pero toca deprisa, hace una pausa corta y cambia las opciones de sitio. La estrella solo se gana acertando a la primera. Explicación completa: toca la «i» de arriba.',
    actT:'🧠 Preguntas resueltas por descarte',actNote:'Porcentaje de preguntas en las que tocó varias opciones hasta acertar o tocó deprisa al azar (desde que se activó la ayuda). Si una actividad sube mucho, puede que ese nivel sea difícil para ella o que esté cansada.',
    actRow:(g,q)=>`${g} de ${q}`,none:'Todavía no hay datos.',itT:'🧠 Donde más adivina',itNote:'Lo que más resuelve por descarte: suele ser lo que todavía no sabe.'},
  en:{numIs:n=>`This is how you write ${agNumW(n)}.`,tap:x=>`Now tap ${x} to continue.`,tapIt:'Now tap it to continue.',write:n=>`Now write ${n}.`,ok:'That’s it.',listen:'Listen carefully.',owl:'Slowly: look carefully first, then tap.',look:'Look:',
@@ -1086,7 +1092,7 @@ const AG_T={
    fMore:l=>`There is more ${l} here.`,fLess:l=>`There is less ${l} here.`,fEq:'There is the same in both.',
    opp:(nm,g,v,w)=>`This ${nm} is ${w}.`,oppQ:w=>`It’s this one: ${w}.`,opp3:(a,b)=>`The opposite of ${a} is ${b}.`,
    set:'🧠 Help after a mistake',setLbl:'Help after a mistake and stop random tapping',yes:'Yes (recommended)',no:'No',
-   setNote:'If she doesn’t know the answer, after the first mistake the app shows it with a full sentence (“Lola eats a fish”) and asks it again a little later; for what she finds hard it shows fewer options. If she knows it but taps too fast, it pauses briefly and moves the options around. The star is only earned on the first try. Full explanation in “ℹ️ How does … work?” (🧠).',
+   setNote:'If she doesn’t know the answer, after the first mistake the app shows it with a full sentence (“Lola eats a fish”) and asks it again a little later; for what she finds hard it shows fewer options. If she knows it but taps too fast, it pauses briefly and moves the options around. The star is only earned on the first try. Full explanation: tap the “i” above.',
    actT:'🧠 Questions solved by elimination',actNote:'Share of questions where she tapped several options until right or tapped too fast at random (since the help was turned on). If an activity goes up a lot, that level may be too hard or she may be tired.',
    actRow:(g,q)=>`${g} of ${q}`,none:'No data yet.',itT:'🧠 Where she guesses most',itNote:'What she most often solves by elimination: usually what she doesn’t know yet.'},
  fr:{numIs:n=>n===1?'Un s’écrit comme ça.':`Le ${agNumW(n)} s’écrit comme ça.`,tap:x=>`Maintenant, touche ${x} pour continuer.`,tapIt:'Maintenant, touche-le pour continuer.',write:n=>`Maintenant, écris le ${n}.`,ok:'C’est ça.',listen:'Écoute bien.',owl:'Doucement : regarde bien d’abord, puis touche.',look:'Regarde :',
@@ -1109,7 +1115,7 @@ const AG_T={
    fMore:l=>`C’est ici qu’il y a le plus ${l}.`,fLess:l=>`C’est ici qu’il y a le moins ${l}.`,fEq:'Il y en a autant dans les deux.',
    opp:(nm,g,v,w)=>`${agDem(nm,g)} ${nm} est ${w}.`,oppQ:w=>`C’est celui-ci : ${w}.`,opp3:(a,b)=>`Le contraire de ${a}, c’est ${b}.`,
    set:'🧠 Aide quand il se trompe',setLbl:'Aider quand il se trompe et éviter qu’il touche au hasard',yes:'Oui (recommandé)',no:'Non',
-   setNote:'S’il ne connaît pas la réponse, dès la première erreur l’app la lui montre avec une phrase complète (« Lola mange un poisson ») et la lui redemande un peu plus tard ; pour ce qui lui est difficile, elle propose moins de choix. S’il la connaît mais touche trop vite, elle fait une courte pause et change les choix de place. L’étoile ne se gagne que du premier coup. Explication complète dans « ℹ️ Comment fonctionne… ? » (🧠).',
+   setNote:'S’il ne connaît pas la réponse, dès la première erreur l’app la lui montre avec une phrase complète (« Lola mange un poisson ») et la lui redemande un peu plus tard ; pour ce qui lui est difficile, elle propose moins de choix. S’il la connaît mais touche trop vite, elle fait une courte pause et change les choix de place. L’étoile ne se gagne que du premier coup. Explication complète : touchez le « i » plus haut.',
    actT:'🧠 Questions résolues par élimination',actNote:'Part des questions où il a touché plusieurs choix jusqu’à trouver, ou touché trop vite au hasard (depuis l’activation de l’aide). Si une activité monte beaucoup, ce niveau est peut-être trop difficile ou il est fatigué.',
    actRow:(g,q)=>`${g} sur ${q}`,none:'Pas encore de données.',itT:'🧠 Là où il devine le plus',itNote:'Ce qu’il résout le plus souvent par élimination : en général ce qu’il ne sait pas encore.'}};
 const AGT=()=>AG_T[lang];
@@ -1230,16 +1236,16 @@ function agEnd(){if(!ag||!ag.cfg||ag.done)return null;ag.done=true;if(!AG_ON)ret
 // Mensaje al acertar después de fallar (sin estrella), o el aviso del búho
 function agCalmWin(m){const o=agEnd(),t=AGT(),txt=o==='owl'?'🦉 '+t.owl:t.ok;if(m)m.textContent=txt;say(o==='owl'?t.owl:t.ok);return o==='owl'?3600:1700}
 // ---- panel de padres ----
-function agSetSection(){const t=AGT();return `<h3>${t.set}</h3><div class="limdays sgset wkset"><label><span>${t.setLbl}</span><select id="agSel"><option value="1"${AG_ON?' selected':''}>${t.yes}</option><option value="0"${AG_ON?'':' selected'}>${t.no}</option></select></label></div><p class="pnote">${t.setNote}</p>`}
+function agSetSection(){const t=AGT();return `<h3>${t.set}${hint('agSet')}</h3><div class="limdays sgset wkset"><label><span>${t.setLbl}</span><select id="agSel"><option value="1"${AG_ON?' selected':''}>${t.yes}</option><option value="0"${AG_ON?'':' selected'}>${t.no}</option></select></label></div><p class="pnote">${t.setNote}</p>`}
 function agHandlers(){const s=document.getElementById('agSel');if(s)s.onchange=()=>{AG_ON=s.value==='1';try{localStorage.setItem('peques-ayuda',AG_ON?'1':'0')}catch(e){}}}
 function agActSection(){const t=AGT(),a=(P.ag||{}).a||{},rows=Object.entries(a).filter(([id,x])=>x.q>0&&games[id]).sort((x,y)=>y[1].g/y[1].q-x[1].g/x[1].q);
-  return `<h3>${t.actT}</h3><p class="pnote">${t.actNote}</p>${rows.length?`<div class="pnlvs">${rows.map(([id,x])=>{const p=Math.round(x.g*100/x.q);
+  return `<h3>${t.actT}${hint('agStats')}</h3><p class="pnote">${t.actNote}</p>${rows.length?`<div class="pnlvs">${rows.map(([id,x])=>{const p=Math.round(x.g*100/x.q);
     return `<div class="pnlv"><b>${esc(sgName(id))}</b><div class="lhbar"><i style="width:${p}%;background:${p>=40?'var(--red)':p>=20?'var(--yellow)':'var(--green)'}"></i></div><em>${p} %</em><em>${t.actRow(x.g,x.q)}</em></div>`}).join('')}</div>`:`<p class="pnote">${t.none}</p>`}`}
 function agItemsSection(kind){const t=AGT(),it=(P.ag||{}).it||{};let rows=Object.entries(it);
   if(kind==='numlet')rows=rows.filter(([k])=>/^(num|let):/.test(k)).map(([k,v])=>[k.split(':')[1],v]);
   else rows=rows.filter(([k])=>k.startsWith(`obj:${lang}:`)).map(([k,v])=>{const e=k.split(':')[2],o=objects.find(x=>x[1]===e);return [`${e} ${o?objName(o).name:''}`,v]});
   rows.sort((a,b)=>b[1]-a[1]);if(!rows.length)return '';
-  return `<h3>${t.itT}</h3><p class="pnote">${t.itNote}</p><p>${rows.slice(0,10).map(([k,v])=>`<span class="chip">${esc(k)} ×${v}</span>`).join(' ')}</p>`}
+  return `<h3>${t.itT}${hint('agStats')}</h3><p class="pnote">${t.itNote}</p><p>${rows.slice(0,10).map(([k,v])=>`<span class="chip">${esc(k)} ×${v}</span>`).join(' ')}</p>`}
 // Contar: la voz cuenta iluminando cada cosa y dice cuántas hay
 const agCountQ=(f,n)=>({say:()=>AGT().count(n,agFruit(f,n),agFruitG(f)),
   seq:txt=>[[AGT().look,lang,()=>stage.querySelectorAll('.agcount').forEach(e=>e.classList.remove('agcount'))],...numWords[lang].slice(0,n).map((w,i)=>[i===0&&agFruitG(f)==='f'?(lang==='es'?'una':lang==='fr'?'une':w):w,lang,()=>{const s=stage.querySelectorAll('.fruits span')[i];if(s)s.classList.add('agcount')},'n']),[txt,lang]]});
@@ -2331,7 +2337,7 @@ function pianoSection(){const t=L(),p=P.piano||{1:[],2:[],3:[]},st=p.st||{};
   const hard=Object.entries(st).filter(([k,s])=>s.m>=2).map(([k,s])=>{const [lv,i]=k.split(':').map(Number);return {lv,i,s,item:PN_SEQ[lv][i]}}).filter(x=>x.item)
     .sort((a,b)=>(b.s.m/(b.s.f+1))-(a.s.m/(a.s.f+1))).slice(0,5);
   const hardHtml=hard.length?hard.map(x=>`<div class="pnhard"><span class="pnseq">${x.item[0].map(n=>PN_KEYS[n][1]).join('')}</span><span>${t.pnLevels[x.lv-1].split(' ')[0]}${x.item[2]?' · '+esc(PN_SONGS[x.item[2]][lang]):''}</span><em>${t.pnMist(x.s.m)}${(p[x.lv]||[]).includes(x.i)?' · ✅':''}</em></div>`).join(''):`<p>${t.nothingYet}</p>`;
-  return `<h3>${t.pianoTitle}</h3><div class="pnlvs">${[1,2,3].map(lvRow).join('')}</div>
+  return `<h3>${t.pianoTitle}${hint('piano')}</h3><div class="pnlvs">${[1,2,3].map(lvRow).join('')}</div>
     <h4 class="ch">${t.pnSongsTitle}</h4><p>${songChips}</p>
     <h4 class="ch">${t.pnHardTitle}</h4><p class="pnote">${t.pnHardNote}</p>${hardHtml}`}
 // Pestañas de la pantalla de padres; cada una con su parte de la explicación
@@ -2345,9 +2351,35 @@ const pTabsNow=()=>{try{if(syFamilyOn())return ['time','activity','numlet','word
 const PSUBS=['kid','guest','acts','sugg','screen','sync','data'],PSUB_T={es:['👧 Peque','👥 Invitado','🗓️ Actividades','💡 Sugerencias','📱 Pantalla','☁️ Sincronizar','💾 Datos'],en:['👧 Child','👥 Guest','🗓️ Activities','💡 Suggestions','📱 Screen','☁️ Sync','💾 Data'],fr:['👧 Enfant','👥 Invité','🗓️ Activités','💡 Suggestions','📱 Écran','☁️ Synchro','💾 Données']};
 let pSub='kid';try{const v=localStorage.getItem('peques-psub');if(PSUBS.includes(v))pSub=v}catch(e){}
 let pTab='time';try{const v=localStorage.getItem('peques-ptab');if(PTABS.includes(v)||v==='family')pTab=v}catch(e){}
-const HELP_TAB={'👨‍👩‍👧':'family','👥':'settings','⏱️':'time','📅':'activity','🎨':'activity','📚':'activity','🎯':'settings','🧠':'settings','☁️':'settings','🔒':'settings','🔢':'numlet','✍️':'numlet','🎹':'numlet','〰️':'numlet','🖐️':'numlet','📏':'numlet','📍':'numlet','🌀':'numlet','💾':'settings','🗓️':'settings','💡':'settings','📱':'settings','🧸':'words'};
-function phelp(tab){const t=L(),parts=t.helpBody.split(/(?=<h4>)/).filter(s=>{const k=Object.keys(HELP_TAB).find(e=>s.startsWith('<h4>'+e));return k&&HELP_TAB[k]===tab});
-  return parts.length?`<details class="phelp"${helpOpen?' open':''}><summary>${t.helpTitle}</summary><div class="phbody">${parts.join('')}</div></details>`:''}
+// Explicaciones para padres: cada «i» abre su trozo de la guía en una ventanita; la guía completa se arma con los mismos trozos (así nunca se desfasan)
+// cada trozo: [emoji de la sección, bloques (párrafos y puntos, en orden) o toda la sección]
+const HINTS={time:[['⏱️',[0,1,2,3,4]]],week:[['⏱️',[7]]],pin:[['⏱️',[5,6]]],
+  act:[['📅',[0,1,2,5]],['📚'],['🔒']],actDays:[['📅',[3]],['🎨']],actHours:[['📅',[3]]],actEvo:[['📅',[4]]],sess:[['📅',[0,1]]],
+  agStats:[['🧠',[9]]],suggLog:[['💡',[9]]],nums:[['🎯'],['🔢']],lets:[['🔢'],['✍️']],comp:[['🖐️']],cmp:[['📏']],donde:[['📍']],lab:[['🌀']],traz:[['〰️']],piano:[['🎹']],
+  words:[['🧸']],family:[['👨‍👩‍👧']],name:[['✍️',[3]]],guest:[['👥']],agSet:[['🧠',[0,1,2,3,4,5,6,7,8,10]]],acts:[['🗓️']],sugg:[['💡',[0,1,2,3,4,5,6,7,8]]],wake:[['📱']],
+  sync:[['☁️',[0,9,11,12]]],syDev:[['☁️',[3,4,5,6,7]]],syConn:[['☁️',[1,2]]],backup:[['💾'],['🔒'],['☁️',[13]]],vers:[['☁️',[10]]],reset:[['🔒'],['☁️',[8]]]};
+const hint=k=>`<button type="button" class="hint" data-hint="${k}" aria-label="${L().hintLbl}" title="${L().hintLbl}">i</button>`;
+const helpParts=()=>L().helpBody.split(/(?=<h4>)/).filter(x=>x.startsWith('<h4>'));
+const helpBlocks=sec=>sec.match(/<p>[\s\S]*?<\/p>|<li>[\s\S]*?<\/li>/g)||[];
+function helpSec(e,ix){const s=helpParts().find(x=>x.startsWith('<h4>'+e));if(!s)return '';if(!ix)return s;
+  const b=helpBlocks(s);let o=s.match(/^<h4>[\s\S]*?<\/h4>/)[0],ul=false;
+  for(const i of ix){const x=b[i];if(!x)continue;const li=x.startsWith('<li>');if(li&&!ul){o+='<ul>';ul=true}if(!li&&ul){o+='</ul>';ul=false}o+=x}
+  return o+(ul?'</ul>':'')}
+// guía completa: índice arriba y todas las secciones
+function helpGuide(){const ps=helpParts();
+  return `<p class="hsindex">${ps.map((s,i)=>`<button type="button" class="chip" data-hs="${i}">${s.match(/^<h4>([\s\S]*?)<\/h4>/)[1]}</button>`).join(' ')}</p>`+ps.map((s,i)=>s.replace('<h4>',`<h4 id="hs${i}">`)).join('')}
+function openHint(k){const t=L(),g=k==='guide';if(!g&&!HINTS[k])return;
+  let sh=document.getElementById('hintSheet');if(!sh){sh=document.createElement('div');sh.id='hintSheet';document.body.appendChild(sh)}
+  sh.innerHTML=peqName(`<div class="hsback"></div><div class="hsbox" role="dialog" aria-modal="true" aria-label="${g?t.helpTitle:t.hintLbl}"><div class="hshead"><b>${g?t.helpTitle:'ⓘ '+t.hintLbl}</b><button type="button" class="btn alt" id="hsClose">✕</button></div>
+    <div class="hsbody phbody">${g?helpGuide():HINTS[k].map(([e,ix])=>helpSec(e,ix)).join('')}${g?'':`<p class="hsmore"><button type="button" class="btn alt" data-hint="guide">${t.helpTitle}</button></p>`}</div></div>`);
+  sh.hidden=false;sh.dataset.k=k;const bd=sh.querySelector('.hsbody');bd.scrollTop=0;
+  sh.querySelector('.hsback').onclick=sh.querySelector('#hsClose').onclick=closeHint;
+  sh.querySelectorAll('[data-hs]').forEach(b=>b.onclick=()=>{const h=document.getElementById('hs'+b.dataset.hs);if(h)bd.scrollTop=h.offsetTop-bd.offsetTop-6});
+  sh.querySelector('#hsClose').focus()}
+function closeHint(){const sh=document.getElementById('hintSheet');if(sh)sh.hidden=true}
+// un solo escuchador para todos los «i» (siguen funcionando aunque el panel se redibuje); dentro de un <summary> no abre ni cierra la sección
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-hint]');if(!b)return;e.preventDefault();e.stopPropagation();openHint(b.dataset.hint)},true);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const sh=document.getElementById('hintSheet');if(sh&&!sh.hidden){closeHint();e.stopPropagation()}}},true);
 function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&document.getElementById('parents').hidden)pTab='time';if(!pTabsNow().includes(pTab))pTab='time';
   const box=document.getElementById('parents');
   const numTiles=[1,2,3,4,5,6,7,8,9].map(n=>{const r=numRec(n);return `<div class="ptnum"><b>${n}</b>${SKILLS.map(sk=>`<span class="dot ${scoreColor(r[sk])}" title="${t.skillNames[sk]}">${t.skillShort[sk]}</span>`).join('')}</div>`}).join('');
@@ -2374,18 +2406,18 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
   const oc=[];const m=P.objConf[l]||{};for(const a in m)for(const b2 in m[a])oc.push([a,b2,m[a][b2]]);oc.sort((a,b)=>b[2]-a[2]);
   const nameOf=e=>{const o=objects.find(x=>x[1]===e);return o?o[li2[l]].replace(/^\*/,''):e};
   box.innerHTML=peqName(`<div class="pcard" role="dialog" aria-modal="true" aria-label="${t.parentsTitle}">
-    <div class="phead"><h2>📊 ${t.parentsTitle}</h2><button class="btn alt" id="pclose">✕</button></div>
+    <div class="phead"><h2>📊 ${t.parentsTitle}</h2><span class="row"><button class="btn alt" id="pguide" data-hint="guide">${t.guideBtn}</button><button class="btn alt" id="pclose">✕</button></span></div>
     ${GUEST.on?`<div class="gnotice">${t.guestPaused}</div>`:''}${syBanner()}
     <div class="ptabs" role="tablist">${pTabsNow().map(k=>`<button class="ptab" role="tab" data-pt="${k}" aria-selected="${k===pTab}">${k==='family'?SYT().famTab:t.pTabs[PTABS.indexOf(k)]}</button>`).join('')}</div>
-    ${syFamilyOn()?`<section class="ppane" data-pane="family"${pTab==='family'||window.__allPanes?'':' hidden'}>${phelp('family')}${familySection()}</section>`:''}
-    <section class="ppane" data-pane="time"${pTab==='time'||window.__allPanes?'':' hidden'}>${phelp('time')}
+    ${syFamilyOn()?`<section class="ppane" data-pane="family"${pTab==='family'||window.__allPanes?'':' hidden'}>${familySection()}</section>`:''}
+    <section class="ppane" data-pane="time"${pTab==='time'||window.__allPanes?'':' hidden'}>
     ${limitSection()}</section>
-    <section class="ppane" data-pane="activity"${pTab==='activity'||window.__allPanes?'':' hidden'}>${phelp('activity')}
+    <section class="ppane" data-pane="activity"${pTab==='activity'||window.__allPanes?'':' hidden'}>
     ${activitySection()}${agActSection()}<div id="sgLogBox">${suggLogSection()}</div></section>
-    <section class="ppane" data-pane="numlet"${pTab==='numlet'||window.__allPanes?'':' hidden'}>${phelp('numlet')}
-    <h3>${t.numbersTitle}</h3><p class="pnote">${t.legend}</p><div class="ptgrid">${numTiles}</div>
+    <section class="ppane" data-pane="numlet"${pTab==='numlet'||window.__allPanes?'':' hidden'}>
+    <h3>${t.numbersTitle}${hint('nums')}</h3><p class="pnote">${t.legend}</p><div class="ptgrid">${numTiles}</div>
     <h3>${t.confTitle}</h3><p>${confs.length||nmir.length?[...confs.slice(0,6).map(([a,b,k])=>`<span class="chip">${t.askedGot(a,b)} ×${k}</span>`),...nmir.map(([n,k])=>`<span class="chip">${t.mirrorChip(n,k)}</span>`)].join(' '):t.nothingYet}</p>
-    <h3>${t.lettersTitle}</h3><p class="pnote">${t.lettersLegend}</p><div class="ptgrid">${letTiles}</div><p class="pnote">${t.writeOpenTxt(P.letOpen||6)}${nlet.length?' '+t.nameLettersNote:''}</p>
+    <h3>${t.lettersTitle}${hint('lets')}</h3><p class="pnote">${t.lettersLegend}</p><div class="ptgrid">${letTiles}</div><p class="pnote">${t.writeOpenTxt(P.letOpen||6)}${nlet.length?' '+t.nameLettersNote:''}</p>
     <h3>${t.confTitle}</h3><p>${lconf.length?lconf.slice(0,8).map(([s,k])=>`<span class="chip">${s}${s.includes('×')?'':` ×${k}`}</span>`).join(' '):t.nothingYet}</p>
     ${componerSection()}
     ${compararSection()}
@@ -2394,23 +2426,23 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     ${trazosSection()}
     ${pianoSection()}
     ${agItemsSection('numlet')}</section>
-    <section class="ppane" data-pane="words"${pTab==='words'||window.__allPanes?'':' hidden'}>${phelp('words')}
-    <h3>${t.wordsTitle}</h3>
+    <section class="ppane" data-pane="words"${pTab==='words'||window.__allPanes?'':' hidden'}>
+    <h3>${t.wordsTitle}${hint('words')}</h3>
     <div class="modes" role="group">${['es','en','fr'].map(x=>`<button class="mode" data-pl="${x}" aria-pressed="${x===l}">${x==='es'?'Español':x==='en'?'English':'Français'}</button>`).join('')}</div>
     <p class="pnote">${t.tapCat}</p><div class="pcats">${cats}</div>
     <h3>${t.hardWords}</h3><p>${hard.length?hard.map(([o,r])=>`<span class="chip">${o[1]} ${o[li2[l]].replace(/^\*/,'')} ×${r.wrong}</span>`).join(' '):t.nothingYet}</p>
     <h3>${t.confTitle}</h3><p>${oc.length?oc.slice(0,6).map(([a,b2,k])=>`<span class="chip">${a} ${nameOf(a)} → ${b2} ${nameOf(b2)} ×${k}</span>`).join(' '):t.nothingYet}</p>
     ${agItemsSection('words')}</section>
-    <section class="ppane" data-pane="settings"${pTab==='settings'||window.__allPanes?'':' hidden'}>${phelp('settings')}
+    <section class="ppane" data-pane="settings"${pTab==='settings'||window.__allPanes?'':' hidden'}>
     <div class="modes psubs" role="tablist">${PSUBS.map((k,i)=>`<button class="mode" data-ps="${k}" aria-pressed="${k===pSub}">${PSUB_T[lang][i]}</button>`).join('')}</div>
-    <div class="psub" data-psub="kid"${pSub==='kid'||window.__allPanes?'':' hidden'}><div class="pname"><label for="kidname">👧 ${t.nameLabel}</label><input id="kidname" maxlength="16" autocomplete="off" value="${childName.replace(/"/g,'&quot;')}"><button class="btn" id="namesave">${t.nameSave}</button><p class="pnote symsg" id="kidNameMsg" aria-live="polite"></p><p class="pnote">${t.nameHint}${syOn()?' '+SYT().nameSyncHint:''}</p></div></div>
+    <div class="psub" data-psub="kid"${pSub==='kid'||window.__allPanes?'':' hidden'}><div class="pname"><label for="kidname">👧 ${t.nameLabel}</label>${hint('name')}<input id="kidname" maxlength="16" autocomplete="off" value="${childName.replace(/"/g,'&quot;')}"><button class="btn" id="namesave">${t.nameSave}</button><p class="pnote symsg" id="kidNameMsg" aria-live="polite"></p><p class="pnote">${t.nameHint}${syOn()?' '+SYT().nameSyncHint:''}</p></div></div>
     <div class="psub" data-psub="guest"${pSub==='guest'||window.__allPanes?'':' hidden'}>${guestSection()}</div>
     <div class="psub" data-psub="acts"${pSub==='acts'||window.__allPanes?'':' hidden'}>${accessSection()}</div>
     <div class="psub" data-psub="sugg"${pSub==='sugg'||window.__allPanes?'':' hidden'}>${suggSection()}</div>
     <div class="psub" data-psub="screen"${pSub==='screen'||window.__allPanes?'':' hidden'}>${wakeSection()}</div>
     <div class="psub" data-psub="sync"${pSub==='sync'||window.__allPanes?'':' hidden'}>${syncSection()}</div>
     <div class="psub" data-psub="data"${pSub==='data'||window.__allPanes?'':' hidden'}>${backupSection()}${versSection()}
-    <h3>🗑️ ${t.resetBtn}</h3><div class="row" id="resetRow"><button class="btn alt" id="preset">🗑️ ${t.resetBtn}</button></div></div></section>
+    <h3>🗑️ ${t.resetBtn}${hint('reset')}</h3><div class="row" id="resetRow"><button class="btn alt" id="preset">🗑️ ${t.resetBtn}</button></div></div></section>
   </div>`);
   box.hidden=false;
   limitHandlers(box);backupHandlers();accessHandlers();suggHandlers();wakeHandlers();agHandlers();syncHandlers();try{syWrapBusy(box);syApplyBusy()}catch(e){}
@@ -2420,8 +2452,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     childName=nn;try{localStorage.setItem('peques-name',childName)}catch(e){}try{syNameChanged(childName)}catch(e){}if(syBackToSync){syBackToSync=false;pSub='sync';try{localStorage.setItem('peques-psub',pSub)}catch(e){}}nameIdx=0;if(!nameSeq().length){wMode='abc'}openParents();if(current==='escletras')escletras()};
   box.querySelectorAll('[data-ad]').forEach(b=>b.onclick=()=>{actDays=+b.dataset.ad;const sc=box.scrollTop;openParents();box.scrollTop=sc});
   {const ps=box.querySelector('.psess');if(ps)ps.addEventListener('toggle',()=>{sessOpen=ps.open})}
-  box.querySelectorAll('.phelp').forEach(d=>d.addEventListener('toggle',()=>{helpOpen=d.open}));
-  box.querySelectorAll('[data-pt]').forEach(b=>b.onclick=()=>{pTab=b.dataset.pt;if(pTab==='activity'){const lb=document.getElementById('sgLogBox');if(lb)lb.innerHTML=suggLogSection()}try{localStorage.setItem('peques-ptab',pTab)}catch(e){}
+    box.querySelectorAll('[data-pt]').forEach(b=>b.onclick=()=>{pTab=b.dataset.pt;if(pTab==='activity'){const lb=document.getElementById('sgLogBox');if(lb)lb.innerHTML=suggLogSection()}try{localStorage.setItem('peques-ptab',pTab)}catch(e){}
     box.querySelectorAll('[data-pt]').forEach(x=>x.setAttribute('aria-selected',x===b));box.querySelectorAll('.ppane').forEach(p=>p.hidden=p.dataset.pane!==pTab);box.scrollTop=0});
   box.querySelectorAll('.pcat').forEach(d=>d.addEventListener('toggle',()=>{d.open?openCats.add(d.dataset.k):openCats.delete(d.dataset.k)}));
   document.getElementById('pclose').onclick=()=>{box.hidden=true};
@@ -2528,13 +2559,13 @@ function activitySection(){const t=L(),days=periodDays(actDays),from=days[0].get
     const hm=d=>d.toLocaleTimeString(locOf(),{hour:'2-digit',minute:'2-digit'});
     return `<li><div class="sh"><b>${esc(a.toLocaleDateString(locOf(),{weekday:'short',day:'numeric',month:'short'}))}</b> · ${hm(a)}–${hm(b)} · ${fmtMin(dur)}${s.n?` · ${s.n} ${t.ansShort} · ${Math.round(s.k*100/s.n)} %`:''}</div><div>${acts||'<span class="pnote">–</span>'}</div></li>`}).join('');
   const has=secs>0||ans>0;
-  return `<h3>${t.actTitle}</h3>
+  return `<h3>${t.actTitle}${hint('act')}</h3>
     <div class="modes" role="group">${[7,14,30].map(n=>`<button class="mode" data-ad="${n}" aria-pressed="${n===actDays}">${t.lastDays(n)}</button>`).join('')}</div>
     ${sumHtml}
-    ${has?`<h4 class="ch">${t.chartTime}</h4>${barChart(days)}
-    <h4 class="ch">${t.chartHours}</h4>${hourChart(days)}
-    <h4 class="ch">${t.chartEvo}</h4><div class="evos">${evoChart(days,t.evoNum,p=>p.n,27)}${evoChart(days,t.evoLet,p=>p.l,78)}${evoChart(days,t.evoWords,(p,k)=>p.w[k]||0,null,[['es','ES','#FF5A4E'],['en','EN','#3A86FF'],['fr','FR','#3BB273']])}</div>
-    <details class="psess"${sessOpen?' open':''}><summary>${t.sessTitle} (${sess.length})</summary><ul>${sessList}</ul></details>`:`<p class="pnote">${t.noAct}</p>`}`}
+    ${has?`<h4 class="ch">${t.chartTime}${hint('actDays')}</h4>${barChart(days)}
+    <h4 class="ch">${t.chartHours}${hint('actHours')}</h4>${hourChart(days)}
+    <h4 class="ch">${t.chartEvo}${hint('actEvo')}</h4><div class="evos">${evoChart(days,t.evoNum,p=>p.n,27)}${evoChart(days,t.evoLet,p=>p.l,78)}${evoChart(days,t.evoWords,(p,k)=>p.w[k]||0,null,[['es','ES','#FF5A4E'],['en','EN','#3A86FF'],['fr','FR','#3BB273']])}</div>
+    <details class="psess"${sessOpen?' open':''}><summary>${t.sessTitle} (${sess.length})${hint('sess')}</summary><ul>${sessList}</ul></details>`:`<p class="pnote">${t.noAct}</p>`}`}
 let sessOpen=false;
 
 
@@ -3237,14 +3268,14 @@ function limitSection(){const t=L(),lim=todayLimit(),r=remaining(),week=[1,2,3,4
   const opts=[0,10,15,20,30,45,60,90,120,180];
   const hist=[];for(let i=6;i>=0;i--){const d=new Date(now());d.setDate(d.getDate()-i);const k=dayKey(d.getTime());hist.push([d,SCR.hist[k]||0,SCR.lim[k]||0])}
   const mx=Math.max(600,...hist.map(h=>Math.max(h[1],h[2])));
-  return `<h3>${t.limTitle}</h3><p class="pnote">${t.limExplain}</p>
+  return `<h3>${t.limTitle}${hint('time')}</h3><p class="pnote">${t.limExplain}</p>
    ${window.__guest?`<div class="gnotice">${t.guestPaused}</div>`:''}<div class="limtoday">${window.__guest?'👥 ':''}${t.limToday(fmtM(TS().used),lim?fmtM(lim):'')}${lim?(r>0?t.limLeft(fmtM(Math.ceil(r/60)*60)):` · ${t.limOver}`):''}</div>
    <div class="row lbtns"><span class="laddl">${t.limAdd}</span><span class="lchips">${[5,10,15,20,30].map(m=>`<button class="lchip" data-add="${m}">+${m}</button>`).join('')}</span><span class="pnote">min</span></div>
    ${lim&&r>0?`<div class="row lbtns"><span class="laddl">${t.limSub}</span><span class="lchips sub">${[5,10,15,20,30].map(m=>`<button class="lchip" data-sub="${m}">−${m}</button>`).join('')}</span><span class="pnote">min</span></div>`:''}
    <div class="row lbtns"><button class="btn alt" id="limReset">${t.limReset}</button><button class="btn ${TS().free?'':'alt'}" id="limFree">${TS().free?t.limFreeOn:t.limFree}</button></div>
    <h4 class="ch">${t.limDaysTitle}</h4><div class="limdays">${week.map(i=>`<label><span>${wd(i)}</span><select data-wd="${i}">${opts.map(o=>`<option value="${o}"${o===LIM.days[i]?' selected':''}>${o?o+' min':t.limNone}</option>`).join('')}</select></label>`).join('')}</div>
-   <h4 class="ch">${t.limWeek}</h4><div class="limhist">${hist.map(([d,u,l])=>`<div class="lh"><span>${d.toLocaleDateString(locOf(),{weekday:'short'})}</span><div class="lhbar"><i style="width:${Math.min(100,u/mx*100)}%;background:${l&&u>=l?'var(--orange)':'var(--green)'}"></i>${l?`<b style="left:${Math.min(100,l/mx*100)}%"></b>`:''}</div><em>${fmtM(u)}${l?' / '+fmtM(l):''}</em></div>`).join('')}</div>
-   <h4 class="ch">${t.pinTitle}</h4><p class="pnote">${LIM.pin?t.pinOn:t.pinOff}</p>
+   <h4 class="ch">${t.limWeek}${hint('week')}</h4><div class="limhist">${hist.map(([d,u,l])=>`<div class="lh"><span>${d.toLocaleDateString(locOf(),{weekday:'short'})}</span><div class="lhbar"><i style="width:${Math.min(100,u/mx*100)}%;background:${l&&u>=l?'var(--orange)':'var(--green)'}"></i>${l?`<b style="left:${Math.min(100,l/mx*100)}%"></b>`:''}</div><em>${fmtM(u)}${l?' / '+fmtM(l):''}</em></div>`).join('')}</div>
+   <h4 class="ch">${t.pinTitle}${hint('pin')}</h4><p class="pnote">${LIM.pin?t.pinOn:t.pinOff}</p>
    <div class="row limpin"><input id="pinNew" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••"><button class="btn" id="pinSave">${t.pinSave}</button>${LIM.pin?`<button class="btn alt" id="pinDel">${t.pinDel}</button>`:''}<span class="pnote" id="pinNote"></span></div>`}
 function limitHandlers(box){const re=()=>{const sc=box.scrollTop;limTick();openParents();box.scrollTop=sc};
   const g=id=>document.getElementById(id);
@@ -3277,7 +3308,7 @@ function guestBadge(){const st=document.querySelector('.stars');let b=document.g
   if(GUEST.on){if(!b){b=document.createElement('span');b.id='guestBadge';b.className='guestbadge';st.prepend(b)}b.innerHTML=`👥<span class="gtxt"> ${L().guestBadge.replace('👥 ','')}</span>`;b.title=L().guestBadge}else if(b)b.remove()}
 function guestSection(){const t=L(),on=GUEST.on,lopts=[0,10,15,20,30,45,60,90,120],hopts=[1,2,3,0];
   const until=on?new Date(GUEST.until).toLocaleTimeString(locOf(),{hour:'2-digit',minute:'2-digit'}):'';
-  return `<h3>${t.guestTitle}</h3><p class="pnote">${t.guestExplain}</p>
+  return `<h3>${t.guestTitle}${hint('guest')}</h3><p class="pnote">${t.guestExplain}</p>
    <div class="gstate${on?' on':''}">${on?t.guestOnTxt(until):t.guestOffTxt}</div>
    <div class="limdays gl"><label><span>${t.guestLimit}</span><select data-gl="limit">${lopts.map(o=>`<option value="${o}"${o===GUEST.limit?' selected':''}>${o?o+' min':t.limNone}</option>`).join('')}</select></label>
     <label><span>${t.guestAuto}</span><select data-gl="hours">${hopts.map(o=>`<option value="${o}"${o===GUEST.hours?' selected':''}>${t.guestHours(o)}</option>`).join('')}</select></label></div>
@@ -3523,7 +3554,7 @@ function trazosSection(){const t=L(),tt=TZ_T[lang],r=P.trz||{sc:{},st:{}},li={es
     const p=s.f/s.a,c=s.a>=3&&p>=.7?'🟢':p>=.4||s.a<3?'🟡':'🔴';return `<span class="chip">${c} ${nm} <small>${s.f}/${s.a}</small>${s.rev?` · ${tt.revChip(s.rev)}`:''}</span>`}).join(' ');
   const hard=TZ_SCENES.map(s=>({s,x:r.sc[s[0]]})).filter(o=>o.x&&o.x.m>=2).sort((a,b)=>b.x.m/(b.x.f+1)-a.x.m/(a.x.f+1)).slice(0,5);
   const txt=s=>s[8+li];
-  return `<h3>${tt.title}</h3><p class="pnote">${tt.note}</p><div class="pnlvs">${[1,2,3].map(lvRow).join('')}</div>
+  return `<h3>${tt.title}${hint('traz')}</h3><p class="pnote">${tt.note}</p><div class="pnlvs">${[1,2,3].map(lvRow).join('')}</div>
    <h4 class="ch">${tt.kindsTitle}</h4><p class="pnote">${tt.kindsNote}</p><p>${kinds}</p>
    <h4 class="ch">${tt.hardTitle}</h4>${hard.length?hard.map(o=>`<div class="pnhard"><span class="pnseq">${o.s[4]}</span><span>${t.pnLevels[o.s[1]-1].split(' ')[0]} ${esc(txt(o.s))}</span><em>${tt.mist(o.x.m)}${o.x.b?' · '+'⭐'.repeat(o.x.b):''}</em></div>`).join(''):`<p>${t.nothingYet}</p>`}`}
 
@@ -3542,7 +3573,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=92; // se sube junto con la caché de sw.js
+const APP_VER=93; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -3586,7 +3617,7 @@ function bkBanner(txt,ok){const el=document.createElement('div');el.className='b
   document.body.appendChild(el);const x=()=>el.remove();el.querySelector('button').onclick=x;if(ok)setTimeout(x,12000)}
 setTimeout(bkVerify,600);
 function backupSection(){const b=BK_T[lang];let last=null;try{last=+localStorage.getItem('peques-lastbk')||null}catch(e){}
-  return `<div class="pbackup"><h3>${b.title}</h3><p class="pnote">${b.note}</p>
+  return `<div class="pbackup"><h3>${b.title}${hint('backup')}</h3><p class="pnote">${b.note}</p>
    <div class="row" id="bkRow"><button class="btn" id="bkSave">${b.save}</button><button class="btn alt" id="bkLoad">${b.load}</button><input type="file" id="bkFile" accept="application/json,.json" hidden></div>
    <p class="pnote" id="bkMsg">${last?b.last(bkDate(last)):b.never}</p>${bkResNote(b)}<p class="pnote bkver"><span id="bkNow">${b.now} ${b.sum(bkSummary(bkLsNow(),'…'))}</span> · ${b.ver} ${APP_VER}</p></div>`}
 function bkResNote(b){let r=null;try{r=JSON.parse(localStorage.getItem('peques-bkres')||'null')}catch(e){}if(!r||Date.now()-r.t>3*86400e3)return '';
@@ -3762,7 +3793,7 @@ function componerSection(){const t=CMP_T[lang],tt=L(),r=P.cmp||{st:{},dec:{},tra
   const rows=CMP_MODES.map((m,i)=>{const s=r.st[m]||{a:0,f:0};const pct=s.a?Math.round(s.f*100/s.a):null;
     return `<div class="pnlv"><b>${t.modes[i]}</b><div class="lhbar"><i style="width:${pct||0}%;background:var(--green)"></i></div><em>${s.a}</em><em>${pct===null?'–':tt.pnFirst(pct)}</em></div>`}).join('');
   const dec=[2,3,4,5,6,7,8,9,10].map(n=>{const d=r.dec[n];if(!d||!d.a)return `<span class="chip">⬜ ${n}</span>`;const p=d.f/d.a,c=d.a>=3&&p>=.7?'🟢':p>=.4||d.a<3?'🟡':'🔴';return `<span class="chip">${c} ${n} <small>${d.f}/${d.a}</small></span>`}).join(' ');
-  return `<h3>${t.title}</h3><p class="pnote">${t.note}</p><div class="pnlvs">${rows}</div>
+  return `<h3>${t.title}${hint('comp')}</h3><p class="pnote">${t.note}</p><div class="pnlvs">${rows}</div>
    <h4 class="ch">${t.decTitle}</h4><p class="pnote">${t.decNote}</p><p>${dec}</p>
    ${r.trap.a?`<p class="pnote">⚠️ ${t.trap(r.trap.m,r.trap.a)}</p>`:''}`}
 
@@ -3997,7 +4028,7 @@ function compararSection(){const t=CZ_T[lang],tt=L(),r=P.cmz||{st:{},trap:{a:0,m
   const chip=k=>{const s=r.st[k],nm=t.dims[k];if(!s||!s.a)return `<span class="chip">⬜ ${nm}</span>`;const p=s.f/s.a,c=s.a>=3&&p>=.7?'🟢':p>=.4||s.a<3?'🟡':'🔴';return `<span class="chip">${c} ${nm} <small>${s.f}/${s.a} · ${tt.pnFirst(Math.round(p*100))}</small></span>`};
   const hard=CZ_OPP.map(o=>({o,x:r.op[o[0]]})).filter(z=>z.x&&z.x.a>z.x.f).sort((a,b)=>(b.x.a-b.x.f)-(a.x.a-a.x.f)).slice(0,6);
   const w=o=>{const g=lang==='en'?'m':(lang==='es'?o[3].es[1]:o[3].fr[1]);return lang==='en'?o[4].en.join(' / '):o[4][lang].map(x=>x[g==='f'?1:0]).join(' / ')};
-  return `<h3>${t.title}</h3><p class="pnote">${t.note} ${t.dimNote}</p><p>${['size','len','height','thick','weight','fill','opp','ord'].map(chip).join(' ')}</p>
+  return `<h3>${t.title}${hint('cmp')}</h3><p class="pnote">${t.note} ${t.dimNote}</p><p>${['size','len','height','thick','weight','fill','opp','ord'].map(chip).join(' ')}</p>
    ${r.trap.a?`<p class="pnote">⚠️ ${t.trap(r.trap.m,r.trap.a)}</p>`:''}
    ${hard.length?`<h4 class="ch">${t.oppHard}</h4><p>${hard.map(z=>`<span class="chip">${z.o[1].replace(/<[^>]+>/g,'').replace(/<br>/g,'')}↔${z.o[2].replace(/<[^>]+>/g,'')} ${esc(w(z.o))} <small>${z.x.f}/${z.x.a}</small></span>`).join(' ')}</p>`:''}`}
 
@@ -4206,7 +4237,7 @@ function donde(){const t=DN_T[lang],rec=dnRec(),lv=dnLv;let over=false,first=tru
 function dondeSection(){const t=DN_T[lang],tt=L(),r=P.pos||{st:{},conf:{}};
   const chip=k=>{const s=r.st[k],nm=t.word[k];if(!s||!s.a)return `<span class="chip">⬜ ${nm}</span>`;const p=s.f/s.a,c=s.a>=3&&p>=.7?'🟢':p>=.4||s.a<3?'🟡':'🔴';return `<span class="chip">${c} ${nm} <small>${s.f}/${s.a}</small></span>`};
   const conf=Object.entries(r.conf).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  return `<h3>${t.title}</h3><p class="pnote">${t.note} ${t.dimNote}</p>${[1,2,3].map(lv=>`<p><b>${tt.pnLevels[lv-1]}</b> ${DN_LV[lv].map(chip).join(' ')}</p>`).join('')}
+  return `<h3>${t.title}${hint('donde')}</h3><p class="pnote">${t.note} ${t.dimNote}</p>${[1,2,3].map(lv=>`<p><b>${tt.pnLevels[lv-1]}</b> ${DN_LV[lv].map(chip).join(' ')}</p>`).join('')}
    ${conf.length?`<h4 class="ch">${t.conf}</h4><p>${conf.map(([k,n])=>{const [a,b]=k.split('>');return `<span class="chip">${t.confChip(t.word[a],t.word[b],n)}</span>`}).join(' ')}</p>`:''}`}
 
 // ===== Laberintos: 66 laberintos fijos (22 por nivel), se recorren con el dedo o el lápiz =====
@@ -4338,7 +4369,7 @@ function laberintoSection(){const t=LB_T[lang],tt=L(),r=P.lab||{done:{},st:{}};
   const row=lv=>{const n=Object.keys(r.done).filter(k=>k.startsWith(lv+'-')).length,s=r.st[lv]||{a:0,f:0,b:0,h:0},pct=s.a?Math.round(s.f*100/s.a):null,ready=lv<3&&s.a>=6&&pct>=70;
     const st3=Object.entries(r.done).filter(([k])=>k.startsWith(lv+'-')).reduce((a,[,v])=>a+v,0);
     return `<div class="pnlv"><b>${tt.pnLevels[lv-1]}</b><div class="lhbar"><i style="width:${n*100/LB_PER}%;background:var(--green)"></i></div><em>${n}/${LB_PER} · ⭐${st3}</em><em>${pct===null?'–':tt.pnFirst(pct)}</em>${ready?`<span class="chip pnready">${tt.pnReady(tt.pnLevels[lv].replace(/^\S+\s/,''))}</span>`:''}</div>${s.a?`<p class="pnote">${t.bumps((s.b/s.a).toFixed(1))} · ${t.hints(s.h)}</p>`:''}`};
-  return `<h3>${t.title}</h3><p class="pnote">${t.note}</p><div class="pnlvs">${[1,2,3].map(row).join('')}</div>`}
+  return `<h3>${t.title}${hint('lab')}</h3><p class="pnote">${t.note}</p><div class="pnlvs">${[1,2,3].map(row).join('')}</div>`}
 
 // ===== Pantalla encendida: pide a la tablet que no oscurezca la pantalla mientras juega =====
 const WK_T={es:{title:'📱 Pantalla encendida',note:'La tablet baja el brillo y se apaga si nadie toca la pantalla durante un rato. Aquí puedes evitarlo mientras se usa la app. Solo funciona con la app abierta y a la vista (instalada o en Chrome); al salir de la app, la tablet vuelve a su comportamiento normal.',
@@ -4363,7 +4394,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 setInterval(wkSync,5000);setTimeout(wkSync,500);
 function wkState(){const t=WK_T[lang].st;if(wkMode==='off')return t.off;if(wkNA)return t.na;if(lockEl)return t.lock;return wkLock?t.on:t.idle}
 function wakeSection(){const t=WK_T[lang];
-  return `<h3>${t.title}</h3><p class="pnote">${t.note}</p><div class="limdays sgset wkset"><label><span>${t.label}</span><select id="wkSel">${['play','always','off'].map(k=>`<option value="${k}"${k===wkMode?' selected':''}>${t[k]}</option>`).join('')}</select></label></div><p class="pnote" id="wkState">${wkState()}</p>`}
+  return `<h3>${t.title}${hint('wake')}</h3><p class="pnote">${t.note}</p><div class="limdays sgset wkset"><label><span>${t.label}</span><select id="wkSel">${['play','always','off'].map(k=>`<option value="${k}"${k===wkMode?' selected':''}>${t[k]}</option>`).join('')}</select></label></div><p class="pnote" id="wkState">${wkState()}</p>`}
 function wakeHandlers(){const s=document.getElementById('wkSel');if(!s)return;s.onchange=async()=>{wkMode=s.value;try{localStorage.setItem('peques-wake',wkMode)}catch(e){}wkTouch=Date.now();await wkSync();const st=document.getElementById('wkState');if(st)st.textContent=wkState()}}
 
 
@@ -4984,7 +5015,7 @@ let syUIRole=null,syCxOpen=false,syBackToSync=false,syPickSel=null; // syPickSel
 const syKidNameOf=id=>((syKids().find(k=>k.id===id)||{}).name)||SY.kidName||'?';
 function syDevLine(){const t=SYT();return SY.role==='parent'?t.devIsParent(SY.devName||'?',SY.parentName||'?'):SY.kid?t.devIsKid(SY.devName||'?',syKidNameOf(SY.kid)):t.devNoKid(SY.devName||'?')}
 function syncSection(){const t=SYT(),on=!!SY.on,conn=syConnected(),role=syUIRole||SY.role,kids=syKids().filter(k=>!k.archived);
-  const head=`<h3>${t.title}</h3><p class="pnote">${t.note}</p>
+  const head=`<h3>${t.title}${hint('sync')}</h3><p class="pnote">${t.note}</p>
    <div class="sycard"><div class="limdays sgset wkset"><label><span>${t.on}</span><select id="syOn"><option value="1"${on?' selected':''}>${t.yes}</option><option value="0"${on?'':' selected'}>${t.no}</option></select></label></div>`;
   if(!on)return head+`<p class="pnote syoffnote">${t.offNote}</p></div>`;
   // 1. estado
@@ -4994,7 +5025,7 @@ function syncSection(){const t=SYT(),on=!!SY.on,conn=syConnected(),role=syUIRole
      ${SY.role==='kid'&&SY.kid&&(SY.cfgHist||[]).length?`<h4 class="ch">${t.lastRecv}</h4><ul class="sydevs">${SY.cfgHist.slice().reverse().map(x=>`<li><b>${esc(x.by||'?')}</b> · ${esc(syAgoSrv(x.t))} · ${esc(x.desc||'')}</li>`).join('')}</ul>`:''}`
     :`<p class="pnote"><b>${t.connectFirst}</b></p>`;
   // 2. este aparato
-  const dev=conn?`<div class="sycard"><h4 class="ch">${t.devT}</h4>
+  const dev=conn?`<div class="sycard"><h4 class="ch">${t.devT}${hint('syDev')}</h4>
    <div class="pname syfield"><label for="syDev">${t.devName}</label><input id="syDev" autocomplete="off" maxlength="30" placeholder="${esc(t.devPh)}" value="${esc(SY.devName)}"></div>
    <div class="limdays sgset wkset"><label><span>${t.role}</span><select id="syRole"><option value="kid"${role==='kid'?' selected':''}>${t.kid}</option><option value="parent"${role==='parent'?' selected':''}>${t.parent}</option></select></label></div>
    <p class="pnote" id="syRoleNote">${t.roleNote[role]}</p>
@@ -5003,7 +5034,7 @@ function syncSection(){const t=SYT(),on=!!SY.on,conn=syConnected(),role=syUIRole
 </div><div class="pname syfield" id="syNewBox" hidden><label for="syNewName">${t.newName}</label><input id="syNewName" autocomplete="off" maxlength="16" placeholder="${esc(t.newNamePh)}" value="${esc(SY.kid?'':(childName||''))}"></div>`}
    <div class="row" id="sySaveRow"><button class="btn" id="sySave">${t.saveDev}</button></div><p class="pnote symsg" id="syMsg" aria-live="polite"></p></div>`:'';
   // 3. conexión con Google (plegada si ya está conectado)
-  const cx=`<details class="sycard sycx" id="syConnBox"${!conn||syCxOpen?' open':''}><summary>${t.connT}</summary>
+  const cx=`<details class="sycard sycx" id="syConnBox"${!conn||syCxOpen?' open':''}><summary>${t.connT}${hint('syConn')}</summary>
    <div class="pname syfield"><label for="syUrl">${t.url}</label><input id="syUrl" autocomplete="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(SY.url)}"></div>
    <div class="pname syfield"><label for="syKey">${t.key}</label><input id="syKey" autocomplete="off" spellcheck="false" value="${esc(SY.key)}"><button class="btn alt" id="syGen">${t.gen}</button></div>
    <div class="row"><button class="btn" id="syConnect">${t.connect}</button></div><p class="pnote symsg" id="syConnMsg" aria-live="polite"></p>
@@ -5095,7 +5126,7 @@ function syNameChanged(name){if(!syOn()||!syConnected()||!name)return;const id=S
 const syFamilyOn=()=>syParent()&&syConnected();
 function familySection(){const t=SYT();if(!syFamilyOn())return '';
   const devs=syDevs().sort((a,b)=>(a.role>b.role?1:-1)||b.lastSeen-a.lastSeen),kn=id=>((syKids().find(k=>k.id===id)||{}).name)||'?';
-  return `<h3>${t.famT}</h3><p class="pnote">${t.famNote}</p><p class="pnote symsg" id="syFamMsg" aria-live="polite"></p>
+  return `<h3>${t.famT}${hint('family')}</h3><p class="pnote">${t.famNote}</p><p class="pnote symsg" id="syFamMsg" aria-live="polite"></p>
    <h4 class="ch">${t.kidsT}</h4>${syKids().length?`<ul class="sydevs">${syKids().map(k=>`<li>👧 <b>${esc(k.name)}</b> ${k.archived?t.archived:''} <button class="btn alt mini" data-syarch="${k.id}">${k.archived?t.unarchive:t.archive}</button> <button class="btn alt mini" data-sydel="${k.id}">${t.del}</button></li>`).join('')}</ul>`:`<p class="pnote">${t.noKids}</p>`}
    <h4 class="ch">${t.devsT}</h4><ul class="sydevs">${devs.map(d=>`<li>${d.role==='parent'?'👨':'👧'} <b>${esc(d.role==='parent'?(d.pname||d.name||'?'):kn(d.kid))}</b> · ${esc(d.name||'?')} · ${d.role==='kid'&&d.active&&syServerAgo(d.lastSeen)<5*60e3?t.playing:t.seen(syAgoSrv(d.lastSeen))}${d.id===DEVID?' ✔️':` <button class="btn alt mini" data-sygone="${d.id}">${t.remove}</button>`}</li>`).join('')}</ul>
    ${SY.sel?`<h4 class="ch">${t.histT} · ${esc(kn(SY.sel))}</h4><div id="syHist" class="pnote">${t.noHist}</div>`:''}`}
@@ -5125,7 +5156,7 @@ async function syShowHist(){const el=document.getElementById('syHist');if(!el)re
 // ---------- 🗂️ Versiones en el Drive (en ⚙️ Ajustes → 💾 Datos, si la sincronización está activa) ----------
 const syVersKid=()=>syOn()&&syConnected()?(SY.role==='parent'?SY.sel:SY.kid):'';
 function versSection(){const t=SYT(),kid=syVersKid();if(!kid)return '';
-  return `<h3>${t.versT}</h3><p class="pnote">${t.versNote}</p><div class="row"><button class="btn alt" id="syVers">${t.versBtn}</button></div><p class="pnote symsg" id="syVersMsg" aria-live="polite"></p><div id="syVersList"></div>`}
+  return `<h3>${t.versT}${hint('vers')}</h3><p class="pnote">${t.versNote}</p><div class="row"><button class="btn alt" id="syVers">${t.versBtn}</button></div><p class="pnote symsg" id="syVersMsg" aria-live="polite"></p><div id="syVersList"></div>`}
 function versHandlers(){const t=SYT(),vb=document.getElementById('syVers');if(!vb)return;
   vb.onclick=async()=>{const kid=syVersKid(),list=document.getElementById('syVersList');if(!navigator.onLine){syMsgAt('syVersMsg',t.needNet);return}
     vb.disabled=true;syMsgAt('syVersMsg','');list.textContent=t.versLoading;
@@ -5248,7 +5279,7 @@ function accInner(msg=''){const a=ACC_T[lang],t=L(),week=[1,2,3,4,5,6,0],d=today
     return `<div class="accrow ${st}" data-acc="${id}"><span class="accname">${em} ${esc(t.tabs[id])}</span><button class="accsw" data-sw="${id}">${lab}</button><button class="btn alt accdb" data-db="${id}" aria-expanded="${accOpen.has(id)}">${a.daysBtn}</button>
       <div class="accdays"${accOpen.has(id)?'':' hidden'}>${week.map(i=>`<button class="accday${allowedOn(id,i)?' on':''}${i===d?' today':''}" data-day="${i}" data-id="${id}" title="${wdName(i,'long')}">${wdName(i,'short')}</button>`).join('')}</div></div>`}).join('')).join('');
   return `<p class="pnote">${a.todayN(wdName(d,'long'),ALL_ACTS.filter(allowed).length,ALL_ACTS.length)}</p>${msg?`<p class="accmsg">${msg}</p>`:''}<div class="acclist">${rows}</div><div class="row"><button class="btn alt" id="accReset">${a.reset}</button></div>`}
-function accessSection(){return `${agSetSection()}<h3>${ACC_T[lang].title}</h3><p class="pnote">${ACC_T[lang].note}</p><div id="accBox">${accInner()}</div>`}
+function accessSection(){return `${agSetSection()}<h3>${ACC_T[lang].title}${hint('acts')}</h3><p class="pnote">${ACC_T[lang].note}</p><div id="accBox">${accInner()}</div>`}
 function accessHandlers(){const box=document.getElementById('accBox');if(!box)return;const a=ACC_T[lang];
   const redraw=msg=>{box.innerHTML=accInner(msg);accessHandlers()};
   // comprueba que cada día quede al menos una actividad; si no, deshace
@@ -5394,7 +5425,7 @@ function suggSection(){const t=SG_T[lang],sel=(k,opts)=>`<select data-sg="${k}">
   const yn=[['1',t.yesL],['0',t.noL]],mins=[5,8,10,15,20,30];
   const rows=CATS.map(([k,e,col,ids])=>`<h4 class="ch"><span style="color:${col}">${e}</span> ${CAT_T[lang][k]}</h4>`+ids.map(id=>{const v=SGC.pr[id]||'normal',am=id in SGC.amin?String(SGC.amin[id]):'g';
     return `<div class="sgrow"><span class="accname">${esc(sgName(id))}</span><label class="sgmin">⏱️ <select data-sgm="${id}" aria-label="${esc(t.actTime)}"><option value="g"${am==='g'?' selected':''}>${t.general(SGC.min?SGC.min+' min':t.never)}</option>${mins.map(m=>`<option value="${m}"${am===String(m)?' selected':''}>${m} min</option>`).join('')}<option value="0"${am==='0'?' selected':''}>${t.never}</option></select></label><div class="modes sgpr" role="group">${[['star',t.star],['normal',t.normal],['never',t.ban]].map(([p,l])=>`<button class="mode" data-sgp="${p}" data-id="${id}" aria-pressed="${v===p}">${l}</button>`).join('')}</div></div>`}).join('')).join('');
-  return `<h3>${t.title}</h3>
+  return `<h3>${t.title}${hint('sugg')}</h3>
    <div class="limdays sgset"><label><span>${t.on}</span><select data-sg="on">${yn.map(([v,l])=>`<option value="${v}"${(SGC.on?'1':'0')===v?' selected':''}>${l}</option>`).join('')}</select></label></div>
    <p class="pnote sgoffnote"${SGC.on?' hidden':''}>${t.offNote}</p>
    <div class="sgrest${SGC.on?'':' off'}"><div class="limdays sgset"><label><span>${t.open}</span><select data-sg="open">${yn.map(([v,l])=>`<option value="${v}"${(SGC.open?'1':'0')===v?' selected':''}>${l}</option>`).join('')}</select></label>
@@ -5416,7 +5447,7 @@ function suggHandlers(){const box=document.getElementById('parents');sgLockRest(
 function suggLogSection(){const t=SG_T[lang],lg=((P.sugg||{}).log||[]).slice(-10).reverse(),all=(P.sugg||{}).log||[];
   const warns=[];try{ALL_ACTS.forEach(id=>{const n=sgNeed(id);if(n.n>=.5&&(!allowed(id)||SGC.pr[id]==='never')){const why=SG_T[lang].why.need(n.d);warns.push(!allowed(id)?t.warnHidden(sgName(id),why):t.warnBan(sgName(id),why))}})}catch(e){}
   let nxt='';try{const s=sgScores(current).slice(0,3);if(s.length)nxt=`<p class="pnote">${t.next} ${s.map(x=>`<b>${esc(sgName(x.id))}</b> (${esc(x.why)})`).join(' · ')}</p>`}catch(e){}
-  return `<h3>${t.logTitle}</h3>${warns.slice(0,4).map(w=>`<p class="pnote sgwarn">${esc(w)}</p>`).join('')}${nxt}
+  return `<h3>${t.logTitle}${hint('suggLog')}</h3>${warns.slice(0,4).map(w=>`<p class="pnote sgwarn">${esc(w)}</p>`).join('')}${nxt}
    ${all.length?`<p class="pnote">${t.accepted(all.filter(x=>x.r==='ok').length,all.length)}</p>`:''}
    ${lg.length?`<div class="sglog">${lg.map(x=>`<div><em>${new Date(x.t).toLocaleString(locOf(),{weekday:'short',hour:'2-digit',minute:'2-digit'})}</em> <b>${esc(sgName(x.id))}</b> <span class="pnote">${esc(x.why)}</span> <span>${t.res[x.r]||''}</span></div>`).join('')}</div>`:`<p>${t.logNone}</p>`}`}
 
