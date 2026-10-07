@@ -118,9 +118,13 @@ a.btn{text-decoration:none;display:inline-block}
 .pkey.lit svg{animation:pbell .55s ease-out;filter:drop-shadow(0 0 10px var(--kc)) drop-shadow(0 0 3px #FFC93C)}.pkey.lit .pn{background:var(--kc);color:#FFFFFF}
 @keyframes pbell{25%{transform:rotate(-13deg) scale(1.04)}55%{transform:rotate(9deg)}80%{transform:rotate(-4deg)}}
 .pkey.pw.lit svg{filter:drop-shadow(0 0 10px #FFC93C)}.pkey.pw.lit .pn{background:#FFC93C;color:var(--ink)}
-.pnstaff{display:block;height:min(26vh,200px);width:auto;max-width:100%;margin:2px auto 0;border:3px solid var(--ink);border-radius:16px;background:#FFFFFF}
+.pnstaff{display:block;height:min(48vh,360px);width:auto;max-width:100%;flex:0 1 auto;min-width:0;margin:2px auto 0;border:3px solid var(--ink);border-radius:16px;background:#FFFFFF}
 .pnstaff .pnh{transform-box:fill-box;transform-origin:center}.pnstaff .pnh.lit{animation:pnpop .45s ease-out}.pnstaff .pnh.lit ellipse{stroke:#FFC93C;stroke-width:6}
 @keyframes pnpop{40%{transform:scale(1.35)}}
+.pntop{display:flex;align-items:center;justify-content:center;gap:14px 18px;width:100%;max-width:980px}
+.pnside{display:flex;flex-direction:column;align-items:center;gap:8px;flex:0 0 auto;max-width:250px}
+.pnside .q{font-size:clamp(1.05rem,2.1vw,1.4rem);margin:0;text-align:center;line-height:1.25}.pnside .row{flex-direction:column;gap:6px}.pnside .btn{min-width:160px;padding:8px 14px;font-size:1.05rem}.pnside .pdots i{width:16px;height:16px}
+@media (orientation:portrait),(max-width:760px){.pntop{flex-direction:column}.pnside{max-width:none}.pnside .row{flex-direction:row}.pnside .btn{min-width:0}}
 .pnsw{display:inline-block;width:.85em;height:.85em;border-radius:50%;border:2px solid var(--ink);margin:0 1px;vertical-align:middle}
 .pkey.wait{filter:saturate(.75)}.pkey.bad{animation:shake .4s}
 .pdots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.pdots i{width:20px;height:20px;border-radius:50%;background:#D5DCE8;display:block}.pdots i.ok{background:var(--green)}.pdots i.bad{background:var(--red)}
@@ -3165,7 +3169,7 @@ const PN_CLEF='M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 
 function pnStaff(nk){const S=20,YB=130,y=p=>YB-(p-2)*S/2,x0=112,dx=Math.min(44,212/Math.max(1,nk-1));
   const lines=[0,1,2,3,4].map(k=>`<line x1="14" x2="346" y1="${YB-k*S}" y2="${YB-k*S}" stroke="#1D2433" stroke-width="${k===1?2.6:2}"/>`).join('');
   const notes=PN_KEYS.slice(0,nk).map(([c],i)=>{const x=x0+i*dx,yy=y(i);return `<g class="pnh" data-n="${i}">${i===0?`<line x1="${x-22}" x2="${x+22}" y1="${yy}" y2="${yy}" stroke="#1D2433" stroke-width="2.4"/>`:''}<ellipse cx="${x}" cy="${yy}" rx="13.6" ry="10" transform="rotate(-18 ${x} ${yy})" fill="${c}" stroke="#1D2433" stroke-width="3"/></g>`}).join('');
-  return `<svg class="pnstaff" viewBox="0 0 360 172" aria-hidden="true"><rect width="360" height="172" fill="#FFFFFF" rx="14"/>${lines}<path d="${PN_CLEF}" transform="translate(28 ${YB-S}) scale(${S/250} ${-S/250})" fill="#1D2433"/>${notes}</svg>`}
+  return `<svg class="pnstaff" viewBox="0 10 360 160" aria-hidden="true"><rect y="10" width="360" height="160" fill="#FFFFFF" rx="14"/>${lines}<path d="${PN_CLEF}" transform="translate(28 ${YB-S}) scale(${S/250} ${-S/250})" fill="#1D2433"/>${notes}</svg>`}
 // dibujo de una campanita (como las de la clase de música)
 function pnBell(c){const w=c==='#FFFFFF';return `<svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="90" rx="38" ry="8" fill="#F4F1EA" stroke="#C9C3B6" stroke-width="2"/>
   <rect x="45" y="6" width="10" height="14" rx="3" fill="#F4F1EA" stroke="#C9C3B6" stroke-width="2"/><ellipse cx="50" cy="7" rx="10" ry="4" fill="#FFFFFF" stroke="#C9C3B6" stroke-width="2"/>
@@ -3209,14 +3213,13 @@ function piano(){qCtx=null;qAns=false;const t=L(),run=++pnRun,nk=PN_KEYCOUNT[pnF
   const seqI=pnFree?-1:pnPick(),item=pnFree?null:PN_SEQ[pnLv][seqI],seq=item?item[0]:[],durs=item&&item[1]?item[1]:seq.map(()=>1),song=item?item[2]:null;
   const done=pnRec();
   stage.innerHTML=`<div class="modes" role="group">${[1,2,3].map(v=>`<button class="mode" data-pl="${v}" aria-pressed="${!pnFree&&v===pnLv}">${t.pnLevels[v-1]}</button>`).join('')}<button class="mode" data-pl="free" aria-pressed="${pnFree}">${t.pnFree}</button></div>
-   ${pnStaff(nk)}
-   <p class="q">${pnFree?t.pnFreeQ:t.pnQ}</p>
-   ${pnFree?'':`<div class="pdots">${seq.map(()=>'<i></i>').join('')}</div><div class="row"><button class="btn alt" id="pnAgain">${t.pnAgain}</button><button class="btn alt" id="pnSlow">${t.pnSlow}</button><span class="pncount">⭐ ${done[pnLv].length}/${PN_SEQ[pnLv].length}</span></div>`}
+   <div class="pntop">${pnStaff(nk)}<div class="pnside"><p class="q">${pnFree?t.pnFreeQ:t.pnQ}</p>
+   ${pnFree?'':`<div class="pdots">${seq.map(()=>'<i></i>').join('')}</div><div class="row"><button class="btn alt" id="pnAgain">${t.pnAgain}</button><button class="btn alt" id="pnSlow">${t.pnSlow}</button></div><span class="pncount">⭐ ${done[pnLv].length}/${PN_SEQ[pnLv].length}</span>`}</div></div>
    <div class="piano" style="--nk:${nk}">${PN_KEYS.slice(0,nk).map(([c,e],i)=>`<button class="pkey${c==='#FFFFFF'?' pw':''}" data-k="${i}" style="--kc:${c}" aria-label="${names[i]}">${pnBell(c)}<span class="pn">${names[i]}</span></button>`).join('')}</div>
    <p class="msg" aria-live="polite"></p>`;
   const msg=stage.querySelector('.msg'),keys=[...stage.querySelectorAll('.pkey')],dots=[...stage.querySelectorAll('.pdots i')];
   // el pentagrama se achica si no cabe todo en la pantalla (sin pasar de un tamaño legible)
-  {const sv=stage.querySelector('.pnstaff');if(sv){const fit=()=>{if(!sv.isConnected){removeEventListener('resize',fit);return}sv.style.height='';const over=document.documentElement.scrollHeight-innerHeight+34; // +34: sitio para el mensaje de 2 líneas («¡Bravo! 🎵 Frère Jacques»)
+  {const sv=stage.querySelector('.pnstaff');if(sv){const fit=()=>{if(!sv.isConnected){removeEventListener('resize',fit);return}sv.style.height='';const over=document.documentElement.scrollHeight-innerHeight+70; // +70: sitio para el mensaje de 2 líneas («¡Bravo! 🎵 Frère Jacques»)
     if(over>0)sv.style.height=Math.max(96,sv.getBoundingClientRect().height-over-4)+'px'};requestAnimationFrame(fit);addEventListener('resize',fit)}}
   stage.querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{if(b.dataset.pl==='free')pnFree=true;else{pnFree=false;pnLv=+b.dataset.pl}try{localStorage.setItem('peques-pianolv',pnLv);localStorage.setItem('peques-pianofree',pnFree?'1':'0')}catch(e){}stopSpeech();piano()});
   // al sonar una campanita se resalta también su nota en el pentagrama de arriba
@@ -3629,7 +3632,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=102; // se sube junto con la caché de sw.js
+const APP_VER=103; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
