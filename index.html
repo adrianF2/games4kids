@@ -3158,11 +3158,19 @@ function colorPage(idx,resume){const t=L(),pg=CP[idx];qCtx=null;qAns=false;
 let AC=null;
 function audioCtx(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){AC=null}}if(AC&&AC.state==='suspended'){try{AC.resume()}catch(e){}}return AC}
 const PN_FREQ=[261.63,293.66,329.63,349.23,392.00,440.00,493.88,523.25];
-// sonido de campanita (Web Audio, sin internet): ataque rápido y parciales que se apagan despacio
-function playNote(i,len=0.5){const a=audioCtx();if(!a)return;const t=a.currentTime+0.01,g=a.createGain();g.connect(a.destination);
-  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.006);g.gain.exponentialRampToValueAtTime(0.0001,t+len+1.3);
-  [[1,0.8],[2,0.22],[3,0.12],[4.16,0.05]].forEach(([m,v])=>{const o=a.createOscillator(),gg=a.createGain();o.type='sine';o.frequency.value=PN_FREQ[i]*m;
-    gg.gain.setValueAtTime(v,t);gg.gain.exponentialRampToValueAtTime(0.0001,t+(len+1.1)/Math.sqrt(m));o.connect(gg);gg.connect(g);o.start(t);o.stop(t+len+1.5)})}
+// sonido de campanita (Web Audio, sin internet), como las campanitas de mesa de la clase:
+// un golpe metálico corto + parciales no armónicos (como un cuenco de metal: ×2,76, ×5,40, ×8,93…) que se apagan rápido,
+// y la nota que queda vibrando con un leve batido (dos tonos casi iguales), que es lo que la hace sonar a campana y no a piano
+const BELL_P=[[1,1,2.6,0],[1,.45,2.4,1.8],[2.76,.45,.9,0],[5.40,.22,.35,0],[8.93,.12,.15,0],[13.34,.06,.08,0]];
+let bellNoise=null;
+function playNote(i,len=0.5){const a=audioCtx();if(!a)return;const t=a.currentTime+0.01,f=PN_FREQ[i],out=a.createGain();out.gain.value=0.26;out.connect(a.destination);
+  const k=Math.min(1.3,0.85+len*0.6);// las notas largas de la melodía vibran un poco más
+  BELL_P.forEach(([m,v,d,det])=>{const fr=f*m+det;if(fr>a.sampleRate/2-200)return;const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=fr;
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(v,t+0.002);g.gain.exponentialRampToValueAtTime(0.0001,t+d*k);o.connect(g);g.connect(out);o.start(t);o.stop(t+d*k+0.05)});
+  // el golpe: un chasquido de ruido muy corto y agudo
+  try{if(!bellNoise){const n=Math.floor(a.sampleRate*0.05);bellNoise=a.createBuffer(1,n,a.sampleRate);const c=bellNoise.getChannelData(0);for(let j=0;j<n;j++)c[j]=(Math.random()*2-1)*Math.exp(-j/(a.sampleRate*0.004))}
+    const src=a.createBufferSource(),hp=a.createBiquadFilter(),ng=a.createGain();src.buffer=bellNoise;hp.type='highpass';hp.frequency.value=3000;ng.gain.value=0.15;
+    src.connect(hp);hp.connect(ng);ng.connect(out);src.start(t)}catch(e){}}
 // pentagrama de arriba: las notas de las campanitas en su sitio (clave de sol), de su color; se resaltan al sonar
 // Clave de sol: glifo de la fuente Bravura (SIL Open Font License 1.1).
 const PN_CLEF='M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z';
@@ -3632,7 +3640,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=104; // se sube junto con la caché de sw.js
+const APP_VER=105; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
