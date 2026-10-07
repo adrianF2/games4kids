@@ -3656,7 +3656,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=103; // se sube junto con la caché de sw.js
+const APP_VER=104; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5458,10 +5458,10 @@ function ntIntroAll(){const t=NTT(),xs=[...Array(8).keys()].map(i=>112+i*32);
   const one=i=>{lit(i);playBell(i);say(ntName(i))};
   stage.querySelectorAll('.nthead.sc').forEach(h=>h.onclick=()=>one(+h.dataset.n));
   stage.querySelectorAll('.ntbell').forEach(b=>b.onclick=()=>one(+b.dataset.v));
-  let run=0;const scale=()=>{const my=++run;let k=0;const step=()=>{if(my!==run||current!=='notas'||k>7){if(k>7)lit(-1);return}one(k++);setTimeout(step,1000)};step()};
+  let run=0;const scale=()=>{const my=++run;let k=0;const step=()=>{if(my!==run||current!=='notas'||k>7){if(k>7)lit(-1);return}one(k++);afterSpeech(step,400,4000,550)};step()};
   document.getElementById('ntScale').onclick=scale;
   document.getElementById('ntNext').onclick=()=>{run++;const d=ntData();d.intro=true;for(let i=0;i<8;i++)ntRec(i).seen=true;saveP();notas()};
-  later(()=>{say(t.allSay);setTimeout(scale,2600)},300)}
+  later(()=>{say(t.allSay);afterSpeech(scale,500,9000,600)},300)}
 // acierto: suena la campanita, la voz dice el nombre y la felicitación; la estrella solo a la primera
 function ntWin(el,i){const calm=agCalm();noteAns(true);el.classList.add('right');playBell(i);ntRQ=ntRQ&&ntRQ.n===i?null:ntRQ;
   const m=stage.querySelector('.msg'),go=d=>{stage.querySelectorAll('.pick,.ntzone').forEach(b=>{b.disabled=true;b.classList.add('agwait')});setTimeout(()=>{if(current==='notas')notas()},d)};
