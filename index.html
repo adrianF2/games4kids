@@ -28,6 +28,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;fl
 .hright{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 h1{font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:clamp(2rem,6vw,2.8rem);line-height:1;margin:0;text-wrap:balance}
 h1 span:nth-child(1){color:var(--red)}h1 span:nth-child(2){color:var(--blue)}h1 span:nth-child(3){color:var(--green)}
+.bigstar{position:fixed;left:50%;top:45%;z-index:65;pointer-events:none;font-size:min(42vmin,260px);line-height:1;opacity:0;filter:drop-shadow(0 6px 22px rgba(255,176,0,.6));animation:bigStar 1.15s ease-out forwards}
+@keyframes bigStar{0%{transform:translate(-50%,-50%) scale(.2) rotate(-30deg);opacity:0}22%{transform:translate(-50%,-50%) scale(1.18) rotate(8deg);opacity:1}40%{transform:translate(-50%,-50%) scale(1) rotate(0)}70%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(.12);opacity:.3}}
+.stars.bump{animation:starBump .35s ease-out}@keyframes starBump{50%{transform:scale(1.3)}}
 .stars{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.5rem;background:var(--yellow);border-radius:999px;padding:4px 18px;font-variant-numeric:tabular-nums}
 .langs{display:flex;gap:4px;background:var(--card);border:2px solid var(--ink);border-radius:999px;padding:3px}
 .lang{font:800 .95rem "Baloo 2",sans-serif;border:none;border-radius:999px;padding:4px 12px;background:transparent;color:var(--ink);cursor:pointer}
@@ -691,7 +694,7 @@ const T={
 <li><b>En Componer, la explicación sigue los pasos</b> iluminando las cosas en silencio: en «Uno más» enseña las que hay, las que llegan o se van y el resultado («Ahora hay 4 manzanas»); en «Escondidos» enseña las que se ven y levanta el vaso (o enseña los puntos de los dos dados); en «Más o menos» enseña cada plato, las pone una con una y señala las que sobran.</li>
 <li><b>Menos opciones</b> en lo que más le cuesta: 3 en vez de 4, o 2 si le cuesta mucho, hasta que empiece a acertar.</li>
 <li><b>Si lo sabe pero va con prisa</b> (falla algo que suele acertar y toca en menos de un segundo): las opciones se ponen grises un segundo, la voz dice «Escucha bien», repite la pregunta y las opciones cambian de sitio. Si vuelve a fallar, se le enseña la respuesta como arriba.</li>
-<li><b>La estrella ⭐ y el «¡Bravo!»</b> solo se ganan acertando a la primera. Si acierta después de fallar oye un «Eso es» tranquilo: sin reproches ni sonidos de error.</li>
+<li><b>La estrella ⭐ y el «¡Bravo!»</b> solo se ganan acertando a la primera: al ganarla aparece un momento una estrella grande en la pantalla, que vuela al contador de arriba. Si acierta después de fallar oye un «Eso es» tranquilo: sin reproches ni sonidos de error.</li>
 <li><b>El búho 🦉:</b> si adivina en 3 preguntas seguidas, dice con calma «Despacito: primero mira bien y luego toca». Si sigue adivinando, propone otra actividad (si las sugerencias están activadas).</li>
 <li><b>Dónde se aplica:</b> Contar, Orden, Escuchar, Colores, Formas, Objetos, Patrones, Letras, Cuentos, Componer (menos «Tantos como»), Comparar (menos ordenar del nivel difícil) y Dónde está (menos «Ponlo»). No cambia Poner, Decir, Parejas, Escribir 123, Escribir ABC, Trazos, Laberintos, Dibujar, Colorear ni Piano.</li>
 <li><b>Seguimiento:</b> como siempre, solo cuenta el primer intento. En «📅 Actividad» ves qué % de preguntas resuelve por descarte en cada actividad; en «🔢 Números y letras» y «🧸 Palabras», en qué adivina más (suele ser lo que todavía no sabe).</li>
@@ -835,7 +838,7 @@ const T={
 <li><b>In Bonds, the explanation follows the steps</b>, lighting things up silently: in “One more” it shows what is there, what arrives or goes away and the result (“Now there are 4 apples”); in “Hidden” it shows what can be seen and lifts the cup (or shows the dots on both dice); in “More or less” it shows each plate, matches them one with one and points out the ones left over.</li>
 <li><b>Fewer options</b> for what she finds hardest: 3 instead of 4, or 2 if it is very hard, until she starts getting it right.</li>
 <li><b>If she knows it but rushes</b> (gets wrong something she usually gets right, tapping in under a second): the options go grey for a second, the voice says “Listen carefully”, repeats the question and the options move around. If she gets it wrong again, the answer is shown as above.</li>
-<li><b>The star ⭐ and “Well done!”</b> are only earned on the first try. If she gets it right after a mistake she hears a calm “That’s it”: no telling off, no error sounds.</li>
+<li><b>The star ⭐ and “Well done!”</b> are only earned on the first try: when she wins one, a big star appears on the screen for a moment and flies to the counter at the top. If she gets it right after a mistake she hears a calm “That’s it”: no telling off, no error sounds.</li>
 <li><b>The owl 🦉:</b> if she guesses on 3 questions in a row, it calmly says “Slowly: look carefully first, then tap”. If she keeps guessing, it suggests another activity (if suggestions are on).</li>
 <li><b>Where it applies:</b> Count, Order, Listen, Colors, Shapes, Objects, Patterns, Letters, Stories, Bonds (except “As many as”), Compare (except ordering at the hard level) and Where is it (except “Put it”). Put, Say it, Pairs, Write 123, Write ABC, Lines, Mazes, Draw, Coloring and Piano don’t change.</li>
 <li><b>Tracking:</b> as always, only the first try counts. In “📅 Activity” you can see the % of questions solved by elimination in each activity; in “🔢 Numbers and letters” and “🧸 Words”, where she guesses most (usually what she doesn’t know yet).</li>
@@ -979,7 +982,7 @@ const T={
 <li><b>Dans Composer, l’explication suit les étapes</b> en allumant les objets en silence : dans « Un de plus », elle montre ce qu’il y a, ce qui arrive ou s’en va et le résultat (« Maintenant il y a 4 pommes ») ; dans « Cachés », elle montre ce qu’on voit et soulève le gobelet (ou montre les points des deux dés) ; dans « Plus ou moins », elle montre chaque assiette, les met un avec un et montre ceux qui restent en trop.</li>
 <li><b>Moins de choix</b> pour ce qui lui est le plus difficile : 3 au lieu de 4, ou 2 si c’est très difficile, jusqu’à ce qu’il commence à réussir.</li>
 <li><b>S’il la connaît mais va trop vite</b> (il rate ce qu’il réussit d’habitude en touchant en moins d’une seconde) : les choix deviennent gris une seconde, la voix dit « Écoute bien », répète la question et les choix changent de place. S’il se trompe encore, la réponse lui est montrée comme ci-dessus.</li>
-<li><b>L’étoile ⭐ et le « Bravo ! »</b> ne se gagnent que du premier coup. S’il trouve après une erreur, il entend un « C’est ça » calme : pas de reproches ni de sons d’erreur.</li>
+<li><b>L’étoile ⭐ et le « Bravo ! »</b> ne se gagnent que du premier coup : quand il en gagne une, une grande étoile apparaît un instant à l’écran et s’envole vers le compteur en haut. S’il trouve après une erreur, il entend un « C’est ça » calme : pas de reproches ni de sons d’erreur.</li>
 <li><b>Le hibou 🦉 :</b> s’il devine 3 questions de suite, il dit calmement « Doucement : regarde bien d’abord, puis touche ». S’il continue à deviner, il propose une autre activité (si les suggestions sont activées).</li>
 <li><b>Où ça s’applique :</b> Compter, Ordre, Écoute, Couleurs, Formes, Objets, Suites, Lettres, Histoires, Composer (sauf « Autant que »), Comparer (sauf ranger au niveau difficile) et Où est-il (sauf « Place-le »). Rien ne change dans Mettre, Dis-le, Paires, Écrire 123, Écrire ABC, Graphisme, Labyrinthes, Dessiner, Colorier et Piano.</li>
 <li><b>Suivi :</b> comme toujours, seul le premier essai compte. Dans « 📅 Activité », vous voyez le % de questions résolues par élimination dans chaque activité ; dans « 🔢 Nombres et lettres » et « 🧸 Mots », là où il devine le plus (en général ce qu’il ne sait pas encore).</li>
@@ -1016,6 +1019,13 @@ const L=()=>T[lang];
 
 const stage=document.getElementById('stage'), scoreEl=document.getElementById('score');
 let score=0,current='contar';
+// cada estrella ganada: una ⭐ grande aparece un momento en el centro y vuela al contador de arriba (no tapa los toques)
+let scoreShown=0;
+function setScore(){const up=score>scoreShown;scoreShown=score;scoreEl.textContent=score;if(up)bigStar()}
+function bigStar(){try{document.querySelectorAll('.bigstar').forEach(x=>x.remove());const st=scoreEl.closest('.stars')||scoreEl,r=st.getBoundingClientRect();
+  const el=document.createElement('div');el.className='bigstar';el.textContent='⭐';el.setAttribute('aria-hidden','true');
+  el.style.setProperty('--tx',Math.round(r.left+r.width/2-innerWidth/2)+'px');el.style.setProperty('--ty',Math.round(r.top+r.height/2-innerHeight*.45)+'px');
+  document.body.appendChild(el);setTimeout(()=>{el.remove();st.classList.remove('bump');void st.offsetWidth;st.classList.add('bump')},1150)}catch(e){}}
 const rand=n=>Math.floor(Math.random()*n);
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
 
@@ -1260,7 +1270,7 @@ function czAnsSize(dim,nm,g,more,eq){const T=AGT();if(eq)return T.czEq;const A=C
 
 function win(btn,next){const calm=agCalm();noteAns(true);btn.classList.add('right');
   if(calm){trackRight();stage.querySelectorAll('.agwait').forEach(e=>e.classList.remove('agwait'));const d=agCalmWin(stage.querySelector('.msg'));stage.querySelectorAll('.pick').forEach(b=>b.disabled=true);setTimeout(()=>{if(current===next.name)next()},d);return}
-  agEnd();score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)],cele=trackRight(),m=stage.querySelector('.msg');
+  agEnd();score++;setScore();const p=L().praise[rand(L().praise.length)],cele=trackRight(),m=stage.querySelector('.msg');
   if(cele){m.innerHTML=`${p} ⭐<br>🎉 ${cele}`;saySeq([[p,lang],[cele,lang]],{rate:.9,gap:250})}else{m.textContent=p+' ⭐';say(p)}stage.querySelectorAll('.pick').forEach(b=>b.disabled=true);setTimeout(()=>{if(current===next.name)next()},cele?3200:1400)}
 function miss(btn,ans){trackWrong(ans!==undefined?ans:(btn.dataset&&btn.dataset.v));btn.classList.remove('wrong');void btn.offsetWidth;btn.classList.add('wrong');if(agMiss(btn))return;stage.querySelector('.msg').textContent=L().miss;say(L().miss)}
 function frame(q,body){qCtx=null;qAns=false;agReset();stage.innerHTML=`<p class="q">${q}</p>${body}<p class="msg" aria-live="polite"></p><button class="btn alt" id="hear">${L().hear}</button>`;document.getElementById('hear').onclick=()=>say(q.replace(/<[^>]+>/g,''))}
@@ -2154,7 +2164,7 @@ function writeModes(){if(!nameSeq().length)return;
   stage.querySelectorAll('[data-wm]').forEach(b=>b.onclick=()=>{wMode=b.dataset.wm;nameIdx=0;try{localStorage.setItem('peques-wmode',wMode)}catch(e){}stopSpeech();escletras()})}
 // Tira con el nombre: letras ya escritas, la actual y las que faltan
 function nameStrip(seq,i){return `<div class="namestrip" aria-hidden="true">${seq.map((c,k)=>`<span class="${k<i?'ok':k===i?'cur':''}">${k<=i?c:'·'}</span>`).join('')}</div>`}
-function nameDone(){nameIdx=0;const nm=kidName().trim();score+=3;scoreEl.textContent=score;
+function nameDone(){nameIdx=0;const nm=kidName().trim();score+=3;setScore();
   frame(L().nameDone(nm),`<div class="namestrip big">${nameSeq().map(c=>`<span class="ok">${c}</span>`).join('')}</div><div class="row"><button class="btn big" id="again">${L().nameAgain}</button></div>`);
   stage.querySelector('.msg').textContent='⭐⭐⭐';
   document.getElementById('hear').hidden=true;document.getElementById('again').onclick=escletras;
@@ -2173,7 +2183,7 @@ function memoria(){const animals=shuffle(['🐶','🐱','🐰','🐸','🐷','�
     c.classList.add('open');open.push(c);
     if(open.length===2){lock=true;const[a,b]=open;
       if(a.textContent===b.textContent){setTimeout(()=>{a.classList.add('done');b.classList.add('done');open=[];lock=false;found++;
-        if(found===animals.length){score+=3;scoreEl.textContent=score;stage.querySelector('.msg').innerHTML=`${L().allFound} ⭐⭐⭐ <br><button class="btn" id="again">${L().again}</button>`;say(L().allFound);document.getElementById('again').onclick=memoria}},400)}
+        if(found===animals.length){score+=3;setScore();stage.querySelector('.msg').innerHTML=`${L().allFound} ⭐⭐⭐ <br><button class="btn" id="again">${L().again}</button>`;say(L().allFound);document.getElementById('again').onclick=memoria}},400)}
       else setTimeout(()=>{a.classList.remove('open');b.classList.remove('open');open=[];lock=false},900)}})}
 
 // Patrones: ¿qué sigue en la fila?
@@ -2713,7 +2723,7 @@ function storyItems(st){return [...st.q.map(q=>({type:'q',q})),...(st.seq?[{type
 function storyDots(st,k){const items=storyItems(st);return `<div class="sdots">${items.map((_,i)=>`<span class="${i<k?'ok':i===k?'cur':''}"></span>`).join('')}</div>`}
 function storyRight(btn,next){const calm=agCalm();noteAns(true);btn.classList.add('right');
   if(calm){const d=agCalmWin(stage.querySelector('.msg'));stage.querySelectorAll('.pick,.card').forEach(b=>b.disabled=true);later(next,d);return}
-  agEnd();score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
+  agEnd();score++;setScore();const p=L().praise[rand(L().praise.length)];
   stage.querySelector('.msg').textContent=p+' ⭐';say(p);stage.querySelectorAll('.pick,.card').forEach(b=>b.disabled=true);later(next,1500)}
 function storyQuiz(st,k){qCtx=null;qAns=false;agReset();const items=storyItems(st);if(k>=items.length)return storyEnd(st);const it=items[k];
   const replay=()=>narrate(st,()=>{},null);
@@ -2741,7 +2751,7 @@ function storyQuiz(st,k){qCtx=null;qAns=false;agReset();const items=storyItems(s
     agQ({opts:'.card',noShuffle:true,right:()=>stage.querySelector(`.card[data-v="${order[got]}"]`),emoji:()=>order[got],
       say:()=>{const o=AGT().seqOrd,i=got===0?0:got===order.length-1?3:got===1?1:2,d=desc(order[got]);return d?`${o[i]}: ${d}.`:o[i]+'.'}});
     later(ask,300)}}
-function storyEnd(st){markHeard(st);score+=2;scoreEl.textContent=score;
+function storyEnd(st){markHeard(st);score+=2;setScore();
   stage.innerHTML=`<div class="storypic">${st.pic}</div><p class="q">🎉 ${L().storyDone} ⭐⭐</p><div class="row"><button class="btn big" id="sNext">${L().anotherStory}</button><button class="btn alt" id="sAgain">${L().listenStory}</button></div>`;
   storyLevelBar();say(L().storyDone);
   document.getElementById('sNext').onclick=()=>{stopSpeech();cuentos()};
@@ -3079,11 +3089,11 @@ function colorPage(idx,resume){const t=L(),pg=CP[idx];qCtx=null;qAns=false;
     // cada parte cuenta como una respuesta: acierto si el primer color que recibe es el pedido
     const answer=(ok,i)=>{if(s.answered.has(i))return;s.answered.add(i);qAns=false;noteAns(ok);qAns=false};
     if(sayMode2){const h=pg.hints[s.step];if(!h)return;const Lb=hintLabel(h);if(!touched.has(Lb))return;const c=cover(Lb,PCOL[h[2]]);
-      if(c.hit>=0.6){answer(true,s.step);score++;scoreEl.textContent=score;s.step++;const p=t.praise[rand(t.praise.length)];msg.textContent=p+' ⭐';
+      if(c.hit>=0.6){answer(true,s.step);score++;setScore();s.step++;const p=t.praise[rand(t.praise.length)];msg.textContent=p+' ⭐';
         const nx=instr();saySeq([[p,lang],[nx,lang]],{gap:300});if(s.step>=pg.hints.length)stage.querySelector('#cDone').classList.add('pulse')}
       else if(c.other>=0.5){answer(false,s.step);const w=t.colWrong(t.colors[h[2]]);msg.textContent=w;say(w)}}
     if(numMode){for(let i=0;i<pg.hints.length;i++){const h=pg.hints[i],Lb=hintLabel(h);if(!touched.has(Lb)||s.okH.has(i))continue;const c=cover(Lb,PCOL[h[2]]);
-        if(c.hit>=0.6){s.okH.add(i);answer(true,i);score++;scoreEl.textContent=score}
+        if(c.hit>=0.6){s.okH.add(i);answer(true,i);score++;setScore()}
         else if(c.other>=0.5){answer(false,i);const n=s.numCols.indexOf(h[2])+1,w=t.colNumWrong(n);msg.textContent=w;say(w)}}
       if(s.okH.size===pg.hints.length)finish()}};
   const fillAt=(L,hex)=>{const id=x.getImageData(0,0,CPR,CPR),d=id.data;const er=hex===null,[r,g,b]=er?[0,0,0]:hexRGB(hex);
@@ -3124,7 +3134,7 @@ function colorPage(idx,resume){const t=L(),pg=CP[idx];qCtx=null;qAns=false;
   cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
   async function finish(){if(s.finished)return;s.finished=true;const out=document.createElement('canvas');out.width=out.height=CPR;const o=out.getContext('2d');o.fillStyle='#FFFFFF';o.fillRect(0,0,CPR,CPR);o.drawImage(cv,0,0);o.drawImage(m.lines,0,0);
     const ok=await saveArt(out,'color');const done=doneColored();if(!done.includes(pg.id)&&!window.__guest){done.push(pg.id);try{localStorage.setItem('peques-colored',JSON.stringify(done))}catch(e){}}
-    score+=3;scoreEl.textContent=score;
+    score+=3;setScore();
     let prec='';if(s.inPx+s.outPx>2000){const r=s.outPx/(s.inPx+s.outPx);prec=t.colPrecision[r<0.04?2:r<0.12?1:0]}
     msg.innerHTML=`${prec?prec+'<br>':''}${ok?t.colFinished:'⭐⭐⭐'} <br><button class="btn" id="cAgain">${t.colAnother}</button>`;
     saySeq([...(prec?[[prec.replace(/[⭐]/g,''),lang]]:[]),[t.colFinished.replace(/[⭐]/g,''),lang]],{gap:300});
@@ -3198,7 +3208,7 @@ function piano(){qCtx=null;qAns=false;const t=L(),run=++pnRun,nk=PN_KEYCOUNT[pnF
     if(demo||finished)return;playNote(i,0.5);flash(i,260);
     if(!counted){counted=true;pnStat(pnLv,seqI).a++}
     if(i===seq[pos]){dots[pos].className='ok';pos++;
-      if(pos===seq.length){finished=true;noteAns(true);score++;scoreEl.textContent=score;
+      if(pos===seq.length){finished=true;noteAns(true);score++;setScore();
         if(!fails)pnStat(pnLv,seqI).f++;const d=pnRec()[pnLv];if(!d.includes(seqI))d.push(seqI);saveP();
         const p=t.praise[rand(t.praise.length)],sn=song?PN_SONGS[song][lang]:'';
         msg.innerHTML=`${p} ⭐${sn?`<br>🎵 ${t.pnSong(sn)}`:''}`;stage.querySelector('.pncount').textContent=`⭐ ${d.length}/${PN_SEQ[pnLv].length}`;
@@ -3514,7 +3524,7 @@ function trazos(){qCtx=null;qAns=false;const run=++tzRun,t=L(),tt=TZ_T[lang],sc=
   const finish=()=>{if(finished)return;const prec=precision();
     if(prec<.6){fail(tt.messy);return}
     finished=true;const rev=reversed();let stars=prec>=.85&&!fails?3:prec>=.7&&fails<=1?2:1;if(rev)stars=Math.min(stars,2);
-    const [st,s]=stat();if(!fails){st.f++;s.f++}if(rev)st.rev++;s.b=Math.max(s.b||0,stars);saveP();noteAns(!fails);score++;scoreEl.textContent=score;
+    const [st,s]=stat();if(!fails){st.f++;s.f++}if(rev)st.rev++;s.b=Math.max(s.b||0,stars);saveP();noteAns(!fails);score++;setScore();
     stage.querySelectorAll('.drawbtns button:not(#hear),[data-tl]').forEach(b=>b.disabled=true);pad.classList.add('right');
     okEls.forEach((e,i)=>{e.setAttribute('opacity','.9');gEls[i].setAttribute('opacity','.15')});cv.style.opacity='.55';
     const p=t.praise[rand(t.praise.length)];msg.innerHTML=`${p} ${'⭐'.repeat(stars)}${rev?`<br><small>${tt.rev}</small>`:''}`;
@@ -3592,7 +3602,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=98; // se sube junto con la caché de sw.js
+const APP_VER=99; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4178,7 +4188,7 @@ function donde(){const t=DN_T[lang],rec=dnRec(),lv=dnLv;let over=false,first=tru
     if(!ok&&chosen&&chosen!==rels[0]){const k=[rels[0],chosen].sort().join('>');rec.conf[k]=(rec.conf[k]||0)+1}saveP()};
   const good=(el,sentence)=>{if(over)return;over=true;const calm=agCalm();noteAns(true);if(el)el.classList.add('right');
     if(calm){const d=agCalmWin(msgEl());setTimeout(()=>{if(current==='donde')donde()},d);return}
-    agEnd();score++;scoreEl.textContent=score;const p=L().praise[rand(L().praise.length)];
+    agEnd();score++;setScore();const p=L().praise[rand(L().praise.length)];
     msgEl().innerHTML=`${p} ⭐<br><small>${esc(sentence)}</small>`;saySeq([[p,lang],[sentence,lang]],{gap:250});afterSpeech(()=>{if(current==='donde')donde()},1200,10000)};
   const bar=()=>stage.insertAdjacentHTML('afterbegin',`<div class="cmpbar"><div class="modes cmpmodes" role="group">${DN_MODES.map((m,i)=>`<button class="mode" data-dm="${m}" aria-pressed="${m===dnMode}">${t.modes[i]}</button>`).join('')}</div><div class="modes cmplv" role="group">${[1,2,3].map(v=>`<button class="mode" data-dl="${v}" aria-pressed="${v===dnLv}" aria-label="${L().pnLevels[v-1]}" title="${L().pnLevels[v-1]}">${L().pnLevels[v-1].split(' ')[0]}</button>`).join('')}</div></div>`);
   const bind=(speak=true)=>{if(speak)sayQuestion();stage.querySelectorAll('[data-dm]').forEach(b=>b.onclick=()=>{dnMode=b.dataset.dm;try{localStorage.setItem('peques-dnmode',dnMode)}catch(e){}stopSpeech();donde()});
@@ -4354,7 +4364,7 @@ function laberinto(n){qCtx=null;qAns=false;const t=L(),tt=LB_T[lang],rec=lbRec()
   const toc=()=>{try{const a=audioCtx();if(!a)return;const o=a.createOscillator(),g=a.createGain();o.frequency.value=150;o.type='triangle';g.gain.setValueAtTime(.25,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.15);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.16)}catch(e){}};
   const bump=()=>{const now2=Date.now();if(now2-lastBump<700)return;lastBump=now2;bumps++;toc();const tx=me.querySelector('text');tx.classList.remove('lbshake');void tx.getBoundingClientRect();tx.classList.add('lbshake');msg.textContent=tt.bump};
   const finish=()=>{finished=true;const clean=!bumps&&!hints,stars=clean?3:bumps<=3&&hints<=1?2:1,s=st();s.a++;if(clean)s.f++;s.b+=bumps;s.h+=hints;
-    rec.done[m.id]=Math.max(rec.done[m.id]||0,stars);saveP();noteAns(clean);score++;scoreEl.textContent=score;hintG.innerHTML='';
+    rec.done[m.id]=Math.max(rec.done[m.id]||0,stars);saveP();noteAns(clean);score++;setScore();hintG.innerHTML='';
     svg.querySelector('.lbgoal').classList.add('lbwin');me.querySelector('text').classList.add('lbwin');svg.querySelector('.lbstart').style.display='none';
     const p=t.praise[rand(t.praise.length)];msg.innerHTML=`${p} ${'⭐'.repeat(stars)}`;stage.querySelector('.pncount').textContent=`⭐ ${Object.keys(rec.done).filter(k=>k.startsWith(lbLv+'-')).length}/${LB_PER}`;
     saySeq([[p,lang],[tt.arrived,lang]],{gap:200});const run=lbCur;afterSpeech(()=>{if(current==='laberinto'&&lbCur===run)laberinto()},1600,10000)};
