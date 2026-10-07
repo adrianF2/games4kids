@@ -706,7 +706,7 @@ const T={
 <li><b>👨 Aparato de un padre:</b> aparece la pestaña <b>«👨‍👩‍👧 Familia»</b> con los peques (archivar, borrar), los aparatos (quitar) y los últimos cambios de ajustes. Arriba eliges el peque y ves sus gráficos, de qué aparato vienen los datos y quién hizo el último cambio. Cada cambio que hagas se envía solo y <b>firmado con tu nombre</b>; los cambios seguidos se agrupan y se envían 2 segundos después del último toque, con una sola línea en el historial (por ejemplo «actividades visibles (−Contar, −Orden)»). Los cambios se combinan campo por campo: si dos padres cambian cosas distintas a la vez, aunque sea dentro del mismo ajuste (dos actividades, dos días del límite), se quedan las dos, y lo que cambias en tu aparato nunca se pierde aunque llegue otro cambio mientras tanto. «+ / − minutos» y «Sin límite hoy» se envían como órdenes para hoy y se aplican una sola vez. Aquí no cuenta el tiempo de pantalla ni se bloquea la app: no lo uses para que juegue un peque.</li>
 <li><b>Cambiar de modo:</b> al pasar un aparato de peque a padre, antes se envía lo último jugado (sin internet, se guarda y se envía al volver). Un aparato que era de padre y pasa a «peque nuevo» empieza vacío.</li>
 <li><b>Borrar progreso y copias:</b> «🗑️ Borrar progreso» o «📂 Recuperar copia» en un aparato sincronizado se convierte en el estado de ese peque en todos sus aparatos (en el de un padre, del peque elegido); no se mezcla con lo anterior.</li>
-<li><b>Si un intento falla:</b> el script de Google atiende los cambios de uno en uno, así que a veces un aparato tiene que esperar su turno. La app lo reintenta sola en unos segundos y no lo marca como problema; solo avisa con ⚠️ si falla varias veces seguidas, lleva más de 10 minutos sin sincronizar o el error necesita que hagas algo (clave, permisos, script antiguo). Justo después de publicar una versión nueva del script, Google puede tardar unos minutos en usarla en todos sus servidores: mientras tanto algún intento puede fallar y se reintenta solo. En «☁️ Sincronizar» puedes ver los «🕘 Últimos problemas», y «🩺 Probar la conexión» hace 20 consultas seguidas (sin tocar el Drive) y dice cuántas salieron bien, cuánto tardaron y qué errores dio Google.</li>
+<li><b>Si un intento falla:</b> el script de Google atiende los cambios de uno en uno, así que a veces un aparato tiene que esperar su turno. Cada vuelta de sincronización es una sola consulta (lo nuevo del peque, sus ajustes y quién está conectado), y si la conexión con Google falla o Google responde con una página de error, la app la repite al momento. Si aun así no sale, lo reintenta sola en unos segundos y no lo marca como problema; solo avisa con ⚠️ si falla varias veces seguidas, lleva más de 10 minutos sin sincronizar o el error necesita que hagas algo (clave, permisos, script antiguo). Justo después de publicar una versión nueva del script, Google puede tardar unos minutos en usarla en todos sus servidores: mientras tanto algún intento puede fallar y se reintenta solo. En «☁️ Sincronizar» puedes ver los «🕘 Últimos problemas», y «🩺 Probar la conexión» hace 20 consultas seguidas (sin tocar el Drive) y dice cuántas salieron bien, cuánto tardaron y qué errores dio Google.</li>
 <li><b>Versiones en el Drive:</b> se guardan las 5 últimas y una por día durante 30 días. En «⚙️ Ajustes → 💾 Datos → 🕘 Ver versiones» puedes recuperar una; pasa a ser el estado actual del peque en todos sus aparatos. Los peques que ya no usan la app se pueden archivar (y recuperar) o borrar: su carpeta (progreso, ajustes y versiones) va a la papelera de tu Drive y se puede recuperar desde allí durante 30 días. Al desactivar la sincronización en un aparato, este sale de la lista y deja libre a su peque; un aparato perdido o roto se puede quitar con «🗑️ Quitar» desde el aparato de un padre, y si un aparato lleva más de 30 días sin conectarse, la app permite borrar a su peque tras avisar. No se pueden crear dos peques con el mismo nombre: si ya existe, la app lo propone para seguir con su progreso.</li>
 <li><b>Sin bucles:</b> leer nunca provoca escribir, y un aparato que no ha cambiado nada no vuelve a enviar. Con la app oculta (otra app, la pantalla apagada o una pestaña que no estás mirando) no pregunta nada a Google: solo termina de enviar lo pendiente, y al volver a la app sincroniza enseguida. Además, el script guarda una copia rápida de los datos en la memoria de Google, así las consultas frecuentes no tocan el Drive ni gastan el límite diario que Google pone a los scripts.</li>
 <li><b>Sin internet:</b> la app sigue funcionando con normalidad; los cambios quedan en cola y se envían y reciben cuando vuelve la conexión. En «☁️ Sincronizar» ves cuándo fue la última sincronización, y arriba del panel un aviso pequeño (☁️, 📴 o ⚠️) que lleva allí al tocarlo.</li>
@@ -848,7 +848,7 @@ const T={
 <li><b>👨 A parent’s device:</b> the <b>“👨‍👩‍👧 Family”</b> tab appears with the children (archive, delete), the devices (remove) and the latest settings changes. At the top you choose the child and see their charts, which device the data comes from and who made the last change. Every change you make is sent on its own and <b>signed with your name</b>; changes made one after another are grouped and sent 2 seconds after the last tap, with a single line in the history (for example “visible activities (−Count, −Order)”). Changes are merged field by field: if two parents change different things at the same time, even within the same setting (two activities, two days of the limit), both are kept, and what you change on your device is never lost even if another change arrives meanwhile. “+ / − minutes” and “No limit today” are sent as orders for today and applied only once. Screen time isn’t counted here and the app never locks: don’t use it for a child to play.</li>
 <li><b>Changing mode:</b> when a device goes from child to parent, the last play is sent first (without internet, it is kept and sent when back online). A device that was a parent’s and becomes a “new child” starts empty.</li>
 <li><b>Erasing progress and backups:</b> “🗑️ Reset progress” or “📂 Restore backup” on a synced device becomes that child’s state on all their devices (on a parent’s device, the selected child’s); it isn’t mixed with what was there.</li>
-<li><b>If an attempt fails:</b> the Google script handles changes one at a time, so sometimes a device has to wait its turn. The app retries on its own within seconds and doesn’t flag it as a problem; it only shows ⚠️ if it fails several times in a row, hasn’t synced for more than 10 minutes, or the error needs you to do something (key, permissions, old script). Right after deploying a new version of the script, Google may take a few minutes to use it on all its servers: meanwhile an attempt may fail and is retried on its own. In “☁️ Sync” you can see the “🕘 Latest problems”, and “🩺 Test the connection” makes 20 requests in a row (without touching Drive) and tells you how many succeeded, how long they took and which errors Google gave.</li>
+<li><b>If an attempt fails:</b> the Google script handles changes one at a time, so sometimes a device has to wait its turn. Each sync round is a single request (what’s new for the child, their settings and who is connected), and if the connection with Google fails or Google answers with an error page, the app repeats it right away. If it still fails, it retries on its own within seconds and doesn’t flag it as a problem; it only shows ⚠️ if it fails several times in a row, hasn’t synced for more than 10 minutes, or the error needs you to do something (key, permissions, old script). Right after deploying a new version of the script, Google may take a few minutes to use it on all its servers: meanwhile an attempt may fail and is retried on its own. In “☁️ Sync” you can see the “🕘 Latest problems”, and “🩺 Test the connection” makes 20 requests in a row (without touching Drive) and tells you how many succeeded, how long they took and which errors Google gave.</li>
 <li><b>Versions in Drive:</b> the last 5 are kept, plus one per day for 30 days. In “⚙️ Settings → 💾 Data → 🕘 See versions” you can restore one; it becomes the child’s current state on all their devices. Children who no longer use the app can be archived (and restored) or deleted: their folder (progress, settings and versions) goes to your Drive trash and can be restored from there for 30 days. When sync is turned off on a device, it leaves the list and frees its child; a lost or broken device can be removed with “🗑️ Remove” from a parent’s device, and if a device hasn’t connected for more than 30 days, the app lets you delete its child after a warning. Two children can’t have the same name: if it already exists, the app offers it so you continue with their progress.</li>
 <li><b>No loops:</b> reading never causes writing, and a device that hasn’t changed anything doesn’t send again. While the app is hidden (another app, the screen off or a tab you’re not looking at) it asks Google nothing: it only finishes sending what’s pending, and syncs right away when you come back. The script also keeps a quick copy of the data in Google’s memory, so frequent checks don’t touch Drive or use up the daily limit Google sets for scripts.</li>
 <li><b>Without internet:</b> the app keeps working normally; changes are queued and sent and received when the connection is back. In “☁️ Sync” you see when the last sync happened, and at the top of the panel a small notice (☁️, 📴 or ⚠️) takes you there when tapped.</li>
@@ -990,7 +990,7 @@ const T={
 <li><b>👨 Appareil d’un parent :</b> l’onglet <b>« 👨‍👩‍👧 Famille »</b> apparaît avec les enfants (archiver, supprimer), les appareils (retirer) et les derniers changements de réglages. En haut, vous choisissez l’enfant et voyez ses graphiques, de quel appareil viennent les données et qui a fait le dernier changement. Chaque changement est envoyé tout seul et <b>signé de votre nom</b> ; les changements faits à la suite sont regroupés et envoyés 2 secondes après le dernier toucher, avec une seule ligne dans l’historique (par exemple « activités visibles (−Compter, −Ordre) »). Les changements sont combinés champ par champ : si deux parents changent des choses différentes en même temps, même dans le même réglage (deux activités, deux jours de la limite), les deux sont gardés, et ce que vous changez sur votre appareil n’est jamais perdu, même si un autre changement arrive entre-temps. « + / − minutes » et « Sans limite aujourd’hui » sont envoyés comme des ordres pour aujourd’hui et appliqués une seule fois. Ici, le temps d’écran n’est pas compté et l’app ne se bloque jamais : ne l’utilisez pas pour faire jouer un enfant.</li>
 <li><b>Changer de mode :</b> quand un appareil passe d’enfant à parent, la dernière partie est d’abord envoyée (sans internet, elle est gardée et envoyée au retour). Un appareil de parent qui devient « nouvel enfant » commence vide.</li>
 <li><b>Effacer la progression et sauvegardes :</b> « 🗑️ Effacer la progression » ou « 📂 Restaurer une sauvegarde » sur un appareil synchronisé devient l’état de cet enfant sur tous ses appareils (sur celui d’un parent, de l’enfant choisi) ; ce n’est pas mélangé avec l’existant.</li>
-<li><b>Si une tentative échoue :</b> le script Google traite les changements un par un, donc un appareil doit parfois attendre son tour. L’app réessaie toute seule en quelques secondes et ne le signale pas comme un problème ; elle n’affiche ⚠️ que si cela échoue plusieurs fois de suite, s’il n’y a pas eu de synchronisation depuis plus de 10 minutes ou si l’erreur demande une action de votre part (clé, autorisations, ancien script). Dans « ☁️ Synchroniser », vous pouvez voir les « 🕘 Derniers problèmes », et « 🩺 Tester la connexion » fait 20 requêtes d’affilée (sans toucher au Drive) et indique combien ont réussi, combien de temps elles ont pris et quelles erreurs Google a renvoyées. Juste après avoir déployé une nouvelle version du script, Google peut mettre quelques minutes à l’utiliser sur tous ses serveurs : en attendant, une tentative peut échouer et se relance toute seule.</li>
+<li><b>Si une tentative échoue :</b> le script Google traite les changements un par un, donc un appareil doit parfois attendre son tour. Chaque tour de synchronisation est une seule requête (les nouveautés de l’enfant, ses réglages et qui est connecté), et si la connexion avec Google échoue ou si Google renvoie une page d’erreur, l’app la répète aussitôt. Si cela échoue encore, elle réessaie toute seule en quelques secondes et ne le signale pas comme un problème ; elle n’affiche ⚠️ que si cela échoue plusieurs fois de suite, s’il n’y a pas eu de synchronisation depuis plus de 10 minutes ou si l’erreur demande une action de votre part (clé, autorisations, ancien script). Dans « ☁️ Synchroniser », vous pouvez voir les « 🕘 Derniers problèmes », et « 🩺 Tester la connexion » fait 20 requêtes d’affilée (sans toucher au Drive) et indique combien ont réussi, combien de temps elles ont pris et quelles erreurs Google a renvoyées. Juste après avoir déployé une nouvelle version du script, Google peut mettre quelques minutes à l’utiliser sur tous ses serveurs : en attendant, une tentative peut échouer et se relance toute seule.</li>
 <li><b>Versions sur le Drive :</b> les 5 dernières sont gardées, plus une par jour pendant 30 jours. Dans « ⚙️ Réglages → 💾 Données → 🕘 Voir les versions », vous pouvez en restaurer une ; elle devient l’état actuel de l’enfant sur tous ses appareils. Les enfants qui n’utilisent plus l’app peuvent être archivés (et récupérés) ou supprimés : leur dossier (progression, réglages et versions) va dans la corbeille de votre Drive et peut y être récupéré pendant 30 jours. Quand la synchronisation est désactivée sur un appareil, il sort de la liste et libère son enfant ; un appareil perdu ou cassé peut être retiré avec « 🗑️ Retirer » depuis l’appareil d’un parent, et si un appareil ne s’est pas connecté depuis plus de 30 jours, l’app permet de supprimer son enfant après un avertissement. Deux enfants ne peuvent pas avoir le même prénom : s’il existe déjà, l’app le propose pour continuer avec sa progression.</li>
 <li><b>Pas de boucles :</b> lire n’entraîne jamais d’écriture, et un appareil qui n’a rien changé ne renvoie rien. Quand l’app est cachée (autre app, écran éteint ou onglet que vous ne regardez pas), elle ne demande rien à Google : elle finit seulement d’envoyer ce qui est en attente, et se synchronise tout de suite à votre retour. Le script garde aussi une copie rapide des données dans la mémoire de Google : les vérifications fréquentes ne touchent pas le Drive et n’épuisent pas la limite quotidienne que Google impose aux scripts.</li>
 <li><b>Sans internet :</b> l’app continue de fonctionner normalement ; les changements sont mis en attente, puis envoyés et reçus au retour de la connexion. Dans « ☁️ Synchro », vous voyez la dernière synchronisation, et en haut du panneau un petit indicateur (☁️, 📴 ou ⚠️) y mène quand on le touche.</li>
@@ -3573,7 +3573,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=95; // se sube junto con la caché de sw.js
+const APP_VER=96; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -4433,7 +4433,12 @@ const syMyName=()=>{const who=SY.role==='parent'?SY.parentName:(SY.kidName||chil
 // detalle de una respuesta que no es del script (página de error de Google): código y título, para poder verlo en «Últimos problemas»
 const syRespDet=(st,tx)=>{const m=/<title>([^<]{1,80})/i.exec(tx||'');return 'HTTP '+st+(m?' · '+m[1].trim():tx?' · '+String(tx).replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,80):'')};
 const syHuella=async s=>{try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].slice(0,4).map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return ''}};
-async function syCall(p){const ctl=typeof AbortController!=='undefined'?new AbortController():null,tm=ctl?setTimeout(()=>ctl.abort(),60000):0,t0=Date.now();
+// si una consulta falla por la conexión (o Google responde con una página de error), se repite una vez al momento antes de darla por fallida
+const SY_REPEAT=['sync','hello','getState','getConfig','versions','getVersion','ping','putState'];
+const syRepeatable=e=>{const m=String((e&&e.message)||e||'');return /^(resp|empty|keyold)$/.test(m)||/fetch|network|load failed/i.test(m)};
+async function syCall(p){try{return await syCall1(p)}catch(e){if(!SY_REPEAT.includes(p.action)||!syRepeatable(e)||!navigator.onLine)throw e;
+    await new Promise(r=>setTimeout(r,1500));try{return await syCall1(p)}catch(e2){if(!e2.det&&e.det)e2.det=e.det;throw e2}}}
+async function syCall1(p){const ctl=typeof AbortController!=='undefined'?new AbortController():null,tm=ctl?setTimeout(()=>ctl.abort(),60000):0,t0=Date.now();
   // detalle para «Últimos problemas»: de qué servidor de Google vino la respuesta (el del script o el que entrega su resultado) y cuánto tardó
   const secs=()=>((Date.now()-t0)/1000).toFixed(1)+' s',host=r=>{try{const u=new URL(r.url);return u.host+(/\/echo/.test(u.pathname)?' (echo)':'')}catch(e){return ''}};
   let r=null;
@@ -4627,9 +4632,16 @@ async function syPushState(force){if(!SY.kid||window.__guest)return;try{saveP()}
   const data={app:'juegos-para-peques',v:1,t:Date.now(),ls:b.ls,kid:SY.kid,from:DEVID,fromName:SY.devName,epoch:SY.epoch};
   try{const r=await syCall({action:'putState',kid:SY.kid,data:JSON.stringify(data),base:SY.seq,force:f});SY.seq=r.seq;SY.pushHash=b.h;SY.trackHash=syTrackHash();SY.forcePush=false;SY.lastPush=Date.now();sySave()}
   catch(e){if(e.message==='conflict'&&e.data){const d=syJ(e.data);if(d&&d.ls){syPendRelay=d;return}}throw e}}
-async function syPullKid(){const [st,cf]=await Promise.all([syCall({action:'getState',kid:SY.kid}),syCall({action:'getConfig',kid:SY.kid})]);SY.lastPull=Date.now();
-  const d=syJ(st.data);if(d&&d.ls&&(d.seq||0)>SY.seq&&(d.from!==DEVID||(d.epoch||0)>SY.epoch))syPendRelay=d;else if(d&&d.from===DEVID&&(d.seq||0)>SY.seq){SY.seq=d.seq}
-  const c=syJ(cf.data);if(c){if((c.ver||0)>SY.cfgVer)syPendCfg=c;else scrApplyCmds(c.cmds)}}
+// una sola llamada por vuelta: «sigo aquí» (si toca), ajustes y, si toca, el progreso; el script solo manda lo que sea más nuevo que lo que ya tenemos
+async function sySyncRead(me,st){const kidM=SY.role==='kid',kid=kidM?SY.kid:SY.sel,p={action:'sync'};if(me)p.me=syMe();
+  if(kid){p.kid=kid;p.cv=SY.cfgVer||0;if(st){p.st=1;p.seq=(kidM?SY.seq:SY.selSeq)||0}}
+  const r=await syCall(p);if(me&&r.reg)await syGotReg(r);
+  if(!kid||kid!==(kidM?SY.kid:SY.sel)||SY.role!==(kidM?'kid':'parent'))return;
+  const d=st?syJ(r.st):null,c=syJ(r.cfg);if(st)SY.lastPull=Date.now();
+  if(kidM){if(d&&d.ls&&(d.seq||0)>SY.seq&&(d.from!==DEVID||(d.epoch||0)>SY.epoch))syPendRelay=d;else if(d&&d.from===DEVID&&(d.seq||0)>SY.seq){SY.seq=d.seq}
+    if(c){if((c.ver||0)>SY.cfgVer)syPendCfg=c;else scrApplyCmds(c.cmds)}else if(r.cmds)scrApplyCmds(r.cmds);syApplyPend()}
+  else{if(d&&d.ls&&(d.seq||0)>SY.selSeq){for(const k of SY_TRACK){if(k in d.ls)lsSet(k,d.ls[k])}SY.selSeq=d.seq||0;SY.selFrom=d.fromName||'';SY.selT=d.t||0;sySave();syReload(true)}
+    if(c&&(c.ver||0)>SY.cfgVer)syApplyCfg(c)}}
 // crear un niño nuevo con los datos de este aparato (o vacío)
 async function syCreateKid(name,empty){if(empty){[...SY_TRACK].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});loadP();sessionNew={};resumeSess();SCR.hist={};SCR.lim={};SCR.used=0;SCR.extra=0;SCR.cx=[];SCR.free=false;saveScr()}
   const id='k'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-3);
@@ -4663,15 +4675,14 @@ async function syParentPush(){const id=SY.sel;if(!id){SY.forcePush=false;return}
   const cur=syJ((await syCall({action:'getState',kid:id})).data),ep=Math.max(cur?(cur.epoch||0):0,SY.epoch||0)+1,b=syPushBody();
   const r=await syCall({action:'putState',kid:id,data:JSON.stringify({app:'juegos-para-peques',v:1,t:Date.now(),ls:b.ls,kid:id,from:DEVID,fromName:syMyName(),epoch:ep}),base:0,force:true});
   SY.selSeq=r.seq;SY.epoch=ep;SY.selFrom=syMyName();SY.selT=Date.now();SY.forcePush=false;SY.lastPush=Date.now();sySave()}
-async function syPullParent(){const id=SY.sel;const [st,cf]=await Promise.all([syCall({action:'getState',kid:id}),syCall({action:'getConfig',kid:id})]);SY.lastPull=Date.now();
-  if(id!==SY.sel)return;const d=syJ(st.data),c=syJ(cf.data);
-  if(d&&d.ls&&(d.seq||0)>SY.selSeq){for(const k of SY_TRACK){if(k in d.ls)lsSet(k,d.ls[k])}SY.selSeq=d.seq||0;SY.selFrom=d.fromName||'';SY.selT=d.t||0;sySave();syReload(true)}
-  if(c&&(c.ver||0)>SY.cfgVer)syApplyCfg(c)}
 
 // ---------- registro común ----------
-async function syHello(){const kidM=SY.role==='kid';const active=kidM&&!document.hidden&&Date.now()-sgLastPtr<120e3;
+// «sigo aquí»: quién es este aparato (y, en el del peque, si está jugando y cuánto lleva hoy)
+function syMe(){const kidM=SY.role==='kid';const active=kidM&&!document.hidden&&Date.now()-sgLastPtr<120e3;
   const sum=kidM&&SY.kid?{min:Math.round(((SCR.hist||{})[dayKey(now())]||0)/60),day:dayKey(now())}:null;
-  const r=await syCall({action:'hello',me:{id:DEVID,name:SY.devName,role:SY.role,kid:kidM?SY.kid:'',pname:SY.parentName,active,sum}});
+  return {id:DEVID,name:SY.devName,role:SY.role,kid:kidM?SY.kid:'',pname:SY.parentName,active,sum}}
+async function syHello(){const r=await syCall({action:'hello',me:syMe()});await syGotReg(r)}
+async function syGotReg(r){const kidM=SY.role==='kid';
   const rk=g=>g?JSON.stringify([g.kids,Object.values(g.devices||{}).map(d=>[d.id,d.name,d.role,d.kid,d.pname])]):'',chg=rk(SY.reg)!==rk(r.reg);
   SY.reg=r.reg;sySave();if(chg)setTimeout(()=>syRefreshPanel(),0);
   // si borraron de la lista al niño de este aparato, el aparato queda libre y pide elegir otro
@@ -4706,16 +4717,15 @@ async function syTick(){if(!syOn()){if(SY&&SY.bye&&SY.url&&SY.key&&navigator.onL
   syBusy=true;
   try{await syFlushFinal();
     if(hid){await syFlushQ();if(SY.role==='kid'){if(SY.kid)await syPushState()}else if(SY.forcePush)await syParentPush();syHideAt=0;SY.lastOk=Date.now();SY.lastErr='';SY.errCount=0;sySave();return}
-    // el registro de la familia se pide a la vez que lo demás (una espera menos)
-    const hw=(ms)=>syDue('hello',ms)?syHello().then(()=>null,e=>e):null;
+    // primero se envía lo pendiente; luego UNA sola consulta: «sigo aquí» (cada 2 min en el peque, 1 min en un padre), ajustes (cada 30 s) y progreso de otros aparatos (cada 3 min / 1 min)
     if(SY.role==='kid'){
-      const h=hw(120e3);
       if(SY.kid){await syFlushQ();
-        // los ajustes se miran cada 30 s (una consulta pequeña); el seguimiento de otros aparatos, cada 3 min
-        if(syDue('pull',180e3)){syNext.cfg=Date.now()+30e3;await syPullKid();syApplyPend()}
-        else if(syDue('cfg',30e3)){const c=syJ((await syCall({action:'getConfig',kid:SY.kid})).data);if(c){if((c.ver||0)>SY.cfgVer)syPendCfg=c;else scrApplyCmds(c.cmds)}syApplyPend()}if(syDue('push',300e3)||SY.forcePush)await syPushState()}
-      const he=h&&await h;if(he)throw he}
-    else{if(SY.forcePush)await syParentPush();const h=hw(60e3);await syFlushQ();if(SY.sel&&syDue('pull',60e3))await syPullParent();const he=h&&await h;if(he)throw he}
+        const wh=syDue('hello',120e3),ws=syDue('pull',180e3),wc=ws||syDue('cfg',30e3);if(ws)syNext.cfg=Date.now()+30e3;
+        if(wh||wc)await sySyncRead(wh,ws);
+        if(SY.kid&&(syDue('push',300e3)||SY.forcePush))await syPushState()}
+      else if(syDue('hello',120e3))await syHello()}
+    else{if(SY.forcePush)await syParentPush();await syFlushQ();
+      const wh=syDue('hello',60e3),wp=!!SY.sel&&syDue('pull',60e3);if(wh||wp)await sySyncRead(wh,wp)}
     SY.lastOk=Date.now();SY.lastErr='';SY.errCount=0;sySave();syFirst=false}
   catch(e){const m=String((e&&e.message)||e);if(m==='nokid'&&SY.role==='kid'){syFreeKid();SY.lastErr='';sySave();return}SY.lastErr=navigator.onLine?m:'offline';
     // fallos pasajeros (script ocupado o lento): se reintenta enseguida; se anotan para poder verlos
@@ -4830,7 +4840,7 @@ const ESCRIBEN = ['kidSet', 'kidDel', 'kidNew', 'putState', 'patchConfig'];
 // huella corta de un texto (para comprobar que la clave llegó entera sin tener que devolverla)
 function huella(s) { return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(s), Utilities.Charset.UTF_8).slice(0, 4).map(x => ((x + 256) % 256).toString(16).padStart(2, '0')).join(''); }
 function salida(p) { let o; try { if (!p.key && !p.action) o = { ok: false, err: 'empty' }; else o = ESCRIBEN.indexOf(p.action) >= 0 ? conBloqueo(() => responder(p)) : responder(p); } catch (err) { const m = String((err && err.message) || err); o = { ok: false, err: /lock|bloqueo|verrou/i.test(m) ? 'busy' : m }; }
-  o.now = Date.now(); o.sv = 6; return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+  o.now = Date.now(); o.sv = 7; return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
 // ---------- acceso a Drive (solo archivos creados por este script) ----------
 const API = 'https://www.googleapis.com/drive/v3/files', SUBIR = 'https://www.googleapis.com/upload/drive/v3/files', CARPETA_MIME = 'application/vnd.google-apps.folder';
@@ -4955,6 +4965,18 @@ function responder(p) {
     const d = r.devices[m.id] || {}, cambio = ['name', 'role', 'kid', 'pname'].some(k => (m[k] || '') !== (d[k] || '')) || !!m.active !== !!d.active;
     if (!cambio && d.lastSeen && Date.now() - d.lastSeen < 240000) { r.devices[m.id] = Object.assign({}, d, m, { lastSeen: d.lastSeen }); return { ok: true, reg: r }; }
     return conBloqueo(() => { const r2 = registro(); r2.devices[m.id] = Object.assign(r2.devices[m.id] || {}, m, { lastSeen: Date.now() }); guardarRegistro(r2); return { ok: true, reg: r2 }; }); }
+  // una sola consulta por vuelta: «sigo aquí» (si viene «me»), ajustes del niño y, si se pide, su progreso;
+  // solo se devuelve lo que es más nuevo que lo que el aparato ya tiene (cv = versión de ajustes, seq = número de progreso)
+  if (p.action === 'sync') { const o = { ok: true };
+    if (p.me) o.reg = responder(Object.assign({}, p, { action: 'hello' })).reg;
+    if (p.kid && typeof p.kid === 'string') { let dir;
+      const lee = n => { const ck = p.kid + '/' + n, t = cacheLeer(ck); if (t !== null) return t;
+        if (dir === undefined) dir = carpetaNino(p.kid, null, false); return dir ? conCopia(ck, () => leer(dir, n)) : null; };
+      const tc = lee('config.json'); let c = null; try { c = JSON.parse(tc || 'null'); } catch (e) {}
+      if (c && (c.ver || 0) > (+p.cv || 0)) o.cfg = tc; else if (c) o.cmds = c.cmds || [];
+      if (p.st) { const ts = lee('estado.json'); let s = null; try { s = JSON.parse(ts || 'null'); } catch (e) {}
+        if (s && (s.seq || 0) > (+p.seq || 0)) o.st = ts; } }
+    return o; }
   // niño nuevo en una sola llamada: registro, carpeta, ajustes y estado (y no deja repetir nombre)
   if (p.action === 'kidNew') { const k = p.kid || {}; if (!k.id || !k.name) return { ok: false, err: 'kid' };
     const r = registro(), nm = x => String(x || '').trim().toLowerCase();
@@ -5109,7 +5131,7 @@ function syncHandlers(){syBannerHandlers();familyHandlers();versHandlers();const
   if(g('syDiag'))g('syDiag').onclick=async()=>{if(!navigator.onLine){syMsgAt('syDiagMsg',t.stOff);return}
     const N=20,ts=[],errs={};while(syBusy)await new Promise(r=>setTimeout(r,50));syBusy=true;
     try{for(let i=0;i<N;i++){syMsgAt('syDiagMsg',t.diagRun(i+1,N),'busy');const t0=Date.now();
-        try{await syCall({action:'hello',me:{}});ts.push(Date.now()-t0)}
+        try{await syCall1({action:'hello',me:{}});ts.push(Date.now()-t0)}
         catch(e){const k=syErrTxt(String((e&&e.message)||e))+(e&&e.det?' ('+String(e.det).replace(/ · [\d.]+ s$|^[\d.]+ s$/,'')+')':'');errs[k]=(errs[k]||0)+1}
         await new Promise(r=>setTimeout(r,300))}}
     finally{syBusy=false}
