@@ -118,7 +118,7 @@ a.btn{text-decoration:none;display:inline-block}
 @keyframes agglowz{50%{fill:rgba(255,201,60,.15)}}
 .ntstaff .nthead.bad{opacity:.55}.ntstaff .nthead.teach{animation:ntpop .6s ease-out}.ntstaff .nthead.ok{animation:ntpop .4s ease-out}
 @keyframes ntpop{0%{transform:scale(.6);transform-origin:236px 90px;opacity:.3}100%{transform:scale(1);opacity:1}}
-.ntbells{gap:14px!important}.ntstaff .nthead.ntlit ellipse{stroke:#FFC93C;stroke-width:6}.pick.ntbell.ntlit{box-shadow:0 0 0 5px #FFC93C;transform:scale(1.06)}
+.ntbells{gap:14px!important}.ntmini .ntstaff{width:min(100%,360px)}.ntstaff .nthead.ntlit ellipse{stroke:#FFC93C;stroke-width:6}.pick.ntbell.ntlit{box-shadow:0 0 0 5px #FFC93C;transform:scale(1.06)}
 .ntall{gap:6px!important;flex-wrap:nowrap!important}.ntall{width:100%;justify-content:center}.ntall .pick.ntbell{flex:1 1 0;min-width:0;max-width:92px;width:auto;padding:3px 2px 2px;border-radius:14px;font-size:clamp(.8rem,2.4vw,1.15rem)}
 .ptnum.ntt b{font-size:1.15rem;white-space:nowrap}.ntsw{display:inline-block;width:.8em;height:.8em;border-radius:50%;border:2px solid var(--ink);vertical-align:middle}
 .pick.ntbell{width:clamp(84px,17vw,118px);height:auto;border-radius:22px;padding:6px 6px 4px;display:flex;flex-direction:column;align-items:center;gap:0;background:#FFFFFF;font:800 1.25rem "Baloo 2",sans-serif}
@@ -650,7 +650,7 @@ const T={
 <li><b>Al empezar:</b> se presentan las 8 notas juntas, como en clase: la escalera de do a do agudo en el pentagrama, cada nota con su color y su campanita debajo; puede tocarlas para oírlas y «▶️ Escuchar todas» las toca subiendo mientras la voz dice su nombre. Después, en cada pregunta salen 4 campanitas para elegir (entre ellas las que suele confundir), y las notas que le cuestan salen más a menudo.</li>
 <li><b>Tres tipos de pregunta:</b> 🔔 <b>C · Color</b>, «¿Cuál es el re?»: toca la campanita de ese color (las campanitas no llevan el nombre); 👀 <b>L · Leer</b>, «¿Qué nota es?»: ve la nota en el pentagrama y toca su campanita; 📍 <b>U · Ubicar</b>, «¿Dónde va el mi?»: toca su sitio en el pentagrama (la línea o el espacio). Salen más las que le cuestan, y ubicar llega cuando ya conoce la nota.</li>
 <li><b>Del color a leer de verdad:</b> en «¿Qué nota es?» cada nota sale 🎨 pintada de su color, luego 🖍️ solo con el borde de color y al final ⚫ negra, como en una partitura. Pasa de etapa cuando la lee bien a la primera en días distintos; si una nota negra se le olvida, vuelve al borde de color.</li>
-<li><b>Si se equivoca:</b> suena la campanita que tocó, sin reproches; con «Ayuda cuando falla», la voz explica dónde vive la nota o de qué color es, se ilumina la respuesta y esa nota vuelve a salir dos preguntas después. La estrella solo se gana a la primera.</li>
+<li><b>Si se equivoca:</b> suena la campanita que tocó, sin reproches. Con «Ayuda cuando falla», la voz explica siempre las dos cosas, su color y su sitio («Este es el mi, la campanita amarilla: está sentado en la primera línea»); si tocó una nota vecina, las compara («Tocaste el re. El mi está un escalón más arriba») y en el pentagrama se ven las dos juntas para ver cuál está más arriba; si no, la sitúa respecto a las notas guía, el do (con su rayita) y el sol (en la línea de la clave): «El la está un escalón encima del sol». En «¿Cuál es el re?» aparece además un pentagrama pequeño con la nota. Se ilumina la respuesta para que la toque, y esa nota vuelve a salir dos preguntas después. La estrella solo se gana a la primera.</li>
 <li><b>Seguimiento:</b> en «🔢 Números y letras» se ve cada nota con su etapa y cómo va en C, L y U (con los mismos colores que los números), y con cuáles se confunde. En Actividad cuenta como «Música», y en la evolución hay una gráfica de notas dominadas (de 24: 8 notas × 3).</li></ul>
 <h4>🖐️ Componer números</h4>
 <ul><li>Pasar de «contar» a entender que un número está hecho de otros (5 es 3 y 2), como en MS. Cuatro juegos: <b>🙈 Escondidos</b> (se ven todos, un vaso tapa algunos: ¿cuántos hay debajo?; o dos tarjetas de puntos como en un dado: ¿cuántos en total?), <b>⚖️ Más o menos</b> (¿dónde hay más / menos? y, desde el nivel medio, «= igual»), <b>➕ Uno más</b> (llega uno o se va uno: ¿cuántos hay ahora?) y <b>🧺 Tantos como</b> (hacer un plato con la misma cantidad que el modelo, sin número).</li>
@@ -801,7 +801,7 @@ const T={
 <li><b>At the start:</b> the 8 notes are introduced together, as in class: the staircase from C to high C on the staff, each note in its colour with its bell below; the child can tap them to hear them, and “▶️ Hear them all” plays them going up while the voice says their names. Then each question shows 4 bells to choose from (including the ones usually mixed up), and the hardest notes come up more often.</li>
 <li><b>Three kinds of question:</b> 🔔 <b>C · Colour</b>, “Which one is D?”: tap the bell of that colour (the bells have no name on them); 👀 <b>R · Read</b>, “Which note is it?”: see the note on the staff and tap its bell; 📍 <b>P · Place</b>, “Where does E go?”: tap its place on the staff (the line or the space). The hardest ones come up more, and placing comes once the note is known.</li>
 <li><b>From colour to real reading:</b> in “Which note is it?” each note first appears 🎨 painted in its colour, then 🖍️ with only a coloured outline and finally ⚫ black, like in a score. It moves to the next step when read right on the first try on different days; if a black note is forgotten, it goes back to the coloured outline.</li>
-<li><b>After a mistake:</b> the bell they tapped sounds, with no telling off; with “Help after a mistake”, the voice explains where the note lives or what colour it is, the answer lights up and that note comes back two questions later. The star is only earned on the first try.</li>
+<li><b>After a mistake:</b> the bell they tapped sounds, with no telling off. With “Help after a mistake”, the voice always explains both its colour and its place (“This is E, the yellow bell: it sits on the first line”); if they tapped a neighbouring note, it compares them (“You tapped D. E is one step higher”) and both appear side by side on the staff to see which is higher; otherwise it places it relative to the guide notes, C (with its little line) and G (on the clef’s line): “A is one step above G”. In “Which one is D?” a small staff with the note also appears. The answer lights up to be tapped, and that note comes back two questions later. The star is only earned on the first try.</li>
 <li><b>Tracking:</b> in “🔢 Numbers & letters” you see each note with its step and how it is doing in C, R and P (same colours as numbers), and which ones get mixed up. In Activity it counts as “Music”, and the progress charts include notes mastered (of 24: 8 notes × 3).</li></ul>
 <h4>🖐️ Number bonds</h4>
 <ul><li>Moving from “counting” to understanding that a number is made of others (5 is 3 and 2), as in pre-K. Four games: <b>🙈 Hidden</b> (all are shown, then a cup covers some: how many are under it?; or two dot cards like dice: how many altogether?), <b>⚖️ More or less</b> (where are there more / fewer? and, from the medium level, “= same”), <b>➕ One more</b> (one arrives or one leaves: how many now?) and <b>🧺 As many as</b> (make a plate with the same amount as the model, with no number).</li>
@@ -952,7 +952,7 @@ const T={
 <li><b>Au début :</b> les 8 notes sont présentées ensemble, comme en cours : l’escalier de do à do aigu sur la portée, chaque note de sa couleur avec sa clochette en dessous ; l’enfant peut les toucher pour les entendre, et « ▶️ Toutes les écouter » les joue en montant pendant que la voix dit leur nom. Ensuite, chaque question propose 4 clochettes (dont celles qu’il confond souvent), et les notes difficiles reviennent plus souvent.</li>
 <li><b>Trois types de questions :</b> 🔔 <b>C · Couleur</b>, « Où est le ré ? » : toucher la clochette de cette couleur (les clochettes ne portent pas de nom) ; 👀 <b>L · Lire</b>, « Quelle note est-ce ? » : voir la note sur la portée et toucher sa clochette ; 📍 <b>P · Placer</b>, « Où va le mi ? » : toucher sa place sur la portée (la ligne ou l’interligne). Les plus difficiles reviennent plus souvent, et placer arrive quand la note est connue.</li>
 <li><b>De la couleur à la vraie lecture :</b> dans « Quelle note est-ce ? », chaque note apparaît d’abord 🎨 peinte de sa couleur, puis 🖍️ avec seulement le contour de couleur et enfin ⚫ noire, comme sur une partition. Elle passe à l’étape suivante quand elle est lue du premier coup sur des jours différents ; si une note noire est oubliée, elle revient au contour de couleur.</li>
-<li><b>En cas d’erreur :</b> la clochette touchée sonne, sans reproche ; avec « Aide quand il se trompe », la voix explique où habite la note ou de quelle couleur elle est, la réponse s’allume et la note revient deux questions plus tard. L’étoile ne se gagne que du premier coup.</li>
+<li><b>En cas d’erreur :</b> la clochette touchée sonne, sans reproche. Avec « Aide quand il se trompe », la voix explique toujours les deux, sa couleur et sa place (« Voici le mi, la clochette jaune : il est assis sur la première ligne ») ; s’il a touché une note voisine, elle les compare (« Tu as touché le ré. Le mi est une marche plus haut ») et les deux apparaissent côte à côte sur la portée pour voir laquelle est plus haute ; sinon, elle la situe par rapport aux notes repères, le do (avec son petit trait) et le sol (sur la ligne de la clé) : « Le la est une marche au-dessus du sol ». Dans « Où est le ré ? », une petite portée avec la note apparaît aussi. La réponse s’allume pour être touchée, et cette note revient deux questions plus tard. L’étoile ne se gagne que du premier coup.</li>
 <li><b>Suivi :</b> dans « 🔢 Nombres et lettres », on voit chaque note avec son étape et où elle en est en C, L et P (mêmes couleurs que les nombres), et lesquelles se confondent. Dans Activité, elle compte comme « Musique », et l’évolution comprend un graphique des notes maîtrisées (sur 24 : 8 notes × 3).</li></ul>
 <h4>🖐️ Composer les nombres</h4>
 <ul><li>Passer de « compter » à comprendre qu’un nombre est fait d’autres nombres (5, c’est 3 et 2), comme en MS. Quatre jeux : <b>🙈 Cachés</b> (on voit tout, puis un gobelet en cache une partie : combien dessous ? ; ou deux cartes à points comme un dé : combien en tout ?), <b>⚖️ Plus ou moins</b> (où y en a-t-il le plus / le moins ? et, dès le niveau moyen, « = autant »), <b>➕ Un de plus</b> (il en arrive un ou il en part un : combien maintenant ?) et <b>🧺 Autant que</b> (faire une assiette avec autant d’objets que le modèle, sans nombre).</li>
@@ -3656,7 +3656,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=102; // se sube junto con la caché de sw.js
+const APP_VER=103; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5342,24 +5342,24 @@ const NT_CLEF='M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 
 const NT_SK=['c','l','u'];
 const NT_T={
  es:{q:{l:'¿Qué nota es?',c:n=>`¿Cuál es el <u>${n}</u>?`,u:n=>`¿Dónde va el <u>${n}</u>?`},sayQ:{l:'¿Qué nota es?',c:n=>`¿Cuál es el ${n}?`,u:n=>`¿Dónde va el ${n}?`},
-   name:['do','re','mi','fa','sol','la','si','do agudo'],colors:['rojo','naranja','amarillo','verde','azul claro','azul','morado','blanco'],
+   name:['do','re','mi','fa','sol','la','si','do agudo'],colors:['roja','naranja','amarilla','verde','azul claro','azul','morada','blanca'],
    spot:['tiene una rayita en la barriga y vive debajo de las cinco líneas','cuelga debajito de la primera línea','está sentado en la primera línea','está en el primer espacio, entre la primera y la segunda línea','está en la segunda línea, donde se enrolla la clave de sol','está en el segundo espacio','está en la tercera línea, la del medio','está en el tercer espacio'],
    intro:(n,s)=>`Este es el ${n}: ${s}.`,introT:n=>`🎼 Nota nueva: <u>${n}</u>`,next:'➡️ Seguir',hearIt:'Toca la nota o la campanita para oírla.',
-   isColor:(n,c)=>`El ${n} es la campanita ${c}.`,goes:(n,s)=>`El ${n} ${s}.`,tapBell:'Toca la campanita.',tapSpot:'Toca su sitio en el pentagrama.',
+   full:(n,c,s)=>`Este es el ${n}, la campanita ${c}: ${s}.`,steps:k=>k===1?'un escalón':k===2?'dos escalones':'tres escalones',cmp:(w,n,st,up)=>`Tocaste el ${w}. El ${n} está ${st} más ${up?'arriba':'abajo'}.`,guide:(st,up,g)=>`Está ${st} ${up?'encima':'debajo'} del ${g}.`,isColor:(n,c)=>`El ${n} es la campanita ${c}.`,goes:(n,s)=>`El ${n} ${s}.`,tapBell:'Toca la campanita.',tapSpot:'Toca su sitio en el pentagrama.',
    title:'🎼 Notas (clave de sol)',legend:'C = color de su campanita · L = leer en el pentagrama · U = ubicar en el pentagrama — 🎨 nota de color · 🖍️ con borde de color · ⚫ negra · – aún no ha salido',
    conf:'Confusiones',evo:'🎼 Notas (de 24)',stg:['🎨','🖍️','⚫'],openTxt:()=>'Las 8 notas están abiertas desde el principio, como en clase; salen más las que le cuestan.',allT:'🎼 Las 8 notas',allPlay:'▶️ Escuchar todas',allSay:'Estas son las ocho notas, cada una con el color de su campanita. ¡Escucha!'},
  en:{q:{l:'Which note is it?',c:n=>`Which one is <u>${n}</u>?`,u:n=>`Where does <u>${n}</u> go?`},sayQ:{l:'Which note is it?',c:n=>`Which one is ${n}?`,u:n=>`Where does ${n} go?`},
    name:['C','D','E','F','G','A','B','high C'],colors:['red','orange','yellow','green','light blue','blue','purple','white'],
    spot:['has a little line through its tummy and lives below the five lines','hangs just below the first line','sits on the first line','is in the first space, between the first and second lines','is on the second line, where the treble clef curls','is in the second space','is on the third line, the middle one','is in the third space'],
    intro:(n,s)=>`This is ${n}: it ${s}.`,introT:n=>`🎼 New note: <u>${n}</u>`,next:'➡️ Next',hearIt:'Tap the note or the bell to hear it.',
-   isColor:(n,c)=>`${n} is the ${c} bell.`,goes:(n,s)=>`${n} ${s}.`,tapBell:'Tap the bell.',tapSpot:'Tap its place on the staff.',
+   full:(n,c,s)=>`This is ${n}, the ${c} bell: it ${s}.`,steps:k=>k===1?'one step':k===2?'two steps':'three steps',cmp:(w,n,st,up)=>`You tapped ${w}. ${n} is ${st} ${up?'higher':'lower'}.`,guide:(st,up,g)=>`It is ${st} ${up?'above':'below'} ${g}.`,isColor:(n,c)=>`${n} is the ${c} bell.`,goes:(n,s)=>`${n} ${s}.`,tapBell:'Tap the bell.',tapSpot:'Tap its place on the staff.',
    title:'🎼 Notes (treble clef)',legend:'C = bell colour · R = read on the staff · P = place on the staff — 🎨 coloured note · 🖍️ coloured outline · ⚫ black · – not asked yet',
    conf:'Mix-ups',evo:'🎼 Notes (of 24)',stg:['🎨','🖍️','⚫'],openTxt:()=>'All 8 notes are open from the start, as in class; the hardest ones come up more.',allT:'🎼 The 8 notes',allPlay:'▶️ Hear them all',allSay:'These are the eight notes, each with the colour of its bell. Listen!'},
  fr:{q:{l:'Quelle note est-ce ?',c:n=>`Où est le <u>${n}</u> ?`,u:n=>`Où va le <u>${n}</u> ?`},sayQ:{l:'Quelle note est-ce ?',c:n=>`Où est le ${n} ?`,u:n=>`Où va le ${n} ?`},
-   name:['do','ré','mi','fa','sol','la','si','do aigu'],colors:['rouge','orange','jaune','vert','bleu clair','bleu','violet','blanc'],
+   name:['do','ré','mi','fa','sol','la','si','do aigu'],colors:['rouge','orange','jaune','verte','bleu clair','bleue','violette','blanche'],
    spot:['a un petit trait sur le ventre et vit sous les cinq lignes','est accroché juste sous la première ligne','est assis sur la première ligne','est dans le premier interligne, entre la première et la deuxième ligne','est sur la deuxième ligne, là où s’enroule la clé de sol','est dans le deuxième interligne','est sur la troisième ligne, celle du milieu','est dans le troisième interligne'],
    intro:(n,s)=>`Voici le ${n} : il ${s}.`,introT:n=>`🎼 Nouvelle note : <u>${n}</u>`,next:'➡️ Continuer',hearIt:'Touche la note ou la clochette pour l’entendre.',
-   isColor:(n,c)=>`Le ${n}, c’est la clochette ${c}.`,goes:(n,s)=>`Le ${n} ${s}.`,tapBell:'Touche la clochette.',tapSpot:'Touche sa place sur la portée.',
+   full:(n,c,s)=>`Voici le ${n}, la clochette ${c} : il ${s}.`,steps:k=>k===1?'une marche':k===2?'deux marches':'trois marches',cmp:(w,n,st,up)=>`Tu as touché le ${w}. Le ${n} est ${st} plus ${up?'haut':'bas'}.`,guide:(st,up,g)=>`Il est ${st} ${up?'au-dessus':'en dessous'} du ${g}.`,isColor:(n,c)=>`Le ${n}, c’est la clochette ${c}.`,goes:(n,s)=>`Le ${n} ${s}.`,tapBell:'Touche la clochette.',tapSpot:'Touche sa place sur la portée.',
    title:'🎼 Notes (clé de sol)',legend:'C = couleur de sa clochette · L = lire sur la portée · P = placer sur la portée — 🎨 note de couleur · 🖍️ contour de couleur · ⚫ noire · – pas encore demandée',
    conf:'Confusions',evo:'🎼 Notes (sur 24)',stg:['🎨','🖍️','⚫'],openTxt:()=>'Les 8 notes sont ouvertes dès le début, comme en cours ; les plus difficiles reviennent plus souvent.',allT:'🎼 Les 8 notes',allPlay:'▶️ Toutes les écouter',allSay:'Voici les huit notes, chacune avec la couleur de sa clochette. Écoute !'}};
 const NTT=()=>NT_T[lang];
@@ -5419,26 +5419,35 @@ function notas(){const t=NTT(),q=ntPick();stopSpeech();
   if(sk==='u'){
     const zones=[...Array(8).keys()];
     frame(t.q.u(ntShort(i)),`<div class="ntwrap">${ntStaff({zones,big:true,label:t.q.u(ntName(i))})}<button class="ntbellbig" id="ntBell" aria-label="${ntName(i)}">${ntBellSvg(i)}</button></div>`);
-    const svg=stage.querySelector('.ntstaff'),ghost=svg.querySelector('.ntghost');let done=false;
+    const svg=stage.querySelector('.ntstaff'),ghost=svg.querySelector('.ntghost');let done=false,wrongV=null;
     document.getElementById('ntBell').onclick=()=>{playBell(i);say(ntName(i))};
     trackStart({kind:'nt',sk:'u',n:i});
     const place=(p,cls)=>{ghost.innerHTML=ntHead(i,p,0,cls)};
     svg.querySelectorAll('.ntzone').forEach(z=>z.onclick=()=>{if(done)return;const p=+z.dataset.p;place(p,p===i?'ok':'bad');
-      if(p===i){done=true;ntWin(z,i)}else{playBell(Math.min(7,p));miss(z,p)}});
+      if(p===i){done=true;ntWin(z,i)}else{wrongV=p;playBell(Math.min(7,p));miss(z,p)}});
     agQ({opts:'.ntzone',noShuffle:true,known:()=>r.u.att>=3&&r.u.s>=70,right:()=>svg.querySelector(`.ntzone[data-p="${i}"]`),
-      say:()=>t.goes(cap(ntName(i)),t.spot[i]),show:()=>place(i,'teach'),fin:()=>[t.tapSpot,t.tapSpot]});
+      say:()=>ntExplain(i,wrongV),show:()=>ntShowPair(svg,i,wrongV),fin:()=>[t.tapSpot,t.tapSpot]});
     later(()=>{say(t.sayQ.u(ntName(i)));setTimeout(()=>playBell(i),60)},300);return}
   const opts=ntOptions(i),staffHtml=sk==='l'?ntStaff({note:i,stage:r.st,label:t.q.l}):'';
   frame(sk==='l'?t.q.l:t.q.c(ntShort(i)),`${staffHtml?`<div class="ntwrap">${staffHtml}</div>`:''}<div class="row ntbells">${opts.map(k=>ntBellBtn(k,sk==='l')).join('')}</div>`);
   trackStart({kind:'nt',sk,n:i});
   const hear=document.getElementById('hear');if(hear)hear.onclick=()=>sk==='l'?(say(t.sayQ.l),setTimeout(()=>playBell(i),900)):say(t.sayQ.c(ntName(i)));
   if(sk==='l'){const h=stage.querySelector('.nthead.main');if(h)h.onclick=()=>playBell(i)}
-  stage.querySelectorAll('.ntbell').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;if(v===i)ntWin(b,i);else{playBell(v);miss(b,v)}});
+  let wrongV=null;stage.querySelectorAll('.ntbell').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;if(v===i)ntWin(b,i);else{wrongV=v;playBell(v);miss(b,v)}});
   agQ({noShuffle:true,known:()=>r[sk].att>=3&&r[sk].s>=70,right:()=>stage.querySelector(`.ntbell[data-v="${i}"]`),
-    say:()=>sk==='l'?t.intro(ntName(i),t.spot[i]):t.isColor(cap(ntName(i)),t.colors[i]),
-    show:()=>{if(sk==='l'){const s=stage.querySelector('.ntstaff .nthead.main');if(s)s.outerHTML=ntHead(i,i,0,'main')}},fin:()=>[t.tapBell,t.tapBell]});
+    say:()=>ntExplain(i,wrongV),
+    // en «¿Cuál es el re?» no hay pentagrama: aparece uno pequeño con la nota para unir color y sitio
+    show:()=>{let svg=stage.querySelector('.ntstaff');if(!svg){const bl=stage.querySelector('.ntbells');if(bl){bl.insertAdjacentHTML('beforebegin',`<div class="ntwrap ntmini">${ntStaff({label:ntName(i)})}</div>`);svg=stage.querySelector('.ntstaff')}}ntShowPair(svg,i,wrongV)},fin:()=>[t.tapBell,t.tapBell]});
   later(()=>{if(sk==='l'){say(t.sayQ.l)}else say(t.sayQ.c(ntName(i)))},300)}
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+// explicación al fallar: siempre color y sitio; si tocó una vecina, la compara («un escalón más arriba»); si no, la sitúa respecto a do o sol
+function ntExplain(i,w){const t=NTT(),parts=[t.full(ntName(i),t.colors[i],t.spot[i])];
+  if(w!=null&&w!==i&&Math.abs(w-i)<=3)parts.push(t.cmp(ntName(w),ntName(i),t.steps(Math.abs(w-i)),i>w));
+  else if(i!==0&&i!==4){const g=Math.abs(i-4)<=Math.abs(i)?4:0,k=Math.abs(i-g);if(k<=3)parts.push(t.guide(t.steps(k),i>g,ntName(g)))}
+  return parts.join(' ')}
+// en el pentagrama, la nota correcta de su color y, si tocó otra, esa también al lado (más clara) para ver cuál está más arriba
+function ntShowPair(svg,i,w){if(!svg)return;const g=svg.querySelector('.ntghost'),m=svg.querySelector('.nthead.main');if(m)m.remove();
+  g.innerHTML=(w!=null&&w!==i&&w>=0&&w<8?ntHead(w,w,0,'bad',NT_X-58):'')+ntHead(i,i,0,'teach')}
 // presentación de las 8 notas juntas, como en clase: la escalera de do a do agudo con sus colores y sus campanitas
 function ntIntroAll(){const t=NTT(),xs=[...Array(8).keys()].map(i=>112+i*32);
   const staff=ntStaff({big:true,label:t.allT}).replace('<g class="ntghost"></g>',xs.map((x,i)=>ntHead(i,i,0,'sc',x)).join(''));
