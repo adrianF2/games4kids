@@ -110,6 +110,18 @@ h4.ch{margin:12px 0 2px;font-size:.95rem}
 .gbig{display:block;max-width:100%;max-height:70dvh;margin:12px auto;border-radius:14px;box-shadow:0 0 0 2px #1F2A4433}
 a.btn{text-decoration:none;display:inline-block}
 @media (max-width:600px){.sw{width:32px;height:32px}.tool{height:38px;min-width:38px}}
+.ntwrap{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;flex-wrap:wrap}
+.ntstaff{width:min(100%,560px);height:auto;border:3px solid var(--ink);border-radius:16px;background:#FFFFFF;touch-action:manipulation}
+.ntstaff.big{width:min(100%,620px)}.ntstaff .nthead{cursor:pointer}
+.ntstaff .ntzone{fill:transparent;cursor:pointer}.ntstaff .ntzone:hover{fill:rgba(58,134,255,.08)}
+.ntstaff .ntzone.agshow{fill:rgba(255,201,60,.45);animation:agglowz .8s ease-in-out infinite}.ntstaff .ntzone.agoff{pointer-events:none}
+@keyframes agglowz{50%{fill:rgba(255,201,60,.15)}}
+.ntstaff .nthead.bad{opacity:.55}.ntstaff .nthead.teach{animation:ntpop .6s ease-out}.ntstaff .nthead.ok{animation:ntpop .4s ease-out}
+@keyframes ntpop{0%{transform:scale(.6);transform-origin:236px 90px;opacity:.3}100%{transform:scale(1);opacity:1}}
+.ntbells{gap:14px!important}.ptnum.ntt b{font-size:1.15rem;white-space:nowrap}.ntsw{display:inline-block;width:.8em;height:.8em;border-radius:50%;border:2px solid var(--ink);vertical-align:middle}
+.pick.ntbell{width:clamp(84px,17vw,118px);height:auto;border-radius:22px;padding:6px 6px 4px;display:flex;flex-direction:column;align-items:center;gap:0;background:#FFFFFF;font:800 1.25rem "Baloo 2",sans-serif}
+.pick.ntbell svg,.ntbellbig svg{width:100%;height:auto;display:block}
+.ntbellbig{width:clamp(96px,20vw,140px);border:3px solid var(--ink);border-radius:22px;background:#FFFFFF;padding:6px;cursor:pointer}
 .piano{display:grid;grid-template-columns:repeat(var(--nk),minmax(0,1fr));gap:6px;width:100%;max-width:780px;flex:1 1 auto;min-height:190px;max-height:430px}
 .pkey{position:relative;border:3px solid var(--ink);border-radius:8px 8px 20px 20px;background:linear-gradient(#FFFFFF 0 42%,var(--kc) 42%);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:0 0 12px;touch-action:none;transition:transform .08s,filter .08s;-webkit-tap-highlight-color:transparent}
 .pkey .pe{font-size:clamp(1.4rem,4.5vw,2.2rem)}.pkey .pn{font:800 clamp(.9rem,2.6vw,1.25rem) "Baloo 2",sans-serif;color:#FFFFFF;text-shadow:0 1px 2px #0008}
@@ -560,6 +572,7 @@ body.menu-closed .tabs{display:none!important}
     <button class="tab" role="tab" id="t-dibujar" aria-selected="false"><b>🖌️</b><span></span></button>
     <button class="tab" role="tab" id="t-colorear" aria-selected="false"><b>🌈</b><span></span></button>
     <button class="tab" role="tab" id="t-piano" aria-selected="false"><b>🎹</b><span></span></button>
+    <button class="tab" role="tab" id="t-notas" aria-selected="false"><b>🎼</b><span></span></button>
   </nav>
 
   <section class="stage" id="stage"></section>
@@ -581,7 +594,7 @@ function bumpGen(){myGen=String(Date.now());try{lsSet(GEN_K,myGen)}catch(e){}}
 window.addEventListener('storage',e=>{if(e.key===GEN_K||e.key===null)genStale()});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)genStale()});
 const T={
- es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',componer:'Componer',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',comparar:'Comparar',donde:'Dónde está',objetos:'Objetos',memoria:'Parejas',laberinto:'Laberintos',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano'},
+ es:{title:['Juegos','para','Peques'],tabs:{contar:'Contar',poner:'Poner',componer:'Componer',orden:'Orden',patrones:'Patrones',letras:'Letras',sonidos:'Escuchar',decir:'Decir',trazar:'Escribir 123',escletras:'Escribir ABC',trazos:'Trazos',colores:'Colores',formas:'Formas',comparar:'Comparar',donde:'Dónde está',objetos:'Objetos',memoria:'Parejas',laberinto:'Laberintos',cuentos:'Cuentos',dibujar:'Dibujar',colorear:'Colorear',piano:'Piano',notas:'Notas'},
   tap:'👆 Tocar',type:'⌨️ Escribir',qCount:'¿Cuántos hay?',qWrite:'¿Cuántos hay? Escribe el número',qMissing:'¿Qué número falta?',
   qColor:c=>`Toca el color <u>${c}</u>`,qShape:(a,s)=>`¿Dónde está ${a}<u>${s}</u>?`,qPairs:'Encuentra las parejas',storyLevels:['🌱 Fácil','🌿 Medio','🌳 Difícil'],listenStory:'🔊 Escuchar el cuento',toQuestions:'➡️ Preguntas',questionsNow:'¡Ahora, las preguntas!',replayStory:'📖 Escuchar el cuento otra vez',repeatQ:'🔊 Repetir la pregunta',seqQ:'¿Qué pasó primero, después y al final? Tócalos en orden.',storyDone:'¡Terminaste el cuento!',anotherStory:'📚 Otro cuento',storyOf:(i,n)=>`Cuento ${i} de ${n}`,imgOn:'🖼️ Con imágenes',imgOff:'🙈 Sin imágenes',mastered:n=>`¡Ya sabes el ${n}!`,masteredWord:w=>`¡Ya sabes «${w}»!`,parentsTitle:'Progreso',numbersTitle:'Números',legend:'R = reconocer · D = decir · E = escribir — 🟢 lo domina · 🟡 aprendiendo · 🔴 le cuesta · gris: pocos intentos',skillNames:{recog:'Reconocer',say:'Decir',write:'Escribir'},skillShort:{recog:'R',say:'D',write:'E'},confTitle:'Confusiones frecuentes',askedGot:(a,b)=>`pedía ${a}, eligió ${b}`,nothingYet:'Todavía no hay datos.',wordsTitle:'Palabras de Objetos',hardWords:'Palabras que más le cuestan',resetBtn:'Borrar progreso',stKnown:'Las sabe',stLearning:'Está aprendiendo (× = errores)',stNew:'Todavía no han salido',tapCat:'Toca una categoría para ver las palabras.',resetAsk:'¿Seguro? Se borrará todo el seguimiento, la actividad y el tiempo en pantalla de los últimos días. Se conservan los ajustes, los límites, el PIN y la galería.',resetYes:'Sí, borrar',resetNo:'Cancelar',holdHint:'👆 Para padres: mantén pulsado 📊 2 segundos para ver el progreso',qPattern:'¿Qué sigue?',levelNames:['Fácil','Medio','Difícil'],qLetter:'Escucha y toca la letra',qObj:(n,pl)=>pl?`¿Dónde están <u>${n}</u>?`:`¿Dónde está <u>${n}</u>?`,catLabel:'Categoría',cats:{all:'Todo',fruit:'Frutas',veg:'Verduras',body:'Cuerpo',animal:'Animales',home:'Casa',music:'Música',build:'Construcción',school:'Escuela',transport:'Transporte',nature:'Naturaleza',toys:'Juguetes',clothes:'Ropa',food:'Comida',sport:'Deportes',place:'Lugares',people:'Personas',face:'Caras'},qDrawL:l=>`Escribe la letra <u>${l}</u>`,qDrawLsay:nm=>`Escribe la letra ${nm}`,drawEmptyL:'Primero escribe la letra con el lápiz',showMe:'👀 Mira cómo',mirrorMsgN:'¡Casi! El número quedó al revés. Mira cómo se hace.',mirrorMsg:'¡Casi! La letra quedó al revés. Mira cómo se hace.',masteredLetter:l=>`¡Ya sabes la ${l}!`,qSayL:'Di esta letra en voz alta',lettersTitle:'Letras',lettersLegend:'R = reconocer (Letras) · D = decir · E = escribir (🔒 aún no abierta) — mismos colores que los números',writeOpenTxt:n=>`Escribir ABC: ${n} de 26 letras abiertas. Se abre una nueva cuando quedan 2 o menos por dominar.`,wroteLike:(a,b)=>`pedía ${a}, escribió algo como ${b}`,mirrorChip:(a,k)=>`${a} al revés ×${k}`,helpTitle:'📖 Guía completa',guideBtn:'📖 Guía',hintLbl:'Cómo funciona',helpBody:`<h4>⏱️ Tiempo de pantalla y PIN</h4>
 <ul><li><b>Qué cuenta:</b> el tiempo que la app está abierta y visible en pantalla, juegue o no (también escuchando un cuento). Se pausa si la tablet se bloquea o se apaga la pantalla, si se cambia de app y mientras la pantalla de padres está abierta. Cada día empieza de cero a medianoche.</li>
@@ -630,6 +643,13 @@ const T={
 <ul><li>La página toca una melodía iluminando las teclas; luego el peque la repite. Las teclas tienen los colores de las campanitas de colores de las clases de música: do rojo, re naranja, mi amarillo, fa verde, sol azul claro, la azul, si morado y el do agudo blanco. Si se equivoca, se la vuelve a enseñar (tras dos errores, más despacio). «▶️ Otra vez» y «🐢 Despacio» la repiten cuando quiera.</li>
 <li>100 melodías en 3 niveles: 🟢 Fácil (2–3 notas, 4 teclas), 🟡 Medio (4–5 notas, 6 teclas), 🔴 Difícil (6–8 notas, 8 teclas). Muchas son trozos de canciones tradicionales (Frère Jacques, Au clair de la lune, Estrellita, Himno de la alegría, Cumpleaños feliz…) y al acertar se dice cuál era. Primero salen las que aún no ha logrado.</li>
 <li>Cada melodía cuenta como una respuesta en Actividad (acierto si la repite bien a la primera); el tiempo aparece como «Música». En «🔢 Números y letras» se ve, por nivel, cuántas melodías ha logrado y su % a la primera (con «💡 Lista para el nivel…» cuando acierta el 80 % o más), qué canciones conoce (✅ todas sus partes, 🟡 algunas, ⬜ ninguna) y las 5 melodías en las que más se equivoca, dibujadas con los dibujos de las teclas. «🎹 Libre» es para tocar a su gusto.</li></ul>
+<h4>🎼 Notas (clave de sol)</h4>
+<ul><li><b>Para qué:</b> aprender a leer las notas en el pentagrama con clave de sol, como en las clases de música, con los colores de las campanitas: do rojo, re naranja, mi amarillo, fa verde, sol azul claro, la azul, si morado y do agudo blanco.</li>
+<li><b>Nota nueva:</b> primero se presenta: sale en el pentagrama pintada de su color junto a su campanita, suena y la voz dice dónde vive (por ejemplo «el do tiene una rayita en la barriga y vive debajo de las cinco líneas»). Se empieza con do y re, y se abre la siguiente cuando las anteriores ya no le cuestan (como mucho 2 al día), en orden: do, re, mi, fa, sol, la, si y do agudo.</li>
+<li><b>Tres tipos de pregunta:</b> 🔔 <b>C · Color</b>, «¿Cuál es el re?»: toca la campanita de ese color (las campanitas no llevan el nombre); 👀 <b>L · Leer</b>, «¿Qué nota es?»: ve la nota en el pentagrama y toca su campanita; 📍 <b>U · Ubicar</b>, «¿Dónde va el mi?»: toca su sitio en el pentagrama (la línea o el espacio). Salen más las que le cuestan, y ubicar llega cuando ya conoce la nota.</li>
+<li><b>Del color a leer de verdad:</b> en «¿Qué nota es?» cada nota sale 🎨 pintada de su color, luego 🖍️ solo con el borde de color y al final ⚫ negra, como en una partitura. Pasa de etapa cuando la lee bien a la primera en días distintos; si una nota negra se le olvida, vuelve al borde de color.</li>
+<li><b>Si se equivoca:</b> suena la campanita que tocó, sin reproches; con «Ayuda cuando falla», la voz explica dónde vive la nota o de qué color es, se ilumina la respuesta y esa nota vuelve a salir dos preguntas después. La estrella solo se gana a la primera.</li>
+<li><b>Seguimiento:</b> en «🔢 Números y letras» se ve cada nota con su etapa y cómo va en C, L y U (con los mismos colores que los números), cuántas notas están abiertas y con cuáles se confunde. En Actividad cuenta como «Música», y en la evolución hay una gráfica de notas dominadas (de 24: 8 notas × 3).</li></ul>
 <h4>🖐️ Componer números</h4>
 <ul><li>Pasar de «contar» a entender que un número está hecho de otros (5 es 3 y 2), como en MS. Cuatro juegos: <b>🙈 Escondidos</b> (se ven todos, un vaso tapa algunos: ¿cuántos hay debajo?; o dos tarjetas de puntos como en un dado: ¿cuántos en total?), <b>⚖️ Más o menos</b> (¿dónde hay más / menos? y, desde el nivel medio, «= igual»), <b>➕ Uno más</b> (llega uno o se va uno: ¿cuántos hay ahora?) y <b>🧺 Tantos como</b> (hacer un plato con la misma cantidad que el modelo, sin número).</li>
 <li>Niveles: 🟢 hasta 4, 🟡 hasta 6 (lo que se pide al final de MS), 🔴 hasta 10. En el medio y difícil aparecen trampas: en «Más o menos» la colección más pequeña tiene cosas más grandes o más separadas, y en «Uno más» la caja se cierra (hay que pensarlo sin contar).</li>
@@ -661,7 +681,7 @@ const T={
 <h4>👥 Modo invitado</h4>
 <ul><li>En «⚙️ Ajustes» se activa cuando juega otro peque. Arriba aparece «👥 Invitado» mientras está activo.</li>
 <li>Puedes escribir el nombre del invitado (opcional): el búho le saluda por su nombre y en «Escribir ABC» aparece «✍️ Mi nombre» con sus letras. El nombre de tu peque está en «👧 Peque» y no cambia.</li>
-<li>No se guarda nada del seguimiento (puntuaciones, palabras, letras, piano, estrellas de Colorear, cuentos escuchados) ni de Actividad. Al desactivarlo, todo vuelve exactamente a como estaba.</li>
+<li>No se guarda nada del seguimiento (puntuaciones, palabras, letras, piano, notas, estrellas de Colorear, cuentos escuchados) ni de Actividad. Al desactivarlo, todo vuelve exactamente a como estaba.</li>
 <li>El tiempo de pantalla cuenta para el invitado con su propio límite (o sin límite), no para el peque. Si el invitado llega a su límite, aparece la pantalla de fin y se desbloquea igual que siempre.</li>
 <li>Se desactiva solo tras 1, 2 o 3 horas o a medianoche, por si se olvida. Los dibujos del invitado se guardan en la galería.</li></ul>
 <h4>🔒 Los datos</h4>
@@ -679,7 +699,7 @@ const T={
 <li><b>Cuándo no aparece:</b> en modo invitado, con la pantalla de padres abierta, cuando quedan 3 minutos o menos del límite de tiempo, o si solo hay una actividad visible ese día.</li>
 <li><b>Si toca 👎</b> (o no contesta en 30 segundos): según el ajuste, la app espera 5, 10, 15 o 20 minutos antes de volver a sugerir, o no vuelve a preguntar mientras siga en esa actividad (cuando cambia de actividad, el contador empieza de nuevo).</li>
 <li><b>Qué actividad propone:</b> solo las <b>visibles hoy</b> (🗓️ Actividades) que no estén en «🚫 No sugerir», y nunca la actual ni una que haya rechazado hace poco. A cada una le da puntos según cinco cosas:
- ① lo que <b>le cuesta</b> según su seguimiento (números, letras, trazos, posiciones, comparaciones, componer, laberintos, piano y palabras);
+ ① lo que <b>le cuesta</b> según su seguimiento (números, letras, trazos, posiciones, comparaciones, componer, laberintos, piano, notas y palabras);
  ② tus <b>⭐ Reforzar</b>;
  ③ lo que <b>no usa desde hace días</b> (o no ha probado nunca);
  ④ el <b>equilibrio del día</b>: si hoy ha hecho mucho de un tipo (por ejemplo letras), suben las de otro tipo, y tras unos 25 minutos de aprendizaje puede proponer algo creativo como descanso;
@@ -725,7 +745,7 @@ const T={
   praise:['¡Muy bien!','¡Genial!','¡Bravo!','¡Excelente!','¡Así se hace!','¡Eso es!'],
   colors:{red:'rojo',yellow:'amarillo',green:'verde',blue:'azul',purple:'morado',orange:'naranja',pink:'rosado',brown:'café',black:'negro',white:'blanco',gray:'gris'},
   shapes:{circle:['el ','círculo'],square:['el ','cuadrado'],triangle:['el ','triángulo'],star:['la ','estrella'],heart:['el ','corazón']},},
- en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',componer:'Bonds',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',comparar:'Compare',donde:'Where is it',objetos:'Objects',memoria:'Pairs',laberinto:'Mazes',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano'},
+ en:{title:['Games','for','Kids'],tabs:{contar:'Count',poner:'Put',componer:'Bonds',orden:'Order',patrones:'Patterns',letras:'Letters',sonidos:'Listen',decir:'Say it',trazar:'Write 123',escletras:'Write ABC',trazos:'Lines',colores:'Colors',formas:'Shapes',comparar:'Compare',donde:'Where is it',objetos:'Objects',memoria:'Pairs',laberinto:'Mazes',cuentos:'Stories',dibujar:'Draw',colorear:'Coloring',piano:'Piano',notas:'Notes'},
   tap:'👆 Tap',type:'⌨️ Type',qCount:'How many are there?',qWrite:'How many? Type the number',qMissing:'Which number is missing?',
   qColor:c=>`Tap the color <u>${c}</u>`,qShape:(a,s)=>`Where is ${a}<u>${s}</u>?`,qPairs:'Find the pairs',storyLevels:['🌱 Easy','🌿 Medium','🌳 Hard'],listenStory:'🔊 Listen to the story',toQuestions:'➡️ Questions',questionsNow:'Now, the questions!',replayStory:'📖 Listen to the story again',repeatQ:'🔊 Repeat the question',seqQ:'What happened first, next and last? Tap them in order.',storyDone:'You finished the story!',anotherStory:'📚 Another story',storyOf:(i,n)=>`Story ${i} of ${n}`,imgOn:'🖼️ With pictures',imgOff:'🙈 No pictures',mastered:n=>`You know ${n} now!`,masteredWord:w=>`You know “${w}” now!`,parentsTitle:'Progress',numbersTitle:'Numbers',legend:'R = recognize · S = say · W = write — 🟢 mastered · 🟡 learning · 🔴 struggling · gray: few tries',skillNames:{recog:'Recognize',say:'Say',write:'Write'},skillShort:{recog:'R',say:'S',write:'W'},confTitle:'Frequent mix-ups',askedGot:(a,b)=>`asked ${a}, chose ${b}`,nothingYet:'No data yet.',wordsTitle:'Words in Objects',hardWords:'Hardest words',resetBtn:'Reset progress',stKnown:'Knows',stLearning:'Learning (× = mistakes)',stNew:'Not shown yet',tapCat:'Tap a category to see the words.',resetAsk:'Are you sure? All tracking, activity and recent screen time will be deleted. Settings, limits, PIN and gallery are kept.',resetYes:'Yes, delete',resetNo:'Cancel',holdHint:'👆 For parents: press and hold 📊 for 2 seconds to see progress',qPattern:'What comes next?',levelNames:['Easy','Medium','Hard'],qLetter:'Listen and tap the letter',qObj:(n,pl)=>pl?`Where are <u>${n}</u>?`:`Where is <u>${n}</u>?`,catLabel:'Category',cats:{all:'All',fruit:'Fruits',veg:'Vegetables',body:'Body',animal:'Animals',home:'Home',music:'Music',build:'Building',school:'School',transport:'Transport',nature:'Nature',toys:'Toys',clothes:'Clothes',food:'Food',sport:'Sports',place:'Places',people:'People',face:'Faces'},qDrawL:l=>`Write the letter <u>${l}</u>`,qDrawLsay:nm=>`Write the letter ${nm}`,drawEmptyL:'First write the letter with the pen',showMe:'👀 Show me',mirrorMsgN:'Almost! The number is backwards. Watch how to write it.',mirrorMsg:'Almost! The letter is backwards. Watch how to write it.',masteredLetter:l=>`You know ${l} now!`,qSayL:'Say this letter out loud',lettersTitle:'Letters',lettersLegend:'R = recognize (Letters) · S = say · W = write (🔒 not open yet) — same colors as numbers',writeOpenTxt:n=>`Write ABC: ${n} of 26 letters open. A new one opens when 2 or fewer are still being learned.`,wroteLike:(a,b)=>`asked ${a}, wrote something like ${b}`,mirrorChip:(a,k)=>`${a} backwards ×${k}`,helpTitle:'📖 Full guide',guideBtn:'📖 Guide',hintLbl:'How it works',helpBody:`<h4>⏱️ Screen time and PIN</h4>
 <ul><li><b>What counts:</b> the time the app is open and visible on screen, playing or not (also listening to a story). It pauses when the tablet locks or the screen turns off, in another app, and while the parents’ screen is open. Each day starts from zero at midnight.</li>
@@ -774,6 +794,13 @@ const T={
 <ul><li>The page plays a tune lighting up the keys; then the child plays it back. The keys have the colours of the coloured hand bells used in music classes: C red, D orange, E yellow, F green, G light blue, A blue, B purple and the high C white. After a mistake it is shown again (after two mistakes, more slowly). “▶️ Again” and “🐢 Slowly” replay it at any time.</li>
 <li>100 tunes in 3 levels: 🟢 Easy (2–3 notes, 4 keys), 🟡 Medium (4–5 notes, 6 keys), 🔴 Hard (6–8 notes, 8 keys). Many are bits of traditional songs (Frère Jacques, Twinkle Twinkle, Ode to Joy, Happy Birthday…) and their name is said when completed. Tunes not yet completed come first.</li>
 <li>Each tune counts as one answer in Activity (right if played back correctly the first time); the time appears as “Music”. In “🔢 Numbers & letters” you see, per level, how many tunes are completed and the % right first time (with “💡 Ready for the … level” at 80 % or more), which songs are known (✅ all parts, 🟡 some, ⬜ none) and the 5 tunes with most mistakes, drawn with the pictures on the keys. “🎹 Free play” is for playing freely.</li></ul>
+<h4>🎼 Notes (treble clef)</h4>
+<ul><li><b>What for:</b> learning to read notes on the staff with the treble clef, as in music class, with the colours of the hand bells: C red, D orange, E yellow, F green, G light blue, A blue, B purple and high C white.</li>
+<li><b>New note:</b> it is introduced first: it appears on the staff painted in its colour next to its bell, it sounds and the voice says where it lives (e.g. “C has a little line through its tummy and lives below the five lines”). It starts with C and D, and the next one opens when the previous ones are no longer hard (at most 2 a day), in order: C, D, E, F, G, A, B and high C.</li>
+<li><b>Three kinds of question:</b> 🔔 <b>C · Colour</b>, “Which one is D?”: tap the bell of that colour (the bells have no name on them); 👀 <b>R · Read</b>, “Which note is it?”: see the note on the staff and tap its bell; 📍 <b>P · Place</b>, “Where does E go?”: tap its place on the staff (the line or the space). The hardest ones come up more, and placing comes once the note is known.</li>
+<li><b>From colour to real reading:</b> in “Which note is it?” each note first appears 🎨 painted in its colour, then 🖍️ with only a coloured outline and finally ⚫ black, like in a score. It moves to the next step when read right on the first try on different days; if a black note is forgotten, it goes back to the coloured outline.</li>
+<li><b>After a mistake:</b> the bell they tapped sounds, with no telling off; with “Help after a mistake”, the voice explains where the note lives or what colour it is, the answer lights up and that note comes back two questions later. The star is only earned on the first try.</li>
+<li><b>Tracking:</b> in “🔢 Numbers & letters” you see each note with its step and how it is doing in C, R and P (same colours as numbers), how many notes are open and which ones get mixed up. In Activity it counts as “Music”, and the progress charts include notes mastered (of 24: 8 notes × 3).</li></ul>
 <h4>🖐️ Number bonds</h4>
 <ul><li>Moving from “counting” to understanding that a number is made of others (5 is 3 and 2), as in pre-K. Four games: <b>🙈 Hidden</b> (all are shown, then a cup covers some: how many are under it?; or two dot cards like dice: how many altogether?), <b>⚖️ More or less</b> (where are there more / fewer? and, from the medium level, “= same”), <b>➕ One more</b> (one arrives or one leaves: how many now?) and <b>🧺 As many as</b> (make a plate with the same amount as the model, with no number).</li>
 <li>Levels: 🟢 up to 4, 🟡 up to 6 (what is expected at the end of the year), 🔴 up to 10. Medium and hard include traps: in “More or less” the smaller set has bigger or more spread-out things, and in “One more” the box closes (it has to be worked out without counting).</li>
@@ -805,7 +832,7 @@ const T={
 <h4>👥 Guest mode</h4>
 <ul><li>Turn it on in “⚙️ Settings” when another child plays. “👥 Guest” shows at the top while it is on.</li>
 <li>You can type the guest’s name (optional): the owl greets them by name and “✍️ My name” appears in Write ABC with their letters. Your child’s name is in “👧 Child” and doesn’t change.</li>
-<li>Nothing is saved in tracking (scores, words, letters, piano, Coloring stars, stories heard) or Activity. When turned off, everything is exactly as before.</li>
+<li>Nothing is saved in tracking (scores, words, letters, piano, notes, Coloring stars, stories heard) or Activity. When turned off, everything is exactly as before.</li>
 <li>Screen time counts for the guest with its own limit (or no limit), not for the child. If the guest reaches the limit, the end screen appears and is unlocked as usual.</li>
 <li>It turns off by itself after 1, 2 or 3 hours or at midnight, in case you forget. The guest’s drawings are kept in the gallery.</li></ul>
 <h4>🔒 The data</h4>
@@ -823,7 +850,7 @@ const T={
 <li><b>When it doesn’t appear:</b> in guest mode, with the parents’ screen open, with 3 minutes or less of the time limit left, or if only one activity is visible that day.</li>
 <li><b>If they tap 👎</b> (or don’t answer within 30 seconds): depending on the setting, the app waits 5, 10, 15 or 20 minutes before suggesting again, or doesn’t ask again while they stay in that activity (when they change activity, the counter starts again).</li>
 <li><b>Which activity it suggests:</b> only those <b>visible today</b> (🗓️ Activities) that aren’t set to “🚫 Don’t suggest”, never the current one or one recently declined. Each gets points for five things:
- ① what they <b>find hard</b> according to their progress (numbers, letters, lines, positions, comparing, number bonds, mazes, piano and words);
+ ① what they <b>find hard</b> according to their progress (numbers, letters, lines, positions, comparing, number bonds, mazes, piano, notes and words);
  ② your <b>⭐ Practise</b> marks;
  ③ what <b>hasn’t been played for days</b> (or never tried);
  ④ the <b>day’s balance</b>: after a lot of one kind (for example letters), other kinds go up, and after about 25 minutes of learning it may suggest something creative as a break;
@@ -869,7 +896,7 @@ const T={
   praise:['Great job!','Awesome!','Well done!','Excellent!','You did it!','That’s right!'],
   colors:{red:'red',yellow:'yellow',green:'green',blue:'blue',purple:'purple',orange:'orange',pink:'pink',brown:'brown',black:'black',white:'white',gray:'gray'},
   shapes:{circle:['the ','circle'],square:['the ','square'],triangle:['the ','triangle'],star:['the ','star'],heart:['the ','heart']},},
- fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',componer:'Composer',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',comparar:'Comparer',donde:'Où est-il',objetos:'Objets',memoria:'Paires',laberinto:'Labyrinthes',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano'},
+ fr:{title:['Jeux','pour','Petits'],tabs:{contar:'Compter',poner:'Mettre',componer:'Composer',orden:'Ordre',patrones:'Suites',letras:'Lettres',sonidos:'Écoute',decir:'Dis-le',trazar:'Écrire 123',escletras:'Écrire ABC',trazos:'Graphisme',colores:'Couleurs',formas:'Formes',comparar:'Comparer',donde:'Où est-il',objetos:'Objets',memoria:'Paires',laberinto:'Labyrinthes',cuentos:'Histoires',dibujar:'Dessiner',colorear:'Colorier',piano:'Piano',notas:'Notes'},
   tap:'👆 Toucher',type:'⌨️ Écrire',qCount:'Combien y en a-t-il ?',qWrite:'Combien ? Écris le chiffre',qMissing:'Quel nombre manque ?',
   qColor:c=>`Touche la couleur <u>${c}</u>`,qShape:(a,s)=>`Où est ${a}<u>${s}</u> ?`,qPairs:'Trouve les paires',storyLevels:['🌱 Facile','🌿 Moyen','🌳 Difficile'],listenStory:'🔊 Écouter l’histoire',toQuestions:'➡️ Questions',questionsNow:'Maintenant, les questions !',replayStory:'📖 Réécouter l’histoire',repeatQ:'🔊 Répéter la question',seqQ:'Qu’est-ce qui s’est passé en premier, ensuite et à la fin ? Touche-les dans l’ordre.',storyDone:'Tu as fini l’histoire !',anotherStory:'📚 Une autre histoire',storyOf:(i,n)=>`Histoire ${i} sur ${n}`,imgOn:'🖼️ Avec images',imgOff:'🙈 Sans images',mastered:n=>`Tu connais le ${n} !`,masteredWord:w=>`Tu connais « ${w} » !`,parentsTitle:'Progrès',numbersTitle:'Nombres',legend:'R = reconnaître · D = dire · É = écrire — 🟢 acquis · 🟡 en cours · 🔴 difficile · gris : peu d’essais',skillNames:{recog:'Reconnaître',say:'Dire',write:'Écrire'},skillShort:{recog:'R',say:'D',write:'É'},confTitle:'Confusions fréquentes',askedGot:(a,b)=>`demandé ${a}, choisi ${b}`,nothingYet:'Pas encore de données.',wordsTitle:'Mots des Objets',hardWords:'Mots les plus difficiles',resetBtn:'Effacer la progression',stKnown:'Les connaît',stLearning:'En cours (× = erreurs)',stNew:'Pas encore vus',tapCat:'Touche une catégorie pour voir les mots.',resetAsk:'Vraiment ? Tout le suivi, l’activité et le temps d’écran des derniers jours seront effacés. Les réglages, les limites, le code et la galerie sont conservés.',resetYes:'Oui, effacer',resetNo:'Annuler',holdHint:'👆 Pour les parents : reste appuyé 2 secondes sur 📊 pour voir la progression',qPattern:'Qu’est-ce qui vient après ?',levelNames:['Facile','Moyen','Difficile'],qLetter:'Écoute et touche la lettre',qObj:(n,pl)=>pl?`Où sont <u>${n}</u> ?`:`Où est <u>${n}</u> ?`,catLabel:'Catégorie',cats:{all:'Tout',fruit:'Fruits',veg:'Légumes',body:'Corps',animal:'Animaux',home:'Maison',music:'Musique',build:'Chantier',school:'École',transport:'Transports',nature:'Nature',toys:'Jouets',clothes:'Vêtements',food:'Nourriture',sport:'Sports',place:'Lieux',people:'Personnes',face:'Visages'},qDrawL:l=>`Écris la lettre <u>${l}</u>`,qDrawLsay:nm=>`Écris la lettre ${nm}`,drawEmptyL:'Écris d’abord la lettre avec le stylet',showMe:'👀 Montre-moi',mirrorMsgN:'Presque ! Le chiffre est à l’envers. Regarde comment on fait.',mirrorMsg:'Presque ! La lettre est à l’envers. Regarde comment on fait.',masteredLetter:l=>`Tu connais le ${l} !`,qSayL:'Dis cette lettre à voix haute',lettersTitle:'Lettres',lettersLegend:'R = reconnaître (Lettres) · D = dire · É = écrire (🔒 pas encore ouverte) — mêmes couleurs que les nombres',writeOpenTxt:n=>`Écrire ABC : ${n} lettres sur 26 ouvertes. Une nouvelle s’ouvre quand il en reste 2 ou moins à apprendre.`,wroteLike:(a,b)=>`demandé ${a}, écrit comme ${b}`,mirrorChip:(a,k)=>`${a} à l’envers ×${k}`,helpTitle:'📖 Guide complet',guideBtn:'📖 Guide',hintLbl:'Comment ça marche',helpBody:`<h4>⏱️ Temps d’écran et code</h4>
 <ul><li><b>Ce qui compte :</b> le temps où l’app est ouverte et affichée, que l’enfant joue ou non (aussi en écoutant une histoire). Le compteur s’arrête quand la tablette se verrouille ou que l’écran s’éteint, dans une autre app et quand l’écran parents est ouvert. Chaque jour repart de zéro à minuit.</li>
@@ -918,6 +945,13 @@ const T={
 <ul><li>La page joue une mélodie en allumant les touches ; puis l’enfant la rejoue. Les touches ont les couleurs des clochettes de couleur des cours d’éveil musical : do rouge, ré orange, mi jaune, fa vert, sol bleu clair, la bleu, si violet et le do aigu blanc. En cas d’erreur, elle est rejouée (après deux erreurs, plus lentement). « ▶️ Encore » et « 🐢 Doucement » la rejouent à tout moment.</li>
 <li>100 mélodies sur 3 niveaux : 🟢 Facile (2–3 notes, 4 touches), 🟡 Moyen (4–5 notes, 6 touches), 🔴 Difficile (6–8 notes, 8 touches). Beaucoup sont des extraits de chansons traditionnelles (Frère Jacques, Au clair de la lune, Ah ! vous dirai-je maman, Hymne à la joie, Joyeux anniversaire…) dont le nom est annoncé à la fin. Les mélodies pas encore réussies passent en premier.</li>
 <li>Chaque mélodie compte comme une réponse dans Activité (réussie si rejouée correctement du premier coup) ; le temps apparaît comme « Musique ». Dans « 🔢 Nombres et lettres », on voit par niveau combien de mélodies sont réussies et le % du premier coup (avec « 💡 Prêt pour le niveau… » à partir de 80 %), quelles chansons sont connues (✅ toutes les parties, 🟡 certaines, ⬜ aucune) et les 5 mélodies avec le plus d’erreurs, dessinées avec les dessins des touches. « 🎹 Libre » permet de jouer librement.</li></ul>
+<h4>🎼 Notes (clé de sol)</h4>
+<ul><li><b>Pourquoi :</b> apprendre à lire les notes sur la portée en clé de sol, comme en cours d’éveil musical, avec les couleurs des clochettes : do rouge, ré orange, mi jaune, fa vert, sol bleu clair, la bleu, si violet et do aigu blanc.</li>
+<li><b>Nouvelle note :</b> elle est d’abord présentée : elle apparaît sur la portée, peinte de sa couleur, à côté de sa clochette, elle sonne et la voix dit où elle habite (par ex. « le do a un petit trait sur le ventre et vit sous les cinq lignes »). On commence par do et ré, et la suivante s’ouvre quand les précédentes ne posent plus de difficulté (au plus 2 par jour), dans l’ordre : do, ré, mi, fa, sol, la, si et do aigu.</li>
+<li><b>Trois types de questions :</b> 🔔 <b>C · Couleur</b>, « Où est le ré ? » : toucher la clochette de cette couleur (les clochettes ne portent pas de nom) ; 👀 <b>L · Lire</b>, « Quelle note est-ce ? » : voir la note sur la portée et toucher sa clochette ; 📍 <b>P · Placer</b>, « Où va le mi ? » : toucher sa place sur la portée (la ligne ou l’interligne). Les plus difficiles reviennent plus souvent, et placer arrive quand la note est connue.</li>
+<li><b>De la couleur à la vraie lecture :</b> dans « Quelle note est-ce ? », chaque note apparaît d’abord 🎨 peinte de sa couleur, puis 🖍️ avec seulement le contour de couleur et enfin ⚫ noire, comme sur une partition. Elle passe à l’étape suivante quand elle est lue du premier coup sur des jours différents ; si une note noire est oubliée, elle revient au contour de couleur.</li>
+<li><b>En cas d’erreur :</b> la clochette touchée sonne, sans reproche ; avec « Aide quand il se trompe », la voix explique où habite la note ou de quelle couleur elle est, la réponse s’allume et la note revient deux questions plus tard. L’étoile ne se gagne que du premier coup.</li>
+<li><b>Suivi :</b> dans « 🔢 Nombres et lettres », on voit chaque note avec son étape et où elle en est en C, L et P (mêmes couleurs que les nombres), combien de notes sont ouvertes et lesquelles se confondent. Dans Activité, elle compte comme « Musique », et l’évolution comprend un graphique des notes maîtrisées (sur 24 : 8 notes × 3).</li></ul>
 <h4>🖐️ Composer les nombres</h4>
 <ul><li>Passer de « compter » à comprendre qu’un nombre est fait d’autres nombres (5, c’est 3 et 2), comme en MS. Quatre jeux : <b>🙈 Cachés</b> (on voit tout, puis un gobelet en cache une partie : combien dessous ? ; ou deux cartes à points comme un dé : combien en tout ?), <b>⚖️ Plus ou moins</b> (où y en a-t-il le plus / le moins ? et, dès le niveau moyen, « = autant »), <b>➕ Un de plus</b> (il en arrive un ou il en part un : combien maintenant ?) et <b>🧺 Autant que</b> (faire une assiette avec autant d’objets que le modèle, sans nombre).</li>
 <li>Niveaux : 🟢 jusqu’à 4, 🟡 jusqu’à 6 (attendu de fin de MS), 🔴 jusqu’à 10. Aux niveaux moyen et difficile, des pièges : dans « Plus ou moins » la plus petite collection a des objets plus gros ou plus écartés, et dans « Un de plus » la boîte se ferme (il faut réfléchir sans compter).</li>
@@ -949,7 +983,7 @@ const T={
 <h4>👥 Mode invité</h4>
 <ul><li>Il s’active dans « ⚙️ Réglages » quand un autre enfant joue. « 👥 Invité » s’affiche en haut tant qu’il est activé.</li>
 <li>Vous pouvez écrire le prénom de l’invité (facultatif) : le hibou le salue par son prénom et « ✍️ Mon prénom » apparaît dans Écrire ABC avec ses lettres. Le prénom de votre enfant est dans « 👧 Enfant » et ne change pas.</li>
-<li>Rien n’est enregistré dans le suivi (scores, mots, lettres, piano, étoiles de Colorier, histoires écoutées) ni dans Activité. En le désactivant, tout redevient exactement comme avant.</li>
+<li>Rien n’est enregistré dans le suivi (scores, mots, lettres, piano, notes, étoiles de Colorier, histoires écoutées) ni dans Activité. En le désactivant, tout redevient exactement comme avant.</li>
 <li>Le temps d’écran compte pour l’invité avec sa propre limite (ou sans limite), pas pour l’enfant. Si l’invité atteint sa limite, l’écran de fin apparaît et se débloque comme d’habitude.</li>
 <li>Il s’arrête tout seul après 1, 2 ou 3 heures ou à minuit, au cas où on oublie. Les dessins de l’invité restent dans la galerie.</li></ul>
 <h4>🔒 Les données</h4>
@@ -967,7 +1001,7 @@ const T={
 <li><b>Quand elle n’apparaît pas :</b> en mode invité, avec l’écran des parents ouvert, quand il reste 3 minutes ou moins de la limite de temps, ou s’il n’y a qu’une activité visible ce jour-là.</li>
 <li><b>S’il touche 👎</b> (ou ne répond pas en 30 secondes) : selon le réglage, l’app attend 5, 10, 15 ou 20 minutes avant de suggérer à nouveau, ou ne redemande plus tant qu’il reste dans cette activité (quand il change d’activité, le compteur repart).</li>
 <li><b>Quelle activité elle propose :</b> seulement celles <b>visibles aujourd’hui</b> (🗓️ Activités) qui ne sont pas sur « 🚫 Ne pas suggérer », jamais l’activité en cours ni une refusée récemment. Chacune reçoit des points selon cinq critères :
- ① ce qui <b>est difficile</b> d’après son suivi (nombres, lettres, graphisme, positions, comparer, composer, labyrinthes, piano et mots) ;
+ ① ce qui <b>est difficile</b> d’après son suivi (nombres, lettres, graphisme, positions, comparer, composer, labyrinthes, piano, notes et mots) ;
  ② vos <b>⭐ Renforcer</b> ;
  ③ ce qui <b>n’a pas été utilisé depuis des jours</b> (ou jamais essayé) ;
  ④ l’<b>équilibre de la journée</b> : après beaucoup d’un même type (par exemple les lettres), les autres types remontent, et après environ 25 minutes d’apprentissage elle peut proposer une pause créative ;
@@ -2298,6 +2332,9 @@ function trackWrong(ans){noteAns(false);const c=qCtx;if(!c)return;
     if(isL){if(ans&&ans!==c.n&&ans!=='↔'){const cm=c.sk==='write'?(r.wconf||(r.wconf={})):r.conf;cm[ans]=(cm[ans]||0)+1}}
     else if(ans!=null&&+ans!==c.n&&+ans>=1&&+ans<=9)r.conf[+ans]=(r.conf[+ans]||0)+1;
     if(!c.missed){const k=r[c.sk];k.s+=(0-k.s)*(c.a||.3)*(fast?.3:1);k.att++;k.last=now();if(k.s<45)r.weak=true}}
+  else if(c.kind==='nt'){const r=ntRec(c.n);if(ans!=null&&+ans!==c.n&&+ans>=0&&+ans<8)r.conf[+ans]=(r.conf[+ans]||0)+1;
+    if(!c.missed){const k=r[c.sk];k.s+=(0-k.s)*.3*(fast?.3:1);k.att++;k.last=now();if(c.sk==='l'&&r.st===2&&k.s<45){r.st=1;r.okd=[]}
+      ntRQ={n:c.n,sk:c.sk,due:ntQn+2}}}
   else if(c.kind==='obj'){const o=objRec(c.l,c.e);
     if(ans&&ans!==c.e){const m=(P.objConf[c.l]||(P.objConf[c.l]={}));const x=(m[c.e]||(m[c.e]={}));x[ans]=(x[ans]||0)+1}
     if(!c.missed){o.att++;o.last=now();if(!fast||o.box<3){o.box=0;o.due=now()+60e3;o.tk=0}o.wrong=(o.wrong||0)+1}}
@@ -2313,6 +2350,10 @@ function trackRight(){const c=qCtx;if(!c)return null;qCtx=null;let cele=null;
     // solo sube de caja si ya tocaba repasarla: así «la sabe» exige aciertos en días distintos
     if(o.box<2||o.due<=now()){o.box=Math.min(5,o.box+1);o.due=now()+BOX_INT[o.box]}
     if(was<3&&o.box>=3)cele=L().masteredWord(c.word)}
+  // notas: sube la puntuación de la habilidad; leer bien a la primera en días distintos quita el color poco a poco
+  if(c.kind==='nt'&&!c.missed){const r=ntRec(c.n),k=r[c.sk],td=dayKey(now());k.s+=(100-k.s)*.3;k.att++;k.last=now();
+    if(c.sk==='l'&&r.st<2){if(!r.okd.includes(td))r.okd.push(td);if(k.s>=75&&r.okd.length>=2){r.st++;r.okd=[]}}
+    ntMaybeOpen()}
   if(!c.missed)P.hist.push([now(),c.kind,c.kind==='obj'?c.l+':'+c.e:(c.kind==='let'?'L':'')+c.sk+':'+c.n,1,'']);
   P.hist=P.hist.slice(-300);saveP();return cele}
 
@@ -2370,6 +2411,13 @@ function pianoSection(){const t=L(),p=P.piano||{1:[],2:[],3:[]},st=p.st||{};
   return `<h3>${t.pianoTitle}${hint('piano')}</h3><div class="pnlvs">${[1,2,3].map(lvRow).join('')}</div>
     <h4 class="ch">${t.pnSongsTitle}</h4><p>${songChips}</p>
     <h4 class="ch">${t.pnHardTitle}</h4><p class="pnote">${t.pnHardNote}</p>${hardHtml}`}
+// Notas (clave de sol) en la pantalla de padres: cada nota con su etapa (🎨 / 🖍️ / ⚫) y cómo va en C · L · U
+function ntSection(){const t=NTT(),n=ntOpen(),lb=ntSkLbl(),d=P.nt||{n:{}};
+  const tiles=[...Array(8).keys()].map(i=>{const r=(d.n||{})[i],open=i<n&&r&&r.seen;
+    return `<div class="ptnum ntt"><b><i class="ntsw" style="background:${PN_KEYS[i][0]}"></i> ${ntShort(i)}</b><small>${open?t.stg[r.st||0]:'🔒'}</small>${NT_SK.map(sk=>`<span class="dot ${open?scoreColor(r[sk]):'none'}">${lb[sk]}</span>`).join('')}</div>`}).join('');
+  const cf=[];for(const i in d.n||{}){const r=d.n[i];for(const a in r.conf||{})cf.push([+i,+a,r.conf[a]])}cf.sort((a,b)=>b[2]-a[2]);
+  return `<h3>${t.title}${hint('notas')}</h3><p class="pnote">${t.legend}</p><div class="ptgrid">${tiles}</div><p class="pnote">${t.openTxt(n)}</p>
+    <h4 class="ch">${t.conf}</h4><p>${cf.length?cf.slice(0,6).map(([a,b,k])=>`<span class="chip">${L().askedGot(ntShort(a),ntShort(b))} ×${k}</span>`).join(' '):L().nothingYet}</p>`}
 // Pestañas de la pantalla de padres; cada una con su parte de la explicación
 // en español, «el peque» se cambia por su nombre cuando se sabe (salvo en un aparato de padre, que ve a varios peques)
 function peqName(h){try{if(lang!=='es'||!childName||syParent())return h}catch(e){return h}const n=esc(childName);
@@ -2385,7 +2433,7 @@ let pTab='time';try{const v=localStorage.getItem('peques-ptab');if(PTABS.include
 // cada trozo: [emoji de la sección, bloques (párrafos y puntos, en orden) o toda la sección]
 const HINTS={time:[['⏱️',[0,1,2,3,4]]],week:[['⏱️',[7]]],pin:[['⏱️',[5,6]]],
   act:[['📅',[0,1,2,5]],['📚'],['🔒'],['☁️',[7]]],actDays:[['📅',[3]],['🎨']],actHours:[['📅',[3]]],actEvo:[['📅',[4]]],sess:[['📅',[0,1]]],
-  agStats:[['🧠',[9]]],suggLog:[['💡',[9]]],nums:[['🎯'],['🔢']],lets:[['🔢'],['✍️']],comp:[['🖐️']],cmp:[['📏']],donde:[['📍']],lab:[['🌀']],traz:[['〰️']],piano:[['🎹']],
+  agStats:[['🧠',[9]]],suggLog:[['💡',[9]]],nums:[['🎯'],['🔢']],lets:[['🔢'],['✍️']],comp:[['🖐️']],cmp:[['📏']],donde:[['📍']],lab:[['🌀']],traz:[['〰️']],piano:[['🎹']],notas:[['🎼']],
   words:[['🧸']],name:[['✍️',[3]]],guest:[['👥']],agSet:[['🧠',[0,1,2,3,4,5,6,7,8,10]]],acts:[['🗓️']],sugg:[['💡',[0,1,2,3,4,5,6,7,8]]],wake:[['📱']],
   sync:[['☁️',[0,7,10,12,13]]],syDev:[['☁️',[3,4,5,6,7,8]]],syConn:[['☁️',[1,2]]],backup:[['💾'],['🔒'],['☁️',[14]]],vers:[['☁️',[11]]],reset:[['🔒'],['☁️',[9]]],family:[['👨‍👩‍👧'],['☁️',[7]]]};
 const hint=k=>`<button type="button" class="hint" data-hint="${k}" aria-label="${L().hintLbl}" title="${L().hintLbl}">i</button>`;
@@ -2455,6 +2503,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
     ${laberintoSection()}
     ${trazosSection()}
     ${pianoSection()}
+    ${ntSection()}
     ${agItemsSection('numlet')}</section>
     <section class="ppane" data-pane="words"${pTab==='words'||window.__allPanes?'':' hidden'}>
     <h3>${t.wordsTitle}${hint('words')}</h3>
@@ -2505,7 +2554,7 @@ function openParents(){parentObjLang=parentObjLang||lang;const t=L();if(lockEl&&
 // Sesión de juego = juego seguido: si pasan más de 10 min sin tocar la pantalla, empieza otra.
 // Solo cuenta el tiempo entre toques (cada hueco cuenta como máximo 2 min), así no se suma el tiempo con la tablet olvidada.
 const SESS_GAP=10*60e3,TOUCH_CAP=120e3;
-const ACT_GROUP={contar:'num',poner:'num',componer:'num',orden:'num',sonidos:'num',decirN:'num',trazar:'num',letras:'let',decirL:'let',escletras:'let',trazos:'let',objetos:'obj',cuentos:'story',patrones:'other',colores:'other',formas:'other',comparar:'other',donde:'other',memoria:'other',laberinto:'other',dibujar:'art',colorear:'art',piano:'music'};
+const ACT_GROUP={contar:'num',poner:'num',componer:'num',orden:'num',sonidos:'num',decirN:'num',trazar:'num',letras:'let',decirL:'let',escletras:'let',trazos:'let',objetos:'obj',cuentos:'story',patrones:'other',colores:'other',formas:'other',comparar:'other',donde:'other',memoria:'other',laberinto:'other',dibujar:'art',colorear:'art',piano:'music',notas:'music'};
 const GROUP_COLOR={num:'#3A86FF',let:'#7B5CD6',obj:'#FF8C2B',story:'#3BB273',art:'#FF7EB6',music:'#00A6A6',other:'#9AA0A6'};
 const dayKey=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const actKey=()=>current==='decir'?(sayMode==='abc'?'decirL':'decirN'):current;
@@ -2535,7 +2584,8 @@ function snapshot(){const g=r=>r.att>=3&&r.s>=75;let n=0,l=0;
   for(let i=1;i<=9;i++){const r=P.num[i];if(r)for(const sk of SKILLS)if(g(r[sk]))n++}
   for(const k of LETTER_KEYS){const r=(P.let||{})[k];if(r)for(const sk of SKILLS)if(g(r[sk]))l++}
   const w={};for(const lg of ['es','en','fr']){const m=P.obj[lg]||{};w[lg]=Object.values(m).filter(o=>o.seen&&o.box>=3).length}
-  return {n,l,w}}
+  let m=0;for(const r of Object.values((P.nt||{}).n||{}))for(const sk of NT_SK)if(r&&r[sk]&&g(r[sk]))m++;
+  return {n,l,w,m}}
 document.addEventListener('pointerdown',onTouch,true);
 document.addEventListener('keydown',onTouch,true);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){if(saveTmr){clearTimeout(saveTmr);saveTmr=null}saveP()}});
@@ -2594,7 +2644,7 @@ function activitySection(){const t=L(),days=periodDays(actDays),from=days[0].get
     ${sumHtml}
     ${has?`<h4 class="ch">${t.chartTime}${hint('actDays')}</h4>${barChart(days)}
     <h4 class="ch">${t.chartHours}${hint('actHours')}</h4>${hourChart(days)}
-    <h4 class="ch">${t.chartEvo}${hint('actEvo')}</h4><div class="evos">${evoChart(days,t.evoNum,p=>p.n,27)}${evoChart(days,t.evoLet,p=>p.l,78)}${evoChart(days,t.evoWords,(p,k)=>p.w[k]||0,null,[['es','ES','#FF5A4E'],['en','EN','#3A86FF'],['fr','FR','#3BB273']])}</div>
+    <h4 class="ch">${t.chartEvo}${hint('actEvo')}</h4><div class="evos">${evoChart(days,t.evoNum,p=>p.n,27)}${evoChart(days,t.evoLet,p=>p.l,78)}${evoChart(days,t.evoWords,(p,k)=>p.w[k]||0,null,[['es','ES','#FF5A4E'],['en','EN','#3A86FF'],['fr','FR','#3BB273']])}${evoChart(days,NTT().evo,p=>p.m||0,24)}</div>
     <details class="psess"${sessOpen?' open':''}><summary>${t.sessTitle} (${sess.length})${hint('sess')}</summary><ul>${sessList}</ul></details>`:`<p class="pnote">${t.noAct}</p>`}`}
 let sessOpen=false;
 
@@ -3604,7 +3654,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=100; // se sube junto con la caché de sw.js
+const APP_VER=101; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5281,7 +5331,129 @@ async function syRestoreVersion(kid,name){const t=SYT(),sm=x=>syMsgAt('syVersMsg
   await syFlushQ();syRefreshPanel(true);sm(t.versDone)}catch(e){sm(t.stErr(syErrTxt(String(e.message||e))))}}
 const b2s=d=>{try{return BK_T[lang].sum(bkSummary(d.ls,'–'))}catch(e){return ''}};
 
-const games={laberinto,cuentos,contar,poner,componer,comparar,donde,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano};
+
+// ===== 🎼 Notas: leer las notas en clave de sol (do … do agudo) con los colores de las campanitas de la clase de música =====
+// Tres tipos de pregunta: C = nombre → campanita (color), L = leer (pentagrama → campanita), U = ubicar (campanita → sitio en el pentagrama).
+// Cada nota pasa de 🎨 color → 🖍️ borde de color → ⚫ negra cuando la lee bien a la primera en días distintos.
+// Clave de sol: glifo de la fuente Bravura (SIL Open Font License 1.1).
+const NT_CLEF='M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z';
+const NT_SK=['c','l','u'];
+const NT_T={
+ es:{q:{l:'¿Qué nota es?',c:n=>`¿Cuál es el <u>${n}</u>?`,u:n=>`¿Dónde va el <u>${n}</u>?`},sayQ:{l:'¿Qué nota es?',c:n=>`¿Cuál es el ${n}?`,u:n=>`¿Dónde va el ${n}?`},
+   name:['do','re','mi','fa','sol','la','si','do agudo'],colors:['rojo','naranja','amarillo','verde','azul claro','azul','morado','blanco'],
+   spot:['tiene una rayita en la barriga y vive debajo de las cinco líneas','cuelga debajito de la primera línea','está sentado en la primera línea','está en el primer espacio, entre la primera y la segunda línea','está en la segunda línea, donde se enrolla la clave de sol','está en el segundo espacio','está en la tercera línea, la del medio','está en el tercer espacio'],
+   intro:(n,s)=>`Este es el ${n}: ${s}.`,introT:n=>`🎼 Nota nueva: <u>${n}</u>`,next:'➡️ Seguir',hearIt:'Toca la nota o la campanita para oírla.',
+   isColor:(n,c)=>`El ${n} es la campanita ${c}.`,goes:(n,s)=>`El ${n} ${s}.`,tapBell:'Toca la campanita.',tapSpot:'Toca su sitio en el pentagrama.',
+   title:'🎼 Notas (clave de sol)',legend:'C = color de su campanita · L = leer en el pentagrama · U = ubicar en el pentagrama — 🎨 nota de color · 🖍️ con borde de color · ⚫ negra · 🔒 aún no ha salido',
+   conf:'Confusiones',evo:'🎼 Notas (de 24)',stg:['🎨','🖍️','⚫'],openTxt:(n)=>`${n} de 8 notas abiertas. Una nueva se abre cuando las anteriores ya no le cuestan (como mucho 2 al día).`},
+ en:{q:{l:'Which note is it?',c:n=>`Which one is <u>${n}</u>?`,u:n=>`Where does <u>${n}</u> go?`},sayQ:{l:'Which note is it?',c:n=>`Which one is ${n}?`,u:n=>`Where does ${n} go?`},
+   name:['C','D','E','F','G','A','B','high C'],colors:['red','orange','yellow','green','light blue','blue','purple','white'],
+   spot:['has a little line through its tummy and lives below the five lines','hangs just below the first line','sits on the first line','is in the first space, between the first and second lines','is on the second line, where the treble clef curls','is in the second space','is on the third line, the middle one','is in the third space'],
+   intro:(n,s)=>`This is ${n}: it ${s}.`,introT:n=>`🎼 New note: <u>${n}</u>`,next:'➡️ Next',hearIt:'Tap the note or the bell to hear it.',
+   isColor:(n,c)=>`${n} is the ${c} bell.`,goes:(n,s)=>`${n} ${s}.`,tapBell:'Tap the bell.',tapSpot:'Tap its place on the staff.',
+   title:'🎼 Notes (treble clef)',legend:'C = bell colour · R = read on the staff · P = place on the staff — 🎨 coloured note · 🖍️ coloured outline · ⚫ black · 🔒 not shown yet',
+   conf:'Mix-ups',evo:'🎼 Notes (of 24)',stg:['🎨','🖍️','⚫'],openTxt:(n)=>`${n} of 8 notes open. A new one opens when the previous ones are no longer hard (at most 2 a day).`},
+ fr:{q:{l:'Quelle note est-ce ?',c:n=>`Où est le <u>${n}</u> ?`,u:n=>`Où va le <u>${n}</u> ?`},sayQ:{l:'Quelle note est-ce ?',c:n=>`Où est le ${n} ?`,u:n=>`Où va le ${n} ?`},
+   name:['do','ré','mi','fa','sol','la','si','do aigu'],colors:['rouge','orange','jaune','vert','bleu clair','bleu','violet','blanc'],
+   spot:['a un petit trait sur le ventre et vit sous les cinq lignes','est accroché juste sous la première ligne','est assis sur la première ligne','est dans le premier interligne, entre la première et la deuxième ligne','est sur la deuxième ligne, là où s’enroule la clé de sol','est dans le deuxième interligne','est sur la troisième ligne, celle du milieu','est dans le troisième interligne'],
+   intro:(n,s)=>`Voici le ${n} : il ${s}.`,introT:n=>`🎼 Nouvelle note : <u>${n}</u>`,next:'➡️ Continuer',hearIt:'Touche la note ou la clochette pour l’entendre.',
+   isColor:(n,c)=>`Le ${n}, c’est la clochette ${c}.`,goes:(n,s)=>`Le ${n} ${s}.`,tapBell:'Touche la clochette.',tapSpot:'Touche sa place sur la portée.',
+   title:'🎼 Notes (clé de sol)',legend:'C = couleur de sa clochette · L = lire sur la portée · P = placer sur la portée — 🎨 note de couleur · 🖍️ contour de couleur · ⚫ noire · 🔒 pas encore vue',
+   conf:'Confusions',evo:'🎼 Notes (sur 24)',stg:['🎨','🖍️','⚫'],openTxt:(n)=>`${n} notes sur 8 ouvertes. Une nouvelle s’ouvre quand les précédentes ne posent plus de difficulté (au plus 2 par jour).`}};
+const NTT=()=>NT_T[lang];
+const ntShort=i=>PN_NAMES[lang][i];              // etiqueta corta (do, re… / C, D…)
+const ntName=i=>NTT().name[i];                    // nombre para decir (do agudo / high C)
+const ntSkLbl=()=>lang==='en'?{c:'C',l:'R',u:'P'}:{c:'C',l:'L',u:lang==='fr'?'P':'U'};
+function ntData(){return P.nt||(P.nt={open:2,n:{},nd:null})}
+function ntRec(i){const d=ntData();return d.n[i]||(d.n[i]={c:{s:50,att:0},l:{s:50,att:0},u:{s:50,att:0},st:0,okd:[],conf:{},seen:false})}
+const ntOpen=()=>Math.min(8,Math.max(2,ntData().open||2));
+// timbre de campanita: fundamental clara y parciales que se apagan despacio
+function playBell(i){const a=audioCtx();if(!a)return;const t=a.currentTime+0.01,g=a.createGain();g.connect(a.destination);
+  g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.006);g.gain.exponentialRampToValueAtTime(0.0001,t+1.8);
+  [[1,0.8],[2,0.22],[3,0.12],[4.16,0.05]].forEach(([m,v])=>{const o=a.createOscillator(),gg=a.createGain();o.type='sine';o.frequency.value=PN_FREQ[i]*m;
+    gg.gain.setValueAtTime(v,t);gg.gain.exponentialRampToValueAtTime(0.0001,t+1.6/Math.sqrt(m));o.connect(gg);gg.connect(g);o.start(t);o.stop(t+2)})}
+// pentagrama: líneas cada 20; la 1.ª línea (mi) en y=130; cada nota sube medio espacio
+const NT_S=20,NT_YB=130,ntY=p=>NT_YB-(p-2)*NT_S/2,NT_X=236;
+function ntHead(i,p,stage,cls){const y=ntY(p),c=PN_KEYS[i][0],x=NT_X,fill=stage===0?c:'#FFFFFF',stroke=stage===1?c:'#1D2433',sw=stage===1?5.5:3.4;
+  return `<g class="nthead ${cls||''}" data-p="${p}">${p===0?`<line x1="${x-24}" x2="${x+24}" y1="${y}" y2="${y}" stroke="#1D2433" stroke-width="2.4"/>`:''}
+    <ellipse cx="${x}" cy="${y}" rx="${NT_S*0.68}" ry="${NT_S*0.5}" transform="rotate(-18 ${x} ${y})" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>
+    ${stage===1?`<ellipse cx="${x}" cy="${y}" rx="${NT_S*0.68+3.2}" ry="${NT_S*0.5+3.2}" transform="rotate(-18 ${x} ${y})" fill="none" stroke="#1D2433" stroke-width="1.2"/>`:''}</g>`}
+function ntStaff(o){const zones=o.zones||[],lines=[0,1,2,3,4].map(k=>`<line x1="14" x2="346" y1="${NT_YB-k*NT_S}" y2="${NT_YB-k*NT_S}" stroke="#1D2433" stroke-width="${k===1?2.6:2}"/>`).join('');
+  const zh=zones.map(p=>`<rect class="ntzone" data-p="${p}" x="104" width="242" y="${ntY(p)-NT_S/4}" height="${NT_S/2}" rx="5"/>`).join('');
+  return `<svg class="ntstaff${o.big?' big':''}" viewBox="0 0 360 178" role="img" aria-label="${o.label||''}">
+    <rect x="0" y="0" width="360" height="178" fill="#FFFFFF" rx="14"/>${lines}
+    <path d="${NT_CLEF}" transform="translate(28 ${NT_YB-NT_S}) scale(${NT_S/250} ${-NT_S/250})" fill="#1D2433"/>
+    ${zh}${o.note!=null?ntHead(o.note,o.p!=null?o.p:o.note,o.stage||0,'main'):''}<g class="ntghost"></g></svg>`}
+// campanita como las de la clase: cuerpo de color, botón arriba y base blanca
+function ntBellSvg(i){const c=PN_KEYS[i][0],w=c==='#FFFFFF';
+  return `<svg viewBox="0 0 100 100" class="ntbellsvg" aria-hidden="true"><ellipse cx="50" cy="90" rx="38" ry="8" fill="#F4F1EA" stroke="#C9C3B6" stroke-width="2"/>
+    <rect x="45" y="6" width="10" height="14" rx="3" fill="#F4F1EA" stroke="#C9C3B6" stroke-width="2"/><ellipse cx="50" cy="7" rx="10" ry="4" fill="#FFFFFF" stroke="#C9C3B6" stroke-width="2"/>
+    <path d="M16 80 Q20 76 22 62 Q24 30 50 24 Q76 30 78 62 Q80 76 84 80 Z" fill="${c}" stroke="${w?'#B8B8B8':'#0002'}" stroke-width="2.5"/>
+    <path d="M32 40 Q38 30 48 28" fill="none" stroke="#FFFFFF" stroke-opacity=".55" stroke-width="5" stroke-linecap="round"/></svg>`}
+// en «¿Cuál es el re?» las campanitas van sin nombre: tiene que recordar su color
+const ntBellBtn=(i,lbl)=>`<button class="pick ntbell" data-v="${i}" aria-label="${ntName(i)}">${ntBellSvg(i)}${lbl?`<span>${ntShort(i)}</span>`:''}</button>`;
+// nota nueva: entra cuando todas las abiertas ya no le cuestan (y como mucho 2 nuevas al día)
+function ntMaybeOpen(){const d=ntData(),n=ntOpen();if(n>=8)return;const td=dayKey(now()),nd=d.nd&&d.nd.d===td?d.nd.n:0;if(nd>=2)return;
+  for(let i=0;i<n;i++){const r=ntRec(i);if(!r.seen||r.l.att<3||r.l.s<65||r.c.att<2||r.c.s<60)return}
+  d.open=n+1;d.nd={d:td,n:nd+1}}
+let ntQn=0,ntRQ=null,ntLast=-1;
+function ntPick(){const n=ntOpen();ntQn++;
+  for(let i=0;i<n;i++)if(!ntRec(i).seen)return {intro:i};
+  if(ntRQ&&ntRQ.due<=ntQn&&ntRQ.n<n){const q=ntRQ;ntRQ=null;return {n:q.n,sk:q.sk}}
+  const cand=[];for(let i=0;i<n;i++){const r=ntRec(i);for(const sk of NT_SK){
+    if(sk==='u'&&!(r.st>=1||(r.l.att>=3&&r.l.s>=60)))continue;
+    let w=(100-r[sk].s)+18;if(r[sk].att<3)w+=25;if(i===ntLast)w*=.25;
+    // con la nota aún de color, más preguntas de nombre y de leer; ubicar llega después
+    if(sk==='u'&&r.st===0)w*=.5;cand.push({n:i,sk,w})}}
+  let x=Math.random()*cand.reduce((a,c)=>a+c.w,0);for(const c of cand){x-=c.w;if(x<=0)return c}return cand[cand.length-1]}
+function ntOptions(i){const n=ntOpen(),cnt=n<=2?2:n===3?3:4,r=ntRec(i),out=[i];
+  const conf=Object.keys(r.conf||{}).map(Number).filter(k=>k<n&&k!==i).sort((a,b)=>r.conf[b]-r.conf[a]).slice(0,1);out.push(...conf);
+  for(const k of shuffle([...Array(n).keys()]))if(out.length<cnt&&!out.includes(k))out.push(k);
+  return out.sort((a,b)=>a-b)}
+function notas(){const t=NTT(),q=ntPick();stopSpeech();
+  if(q.intro!=null)return ntIntro(q.intro);
+  const i=q.n,sk=q.sk,r=ntRec(i);ntLast=i;
+  if(sk==='u'){
+    const n=ntOpen(),zones=[...Array(Math.min(8,Math.max(4,n+1))).keys()];
+    frame(t.q.u(ntShort(i)),`<div class="ntwrap">${ntStaff({zones,big:true,label:t.q.u(ntName(i))})}<button class="ntbellbig" id="ntBell" aria-label="${ntName(i)}">${ntBellSvg(i)}</button></div>`);
+    const svg=stage.querySelector('.ntstaff'),ghost=svg.querySelector('.ntghost');let done=false;
+    document.getElementById('ntBell').onclick=()=>{playBell(i);say(ntName(i))};
+    trackStart({kind:'nt',sk:'u',n:i});
+    const place=(p,cls)=>{ghost.innerHTML=ntHead(i,p,0,cls)};
+    svg.querySelectorAll('.ntzone').forEach(z=>z.onclick=()=>{if(done)return;const p=+z.dataset.p;place(p,p===i?'ok':'bad');
+      if(p===i){done=true;ntWin(z,i)}else{playBell(Math.min(7,p));miss(z,p)}});
+    agQ({opts:'.ntzone',noShuffle:true,known:()=>r.u.att>=3&&r.u.s>=70,right:()=>svg.querySelector(`.ntzone[data-p="${i}"]`),
+      say:()=>t.goes(cap(ntName(i)),t.spot[i]),show:()=>place(i,'teach'),fin:()=>[t.tapSpot,t.tapSpot]});
+    later(()=>{say(t.sayQ.u(ntName(i)));setTimeout(()=>playBell(i),60)},300);return}
+  const opts=ntOptions(i),staffHtml=sk==='l'?ntStaff({note:i,stage:r.st,label:t.q.l}):'';
+  frame(sk==='l'?t.q.l:t.q.c(ntShort(i)),`${staffHtml?`<div class="ntwrap">${staffHtml}</div>`:''}<div class="row ntbells">${opts.map(k=>ntBellBtn(k,sk==='l')).join('')}</div>`);
+  trackStart({kind:'nt',sk,n:i});
+  const hear=document.getElementById('hear');if(hear)hear.onclick=()=>sk==='l'?(say(t.sayQ.l),setTimeout(()=>playBell(i),900)):say(t.sayQ.c(ntName(i)));
+  if(sk==='l'){const h=stage.querySelector('.nthead.main');if(h)h.onclick=()=>playBell(i)}
+  stage.querySelectorAll('.ntbell').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;if(v===i)ntWin(b,i);else{playBell(v);miss(b,v)}});
+  agQ({noShuffle:true,known:()=>r[sk].att>=3&&r[sk].s>=70,right:()=>stage.querySelector(`.ntbell[data-v="${i}"]`),
+    say:()=>sk==='l'?t.intro(ntName(i),t.spot[i]):t.isColor(cap(ntName(i)),t.colors[i]),
+    show:()=>{if(sk==='l'){const s=stage.querySelector('.ntstaff .nthead.main');if(s)s.outerHTML=ntHead(i,i,0,'main')}},fin:()=>[t.tapBell,t.tapBell]});
+  later(()=>{if(sk==='l'){say(t.sayQ.l)}else say(t.sayQ.c(ntName(i)))},300)}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+// presentación de una nota nueva: su sitio, su color y su sonido
+function ntIntro(i){const t=NTT(),r=ntRec(i);
+  frame(t.introT(ntShort(i)),`<div class="ntwrap">${ntStaff({note:i,stage:0,big:true,label:ntName(i)})}<button class="ntbellbig" id="ntBell" aria-label="${ntName(i)}">${ntBellSvg(i)}</button></div>
+    <p class="pnote">${t.hearIt}</p><button class="btn" id="ntNext">${t.next}</button>`);
+  const hear=document.getElementById('hear');if(hear)hear.hidden=true;
+  const tell=()=>{playBell(i);setTimeout(()=>say(t.intro(ntName(i),t.spot[i])),500)};
+  document.getElementById('ntBell').onclick=tell;const h=stage.querySelector('.nthead.main');if(h)h.onclick=tell;
+  document.getElementById('ntNext').onclick=()=>{r.seen=true;saveP();notas()};
+  later(tell,300)}
+// acierto: suena la campanita, la voz dice el nombre y la felicitación; la estrella solo a la primera
+function ntWin(el,i){const calm=agCalm();noteAns(true);el.classList.add('right');playBell(i);ntRQ=ntRQ&&ntRQ.n===i?null:ntRQ;
+  const m=stage.querySelector('.msg'),go=d=>{stage.querySelectorAll('.pick,.ntzone').forEach(b=>{b.disabled=true;b.classList.add('agwait')});setTimeout(()=>{if(current==='notas')notas()},d)};
+  if(calm){trackRight();stage.querySelectorAll('.agwait').forEach(e=>e.classList.remove('agwait'));const d=agCalmWin(m);go(Math.max(d,1500));return}
+  agEnd();score++;setScore();const p=L().praise[rand(L().praise.length)],cele=trackRight(),nm=cap(ntName(i));
+  if(m)m.innerHTML=`${esc(nm)} · ${p} ⭐${cele?`<br>🎉 ${cele}`:''}`;
+  setTimeout(()=>saySeq([[nm,lang],[p,lang]].concat(cele?[[cele,lang]]:[]),{gap:200}),350);go(cele?3600:2100)}
+
+const games={laberinto,cuentos,contar,poner,componer,comparar,donde,orden,patrones,sonidos,letras,decir,trazar,escletras,trazos,colores,formas,objetos,memoria,dibujar,colorear,piano,notas};
 
 // Panel de juegos que se puede ocultar
 let menuOpen=true;
@@ -5317,7 +5489,7 @@ document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{lang=b.dataset.l;tr
 
 // ===== Menú por categorías + actividades visibles según el día de la semana =====
 const CATS=[['num','🔢','#3A86FF',['contar','poner','componer','orden','sonidos','trazar']],['let','🔤','#7B5CD6',['letras','decir','escletras','trazos']],
-  ['desc','🧭','#3BB273',['colores','formas','comparar','donde','patrones','objetos']],['crear','🎨','#FF7EB6',['dibujar','colorear','piano']],['jugar','🎲','#FF8C2B',['cuentos','memoria','laberinto']]];
+  ['desc','🧭','#3BB273',['colores','formas','comparar','donde','patrones','objetos']],['crear','🎨','#FF7EB6',['dibujar','colorear','piano','notas']],['jugar','🎲','#FF8C2B',['cuentos','memoria','laberinto']]];
 const CAT_T={es:{num:'Números',let:'Letras',desc:'Descubrir',crear:'Crear',jugar:'Jugar'},en:{num:'Numbers',let:'Letters',desc:'Discover',crear:'Create',jugar:'Play'},fr:{num:'Nombres',let:'Lettres',desc:'Découvrir',crear:'Créer',jugar:'Jouer'}};
 const catOf=id=>(CATS.find(c=>c[3].includes(id))||CATS[0])[0];
 const ALL_ACTS=CATS.flatMap(c=>c[3]);
@@ -5405,7 +5577,7 @@ const SG_CREATIVE=new Set(['dibujar','colorear','piano']);
 // Pesos según el modo elegido por los padres
 const SG_W={bal:{need:.35,star:.20,stale:.20,bal:.15,ms:.10},ref:{need:.45,star:.25,stale:.12,bal:.10,ms:.08},var:{need:.20,star:.15,stale:.30,bal:.25,ms:.10}};
 // Importancia en el programa de moyenne section
-const SG_MS={componer:1,trazos:1,donde:1,escletras:.85,letras:.85,comparar:.8,contar:.75,poner:.7,decir:.65,trazar:.65,sonidos:.6,orden:.6,formas:.6,patrones:.6,objetos:.55,cuentos:.55,laberinto:.5,colores:.4,memoria:.4,piano:.35,dibujar:.3,colorear:.3};
+const SG_MS={notas:.7,componer:1,trazos:1,donde:1,escletras:.85,letras:.85,comparar:.8,contar:.75,poner:.7,decir:.65,trazar:.65,sonidos:.6,orden:.6,formas:.6,patrones:.6,objetos:.55,cuentos:.55,laberinto:.5,colores:.4,memoria:.4,piano:.35,dibujar:.3,colorear:.3};
 // Actividades que trabajan lo mismo (si una está oculta o en 🚫, otra puede cubrirla)
 const SG_SIM=[['letras','decir','escletras','trazos'],['contar','poner','componer','orden','sonidos','trazar'],['donde','laberinto','formas'],['comparar','formas'],['objetos','cuentos','memoria']];
 const SG_T={
@@ -5447,6 +5619,7 @@ function sgNeed(id){try{const nums=[1,2,3,4,5,6,7,8,9],open=writeOrder().slice(0
    case 'donde':{const r=P.pos||{st:{}};return sgSt(r.st,DN_LV.slice(1,4).flat(),k=>DN_T[lang].word[k])}
    case 'laberinto':{const r=P.lab||{st:{}};const s=[1,2,3].map(l=>r.st[l]).filter(x=>x&&x.a);if(!s.length)return {n:.45,d:''};return {n:Math.min(1,sgAvg(s.map(x=>1-x.f/x.a))),d:''}}
    case 'piano':{const st=(P.piano||{}).st||{},v=Object.values(st).filter(x=>x.a);if(!v.length)return {n:.35,d:''};return {n:Math.min(1,sgAvg(v.map(x=>1-x.f/x.a))),d:''}}
+   case 'notas':{const d=P.nt;if(!d)return {n:.5,d:''};const v=[];for(let i=0;i<ntOpen();i++){const r=(d.n||{})[i];if(r)for(const sk of NT_SK)if(r[sk].att)v.push(1-r[sk].s/100)}if(!v.length)return {n:.5,d:''};return {n:Math.min(1,sgAvg(v)),d:''}}
    case 'objetos':{const o=P.obj&&P.obj[lang]||{},v=Object.values(o).filter(x=>x&&x.att);if(!v.length)return {n:.5,d:''};return {n:Math.min(1,v.filter(x=>(x.box||0)<3).length/v.length),d:''}}
    case 'dibujar':case 'colorear':return {n:0,d:''};
    default:return {n:.3,d:''}}}catch(e){return {n:.3,d:''}}}
