@@ -611,8 +611,9 @@ const T={
 <ul><li>🆕 <b>Nueva</b>: todavía no ha salido.</li>
 <li>🟡 <b>Aprendiendo</b>: ha salido pero aún no está consolidada.</li>
 <li>🟢 <b>La sabe</b>: acertada a la primera en <b>días distintos</b>.</li></ul>
-<p>Cada acierto a la primera aplaza el siguiente repaso: 1 min → 10 min → 1 día → 3 días → 7 días → 21 días. Solo avanza si ya tocaba repasarla, así que una palabra no puede pasar a 🟢 en una sola sesión. Un error la devuelve al principio. Para no saturar, se introducen como máximo 5 palabras nuevas por sesión y categoría, y como mucho 8 a la vez en aprendizaje.</p>
-<p><b>¿Qué es una sesión?</b> Desde que se abre la página o la app hasta que se cierra o se recarga. Si solo se sale a la pantalla de inicio o se cambia de app, Android puede mantenerla abierta en segundo plano (horas o días) y sigue siendo la misma sesión; si se cierra desde las apps recientes, o Android la cierra para liberar memoria, empieza una nueva. La sesión solo limita cuántas palabras <b>nuevas</b> salen de golpe: no borra el progreso, y la regla de «días distintos» usa la fecha y la hora, no la sesión.</p>
+<p>Cada acierto a la primera aplaza el siguiente repaso: 1 min → 10 min → 1 día → 3 días → 7 días → 21 días. Solo avanza si ya tocaba repasarla, así que una palabra no puede pasar a 🟢 en una sola sesión. Un error la devuelve al principio (si falla tocando muy rápido una palabra que ya sabía, no baja). Después de los 21 días sigue saliendo cada 21 días mientras la acierte.</p>
+<p><b>Palabras nuevas, al ritmo del peque:</b> como mucho <b>8 nuevas al día</b> en total (juegue en la categoría que juegue; por idioma), de una en una, y solo cuando no hay <b>2 o más palabras que le cuesten</b> (que aún no acierta a la primera o que falló hace poco). Si un día aprende rápido, ve las 8; si le cuestan, ve menos y repasa más.</p>
+<p><b>Qué sale en cada pregunta:</b> primero lo que toca repasar (las que acaba de fallar vuelven pronto, y las de días anteriores cuando les toca); luego, si se puede, una palabra nueva; y si no toca nada, <b>palabras que ya sabe</b> (más o menos la mitad de las preguntas), para que acierte a menudo y repase. Una palabra que ya acertó 2 veces hoy sale muy poco el resto del día, así no se repiten siempre las mismas.</p>
 <h4>📚 Cuentos, Patrones, Colores, Formas y Parejas</h4>
 <p>No tienen puntuación por elemento (son para jugar libremente), pero su tiempo y sus respuestas sí aparecen en <b>Actividad</b>.</p>
 <h4>🎨 Dibujar y Colorear</h4>
@@ -647,7 +648,7 @@ const T={
 <li>«👀 Mira cómo» enseña el trazo con un lápiz animado, en su sentido; sale sola la primera vez que ve una escena y tras dos intentos fallidos. Si garabatea fuera de los puntitos, se le pide ir despacito y se borra. Si lo hace al revés (empezando por el final), se acepta pero se le recuerda empezar en el punto verde: el sentido (de izquierda a derecha, de arriba abajo, círculos en sentido contrario a las agujas del reloj) importa mucho para la cursiva.</li>
 <li>Cada escena cuenta como una respuesta en Actividad (acierto si la hace bien a la primera); el tiempo aparece como «Letras». En «🔢 Números y letras» se ve por nivel cuántas escenas ha hecho y su % a la primera, cada tipo de trazo con 🟢🟡🔴 (y «↺ al revés» si suele hacerlo en sentido contrario) y las escenas que más le cuestan.</li></ul>
 <h4>📅 Actividad (gráficos)</h4>
-<ul><li><b>Sesión de juego</b>: juego seguido. Si pasan más de 10 minutos sin tocar la pantalla, empieza otra. (Es distinta de la «sesión» del límite de palabras nuevas, que va de abrir a cerrar la app.)</li>
+<ul><li><b>Sesión de juego</b>: juego seguido. Si pasan más de 10 minutos sin tocar la pantalla, empieza otra.</li>
 <li><b>Tiempo de juego</b>: solo cuenta mientras toca la pantalla; cada pausa cuenta como máximo 2 minutos, para no sumar el tiempo con la tablet olvidada. Escuchar un cuento largo sin tocar puede contar un poco menos de lo real.</li>
 <li><b>Respuestas</b> y <b>% a la primera</b>: una por pregunta, en todas las actividades con preguntas.</li>
 <li><b>Minutos por día</b>: barras por día, con colores por tipo de actividad. <b>A qué hora</b>: minutos por franja horaria (amarillo mañana, naranja tarde, morado noche).</li>
@@ -754,8 +755,9 @@ const T={
 <ul><li>🆕 <b>New</b>: not shown yet.</li>
 <li>🟡 <b>Learning</b>: shown but not yet consolidated.</li>
 <li>🟢 <b>Knows</b>: right on the first try on <b>different days</b>.</li></ul>
-<p>Each first-try success postpones the next review: 1 min → 10 min → 1 day → 3 days → 7 days → 21 days. It only advances when a review is due, so a word cannot reach 🟢 in one session. A mistake sends it back to the start. At most 5 new words per session and category are introduced, and at most 8 are being learned at once.</p>
-<p><b>What is a session?</b> From opening the page or app until it is closed or reloaded. If you just go to the home screen or switch apps, Android may keep it open in the background (hours or days) and it is still the same session; if you close it from recent apps, or Android closes it to free memory, a new one starts. A session only limits how many <b>new</b> words appear at once: it does not erase progress, and the “different days” rule uses the date and time, not the session.</p>
+<p>Each first-try success postpones the next review: 1 min → 10 min → 1 day → 3 days → 7 days → 21 days. It only advances when a review is due, so a word cannot reach 🟢 in one session. A mistake sends it back to the start (if they miss a word they already knew by tapping very fast, it doesn’t drop). After 21 days it keeps coming back every 21 days as long as they get it right.</p>
+<p><b>New words, at the child’s pace:</b> at most <b>8 new words a day</b> in total (whatever the category; per language), one at a time, and only when there aren’t <b>2 or more words they struggle with</b> (not yet right on the first try, or missed recently). If they learn fast one day, they see all 8; if they struggle, they see fewer and review more.</p>
+<p><b>What each question shows:</b> first what is due for review (words just missed come back soon, and those from previous days when due); then, if possible, a new word; and if nothing is due, <b>words they already know</b> (about half of the questions), so they succeed often and review. A word already answered right twice today shows up very rarely for the rest of the day, so it isn’t always the same few words.</p>
 <h4>📚 Stories, Patterns, Colors, Shapes and Pairs</h4>
 <p>No per-item score (they are for free play), but their time and answers do appear in <b>Activity</b>.</p>
 <h4>🎨 Draw and Coloring</h4>
@@ -790,7 +792,7 @@ const T={
 <li>“👀 Show me” shows the line with an animated pencil, in the right direction; it plays by itself the first time a scene appears and after two failed attempts. If the child scribbles away from the dots, they are asked to go slowly and the drawing is erased. If they draw it backwards (starting from the end), it is accepted but they are reminded to start at the green dot: direction (left to right, top to bottom, circles anticlockwise) matters a lot for cursive writing.</li>
 <li>Each scene counts as one answer in Activity (correct if done well on the first try); the time appears as “Letters”. In “🔢 Numbers & letters” you can see, per level, how many scenes are done and the first-try %, each type of line with 🟢🟡🔴 (and “↺ reversed” if often drawn the other way) and the hardest scenes.</li></ul>
 <h4>📅 Activity (charts)</h4>
-<ul><li><b>Play session</b>: continuous play. After more than 10 minutes without touching the screen, a new one starts. (Different from the “session” for the new-words limit, which goes from opening to closing the app.)</li>
+<ul><li><b>Play session</b>: continuous play. After more than 10 minutes without touching the screen, a new one starts.</li>
 <li><b>Play time</b>: only counted while the screen is being touched; each pause counts for 2 minutes at most, so a forgotten tablet does not add time. Listening to a long story without touching may count a bit less than real.</li>
 <li><b>Answers</b> and <b>% first try</b>: one per question, in every activity with questions.</li>
 <li><b>Minutes per day</b>: one bar per day, colored by type of activity. <b>Time of day</b>: minutes per hour (yellow morning, orange afternoon, purple evening).</li>
@@ -897,8 +899,9 @@ const T={
 <ul><li>🆕 <b>Nouveau</b> : pas encore vu.</li>
 <li>🟡 <b>En cours</b> : déjà vu mais pas encore consolidé.</li>
 <li>🟢 <b>Acquis</b> : réussi du premier coup sur <b>des jours différents</b>.</li></ul>
-<p>Chaque réussite du premier coup repousse la révision suivante : 1 min → 10 min → 1 jour → 3 jours → 7 jours → 21 jours. Le mot n’avance que si la révision était due, donc il ne peut pas passer au 🟢 en une seule séance. Une erreur le renvoie au début. Au maximum 5 mots nouveaux par séance et par catégorie, et au plus 8 en cours en même temps.</p>
-<p><b>Qu’est-ce qu’une séance ?</b> Du moment où l’on ouvre la page ou l’app jusqu’à sa fermeture ou son rechargement. Si l’on revient simplement à l’écran d’accueil ou change d’app, Android peut la garder ouverte en arrière-plan (des heures ou des jours) et c’est toujours la même séance ; si on la ferme depuis les apps récentes, ou si Android la ferme pour libérer de la mémoire, une nouvelle commence. La séance limite seulement le nombre de mots <b>nouveaux</b> d’un coup : elle n’efface pas la progression, et la règle des « jours différents » utilise la date et l’heure, pas la séance.</p>
+<p>Chaque réussite du premier coup repousse la révision suivante : 1 min → 10 min → 1 jour → 3 jours → 7 jours → 21 jours. Le mot n’avance que si la révision était due, donc il ne peut pas passer au 🟢 en une seule séance. Une erreur le renvoie au début (s’il se trompe en touchant très vite un mot qu’il connaissait déjà, il ne redescend pas). Après 21 jours, il revient toutes les 21 jours tant qu’il est réussi.</p>
+<p><b>Mots nouveaux, au rythme de l’enfant :</b> au plus <b>8 nouveaux mots par jour</b> au total (quelle que soit la catégorie ; par langue), un à la fois, et seulement s’il n’y a pas <b>2 mots ou plus qui lui posent problème</b> (pas encore réussis du premier coup, ou ratés récemment). Un jour où il apprend vite, il voit les 8 ; s’il a du mal, il en voit moins et révise davantage.</p>
+<p><b>Ce que propose chaque question :</b> d’abord ce qui est à réviser (les mots qu’il vient de rater reviennent vite, et ceux des jours précédents quand c’est leur tour) ; puis, si possible, un mot nouveau ; et s’il n’y a rien à réviser, <b>des mots qu’il connaît déjà</b> (environ la moitié des questions), pour qu’il réussisse souvent et révise. Un mot déjà réussi 2 fois aujourd’hui revient très rarement le reste de la journée : ce ne sont plus toujours les mêmes.</p>
 <h4>📚 Histoires, Suites, Couleurs, Formes et Paires</h4>
 <p>Pas de score par élément (c’est pour jouer librement), mais leur temps et leurs réponses apparaissent dans <b>Activité</b>.</p>
 <h4>🎨 Dessiner et Colorier</h4>
@@ -933,7 +936,7 @@ const T={
 <li>« 👀 Montre-moi » montre le tracé avec un crayon animé, dans le bon sens ; il se lance tout seul la première fois qu’une scène apparaît et après deux essais ratés. Si l’enfant gribouille hors des pointillés, on lui demande d’aller doucement et le dessin s’efface. S’il trace à l’envers (en partant de la fin), c’est accepté mais on lui rappelle de commencer au point vert : le sens (de gauche à droite, de haut en bas, ronds dans le sens inverse des aiguilles d’une montre) compte beaucoup pour la cursive.</li>
 <li>Chaque scène compte comme une réponse dans Activité (réussie si elle est bien faite du premier coup) ; le temps apparaît comme « Lettres ». Dans « 🔢 Nombres et lettres », on voit par niveau combien de scènes sont réussies et le % du premier coup, chaque type de tracé avec 🟢🟡🔴 (et « ↺ à l’envers » s’il le fait souvent dans l’autre sens) et les scènes les plus difficiles.</li></ul>
 <h4>📅 Activité (graphiques)</h4>
-<ul><li><b>Séance de jeu</b> : jeu continu. Après plus de 10 minutes sans toucher l’écran, une nouvelle commence. (Différent de la « séance » de la limite de mots nouveaux, qui va de l’ouverture à la fermeture de l’app.)</li>
+<ul><li><b>Séance de jeu</b> : jeu continu. Après plus de 10 minutes sans toucher l’écran, une nouvelle commence.</li>
 <li><b>Temps de jeu</b> : compté seulement pendant que l’écran est touché ; chaque pause compte au plus 2 minutes, pour ne pas ajouter le temps d’une tablette oubliée. Écouter une longue histoire sans toucher peut compter un peu moins que la réalité.</li>
 <li><b>Réponses</b> et <b>% du premier coup</b> : une par question, dans toutes les activités avec questions.</li>
 <li><b>Minutes par jour</b> : une barre par jour, colorée par type d’activité. <b>À quelle heure</b> : minutes par heure (jaune matin, orange après-midi, violet soir).</li>
@@ -2286,14 +2289,16 @@ function trackWrong(ans){noteAns(false);const c=qCtx;if(!c)return;
     if(!c.missed){const k=r[c.sk];k.s+=(0-k.s)*(c.a||.3)*(fast?.3:1);k.att++;k.last=now();if(k.s<45)r.weak=true}}
   else if(c.kind==='obj'){const o=objRec(c.l,c.e);
     if(ans&&ans!==c.e){const m=(P.objConf[c.l]||(P.objConf[c.l]={}));const x=(m[c.e]||(m[c.e]={}));x[ans]=(x[ans]||0)+1}
-    if(!c.missed){o.att++;o.last=now();if(!fast||o.box<3){o.box=0;o.due=now()+60e3}o.wrong=(o.wrong||0)+1}}
+    if(!c.missed){o.att++;o.last=now();if(!fast||o.box<3){o.box=0;o.due=now()+60e3;o.tk=0}o.wrong=(o.wrong||0)+1}}
   if(!c.missed)P.hist.push([now(),c.kind,c.kind==='obj'?c.l+':'+c.e:(c.kind==='let'?'L':'')+c.sk+':'+c.n,0,ans==null?'':String(ans)]);
   c.missed=true;P.hist=P.hist.slice(-300);saveP()}
 // Devuelve un mensaje de celebración si acaba de dominar algo
 function trackRight(){const c=qCtx;if(!c)return null;qCtx=null;let cele=null;
   if((c.kind==='num'||c.kind==='let')&&!c.missed){const isL=c.kind==='let',r=isL?letRec(c.n):numRec(c.n),k=r[c.sk],before=k.s;k.s+=(100-k.s)*(c.a||.3);k.att++;k.last=now();
     if(r.weak&&before<75&&k.s>=75&&k.att>=4){r.weak=false;cele=isL?L().masteredLetter(c.n):L().mastered(c.n)}}
-  if(c.kind==='obj'&&!c.missed){const o=objRec(c.l,c.e),was=o.box;o.att++;o.ok=(o.ok||0)+1;o.last=now();
+  if(c.kind==='obj'&&!c.missed){const o=objRec(c.l,c.e),was=o.box,td=dayKey(now());o.att++;o.ok=(o.ok||0)+1;o.last=now();
+    // aciertos de hoy: una palabra acertada 2 veces hoy ya no se repite más que de vez en cuando
+    if(o.td!==td){o.td=td;o.tk=0}o.tk++;
     // solo sube de caja si ya tocaba repasarla: así «la sabe» exige aciertos en días distintos
     if(o.box<2||o.due<=now()){o.box=Math.min(5,o.box+1);o.due=now()+BOX_INT[o.box]}
     if(was<3&&o.box>=3)cele=L().masteredWord(c.word)}
@@ -2306,20 +2311,31 @@ const BOX_INT=[60e3,10*60e3,24*3600e3,3*24*3600e3,7*24*3600e3,21*24*3600e3];
 function objRec(l,e){const m=P.obj[l]||(P.obj[l]={});return m[e]||(m[e]={box:0,due:0,att:0,ok:0,seen:false})}
 const objState=(l,e)=>{const o=(P.obj[l]||{})[e];return !o||!o.seen?'new':o.box>=3?'known':'learning'};
 let sessionNew={};let lastObj=[];
-function pickObject(pool,l){{const rq=agTake('obj:'+l+':'+current,v=>pool.some(o=>o[1]===v));if(rq!=null)return pool.find(o=>o[1]===rq)}const t=now(),st=e=>objState(l,e[1]);
-  const notRecent=pool.filter(o=>!lastObj.includes(o[1]));const P2=notRecent.length?notRecent:pool;
-  const learning=P2.filter(o=>st(o)==='learning'),due=learning.filter(o=>objRec(l,o[1]).due<=t).sort((a,b)=>objRec(l,a[1]).due-objRec(l,b[1]).due);
-  const review=P2.filter(o=>st(o)==='known'&&objRec(l,o[1]).due<=t),fresh=P2.filter(o=>st(o)==='new');
-  const key=l+'|'+objCat,introduced=sessionNew[key]||0,activeLearning=pool.filter(o=>st(o)==='learning').length;
-  const canNew=fresh.length&&introduced<5&&activeLearning<8;
-  const r=Math.random();let pick=null;
-  if(due.length&&r<0.6)pick=due[0];
-  else if(review.length&&r<0.75)pick=review[rand(review.length)];
-  else if(canNew&&r<0.95){pick=fresh[rand(fresh.length)];sessionNew[key]=introduced+1}
-  if(!pick&&learning.length)pick=learning.sort((a,b)=>objRec(l,a[1]).box-objRec(l,b[1]).box)[rand(Math.min(3,learning.length))];
-  if(!pick&&canNew){pick=fresh[rand(fresh.length)];sessionNew[key]=introduced+1}
-  if(!pick){const old=pool.filter(o=>st(o)!=='new'),old2=old.filter(o=>!lastObj.includes(o[1]));pick=(old2.length?old2:old.length?old:P2)[rand((old2.length?old2:old.length?old:P2).length)]}
-  objRec(l,pick[1]).seen=true;lastObj=[pick[1],...lastObj].slice(0,2);return pick}
+// palabras nuevas: como mucho 8 al día en total (por idioma), de una en una, y solo si no hay 2 o más que le cuesten
+const OBJ_NEW_DAY=8,OBJ_HARD_MAX=2;
+const objNewToday=l=>{const x=(P.objNew||{})[l];return x&&x.d===dayKey(now())?x.n:0};
+function pickObject(pool,l){{const rq=agTake('obj:'+l+':'+current,v=>pool.some(o=>o[1]===v));if(rq!=null)return pool.find(o=>o[1]===rq)}
+  const t=now(),td=dayKey(t),R=o=>objRec(l,o[1]),st=o=>objState(l,o[1]),any=a=>a[rand(a.length)];
+  const notRecent=pool.filter(o=>!lastObj.includes(o[1])),P2=notRecent.length?notRecent:pool;
+  // «le cuesta»: ya salió pero aún no la acierta a la primera (o la falló hace poco)
+  const hard=o=>st(o)==='learning'&&R(o).box===0,okToday=o=>R(o).td===td&&(R(o).tk||0)>=2;
+  const learning=P2.filter(o=>st(o)==='learning'),known=P2.filter(o=>st(o)==='known'),fresh=P2.filter(o=>st(o)==='new');
+  const dueL=learning.filter(o=>R(o).due<=t).sort((a,b)=>R(a).due-R(b).due),dueK=known.filter(o=>R(o).due<=t);
+  const nHard=Object.values(P.obj[l]||{}).filter(x=>x.seen&&x.box===0).length,canNew=fresh.length&&objNewToday(l)<OBJ_NEW_DAY&&nHard<OBJ_HARD_MAX;
+  const r=Math.random();let pick=null,isNew=false;
+  // 1. lo que toca repasar: las que acaba de fallar y las de días anteriores; 2. repasos de las que ya sabe
+  if(dueL.length&&r<0.7)pick=dueL[0];
+  else if(dueK.length&&r<0.85)pick=any(dueK);
+  // 3. una palabra nueva
+  if(!pick&&canNew){pick=any(fresh);isNew=true}
+  // 4. si no toca nada: mitad palabras que ya sabe (aciertos fáciles), mitad las que aún practica hoy; las ya acertadas 2 veces hoy, muy poco
+  if(!pick){const prac=learning.filter(o=>!okToday(o)).sort((a,b)=>R(a).box-R(b).box),done=learning.filter(okToday),r2=Math.random();
+    if(known.length&&(r2<0.5||!prac.length)&&!(done.length&&r2>=0.8&&!prac.length))pick=any(known);
+    else if(prac.length)pick=prac[rand(Math.min(3,prac.length))];
+    else if(done.length)pick=any(done)}
+  if(!pick){const old=pool.filter(o=>st(o)!=='new'),old2=old.filter(o=>!lastObj.includes(o[1]));pick=any(old2.length?old2:old.length?old:P2);isNew=st(pick)==='new'}
+  if(isNew){const m=P.objNew||(P.objNew={});m[l]={d:td,n:objNewToday(l)+1}}
+  R(pick).seen=true;lastObj=[pick[1],...lastObj].slice(0,2);return pick}
 function objOptions(target,pool,l,cnt=4){const conf=(P.objConf[l]||{})[target[1]]||{};
   const cs=Object.keys(conf).sort((a,b)=>conf[b]-conf[a]).map(e=>pool.find(o=>o[1]===e)||objects.find(o=>o[1]===e)).filter(Boolean).slice(0,2);
   const out=[target,...cs.filter(o=>o[1]!==target[1])];
@@ -3576,7 +3592,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=97; // se sube junto con la caché de sw.js
+const APP_VER=98; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
