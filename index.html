@@ -1100,15 +1100,21 @@ try{elegirVoz();speechSynthesis.addEventListener('voiceschanged',elegirVoz)}catc
 const tune=(u,l,rate,pitch)=>{u.rate=rate*(l==='fr'?.88:1);u.pitch=(pitch||1)*(l==='fr'?1.08:1)};
 let seqId=0;
 // Corta cualquier frase o secuencia que esté sonando (al cambiar de juego o de idioma)
-function stopSpeech(){seqId++;try{speechSynthesis.cancel()}catch(e){}}
+// Hasta cuándo se considera que la voz sigue hablando: el navegador a veces dice que ya no habla (antes de empezar, entre dos frases
+// o en algunas tablets) y lo siguiente se adelantaba. Se marca al hablar y se libera al terminar la última frase (o al tiempo estimado ×1,6).
+let spkBusyUntil=0;
+const spkEst=(t,rate)=>900+String(t).length*85/(rate||1);
+function stopSpeech(){seqId++;spkBusyUntil=0;try{speechSynthesis.cancel()}catch(e){}}
 // Ejecuta algo un poco después solo si la pantalla del juego sigue siendo la misma
 function later(fn,ms){const mark=stage.lastElementChild;setTimeout(()=>{if(mark&&mark.isConnected)fn()},ms)}
 function saySeq(items,o={}){if(sgShown)return;const id=++seqId;try{speechSynthesis.cancel()}catch(e){return}
-  const next=i=>{if(id!==seqId)return;if(i>=items.length){o.done&&o.done();return}const[t,l,cb]=items[i];
+  spkBusyUntil=Date.now()+1.6*items.reduce((a,[t,l])=>a+spkEst(t,(o.rate||.8)*(l==='fr'?.88:1))+(o.gap||450),0);
+  const next=i=>{if(id!==seqId)return;if(i>=items.length){spkBusyUntil=0;o.done&&o.done();return}const[t,l,cb]=items[i];
     try{const u=new SpeechSynthesisUtterance(t),v=voiceFor(l);u.lang=v?v.lang:defLang[l];if(v)u.voice=v;tune(u,l,o.rate||.8);
-      u.onstart=()=>{if(id===seqId&&cb)cb()};u.onend=()=>setTimeout(()=>next(i+1),o.gap||450);speechSynthesis.speak(u)}catch(e){}};
+      u.onstart=()=>{if(id===seqId&&cb)cb()};u.onend=()=>{if(id===seqId&&i===items.length-1)spkBusyUntil=0;setTimeout(()=>next(i+1),o.gap||450)};speechSynthesis.speak(u)}catch(e){}};
   next(0)}
-function say(t,o={}){if(sgShown&&!o.sg)return;seqId++;try{if(!o.keep)speechSynthesis.cancel();try{speechSynthesis.resume()}catch(e){}const u=new SpeechSynthesisUtterance(t),v=voiceFor(lang);u.lang=v?v.lang:defLang[lang];if(v)u.voice=v;tune(u,lang,o.rate||.9,o.pitch);speechSynthesis.speak(u)}catch(e){}}
+function say(t,o={}){if(sgShown&&!o.sg)return;const id=++seqId;try{if(!o.keep)speechSynthesis.cancel();try{speechSynthesis.resume()}catch(e){}const u=new SpeechSynthesisUtterance(t),v=voiceFor(lang);u.lang=v?v.lang:defLang[lang];if(v)u.voice=v;tune(u,lang,o.rate||.9,o.pitch);
+  spkBusyUntil=Math.max(o.keep?spkBusyUntil:0,Date.now()+1.6*spkEst(t,u.rate));u.onend=u.onerror=()=>{if(id===seqId)spkBusyUntil=0};speechSynthesis.speak(u)}catch(e){}}
 
 // ===== Ayuda al fallar (evitar tocar al azar) =====
 // Si no lo sabe: al primer fallo se le enseña la respuesta con su contexto (frase completa) y se le vuelve a preguntar poco después.
@@ -3262,7 +3268,7 @@ const pnStat=(lv,i)=>{const r=pnRec();r.st=r.st||{};return r.st[lv+':'+i]||(r.st
 function pnPick(){const list=PN_SEQ[pnLv],done=new Set(pnRec()[pnLv]);const idx=list.map((_,i)=>i).filter(i=>i!==pnLast);
   const fresh=idx.filter(i=>!done.has(i)),pool=fresh.length&&Math.random()<0.75?fresh:idx;const i=pool[rand(pool.length)];pnLast=i;return i}
 // Espera a que la voz termine antes de seguir (mín. para que empiece a hablar, máx. por si el navegador no informa)
-function afterSpeech(fn,min=500,max=9000,gap=350){const t0=Date.now();const chk=()=>{let sp=false;try{sp=speechSynthesis.speaking||speechSynthesis.pending}catch(e){}
+function afterSpeech(fn,min=500,max=9000,gap=350){const t0=Date.now();const chk=()=>{let sp=Date.now()<spkBusyUntil;try{sp=sp||speechSynthesis.speaking||speechSynthesis.pending}catch(e){}
   if(sp&&Date.now()-t0<max)setTimeout(chk,150);else setTimeout(fn,sp?0:gap)};setTimeout(chk,min)}
 function piano(){if(pnSong)return pianoSong();clearTimeout(mcTimer);qCtx=null;qAns=false;const t=L(),run=++pnRun,nk=PN_KEYCOUNT[pnFree?'free':pnLv],names=PN_NAMES[lang];
   const seqI=pnFree?-1:pnPick(),item=pnFree?null:PN_SEQ[pnLv][seqI],seq=item?item[0]:[],durs=item&&item[1]?item[1]:seq.map(()=>1),song=item?item[2]:null;
@@ -3848,7 +3854,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=107; // se sube junto con la caché de sw.js
+const APP_VER=108; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
