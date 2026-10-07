@@ -113,11 +113,14 @@ a.btn{text-decoration:none;display:inline-block}
 .piano{display:grid;grid-template-columns:repeat(var(--nk),minmax(0,1fr));gap:6px;width:100%;max-width:820px;flex:0 1 auto;align-items:end;justify-items:center}
 /* cada tecla es una campanita como las de la clase de música: cuerpo de color, botón arriba y base blanca */
 .pkey{position:relative;border:0;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding:4px 0 6px;width:100%;touch-action:none;-webkit-tap-highlight-color:transparent}
-.pkey svg{width:100%;max-width:130px;height:auto;display:block;transform-origin:50% 12%;transition:transform .08s,filter .08s}
+.pkey svg{width:auto;max-width:100%;height:min(16vh,120px);display:block;transform-origin:50% 12%;transition:transform .08s,filter .08s}
 .pkey .pn{font:800 clamp(.95rem,2.6vw,1.3rem) "Baloo 2",sans-serif;color:var(--ink);border-radius:10px;padding:0 8px}
 .pkey.lit svg{animation:pbell .55s ease-out;filter:drop-shadow(0 0 10px var(--kc)) drop-shadow(0 0 3px #FFC93C)}.pkey.lit .pn{background:var(--kc);color:#FFFFFF}
 @keyframes pbell{25%{transform:rotate(-13deg) scale(1.04)}55%{transform:rotate(9deg)}80%{transform:rotate(-4deg)}}
 .pkey.pw.lit svg{filter:drop-shadow(0 0 10px #FFC93C)}.pkey.pw.lit .pn{background:#FFC93C;color:var(--ink)}
+.pnstaff{display:block;height:min(26vh,200px);width:auto;max-width:100%;margin:2px auto 0;border:3px solid var(--ink);border-radius:16px;background:#FFFFFF}
+.pnstaff .pnh{transform-box:fill-box;transform-origin:center}.pnstaff .pnh.lit{animation:pnpop .45s ease-out}.pnstaff .pnh.lit ellipse{stroke:#FFC93C;stroke-width:6}
+@keyframes pnpop{40%{transform:scale(1.35)}}
 .pnsw{display:inline-block;width:.85em;height:.85em;border-radius:50%;border:2px solid var(--ink);margin:0 1px;vertical-align:middle}
 .pkey.wait{filter:saturate(.75)}.pkey.bad{animation:shake .4s}
 .pdots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.pdots i{width:20px;height:20px;border-radius:50%;background:#D5DCE8;display:block}.pdots i.ok{background:var(--green)}.pdots i.bad{background:var(--red)}
@@ -631,7 +634,7 @@ const T={
 <li><b>🖼️ Galería</b>: guarda los últimos 100 dibujos en esta tablet. Se pueden descargar como imagen; para borrar hay que tocar dos veces. «Borrar progreso» no borra la galería.</li>
 <li>El tiempo de estas dos actividades aparece en Actividad como «Arte».</li></ul>
 <h4>🎹 Piano</h4>
-<ul><li>La página toca una melodía iluminando las teclas; luego el peque la repite. En lugar de teclas hay campanitas de colores, como las de las clases de música, que suenan como campanitas: do rojo, re naranja, mi amarillo, fa verde, sol azul claro, la azul, si morado y el do agudo blanco. Si se equivoca, se la vuelve a enseñar (tras dos errores, más despacio). «▶️ Otra vez» y «🐢 Despacio» la repiten cuando quiera.</li>
+<ul><li>La página toca una melodía iluminando las teclas; luego el peque la repite. En lugar de teclas hay campanitas de colores, como las de las clases de música, que suenan como campanitas, y arriba hay un pentagrama con sus notas en su sitio (clave de sol) y de su color, que se resaltan cada vez que suena una campanita: do rojo, re naranja, mi amarillo, fa verde, sol azul claro, la azul, si morado y el do agudo blanco. Si se equivoca, se la vuelve a enseñar (tras dos errores, más despacio). «▶️ Otra vez» y «🐢 Despacio» la repiten cuando quiera.</li>
 <li>100 melodías en 3 niveles: 🟢 Fácil (2–3 notas, 4 teclas), 🟡 Medio (4–5 notas, 6 teclas), 🔴 Difícil (6–8 notas, 8 teclas). Muchas son trozos de canciones tradicionales (Frère Jacques, Au clair de la lune, Estrellita, Himno de la alegría, Cumpleaños feliz…) y al acertar se dice cuál era. Primero salen las que aún no ha logrado.</li>
 <li>Cada melodía cuenta como una respuesta en Actividad (acierto si la repite bien a la primera); el tiempo aparece como «Música». En «🔢 Números y letras» se ve, por nivel, cuántas melodías ha logrado y su % a la primera (con «💡 Lista para el nivel…» cuando acierta el 80 % o más), qué canciones conoce (✅ todas sus partes, 🟡 algunas, ⬜ ninguna) y las 5 melodías en las que más se equivoca, dibujadas con los dibujos de las teclas. «🎹 Libre» es para tocar a su gusto.</li></ul>
 <h4>🖐️ Componer números</h4>
@@ -775,7 +778,7 @@ const T={
 <li><b>🖼️ Gallery</b>: keeps the last 100 pictures on this tablet. They can be downloaded as images; deleting needs two taps. “Reset progress” does not erase the gallery.</li>
 <li>Time in these two activities appears in Activity as “Art”.</li></ul>
 <h4>🎹 Piano</h4>
-<ul><li>The page plays a tune lighting up the keys; then the child plays it back. Instead of keys there are coloured hand bells, like the ones used in music classes, and they sound like bells: C red, D orange, E yellow, F green, G light blue, A blue, B purple and the high C white. After a mistake it is shown again (after two mistakes, more slowly). “▶️ Again” and “🐢 Slowly” replay it at any time.</li>
+<ul><li>The page plays a tune lighting up the keys; then the child plays it back. Instead of keys there are coloured hand bells, like the ones used in music classes, and they sound like bells; at the top there is a staff with their notes in place (treble clef) and in their colours, which light up every time a bell rings: C red, D orange, E yellow, F green, G light blue, A blue, B purple and the high C white. After a mistake it is shown again (after two mistakes, more slowly). “▶️ Again” and “🐢 Slowly” replay it at any time.</li>
 <li>100 tunes in 3 levels: 🟢 Easy (2–3 notes, 4 keys), 🟡 Medium (4–5 notes, 6 keys), 🔴 Hard (6–8 notes, 8 keys). Many are bits of traditional songs (Frère Jacques, Twinkle Twinkle, Ode to Joy, Happy Birthday…) and their name is said when completed. Tunes not yet completed come first.</li>
 <li>Each tune counts as one answer in Activity (right if played back correctly the first time); the time appears as “Music”. In “🔢 Numbers & letters” you see, per level, how many tunes are completed and the % right first time (with “💡 Ready for the … level” at 80 % or more), which songs are known (✅ all parts, 🟡 some, ⬜ none) and the 5 tunes with most mistakes, drawn with the pictures on the keys. “🎹 Free play” is for playing freely.</li></ul>
 <h4>🖐️ Number bonds</h4>
@@ -919,7 +922,7 @@ const T={
 <li><b>🖼️ Galerie</b> : garde les 100 derniers dessins sur cette tablette. On peut les télécharger en image ; pour supprimer, il faut toucher deux fois. « Effacer la progression » n’efface pas la galerie.</li>
 <li>Le temps passé dans ces deux activités apparaît dans Activité comme « Art ».</li></ul>
 <h4>🎹 Piano</h4>
-<ul><li>La page joue une mélodie en allumant les touches ; puis l’enfant la rejoue. Au lieu de touches, il y a des clochettes de couleur, comme celles des cours d’éveil musical, qui sonnent comme des clochettes : do rouge, ré orange, mi jaune, fa vert, sol bleu clair, la bleu, si violet et le do aigu blanc. En cas d’erreur, elle est rejouée (après deux erreurs, plus lentement). « ▶️ Encore » et « 🐢 Doucement » la rejouent à tout moment.</li>
+<ul><li>La page joue une mélodie en allumant les touches ; puis l’enfant la rejoue. Au lieu de touches, il y a des clochettes de couleur, comme celles des cours d’éveil musical, qui sonnent comme des clochettes, et en haut une portée montre leurs notes à leur place (clé de sol) et de leur couleur, qui s’allument chaque fois qu’une clochette sonne : do rouge, ré orange, mi jaune, fa vert, sol bleu clair, la bleu, si violet et le do aigu blanc. En cas d’erreur, elle est rejouée (après deux erreurs, plus lentement). « ▶️ Encore » et « 🐢 Doucement » la rejouent à tout moment.</li>
 <li>100 mélodies sur 3 niveaux : 🟢 Facile (2–3 notes, 4 touches), 🟡 Moyen (4–5 notes, 6 touches), 🔴 Difficile (6–8 notes, 8 touches). Beaucoup sont des extraits de chansons traditionnelles (Frère Jacques, Au clair de la lune, Ah ! vous dirai-je maman, Hymne à la joie, Joyeux anniversaire…) dont le nom est annoncé à la fin. Les mélodies pas encore réussies passent en premier.</li>
 <li>Chaque mélodie compte comme une réponse dans Activité (réussie si rejouée correctement du premier coup) ; le temps apparaît comme « Musique ». Dans « 🔢 Nombres et lettres », on voit par niveau combien de mélodies sont réussies et le % du premier coup (avec « 💡 Prêt pour le niveau… » à partir de 80 %), quelles chansons sont connues (✅ toutes les parties, 🟡 certaines, ⬜ aucune) et les 5 mélodies avec le plus d’erreurs, dessinées avec les dessins des touches. « 🎹 Libre » permet de jouer librement.</li></ul>
 <h4>🖐️ Composer les nombres</h4>
@@ -3156,6 +3159,13 @@ function playNote(i,len=0.5){const a=audioCtx();if(!a)return;const t=a.currentTi
   g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.006);g.gain.exponentialRampToValueAtTime(0.0001,t+len+1.3);
   [[1,0.8],[2,0.22],[3,0.12],[4.16,0.05]].forEach(([m,v])=>{const o=a.createOscillator(),gg=a.createGain();o.type='sine';o.frequency.value=PN_FREQ[i]*m;
     gg.gain.setValueAtTime(v,t);gg.gain.exponentialRampToValueAtTime(0.0001,t+(len+1.1)/Math.sqrt(m));o.connect(gg);gg.connect(g);o.start(t);o.stop(t+len+1.5)})}
+// pentagrama de arriba: las notas de las campanitas en su sitio (clave de sol), de su color; se resaltan al sonar
+// Clave de sol: glifo de la fuente Bravura (SIL Open Font License 1.1).
+const PN_CLEF='M376 415C374 427 376 428 382 434C490 535 572 662 572 815C572 902 548 988 507 1048C492 1070 466 1098 455 1098C441 1098 410 1072 390 1050C316 968 292 843 292 739C292 681 299 616 306 575C308 563 309 561 297 551C153 432 0 289 0 87C0 -87 119 -252 364 -252C387 -252 413 -250 433 -246C444 -244 446 -243 448 -255C460 -322 475 -409 475 -456C475 -604 375 -622 316 -622C262 -622 236 -606 236 -593C236 -586 245 -583 268 -576C299 -567 335 -540 335 -482C335 -427 300 -380 239 -380C172 -380 132 -433 132 -495C132 -560 171 -658 322 -658C389 -658 519 -628 519 -458C519 -401 501 -306 490 -244C488 -232 489 -233 503 -227C604 -187 671 -102 671 11C671 139 577 252 430 252C404 252 404 252 401 270ZM470 943C503 943 530 916 530 861C530 750 435 660 356 591C349 585 345 586 343 599C339 625 337 659 337 691C337 847 409 943 470 943ZM361 262C364 243 364 244 346 238C258 208 201 129 201 44C201 -46 248 -110 316 -133C324 -136 336 -139 343 -139C351 -139 355 -134 355 -128C355 -121 347 -118 340 -115C298 -97 268 -54 268 -8C268 49 307 92 368 109C384 113 386 112 388 101L438 -197C440 -208 439 -208 424 -211C408 -214 388 -216 368 -216C193 -216 80 -119 80 20C80 79 90 158 173 252C233 319 279 356 326 394C336 402 338 401 340 390ZM430 103C428 115 429 118 441 117C522 110 589 42 589 -46C589 -109 551 -160 495 -188C483 -194 481 -194 479 -182Z';
+function pnStaff(nk){const S=20,YB=130,y=p=>YB-(p-2)*S/2,x0=112,dx=Math.min(44,212/Math.max(1,nk-1));
+  const lines=[0,1,2,3,4].map(k=>`<line x1="14" x2="346" y1="${YB-k*S}" y2="${YB-k*S}" stroke="#1D2433" stroke-width="${k===1?2.6:2}"/>`).join('');
+  const notes=PN_KEYS.slice(0,nk).map(([c],i)=>{const x=x0+i*dx,yy=y(i);return `<g class="pnh" data-n="${i}">${i===0?`<line x1="${x-22}" x2="${x+22}" y1="${yy}" y2="${yy}" stroke="#1D2433" stroke-width="2.4"/>`:''}<ellipse cx="${x}" cy="${yy}" rx="13.6" ry="10" transform="rotate(-18 ${x} ${yy})" fill="${c}" stroke="#1D2433" stroke-width="3"/></g>`}).join('');
+  return `<svg class="pnstaff" viewBox="0 0 360 172" aria-hidden="true"><rect width="360" height="172" fill="#FFFFFF" rx="14"/>${lines}<path d="${PN_CLEF}" transform="translate(28 ${YB-S}) scale(${S/250} ${-S/250})" fill="#1D2433"/>${notes}</svg>`}
 // dibujo de una campanita (como las de la clase de música)
 function pnBell(c){const w=c==='#FFFFFF';return `<svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="90" rx="38" ry="8" fill="#F4F1EA" stroke="#C9C3B6" stroke-width="2"/>
   <rect x="45" y="6" width="10" height="14" rx="3" fill="#F4F1EA" stroke="#C9C3B6" stroke-width="2"/><ellipse cx="50" cy="7" rx="10" ry="4" fill="#FFFFFF" stroke="#C9C3B6" stroke-width="2"/>
@@ -3199,13 +3209,19 @@ function piano(){qCtx=null;qAns=false;const t=L(),run=++pnRun,nk=PN_KEYCOUNT[pnF
   const seqI=pnFree?-1:pnPick(),item=pnFree?null:PN_SEQ[pnLv][seqI],seq=item?item[0]:[],durs=item&&item[1]?item[1]:seq.map(()=>1),song=item?item[2]:null;
   const done=pnRec();
   stage.innerHTML=`<div class="modes" role="group">${[1,2,3].map(v=>`<button class="mode" data-pl="${v}" aria-pressed="${!pnFree&&v===pnLv}">${t.pnLevels[v-1]}</button>`).join('')}<button class="mode" data-pl="free" aria-pressed="${pnFree}">${t.pnFree}</button></div>
+   ${pnStaff(nk)}
    <p class="q">${pnFree?t.pnFreeQ:t.pnQ}</p>
    ${pnFree?'':`<div class="pdots">${seq.map(()=>'<i></i>').join('')}</div><div class="row"><button class="btn alt" id="pnAgain">${t.pnAgain}</button><button class="btn alt" id="pnSlow">${t.pnSlow}</button><span class="pncount">⭐ ${done[pnLv].length}/${PN_SEQ[pnLv].length}</span></div>`}
    <div class="piano" style="--nk:${nk}">${PN_KEYS.slice(0,nk).map(([c,e],i)=>`<button class="pkey${c==='#FFFFFF'?' pw':''}" data-k="${i}" style="--kc:${c}" aria-label="${names[i]}">${pnBell(c)}<span class="pn">${names[i]}</span></button>`).join('')}</div>
    <p class="msg" aria-live="polite"></p>`;
   const msg=stage.querySelector('.msg'),keys=[...stage.querySelectorAll('.pkey')],dots=[...stage.querySelectorAll('.pdots i')];
+  // el pentagrama se achica si no cabe todo en la pantalla (sin pasar de un tamaño legible)
+  {const sv=stage.querySelector('.pnstaff');if(sv){const fit=()=>{if(!sv.isConnected){removeEventListener('resize',fit);return}sv.style.height='';const over=document.documentElement.scrollHeight-innerHeight+34; // +34: sitio para el mensaje de 2 líneas («¡Bravo! 🎵 Frère Jacques»)
+    if(over>0)sv.style.height=Math.max(96,sv.getBoundingClientRect().height-over-4)+'px'};requestAnimationFrame(fit);addEventListener('resize',fit)}}
   stage.querySelectorAll('[data-pl]').forEach(b=>b.onclick=()=>{if(b.dataset.pl==='free')pnFree=true;else{pnFree=false;pnLv=+b.dataset.pl}try{localStorage.setItem('peques-pianolv',pnLv);localStorage.setItem('peques-pianofree',pnFree?'1':'0')}catch(e){}stopSpeech();piano()});
-  const flash=(i,ms=380)=>{const k=keys[i];if(!k)return;k.classList.add('lit');setTimeout(()=>k.classList.remove('lit'),ms)};
+  // al sonar una campanita se resalta también su nota en el pentagrama de arriba
+  const flash=(i,ms=380)=>{const k=keys[i];if(!k)return;k.classList.add('lit');setTimeout(()=>k.classList.remove('lit'),ms);
+    const h=stage.querySelector(`.pnstaff .pnh[data-n="${i}"]`);if(h){h.classList.remove('lit');void h.getBoundingClientRect();h.classList.add('lit');setTimeout(()=>h.classList.remove('lit'),Math.max(ms,450))}};
   let demo=false,pos=0,fails=0,finished=false,slow=1,counted=false;
   // La página toca la melodía iluminando las teclas
   const playSeq=(speed,cb)=>{demo=true;keys.forEach(k=>k.classList.add('wait'));let at=0;const beat=520*speed;
@@ -3613,7 +3629,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=101; // se sube junto con la caché de sw.js
+const APP_VER=102; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
