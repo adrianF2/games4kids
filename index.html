@@ -597,7 +597,10 @@ header{gap:14px}
 .gtitle span{font-size:1.25em}
 .gtitle{overflow:hidden;white-space:nowrap}.gtitle span{flex:0 0 auto}
 .hello{font:600 clamp(1.05rem,2.4vw,1.35rem) "Grandstander","Baloo 2",sans-serif;flex:1}
-body[data-view="game"] h1,body[data-view="group"] h1,body[data-view="game"] .langs,body[data-view="group"] .langs{display:none}
+body[data-view="game"] h1,body[data-view="group"] h1{display:none}
+/* idioma siempre a mano: en grupos y juegos, versión corta (ES · EN · FR) */
+.lshort{display:none}body[data-view="game"] .lfull,body[data-view="group"] .lfull{display:none}body[data-view="game"] .lshort,body[data-view="group"] .lshort{display:inline}
+body[data-view="game"] .lang,body[data-view="group"] .lang{padding:4px 9px;font-size:.95rem;min-width:40px}
 body[data-view="game"] .gtitle,body[data-view="group"] .gtitle{display:flex}
 body[data-view="home"] .hello{display:block}body:not([data-view="home"]) .hello{display:none}
 body[data-view="game"] header{margin-bottom:-4px}
@@ -675,9 +678,9 @@ body .cats>.cat:last-child:nth-child(odd){grid-column:auto}
       <button class="menubtn fsbtn" id="fsBtn" hidden>⛶</button>
       <button class="menubtn" id="menuBtn" aria-controls="tabs" aria-expanded="true"></button>
       <div class="langs" role="group" aria-label="Idioma / Language / Langue">
-        <button class="lang" data-l="es" aria-pressed="true">Español</button>
-        <button class="lang" data-l="en" aria-pressed="false">English</button>
-        <button class="lang" data-l="fr" aria-pressed="false">Français</button>
+        <button class="lang" data-l="es" aria-pressed="true" aria-label="Español"><span class="lfull">Español</span><span class="lshort">ES</span></button>
+        <button class="lang" data-l="en" aria-pressed="false" aria-label="English"><span class="lfull">English</span><span class="lshort">EN</span></button>
+        <button class="lang" data-l="fr" aria-pressed="false" aria-label="Français"><span class="lfull">Français</span><span class="lshort">FR</span></button>
       </div>
       <div class="stars" aria-live="polite">⭐ <span id="score">0</span></div>
     </div>
@@ -742,7 +745,7 @@ const T={
 <li>Abajo se ven los últimos 7 días: tiempo en pantalla y el límite de cada día. Los límites y el PIN no se borran con «Borrar progreso». Solo limitan esta app; para limitar toda la tablet, usa Bienestar digital o Google Family Link.</li></ul>
 <h4>🎯 La idea</h4>
 <p>Cada respuesta se guarda en esta tablet. La página usa esa información para elegir qué preguntar: lo que le cuesta sale más a menudo y lo que ya domina sale menos, pero nunca desaparece del todo.</p>
-<p><b>Pantallas del peque:</b> al abrir se ve el inicio con los 5 grupos (🔢 Números, 🔤 Letras, 🧭 Descubrir, 🎨 Crear y 🎲 Jugar) y «Seguir jugando» con sus últimos juegos. Al tocar un grupo aparecen sus actividades (solo las visibles ese día) y, dentro de un juego, «←» vuelve atrás. El nivel o el modo de cada juego está en un solo botón (con ▾) que se abre al tocarlo. El idioma se cambia en el inicio. Los iconos son los <b>Fluent Emoji 3D</b> de Microsoft (licencia MIT): se ven igual en todos los aparatos y funcionan sin internet.</p>
+<p><b>Pantallas del peque:</b> al abrir se ve el inicio con los 5 grupos (🔢 Números, 🔤 Letras, 🧭 Descubrir, 🎨 Crear y 🎲 Jugar) y «Seguir jugando» con sus últimos juegos. Al tocar un grupo aparecen sus actividades (solo las visibles ese día) y, dentro de un juego, «←» vuelve atrás. El nivel o el modo de cada juego está en un solo botón (con ▾) que se abre al tocarlo. El idioma se cambia desde cualquier pantalla: en el inicio con el nombre completo y, dentro de los grupos y los juegos, con el botón corto ES · EN · FR de arriba. Al cambiarlo, el juego vuelve a empezar en el otro idioma (el mismo laberinto y el mismo cuento; los dibujos y lo coloreado se conservan). Los iconos son los <b>Fluent Emoji 3D</b> de Microsoft (licencia MIT): se ven igual en todos los aparatos y funcionan sin internet.</p>
 <h4>📈 Progreso</h4>
 <ul><li>Lo que sabe y lo que le cuesta, en los mismos 5 grupos que su menú: 🔢 Números, 🔤 Letras, 🧭 Descubrir, 🎨 Crear y 🎲 Jugar. Cada grupo empieza con un resumen: cada actividad con sus minutos de los últimos 7 días y la última vez que jugó; tocar una fila lleva a su detalle. Las que dicen «solo tiempo» (Colores, Formas, Patrones, Dibujar, Colorear, Cuentos y Parejas) no tienen detalle propio: su tiempo y sus respuestas están en «📅 Actividad».</li>
 <li>🔢 Números: los números del 1 al 9, sus confusiones y Componer. 🔤 Letras: las letras, sus confusiones y Trazos. 🧭 Descubrir: las palabras de Objetos (en los 3 idiomas), Comparar y ¿Dónde está?. 🎨 Crear: Campanas y Mi canción, cada una con su pentagrama. 🎲 Jugar: Laberintos. El grupo abierto se recuerda en este aparato.</li></ul>
@@ -905,7 +908,7 @@ const T={
 <li>The last 7 days are shown: screen time and each day’s limit. Limits and PIN are not erased by “Reset progress”. They only limit this app; to limit the whole tablet, use Digital Wellbeing or Google Family Link.</li></ul>
 <h4>🎯 The idea</h4>
 <p>Every answer is saved on this tablet. The page uses it to choose what to ask: what is hard comes up more often, what is mastered comes up less, but never disappears.</p>
-<p><b>The child’s screens:</b> the app opens on the home screen with the 5 groups (🔢 Numbers, 🔤 Letters, 🧭 Discover, 🎨 Create and 🎲 Play) and “Keep playing” with the latest games. Tapping a group shows its activities (only those visible that day) and, inside a game, “←” goes back. Each game’s level or mode is in a single button (with ▾) that opens when tapped. The language is changed on the home screen. The icons are Microsoft’s <b>Fluent Emoji 3D</b> (MIT licence): they look the same on every device and work offline.</p>
+<p><b>The child’s screens:</b> the app opens on the home screen with the 5 groups (🔢 Numbers, 🔤 Letters, 🧭 Discover, 🎨 Create and 🎲 Play) and “Keep playing” with the latest games. Tapping a group shows its activities (only those visible that day) and, inside a game, “←” goes back. Each game’s level or mode is in a single button (with ▾) that opens when tapped. The language can be changed from any screen: on the home screen with its full name and, inside groups and games, with the short ES · EN · FR button at the top. When it changes, the game starts again in the other language (same maze and same story; drawings and colouring are kept). The icons are Microsoft’s <b>Fluent Emoji 3D</b> (MIT licence): they look the same on every device and work offline.</p>
 <h4>📈 Progress</h4>
 <ul><li>What the child knows and what is hard, in the same 5 groups as their menu: 🔢 Numbers, 🔤 Letters, 🧭 Discover, 🎨 Create and 🎲 Play. Each group starts with a summary: each activity with its minutes over the last 7 days and the last time it was played; tapping a row takes you to its details. Those marked “time only” (Colors, Shapes, Patterns, Draw, Coloring, Stories and Pairs) have no details of their own: their time and answers are in “📅 Activity”.</li>
 <li>🔢 Numbers: the numbers 1 to 9, their confusions and Number bonds. 🔤 Letters: the letters, their confusions and Lines. 🧭 Discover: the Objects words (in the 3 languages), Comparing and Where is it?. 🎨 Create: Bells and My song, each with its staff. 🎲 Play: Mazes. The open group is remembered on this device.</li></ul>
@@ -1068,7 +1071,7 @@ const T={
 <li>Les 7 derniers jours sont affichés : temps d’écran et limite de chaque jour. Les limites et le code ne sont pas effacés par « Effacer la progression ». Ils ne limitent que cette app ; pour toute la tablette, utilisez Bien-être numérique ou Google Family Link.</li></ul>
 <h4>🎯 Le principe</h4>
 <p>Chaque réponse est enregistrée sur cette tablette. La page s’en sert pour choisir quoi demander : ce qui est difficile revient plus souvent, ce qui est acquis revient moins, sans jamais disparaître.</p>
-<p><b>Les écrans de l’enfant :</b> l’app s’ouvre sur l’accueil avec les 5 groupes (🔢 Nombres, 🔤 Lettres, 🧭 Découvrir, 🎨 Créer et 🎲 Jouer) et « Continuer à jouer » avec les derniers jeux. Toucher un groupe montre ses activités (seulement celles visibles ce jour-là) et, dans un jeu, « ← » revient en arrière. Le niveau ou le mode de chaque jeu est dans un seul bouton (avec ▾) qui s’ouvre quand on le touche. La langue se change sur l’accueil. Les icônes sont les <b>Fluent Emoji 3D</b> de Microsoft (licence MIT) : elles sont identiques sur tous les appareils et fonctionnent sans internet.</p>
+<p><b>Les écrans de l’enfant :</b> l’app s’ouvre sur l’accueil avec les 5 groupes (🔢 Nombres, 🔤 Lettres, 🧭 Découvrir, 🎨 Créer et 🎲 Jouer) et « Continuer à jouer » avec les derniers jeux. Toucher un groupe montre ses activités (seulement celles visibles ce jour-là) et, dans un jeu, « ← » revient en arrière. Le niveau ou le mode de chaque jeu est dans un seul bouton (avec ▾) qui s’ouvre quand on le touche. La langue se change depuis n’importe quel écran : sur l’accueil avec son nom complet et, dans les groupes et les jeux, avec le bouton court ES · EN · FR en haut. Quand on la change, le jeu recommence dans l’autre langue (même labyrinthe et même histoire ; les dessins et le coloriage sont conservés). Les icônes sont les <b>Fluent Emoji 3D</b> de Microsoft (licence MIT) : elles sont identiques sur tous les appareils et fonctionnent sans internet.</p>
 <h4>📈 Progrès</h4>
 <ul><li>Ce que l’enfant sait et ce qui lui est difficile, dans les mêmes 5 groupes que son menu : 🔢 Nombres, 🔤 Lettres, 🧭 Découvrir, 🎨 Créer et 🎲 Jouer. Chaque groupe commence par un résumé : chaque activité avec ses minutes des 7 derniers jours et la dernière fois où il y a joué ; toucher une ligne mène à son détail. Celles marquées « temps seulement » (Couleurs, Formes, Suites, Dessiner, Colorier, Histoires et Paires) n’ont pas de détail propre : leur temps et leurs réponses sont dans « 📅 Activité ».</li>
 <li>🔢 Nombres : les nombres de 1 à 9, leurs confusions et Composer. 🔤 Lettres : les lettres, leurs confusions et Graphisme. 🧭 Découvrir : les mots des Objets (dans les 3 langues), Comparer et Où est-il ?. 🎨 Créer : Clochettes et Ma chanson, chacune avec sa portée. 🎲 Jouer : Labyrinthes. Le groupe ouvert est mémorisé sur cet appareil.</li></ul>
@@ -4165,7 +4168,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=115; // se sube junto con la caché de sw.js
+const APP_VER=116; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5945,7 +5948,9 @@ function applyLang(){const t=L();guestBadge();document.documentElement.lang=lang
   document.getElementById('h1').innerHTML=t.title.map(w=>`<span>${w}</span>`).join(' ');
   document.querySelectorAll('.tab').forEach(b=>b.querySelector('span').textContent=t.tabs[b.id.slice(2)]);
   document.querySelectorAll('.lang').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===lang));
-  elegirVoz();renderMenu();updBar();renderRecent();games[current]()}
+  elegirVoz();renderMenu();updBar();renderRecent();
+  // mismo laberinto y mismo cuento al cambiar de idioma; dibujos y colorear conservan lo hecho
+  if(current==='laberinto'&&typeof lbCur==='number')laberinto(lbCur);else if(current==='cuentos'&&curStory)storyListen(curStory);else games[current]()}
 document.querySelectorAll('.lang').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('peques-lang',lang)}catch(e){}stopSpeech();applyLang()});
 
 // ===== Menú por categorías + actividades visibles según el día de la semana =====
