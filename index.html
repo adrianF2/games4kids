@@ -338,6 +338,8 @@ a.btn{text-decoration:none;display:inline-block}
 .pairlbl{font:800 1rem "Baloo 2",sans-serif;padding:0 6px}
 .mem{aspect-ratio:1;max-width:100%;min-width:0;padding:0;border-radius:16px;border:3px solid var(--ink);background:var(--purple);font-size:clamp(1.4rem,7vw,var(--memfs,2.6rem));cursor:pointer;display:grid;place-items:center;color:transparent}
 .mem.open,.mem.done{background:var(--sky);color:var(--ink)}
+/* boca abajo: el icono 3D también se oculta (el color transparente solo tapa el texto) */
+.mem:not(.open):not(.done) .emo{visibility:hidden}
 .mem.done{border-color:var(--green)}
 @media (max-width:600px){.tabs{grid-template-columns:repeat(5,1fr)}}
 @media (max-width:480px){.slot{width:68px;height:68px;font-size:2.2rem}.storypic{font-size:4rem}.ptile{width:44px;height:48px;font-size:1.8rem}.tile{width:48px;height:56px;font-size:2rem;line-height:56px}.tile.gap{line-height:50px}.tab{font-size:.75rem;padding:8px 2px;border-radius:14px}.tab b{font-size:1.5rem}.pick{width:64px;height:64px;font-size:1.8rem}.pick.color{width:68px;height:68px}.pick.obj{width:68px;height:68px;font-size:2.1rem}}
@@ -4184,7 +4186,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=117; // se sube junto con la caché de sw.js
+const APP_VER=118; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
