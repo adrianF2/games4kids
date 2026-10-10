@@ -764,6 +764,7 @@ const T={
 <h4>✍️ Escribir 123 y Escribir ABC</h4>
 <p>El botón <b>👀 Mira cómo</b> anima el trazo: dónde empieza cada línea (puntos numerados), en qué orden y en qué sentido. Se muestra solo la primera vez que sale un número o una letra, y otra vez tras dos intentos fallidos.</p>
 <p><b>Abrir letras poco a poco (solo ABC):</b> primero las de su nombre (si se ha escrito), luego 6 de trazos rectos (I L T E F H), luego curvas y oblicuas, y al final las más difíciles (B R Q G S). Una letra deja de estar «en curso» cuando tiene al menos 3 intentos y 60 puntos; cuando quedan 2 o menos en curso, se abre la siguiente. 🔒 = todavía no abierta.</p>
+<p><b>Cómo comprueba lo que escribe:</b> mira a la vez el dibujo terminado y los trazos que hizo con el dedo o el lápiz (sin importar el orden ni el sentido), y los compara con varias formas de escribir cada número y letra (1 con o sin palito, 4 abierto o cerrado, 7 curvo o con raya, letras torcidas o más anchas…). Un garabato no vale, y una raya o una O nunca se toman como «al revés».</p>
 <p>Si escribe un número o una letra <b>en espejo</b> (Ǝ en vez de E, Ɛ en vez de 3), se le dice con cariño y se le enseña el trazo. Se cuenta como intento fallido y aparece como «E al revés» o «3 al revés» en las confusiones. Es muy normal a los 4–5 años.</p>
 <p><b>Nombre del peque:</b> si se escribe arriba, las letras de su nombre se abren primero (antes del orden de trazos rectos), salen el doble de a menudo en Letras y Decir, y en Escribir ABC aparece el modo <b>«✍️ Mi nombre»</b>: escribe su nombre letra por letra (cada letra cuenta como práctica de escritura) y al final lo ve completo. Los acentos no cuentan (É = E). En el progreso, sus letras tienen fondo amarillo.</p>
 <p>Las letras siguen siendo las mismas aunque cambie el idioma o el estilo (ABC, abc, cursiva): todo suma a la misma letra.</p>
@@ -927,6 +928,7 @@ const T={
 <h4>✍️ Write 123 and Write ABC</h4>
 <p>The <b>👀 Show me</b> button animates the strokes: where each line starts (numbered dots), in which order and direction. It plays by itself the first time a number or letter appears, and again after two missed tries.</p>
 <p><b>Letters open gradually (ABC only):</b> first the letters of the child’s name (if entered), then 6 with straight strokes (I L T E F H), then curves and slants, and the hardest last (B R Q G S). A letter stops being “in progress” after at least 3 tries and 60 points; when 2 or fewer are in progress, the next one opens. 🔒 = not open yet.</p>
+<p><b>How it checks the writing:</b> it looks both at the finished drawing and at the strokes made with the finger or pen (in any order or direction), and compares them with several ways of writing each number and letter (1 with or without a flag, open or closed 4, curved 7 or with a bar, slanted or wider letters…). A scribble doesn’t count, and a straight line or an O is never taken as “backwards”.</p>
 <p>If a number or letter is written <b>backwards</b> (Ǝ instead of E, Ɛ instead of 3), the child is told gently and shown the strokes. It counts as a missed try and appears as “E backwards” or “3 backwards” in the mix-ups. This is very common at 4–5.</p>
 <p><b>Child’s name:</b> if entered above, the letters of the name open first (before the straight-stroke order), come up twice as often in Letters and Say it, and Write ABC gets a <b>“✍️ My name”</b> mode: the child writes their name letter by letter (each letter counts as writing practice) and sees it complete at the end. Accents are ignored (É = E). In the progress grid, those letters have a yellow background.</p>
 <p>A letter is the same whatever the language or style (ABC, abc, cursive): everything adds up to the same letter.</p>
@@ -1090,6 +1092,7 @@ const T={
 <h4>✍️ Écrire 123 et Écrire ABC</h4>
 <p>Le bouton <b>👀 Montre-moi</b> anime le tracé : où commence chaque trait (points numérotés), dans quel ordre et dans quel sens. Il se lance tout seul la première fois qu’un chiffre ou une lettre apparaît, puis après deux essais ratés.</p>
 <p><b>Ouverture progressive des lettres (ABC seulement) :</b> d’abord celles du prénom (s’il est saisi), puis 6 à traits droits (I L T E F H), puis les courbes et les obliques, et les plus difficiles à la fin (B R Q G S). Une lettre n’est plus « en cours » après au moins 3 essais et 60 points ; quand il en reste 2 ou moins en cours, la suivante s’ouvre. 🔒 = pas encore ouverte.</p>
+<p><b>Comment il vérifie l’écriture :</b> il regarde à la fois le dessin fini et les traits faits avec le doigt ou le stylet (dans n’importe quel ordre ou sens), et les compare à plusieurs façons d’écrire chaque chiffre et lettre (1 avec ou sans crochet, 4 ouvert ou fermé, 7 courbe ou barré, lettres penchées ou plus larges…). Un gribouillis ne compte pas, et un trait ou un O n’est jamais pris « à l’envers ».</p>
 <p>Si un chiffre ou une lettre est écrit <b>en miroir</b> (Ǝ au lieu de E, Ɛ au lieu de 3), on le dit gentiment à l’enfant et on lui montre le tracé. Cela compte comme un essai raté et apparaît comme « E à l’envers » ou « 3 à l’envers » dans les confusions. C’est très courant à 4–5 ans.</p>
 <p><b>Prénom de l’enfant :</b> s’il est saisi en haut, les lettres du prénom s’ouvrent en premier (avant l’ordre des traits droits), reviennent deux fois plus souvent dans Lettres et Dis-le, et Écrire ABC propose le mode <b>« ✍️ Mon prénom »</b> : l’enfant écrit son prénom lettre par lettre (chaque lettre compte comme entraînement à l’écrit) et le voit en entier à la fin. Les accents ne comptent pas (É = E). Dans la grille, ces lettres ont un fond jaune.</p>
 <p>Une lettre reste la même quelle que soit la langue ou le style (ABC, abc, attaché) : tout compte pour la même lettre.</p>
@@ -2264,6 +2267,11 @@ const DIGIT_PATHS={
     8:['M50 70 C20 70 20 12 50 12 C80 12 80 70 50 70 C15 70 15 132 50 132 C85 132 85 70 50 70','M78 30 C75 5 25 5 22 30 C20 55 80 75 80 105 C80 135 20 135 20 105 C20 75 80 55 78 30'],
     9:['M84 45 C84 22 68 10 50 10 C30 10 16 25 16 45 C16 65 32 78 50 78 C68 78 84 65 84 45 L84 130','M84 45 C84 22 68 10 50 10 C30 10 16 25 16 45 C16 65 32 78 50 78 C68 78 84 65 84 45 C84 95 72 130 35 132']
 };
+// otras formas frecuentes en los niños (1 inclinado, 4 abierto, 7 curvo o con raya, 8 de dos bolitas, 9 con palito inclinado…)
+{const MAS={1:['M40 22 L56 10 L53 130'],2:['M15 35 C25 5 85 5 80 45 L15 130 L88 130'],3:['M18 18 C60 0 85 30 50 65 C95 70 90 135 20 120'],4:['M25 10 L20 75 L85 75 M65 30 L65 130'],
+  5:['M75 10 L25 10 L25 60 C70 45 90 80 80 110 C70 140 25 135 15 115'],6:['M70 10 C30 40 10 90 30 125 C50 145 85 120 75 90 C65 65 25 75 22 100'],7:['M10 15 L88 15 C70 50 55 90 48 130'],
+  8:['M50 12 C25 12 25 66 50 66 C75 66 75 12 50 12 M50 66 C18 66 18 132 50 132 C82 132 82 66 50 66'],9:['M80 20 C60 0 18 15 22 45 C26 72 75 70 80 40 L70 130']};
+  for(const k in MAS)DIGIT_PATHS[k].push(...MAS[k])}
 const Digits=makeRecognizer(DIGIT_PATHS,[1,2,3,4,5,6,7,8,9],{numeric:true,OW:2,AW:1.2,RF:1.25,RA:4.5});
 
 // Mayúsculas de imprenta (capitales d'imprimerie) en una caja 100x140.
@@ -2325,10 +2333,60 @@ const LETTER_VARIANTS={
   Y:['M16 10 L50 70 L84 10 M50 70 L50 130','M16 10 L50 66 M84 10 L20 130'],
   Z:['M16 10 L84 10 M84 10 L16 130 M16 130 L84 130','M14 12 L86 10 L14 128 L86 130']
 };
+// más formas de niño (B de dos panzas sueltas, D de un trazo, E empezando por arriba, S más redonda…)
+{const MAS={B:['M20 10 L20 130 M20 10 C70 5 75 65 22 68 M22 68 C90 65 90 135 20 130'],C:['M80 25 C55 0 12 25 18 75 C24 125 70 135 85 110'],D:['M22 10 L22 130 C110 130 105 5 22 10'],
+  E:['M80 12 L20 12 L20 70 L70 70 M20 70 L20 128 L82 128'],G:['M85 35 C75 0 15 5 15 70 C15 130 85 135 85 85 L60 85'],K:['M20 10 L20 130 M75 12 L22 72 L80 128'],P:['M20 130 L20 10 C85 5 85 72 20 72'],
+  R:['M20 130 L20 10 C85 5 85 72 20 72 L82 130'],S:['M82 22 C60 0 15 15 25 45 C35 70 85 70 75 110 C65 140 20 130 15 115'],U:['M20 10 L20 100 C22 140 78 140 80 100 L80 10']};
+  for(const k in MAS)LETTER_VARIANTS[k].push(...MAS[k])}
 const LETTER_KEYS=Object.keys(LETTER_STROKES);
 const LETTER_PATHS={};for(const k of LETTER_KEYS)LETTER_PATHS[k]=[LETTER_STROKES[k].join(' '),...LETTER_VARIANTS[k]];
 // Para letras se acepta también la 2ª o 3ª más parecida si el parecido es bueno (más tolerante)
 const Letters=makeRecognizer(LETTER_PATHS,LETTER_KEYS,{OW:3.5,AW:1.5,RF:1.3,RA:5.5,R3:4.5});
+// Segunda opinión, por los TRAZOS del dedo o del lápiz ($P, nube de puntos): no le importan el orden ni el sentido de los trazos.
+// Las plantillas se comparan también inclinadas, giradas, más estrechas y más anchas (los niños escriben torcido).
+function makeStrokeRec(paths,keys){const N=40,NS='http://www.w3.org/2000/svg';
+  const AUG=[[0,0,1],[0.22,0,1],[-0.22,0,1],[0,0.17,1],[0,-0.17,1],[0,0,0.75],[0,0,1.3]];
+  function strokesOf(d){const svg=document.createElementNS(NS,'svg');document.body.appendChild(svg);
+    const out=d.split(/(?=M)/).map(x=>x.trim()).filter(Boolean).map(x=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',x);svg.appendChild(p);const L=p.getTotalLength(),n=Math.max(4,Math.ceil(L/3)),o=[];for(let i=0;i<=n;i++){const q=p.getPointAtLength(L*i/n);o.push([q.x,q.y])}return o});svg.remove();return out}
+  const len=st=>{let L=0;for(const t of st)for(let i=1;i<t.length;i++)L+=Math.hypot(t[i][0]-t[i-1][0],t[i][1]-t[i-1][1]);return L};
+  function resample(st){const L=len(st),I=L/(N-1);if(!(I>0))return null;const out=[];let D=0;
+    for(const s0 of st){const t=s0.slice();if(!out.length&&t.length)out.push(t[0].slice());
+      for(let i=1;i<t.length;i++){const d=Math.hypot(t[i][0]-t[i-1][0],t[i][1]-t[i-1][1]);
+        if(D+d>=I&&d>0){const u=(I-D)/d,q=[t[i-1][0]+u*(t[i][0]-t[i-1][0]),t[i-1][1]+u*(t[i][1]-t[i-1][1])];out.push(q);t.splice(i,0,q);D=0}else D+=d}}
+    while(out.length<N)out.push(out[out.length-1].slice());return out.slice(0,N)}
+  // escala igual en los dos ejes (un 1 fino no se parece a un 8) y centra; «ink» = largo del trazo / diagonal (un garabato tiene mucho)
+  function norm(st){const r=resample(st);if(!r)return null;let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const[x,y]of r){x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y)}
+    const sc=Math.max(x1-x0,y1-y0)||1;let cx=0,cy=0;r.forEach(q=>{cx+=q[0];cy+=q[1]});cx/=N;cy/=N;
+    return {pts:r.map(([x,y])=>[(x-cx)/sc,(y-cy)/sc]),aspect:(x1-x0+1e-3)/(y1-y0+1e-3),ink:len(st)/(Math.hypot(x1-x0,y1-y0)||1)}}
+  function cloud(P,T,start){const used=new Uint8Array(N);let sum=0,i=start,w=N;
+    do{let m=1e9,idx=-1;for(let j=0;j<N;j++)if(!used[j]){const d=(P[i][0]-T[j][0])**2+(P[i][1]-T[j][1])**2;if(d<m){m=d;idx=j}}used[idx]=1;sum+=(w/N)*Math.sqrt(m);w--;i=(i+1)%N}while(i!==start);return sum}
+  function dist(P,T){const step=Math.floor(Math.sqrt(N));let m=1e9;for(let i=0;i<N;i+=step)m=Math.min(m,cloud(P,T,i),cloud(T,P,i));return m}
+  const tf=(st,[sh,rot,sx])=>st.map(t=>t.map(([x,y])=>{x-=50;y-=70;const X=x*sx+y*sh,Y=y,c=Math.cos(rot),si=Math.sin(rot);return [X*c-Y*si+50,X*si+Y*c+70]}));
+  let T=null;function build(){T=[];for(const k of keys)for(const d of paths[k]){const st=strokesOf(d);for(const a of AUG){const n=norm(tf(st,a));if(n)T.push({k:String(k),n})}}}
+  function scores(st){if(!T)build();const me=norm(st.filter(x=>x.length));if(!me)return null;const b={},ink={};
+    for(const t of T){const v=dist(me.pts,t.n.pts)+0.35*Math.abs(Math.log(me.aspect/t.n.aspect));if(b[t.k]===undefined||v<b[t.k])b[t.k]=v;
+      const r=Math.abs(Math.log(me.ink/t.n.ink));if(ink[t.k]===undefined||r<ink[t.k])ink[t.k]=r}
+    return {b,ink}}
+  // ¿cuánto cambia el dibujo al darle la vuelta? (una raya o una O casi no cambian: no pueden estar «en espejo»)
+  function asym(st){const a=norm(st.filter(x=>x.length));if(!a)return 0;const f=a.pts.map(([x,y])=>[-x,y]);return dist(a.pts,f)}
+  return {scores,build,asym}}
+const DigitsP=makeStrokeRec(DIGIT_PATHS,[1,2,3,4,5,6,7,8,9]),LettersP=makeStrokeRec(LETTER_PATHS,LETTER_KEYS);
+// Pesos ajustados con miles de dibujos simulados (deformados, de formas distintas, en espejo y garabatos)
+const WR_OPT={num:{wi:.5,wp:1,rf:1.05,ink:.6,mf:.75,mfp:.85,asym:.6},let:{wi:1,wp:1,rf:1.2,ink:.6,mf:.75,mfp:.7,asym:.6}};
+// ¿Escribió bien n? Une las dos opiniones (imagen y trazos); un garabato no vale; detecta el espejo
+function judgeWrite(rec,prec,cv,strokes,n,sym,o){const b=rec.scores(cv),ps=strokes&&strokes.length?prec.scores(strokes):null;if(!b)return {empty:true};
+  const t=String(n),ks=Object.keys(b),num=k=>isNaN(+k)?k:+k;
+  const S=cv.width,f=document.createElement('canvas');f.width=f.height=S;const fx=f.getContext('2d');fx.translate(S,0);fx.scale(-1,1);fx.drawImage(cv,0,0);const mb=rec.scores(f);
+  const comb=(B,PB)=>{const mi=Math.min(...ks.map(k=>B[k])),mp=PB?Math.min(...ks.map(k=>PB[k])):1,c={};for(const k of ks)c[k]=o.wi*B[k]/mi+(PB?o.wp*PB[k]/mp:0);return c};
+  const c=comb(b,ps&&ps.b),ord=ks.slice().sort((p,q)=>c[p]-c[q]),rank=ord.indexOf(t)+1,guess=num(ord[0]);
+  const scrib=!!ps&&ps.ink[t]>o.ink;
+  let ok=!scrib&&(rank===1||(rank===2&&c[t]<=c[ord[0]]*o.rf));
+  if(sym.has(n)||(ps&&prec.asym(strokes)<o.asym))return {ok,mirrored:false,guess};
+  const fp=ps?prec.scores(strokes.map(st=>st.map(([x,y])=>[S-x,y]))):null;
+  let mirrored;
+  if(ok){const mo=ks.slice().sort((p,q)=>mb[p]-mb[q]),mImg=mo[0]===t&&mb[t]<b[t]*o.mf,mP=!!fp&&ks.slice().sort((p,q)=>fp.b[p]-fp.b[q])[0]===t&&fp.b[t]<ps.b[t]*o.mfp;mirrored=mImg||mP}
+  else{const fc=comb(mb,fp&&fp.b);mirrored=!scrib&&ks.slice().sort((p,q)=>fc[p]-fc[q])[0]===t}
+  return {ok:ok&&!mirrored,mirrored,guess}}
 
 // Escribir con lápiz (números y letras): se dice y se muestra el modelo, el niño lo escribe y la página lo comprueba.
 // La guía y «Mira cómo» enseñan dónde empieza cada trazo y en qué orden.
@@ -2361,15 +2419,11 @@ function animateLetter(svg,done){const paths=[...svg.querySelectorAll('.st')],do
     const p=paths[i],L0=p.getTotalLength(),ms=Math.max(500,L0*7);dots[i].style.opacity=1;void p.getBoundingClientRect();
     p.style.transition=`stroke-dashoffset ${ms}ms linear`;p.style.strokeDashoffset=0;i++;setTimeout(step,ms+250)};
   setTimeout(step,200)}
-// Compara con el dibujo dado la vuelta: si así se parece claramente más, está escrito en espejo
-let MIRROR_F=0.75;
-function isMirrored(cv,n,r,rec=Letters,sym=letterSymmetric){if(sym.has(n))return false;const S=cv.width,f=document.createElement('canvas');f.width=f.height=S;const fx=f.getContext('2d');fx.translate(S,0);fx.scale(-1,1);fx.drawImage(cv,0,0);const m=rec.check(f,n);
-  return r.ok?(m.rank===1&&m.score<r.score*MIRROR_F):(m.ok&&m.rank<=2)}
 function letterName(l){return letterNames[lang][l]||l.toLowerCase()}
 let animatingL=false;
 // Motor común de las dos actividades de escribir
 function writeGame(o){const {n,rec,wr,next}=o,isNew=wr.att<2,autoGuide=o.autoGuide;
-  let done=false,penSeen=false,cur=null,inked=false,fails=0;const S=600;
+  let done=false,penSeen=false,cur=null,inked=false,fails=0,strokes=[];const S=600;
   frame(o.q,`<div class="drawwrap"><div class="bignum small model" aria-hidden="true">${strokeSVG(o.strokes,'lmodel')}</div><div class="pad" id="pad">${strokeSVG(o.strokes,'lguide'+(guideOn||autoGuide?'':' off'))}<canvas id="cv" width="${S}" height="${S}" aria-label="${o.q.replace(/<[^>]+>/g,'')}"></canvas></div></div><div class="row drawbtns"><button class="btn alt" id="showme">${L().showMe}</button><button class="btn alt" id="guideBtn" aria-pressed="${guideOn}">${L().guide}</button><button class="btn alt" id="clr">${L().clear}</button><button class="btn" id="ok">${L().done}</button></div>`);
   trackStart({kind:o.kind,sk:'write',n,a:.2});
   const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),pad=document.getElementById('pad'),msg=stage.querySelector('.msg'),guide=pad.querySelector('.lguide');
@@ -2379,15 +2433,15 @@ function writeGame(o){const {n,rec,wr,next}=o,isNew=wr.att<2,autoGuide=o.autoGui
   ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#1F2A44';ctx.fillStyle='#1F2A44';
   const pos=e=>{const r=cv.getBoundingClientRect();return [(e.clientX-r.left)*S/r.width,(e.clientY-r.top)*S/r.height]};
   const width=e=>e.pointerType==='pen'?12+(e.pressure||0.5)*26:24;
-  const clear=()=>{ctx.clearRect(0,0,S,S);inked=false;pad.classList.remove('wrong')};
+  const clear=()=>{ctx.clearRect(0,0,S,S);inked=false;strokes=[];pad.classList.remove('wrong')};
   const show=()=>{if(animatingL)return;animatingL=true;guide.classList.remove('off');animateLetter(guide,()=>{animatingL=false;if(!guideOn&&!autoGuide&&fails<2)guide.classList.add('off')})};
   cv.addEventListener('pointerdown',e=>{if(done)return;if(e.pointerType==='pen')penSeen=true;
     if(penSeen&&e.pointerType==='touch')return; // con lápiz, la mano apoyada no dibuja
     e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}
-    const [x,y]=pos(e);cur={id:e.pointerId,x,y};ctx.beginPath();ctx.arc(x,y,width(e)/2,0,Math.PI*2);ctx.fill();inked=true;msg.textContent=''});
+    const [x,y]=pos(e);cur={id:e.pointerId,x,y,st:[[x,y]]};strokes.push(cur.st);ctx.beginPath();ctx.arc(x,y,width(e)/2,0,Math.PI*2);ctx.fill();inked=true;msg.textContent=''});
   cv.addEventListener('pointermove',e=>{if(!cur||e.pointerId!==cur.id)return;e.preventDefault();
     const evs=e.getCoalescedEvents?e.getCoalescedEvents():[e];
-    for(const ev of (evs.length?evs:[e])){const [x,y]=pos(ev);ctx.lineWidth=width(ev);ctx.beginPath();ctx.moveTo(cur.x,cur.y);ctx.lineTo(x,y);ctx.stroke();cur.x=x;cur.y=y}});
+    for(const ev of (evs.length?evs:[e])){const [x,y]=pos(ev);ctx.lineWidth=width(ev);ctx.beginPath();ctx.moveTo(cur.x,cur.y);ctx.lineTo(x,y);ctx.stroke();cur.x=x;cur.y=y;cur.st.push([x,y])}});
   const end=e=>{if(cur&&e.pointerId===cur.id)cur=null};
   cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
   document.getElementById('showme').onclick=show;
@@ -2395,11 +2449,11 @@ function writeGame(o){const {n,rec,wr,next}=o,isNew=wr.att<2,autoGuide=o.autoGui
   document.getElementById('guideBtn').onclick=e=>{guideOn=!guideOn;try{localStorage.setItem('peques-guide',guideOn?'on':'off')}catch(_){}guide.classList.toggle('off',!guideOn);e.currentTarget.setAttribute('aria-pressed',guideOn)};
   document.getElementById('ok').onclick=e=>{if(done)return;
     if(!inked){msg.textContent=o.empty;say(o.empty);return}
-    const r=rec.check(cv,n);
+    const r=judgeWrite(rec,o.prec,cv,strokes,n,o.sym,o.opt);
     if(r.empty){msg.textContent=o.empty;say(o.empty);return}
     // ¿Lo escribió al revés (en espejo)? Es muy normal a esta edad: se avisa con cariño y se enseña el modelo
-    const mirrored=isMirrored(cv,n,r,rec,o.sym);
-    if(r.ok&&!mirrored){done=true;if(o.onWin)o.onWin();pad.classList.add('right');stage.querySelectorAll('.row button').forEach(b=>b.disabled=true);win(e.currentTarget,next);return}
+    const mirrored=r.mirrored;
+    if(r.ok){done=true;if(o.onWin)o.onWin();pad.classList.add('right');stage.querySelectorAll('.row button').forEach(b=>b.disabled=true);win(e.currentTarget,next);return}
     fails++;
     if(mirrored){if(!qCtx||!qCtx.missed)o.record.mirror=(o.record.mirror||0)+1;trackWrong('↔');pad.classList.remove('wrong');void pad.offsetWidth;pad.classList.add('wrong');const mm=o.mirrorMsg;msg.textContent=mm;say(mm);
       setTimeout(()=>{if(!done&&pad.isConnected)show()},1800)}
@@ -2407,13 +2461,13 @@ function writeGame(o){const {n,rec,wr,next}=o,isNew=wr.att<2,autoGuide=o.autoGui
   sayQuestion();
   if(isNew&&!wr.att)later(()=>{if(!inked)show()},1600)}
 function trazar(){const n=pickNum('write'),r=numRec(n),wr=r.write;
-  writeGame({n,rec:Digits,wr,record:r,kind:'num',strokes:DIGIT_STROKES[n],sym:digitSymmetric,q:L().qDraw(n),empty:L().drawEmpty,mirrorMsg:L().mirrorMsgN,next:trazar,autoGuide:wr.att>=2&&wr.s<40})}
+  writeGame({n,rec:Digits,prec:DigitsP,opt:WR_OPT.num,wr,record:r,kind:'num',strokes:DIGIT_STROKES[n],sym:digitSymmetric,q:L().qDraw(n),empty:L().drawEmpty,mirrorMsg:L().mirrorMsgN,next:trazar,autoGuide:wr.att>=2&&wr.s<40})}
 let wMode='abc',nameIdx=0;
 try{if(localStorage.getItem('peques-wmode')==='name')wMode='name'}catch(e){}
 function escletras(){const seq=nameSeq(),byName=wMode==='name'&&seq.length>0;
   if(byName&&nameIdx>=seq.length)return nameDone();
   const n=byName?seq[nameIdx]:pickLetter('write',writeOrder().slice(0,writeOpen())),r=letRec(n),wr=r.write;
-  writeGame({n,rec:Letters,wr,record:r,kind:'let',strokes:LETTER_STROKES[n],sym:letterSymmetric,q:byName?L().qNameLetter(n):L().qDrawL(n),qSay:byName?L().qNameLetter(letterName(n)).replace(/<[^>]+>/g,''):L().qDrawLsay(letterName(n)),empty:L().drawEmptyL,mirrorMsg:L().mirrorMsg,next:escletras,autoGuide:byName||wr.att<2||(wr.att>=2&&wr.s<45),
+  writeGame({n,rec:Letters,prec:LettersP,opt:WR_OPT.let,wr,record:r,kind:'let',strokes:LETTER_STROKES[n],sym:letterSymmetric,q:byName?L().qNameLetter(n):L().qDrawL(n),qSay:byName?L().qNameLetter(letterName(n)).replace(/<[^>]+>/g,''):L().qDrawLsay(letterName(n)),empty:L().drawEmptyL,mirrorMsg:L().mirrorMsg,next:escletras,autoGuide:byName||wr.att<2||(wr.att>=2&&wr.s<45),
     onWin:byName?()=>{nameIdx++}:null});
   if(byName)stage.querySelector('.q').insertAdjacentHTML('afterend',nameStrip(seq,nameIdx));
   writeModes();
@@ -4186,7 +4240,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=118; // se sube junto con la caché de sw.js
+const APP_VER=119; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
