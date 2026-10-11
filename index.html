@@ -515,14 +515,16 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @media (max-width:600px){.cmpmodes .mode{font-size:.74rem;padding:4px 6px}.czcard{min-width:84px;min-height:80px;font-size:2.5rem}.czcard.big{min-width:120px;min-height:110px;font-size:3.3rem}.czscene{max-height:30vh}.czscale{max-height:20vh}}
 
 /* ¿Dónde está? */
-.dnscene{width:min(100%,660px);height:auto;max-height:46vh;touch-action:none;border-radius:18px;border:3px solid var(--ink)}
+.dnscene{display:block;margin:0 auto;width:min(100%,660px);height:auto;touch-action:none;border-radius:18px;border:3px solid var(--ink)}
+.dnlay{display:flex;flex-direction:column;align-items:center;gap:10px}
+@media (orientation:landscape) and (min-width:820px){.dnlay{flex-direction:row;justify-content:center;gap:16px}.dnlay .dnopts{flex-direction:column;flex-wrap:nowrap;gap:10px;margin:0}}
 .dndrag{cursor:grab}.dndrag:not(.done):not(.lift) text{animation:dnbob 1.4s ease-in-out infinite}@keyframes dnbob{50%{transform:translateY(-6px)}}.dndrag.lift text{filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}.dndrag.lift{cursor:grabbing}
 .dnit.right text{filter:drop-shadow(0 0 10px #3BB273)}.dnit[data-v]{cursor:pointer}.dnit.wrong text{opacity:.45}
 .dnpulse{animation:czp .8s ease infinite}
 .dnscene>g[transform]{pointer-events:none}
 .pick.dnopt{width:auto;height:auto;min-width:104px;border-radius:18px;padding:6px 12px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;font:800 1.05rem "Baloo 2",sans-serif}
 .dnopt svg{width:64px;height:48px}
-@media (max-height:820px){.dnscene{max-height:30vh}.pick.dnopt{min-width:92px;padding:4px 10px 6px}.dnopt svg{width:52px;height:40px}}
+@media (max-height:820px){.pick.dnopt{min-width:92px;padding:4px 10px 6px}.dnopt svg{width:52px;height:40px}}
 
 /* Laberintos */
 .lbq{margin:0}.lbmain{flex:1 1 0;min-height:0;width:100%;display:flex;flex-direction:column;gap:8px}
@@ -4513,7 +4515,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-guestlv','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=128; // se sube junto con la caché de sw.js
+const APP_VER=129; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5110,6 +5112,12 @@ function dnRec(){if(!P.pos)P.pos={st:{},conf:{}};return P.pos}
 function dnPickRel(pool){const lv=dnLv,newR=DN_LV[lv].filter(r=>pool.includes(r)),all=DN_LV.slice(1,lv+1).flat().filter(r=>pool.includes(r));
   const src=newR.length&&Math.random()<(lv===1?1:.6)?newR:all;let r,g=0;do{r=src[rand(src.length)]}while(r===dnLast&&g++<10);dnLast=r;return r}
 const dnRefsFor=rel=>Object.keys(DN_REFS).filter(k=>DN_REFS[k].rels.includes(rel));
+// La escena ocupa todo el sitio libre (en horizontal, con las respuestas en una columna a la derecha), sin bandas a los lados
+function dnFit(){const sv=stage.querySelector('.dnscene');if(!sv)return;const lay=stage.querySelector('.dnlay'),op=lay&&lay.querySelector('.dnopts');
+  const side=op&&getComputedStyle(lay).flexDirection==='row'?op.getBoundingClientRect().width+18:0;
+  let w=Math.min(1100,stage.clientWidth-28-side);sv.style.width=w+'px';
+  const over=document.documentElement.scrollHeight-innerHeight;if(over>0){const h=sv.getBoundingClientRect().height-over-6;w=Math.max(240,Math.min(w,h*600/340));sv.style.width=w+'px'}}
+let dnFitT=null;addEventListener('resize',()=>{clearTimeout(dnFitT);dnFitT=setTimeout(()=>{if(current==='donde')dnFit()},150)});
 function dnScene(refs,inner){const ind=DN_REFS[refs[0].ref].ind;
   return `<svg class="dnscene" viewBox="0 0 600 340" role="img"><defs><linearGradient id="dnsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${ind?'#FFF4E0':'#CFEAFF'}"/><stop offset="1" stop-color="${ind?'#FFF4E0':'#EAF6FF'}"/></linearGradient></defs>
    <rect width="600" height="${DN_G}" fill="url(#dnsky)"/><rect y="${DN_G}" width="600" height="40" fill="${ind?'#E8C9A0':'#8BD17C'}"/>${ind?'<rect x="0" y="40" width="600" height="6" fill="#F0DCC0"/>':'<text x="70" y="60" font-size="40">☁️</text>'}${inner}</svg>`}
@@ -5142,7 +5150,7 @@ function donde(){alApply('donde');const t=DN_T[lang],rec=dnRec(),lv=dnLv;let ove
     const trays=[{x:45,y:318},{x:555,y:318},{x:300,y:318},{x:45,y:40},{x:555,y:40}];
     targets.forEach((tg,i)=>{const fr=trays.filter(p=>!chk(tg,p));tg.start=fr.find(p=>!targets.slice(0,i).some(o=>o.start===p))||trays[i]});
     const back=refs.map(o=>dnRefSvg(o)).join(''),front=refs.map(o=>dnRefSvg(o,'front')).join('');
-    frame(q,`${dnScene(refs,`${back}<g class="dnmid"></g>${front}<g class="dnghost"></g>${targets.map((tg,i)=>`<g class="dnit dndrag" data-t="${i}" style="transform:translate(${tg.start.x}px,${tg.start.y}px)"><circle r="38" fill="#FFFFFF" fill-opacity=".001"/><text font-size="${DN_S}" text-anchor="middle" dominant-baseline="central">${tg.item[0]}</text></g>`).join('')}`)}`);bar();
+    frame(q,`${dnScene(refs,`${back}<g class="dnmid"></g>${front}<g class="dnghost"></g>${targets.map((tg,i)=>`<g class="dnit dndrag" data-t="${i}" style="transform:translate(${tg.start.x}px,${tg.start.y}px)"><circle r="38" fill="#FFFFFF" fill-opacity=".001"/><text font-size="${DN_S}" text-anchor="middle" dominant-baseline="central">${tg.item[0]}</text></g>`).join('')}`)}`);bar();dnFit();
     window.__dnT=targets.map(tg=>{const o=refs[tg.ref];return {rel:tg.rel,p:tg.rel==='between'?{x:300,y:DN_G-DN_S*.45}:dnPos(o.ref,o.cx,o.k,tg.rel)}});
     const svg=stage.querySelector('.dnscene'),mid=svg.querySelector('.dnmid');let placed=new Set();
     const toSvg=e=>{const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse())};
@@ -5172,7 +5180,7 @@ function donde(){alApply('donde');const t=DN_T[lang],rec=dnRec(),lv=dnLv;let ove
     for(const r of shuffle(pool.filter(r=>lvAll.includes(r)).concat(shuffle(pool))))if(opts.length<n&&!opts.includes(r))opts.push(r);
     opts=shuffle(opts);
     const q=t.where(dnItem(item));
-    frame(q,`${dnScene(refs,layerSvg([{p:posOf(rel),svg:dnItemSvg(item[0],posOf(rel))}]))}<div class="row dnopts">${opts.map(r=>`<button class="pick dnopt" data-v="${r}"><svg viewBox="0 0 64 48" aria-hidden="true">${DN_ICON[r]}</svg><span>${t.word[r]}</span></button>`).join('')}</div>`);bar();
+    frame(q,`<div class="dnlay">${dnScene(refs,layerSvg([{p:posOf(rel),svg:dnItemSvg(item[0],posOf(rel))}]))}<div class="row dnopts">${opts.map(r=>`<button class="pick dnopt" data-v="${r}"><svg viewBox="0 0 64 48" aria-hidden="true">${DN_ICON[r]}</svg><span>${t.word[r]}</span></button>`).join('')}</div></div>`);bar();dnFit();
     window.__dnAns=rel;
     agQ({opts:'.dnopt',right:()=>stage.querySelector(`.dnopt[data-v="${rel}"]`),say:()=>sentence,known:()=>agStK(((P.pos||{}).st||{})[rel])});
     stage.querySelectorAll('.dnopt').forEach(b=>b.onclick=()=>{if(over)return;const v=b.dataset.v;if(v===rel){mark([rel],true);good(b,sentence)}else{mark([rel],false,v);fails++;miss(b,v);if(fails>=2){const c=stage.querySelector(`.dnopt[data-v="${rel}"]`);c.classList.remove('czhint');void c.offsetWidth;c.classList.add('czhint')}}});
@@ -5189,7 +5197,7 @@ function donde(){alApply('donde');const t=DN_T[lang],rec=dnRec(),lv=dnLv;let ove
   const extra=rel==='between'?[{p:{x:560,y:DN_G-DN_S*.45,layer:'front'},r:'right2'},{p:{x:40,y:DN_G-DN_S*.45,layer:'front'},r:'left2'}].slice(0,lv===1?1:2):[];
   const all=shuffle([{r:rel,p:posOf(rel)},...others.map(r=>({r,p:posOf(r)})),...extra]);
   const q=t.find(dnItem(item),dnRelText(rel,o.ref,refs[1]&&refs[1].ref));
-  frame(q,dnScene(refs,layerSvg(all.map(x=>({p:x.p,svg:dnItemSvg(item[0],x.p,`data-v="${x.r}"`)})))));bar();
+  frame(q,dnScene(refs,layerSvg(all.map(x=>({p:x.p,svg:dnItemSvg(item[0],x.p,`data-v="${x.r}"`)})))));bar();dnFit();
   window.__dnAns=rel;
   agQ({opts:'.dnit[data-v]',noShuffle:true,right:()=>stage.querySelector(`.dnit[data-v="${rel}"]`),say:()=>sentence,known:()=>agStK(((P.pos||{}).st||{})[rel])});
   stage.querySelectorAll('.dnit[data-v]').forEach(g=>g.addEventListener('click',()=>{if(over)return;const v=g.dataset.v;if(v===rel){mark([rel],true);good(g,sentence)}else{mark([rel],false,DN_ICON[v]?v:null);fails++;miss(g,v);if(fails>=2){const c=stage.querySelector(`.dnit[data-v="${rel}"]`);c.classList.remove('czhint');void c.getBoundingClientRect();c.classList.add('czhint')}}}));
