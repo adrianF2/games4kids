@@ -4332,7 +4332,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=121; // se sube junto con la caché de sw.js
+const APP_VER=122; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5226,9 +5226,13 @@ function silabas(){const T=SL_T[lang],rec=slRec();let first=true;
     let n=0,tm=null,busy=false,fails=0;
     document.getElementById('hear').onclick=()=>saySeq([[word,lang],[T.clap,lang]],{gap:350});
     // demostración: cada trozo aparece, suena el tambor y la voz lo dice
-    const chant=(cb)=>{busy=true;chips.innerHTML='';dots.innerHTML='';const sp=slSay(w);let i=0;
-      const step=()=>{if(!stage.contains(drum))return;if(i>=N){busy=false;cb&&cb();return}chips.insertAdjacentHTML('beforeend',`<span>${parts[i]}</span>`);dots.insertAdjacentHTML('beforeend','<i></i>');tum();drum.classList.remove('hit');void drum.offsetWidth;drum.classList.add('hit');
-        say(sp[i],{rate:.8,keep:true});i++;setTimeout(step,750)};step()};
+    // cada sílaba aparece (con su golpe de tambor) cuando la voz empieza a decirla, y la siguiente espera a que termine la anterior
+    const chant=(cb)=>{busy=true;chips.innerHTML='';dots.innerHTML='';const sp=slSay(w);let fin=false,shown=0;
+      const show=i=>{if(!stage.contains(drum)||i<shown)return;for(;shown<=i;shown++){chips.insertAdjacentHTML('beforeend',`<span>${parts[shown]}</span>`);dots.insertAdjacentHTML('beforeend','<i></i>')}tum();drum.classList.remove('hit');void drum.offsetWidth;drum.classList.add('hit')};
+      const end=()=>{if(fin)return;fin=true;clearTimeout(safe);if(!stage.contains(drum))return;show(N-1);busy=false;setTimeout(()=>{if(stage.contains(drum))cb&&cb()},300)};
+      // por si la voz no avisa al terminar (algunos aparatos), se sigue igual tras un rato
+      const safe=setTimeout(end,1500+N*2200);
+      saySeq(sp.map((x,i)=>[x,lang,()=>show(i)]),{rate:.8,gap:350,done:end})};
     const check=()=>{tm=null;if(busy)return;
       if(n===N){mark(true);const ok=fails===0;if(ok){const s=rec.cl=(rec.cl|0)+1;if(s>=3&&rec.lv<3){rec.lv++;rec.cl=0}}saveP();
         chant(()=>{msg.textContent=T.parts(N);say(T.parts(N));afterSpeech(()=>{if(stage.contains(drum))win(drum,silabas)},500,4000)});return}
