@@ -4797,7 +4797,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-guestlv','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=134; // se sube junto con la caché de sw.js
+const APP_VER=135; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -6341,9 +6341,11 @@ function syMergeP(a,b){if(!a)return b;if(!b)return a;const o=Object.assign({},b,
   const hs=new Map();[...(b.hist||[]),...(a.hist||[])].forEach(x=>hs.set(JSON.stringify(x),x));o.hist=[...hs.values()].sort((x,y)=>x[0]-y[0]).slice(-300);
   o.letOpen=Math.max(a.letOpen||0,b.letOpen||0)||undefined;o.recent=a.recent||b.recent;
   // memoria musical (🎶): manda el aparato donde cambió por última vez (puede subir o bajar)
+  // números y letras por idioma: en cada uno gana el registro más reciente (la puntuación puede bajar)
+  if(a.nl||b.nl){const mg=(x,y)=>{if(!x)return y;if(!y)return x;if(typeof x==='object'&&'s' in x&&'a' in x)return ((x.t||0)>(y.t||0)||((x.t||0)===(y.t||0)&&(x.a||0)>=(y.a||0)))?x:y;const r={};for(const k of new Set([...Object.keys(x),...Object.keys(y)]))r[k]=mg(x[k],y[k]);return r};o.nl=mg(a.nl,b.nl)}
   if(a.mspan||b.mspan)o.mspan=((a.mspan||{}).u||0)>=((b.mspan||{}).u||0)?(a.mspan||b.mspan):b.mspan;
   // resto de actividades (contadores): el mayor de cada contador
-  for(const k of new Set([...Object.keys(a),...Object.keys(b)]))if(!['v','sess','days','num','let','obj','objConf','hist','letOpen','recent','mspan'].includes(k))o[k]=syDeepMax(a[k],b[k]);
+  for(const k of new Set([...Object.keys(a),...Object.keys(b)]))if(!['v','sess','days','num','let','obj','objConf','hist','letOpen','recent','mspan','nl'].includes(k))o[k]=syDeepMax(a[k],b[k]);
   o.v=1;return o}
 function syMergeScr(a,b){if(!a)return b;if(!b)return a;const o=Object.assign({},b,a),today=dayKey(now());
   const hd={};for(const s of [a.hd||{},b.hd||{}])for(const id in s){hd[id]=hd[id]||{};for(const d in s[id])hd[id][d]=Math.max(hd[id][d]||0,s[id][d])}o.hd=hd;
