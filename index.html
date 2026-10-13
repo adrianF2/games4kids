@@ -558,7 +558,7 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .rbslot{border:3px dashed #9AA8C0}
 .rbpad{display:grid;grid-template-columns:repeat(3,74px);grid-template-rows:repeat(3,74px);gap:6px}
 .rbarr,.rbrun{border:3px solid var(--ink);border-radius:20px;background:#FFFFFF;font-size:2.9rem;cursor:pointer;box-shadow:0 5px 0 var(--edge);padding:0;display:grid;place-items:center}
-.rbarr:active,.rbrun:active{transform:translateY(3px);box-shadow:0 2px 0 var(--edge)}.rbrun{border-radius:50%;background:var(--green);box-shadow:0 5px 0 #2B7F55}
+.rbarr:active,.rbrun:active{transform:translateY(3px);box-shadow:0 2px 0 var(--edge)}.rbplay{width:58%;height:58%;margin-left:8%;display:block}.rbrun{aspect-ratio:1/1}#blGo{width:min(8.5vh,66px);height:min(8.5vh,66px);align-self:center}.rbrun{border-radius:50%;background:var(--green);box-shadow:0 5px 0 #2B7F55}
 .rbmul{display:flex;gap:8px}.rbmul .mode{font:800 1.3rem "Baloo 2",sans-serif;padding:4px 16px;background:#FFFFFF;border:3px solid var(--ink);border-radius:14px;cursor:pointer}
 .rbbtns{gap:8px}.rbbtns .btn{padding:6px 14px;min-height:44px}.rbmsg{min-height:1.4em;margin:0;text-align:center}
 @media (min-width:1000px),(orientation:landscape) and (min-width:700px){.rbmain{flex-direction:row}.rbside{flex:0 0 400px;justify-content:center}}
@@ -4908,7 +4908,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-guestlv','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=138; // se sube junto con la caché de sw.js
+const APP_VER=139; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -6215,7 +6215,7 @@ function baile(){qCtx=null;qAns=false;blStopMusic();if(blMode>blOpen())blMode=bl
    <div class="blprog">${loop?`<div class="blloop"><span class="bllab">${mode==='each'?'👫':mode==='while'?'❓':'🔁'}</span><div class="blbody"></div>
      ${mode==='each'?'':`<div class="bltimes">${[2,3,4].map(n=>`<button class="mode" data-t="${n}">×${n}</button>`).join('')}${mode==='while'?`<button class="mode" data-t="m" aria-label="🎵">🎵</button>`:''}</div>`}</div>`:`<div class="blbody"></div>`}</div>
    <div class="blpad">${BL_MV.map(m=>`<button class="blmv" data-m="${m}" aria-label="${T.mv[m]}">${BL_IC[m]}</button>`).join('')}</div>
-   <div class="row rbbtns"><button class="btn alt icon" id="blWatch" aria-label="👀">👀</button>${mode==='fix'?'':`<button class="btn alt icon" id="blDel" aria-label="⌫">⌫</button>`}<button class="rbrun" id="blGo" aria-label="▶️">▶️</button><button class="btn alt icon" id="hear" aria-label="${t.hear}">🔊</button></div>
+   <div class="row rbbtns"><button class="btn alt icon" id="blWatch" aria-label="👀">👀</button>${mode==='fix'?'':`<button class="btn alt icon" id="blDel" aria-label="⌫">⌫</button>`}<button class="rbrun" id="blGo" aria-label="▶️"><svg class="rbplay" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5v15l12-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/></svg></button><button class="btn alt icon" id="hear" aria-label="${t.hear}">🔊</button></div>
    <p class="msg" aria-live="polite"></p>`;
   const msg=stage.querySelector('.msg'),bodyEl=stage.querySelector('.blbody');let prog=pz.pre?pz.pre.slice():[],tm=mode==='each'?'e':null,busy=false,finished=false,fails=0,hinted=false;
   stage.querySelectorAll('[data-bm]').forEach(b=>b.onclick=()=>{if(+b.dataset.bm>blOpen()){msg.textContent=T.locked;say(T.locked);return}blMode=+b.dataset.bm;try{localStorage.setItem('peques-blmode',blMode)}catch(e){}stopSpeech();baile()});
@@ -6413,7 +6413,7 @@ function robot(){qCtx=null;qAns=false;const t=L(),T=RB_T[lang],rec=rbRec(),sk=RB
      <g class="rbpred"></g><g class="rbme"><text x="0" y="0" font-size="${CS*.66}" text-anchor="middle" dominant-baseline="central">${ch}</text></g></svg></div>
     <div class="rbside"><div class="rbprog" id="rbprog" aria-live="polite"></div>
      ${kind==='predict'?'':`<div class="rbpad"><span></span><button class="rbarr" data-d="0" aria-label="${T.arrows[0]}">⬆️</button><span></span>
-       <button class="rbarr" data-d="3" aria-label="${T.arrows[3]}">⬅️</button>${kind==='step'?'<span></span>':`<button class="rbrun" id="rbRun" aria-label="▶️">▶️</button>`}<button class="rbarr" data-d="1" aria-label="${T.arrows[1]}">➡️</button>
+       <button class="rbarr" data-d="3" aria-label="${T.arrows[3]}">⬅️</button>${kind==='step'?'<span></span>':`<button class="rbrun" id="rbRun" aria-label="▶️"><svg class="rbplay" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5v15l12-7.5z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/></svg></button>`}<button class="rbarr" data-d="1" aria-label="${T.arrows[1]}">➡️</button>
        <span></span><button class="rbarr" data-d="2" aria-label="${T.arrows[2]}">⬇️</button><span></span></div>`}
      ${multi?`<div class="rbmul">${[2,3,4].map(k=>`<button class="mode" data-k="${k}">×${k}</button>`).join('')}${kind==='until'?`<button class="mode rbw" data-k="w" aria-label="${T.stages[4]}">⏩</button>`:''}</div>`:''}
      <div class="row rbbtns"><button class="btn alt icon" id="hear" aria-label="${t.hear}">🔊</button>${kind==='predict'||kind==='step'||kind==='fix'?'':`<button class="btn alt icon" id="rbDel" aria-label="⌫">⌫</button>`}<button class="btn alt" id="rbHint">${T.hint}</button></div>
