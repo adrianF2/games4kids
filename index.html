@@ -5156,7 +5156,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-guestlv','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=150; // se sube junto con la caché de sw.js
+const APP_VER=151; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -6267,21 +6267,21 @@ const CL_T={es:{title:'La máquina de clasificar',lv:['Una regla','Si no','Dos r
   k:{fruit:'una fruta',animal:'un animal',veh:'un vehículo',clothes:'ropa'},c:{red:'de color rojo',yellow:'de color amarillo',green:'de color verde',blue:'de color azul'},
   is:x=>`es ${x}`,not:x=>`no es ${x}`,Is:x=>`Es ${x}`,Not:x=>`No es ${x}`,and:(a,b)=>`${a} y ${b}`,but:(a,b)=>`${a}, pero ${b}`,nor:(a,b)=>`No es ${a} ni ${b}`,
   go:['va a la cesta','va al cubo','va a la caja'],pass:'sigue por la cinta',rule:(c,g)=>`Si ${c}, ${g}.`,els:g=>`Si no, ${g}.`,why:(c,g)=>`${c}: ${g}.`,
-  fixWhy:w=>`${w} ¡Ya está arreglado!`,guessWhy:'¡Esa es! Mira: todas las de la cesta lo cumplen.',
+  fixWhy:w=>`${w} ¡Ya está arreglado!`,guessWhy:'¡Esa es! Todas las de la cesta lo cumplen.',
   sec:'🏭 La máquina de clasificar',note:'Cada cosa (o reto) cuenta como una respuesta en Actividad. % = acertada a la primera.',modes:{sort:'➡️ Clasificar',fix:'🔧 Arreglar',guess:'🤔 ¿Qué regla?'},hardR:'Le cuestan estas reglas:'},
  en:{title:'The sorting machine',lv:['One rule','Otherwise','Two rules','Double rule (AND)'],IF:'IF',ELSE:'OTHERWISE',AND:'AND',
   q:'Where does it go?',fixQ:'🔧 The machine made a mistake! Which thing is in the wrong place?',guessQ:'🤔 Which rule did the machine use?',newP:'New program!',
   k:{fruit:'a fruit',animal:'an animal',veh:'a vehicle',clothes:'clothing'},c:{red:'red',yellow:'yellow',green:'green',blue:'blue'},
   is:x=>`it’s ${x}`,not:x=>`it isn’t ${x}`,Is:x=>`It’s ${x}`,Not:x=>`It isn’t ${x}`,and:(a,b)=>`${a} and ${b}`,but:(a,b)=>`${a}, but ${b}`,nor:(a,b)=>`It isn’t ${a} or ${b}`,
   go:['it goes in the basket','it goes in the bucket','it goes in the box'],pass:'it stays on the belt',rule:(c,g)=>`If ${c}, ${g}.`,els:g=>`Otherwise, ${g}.`,why:(c,g)=>`${c}: ${g}.`,
-  fixWhy:w=>`${w} All fixed!`,guessWhy:'That’s it! Look: everything in the basket follows it.',
+  fixWhy:w=>`${w} All fixed!`,guessWhy:'That’s it! Everything in the basket follows it.',
   sec:'🏭 The sorting machine',note:'Each thing (or challenge) counts as one answer in Activity. % = right on the first try.',modes:{sort:'➡️ Sorting',fix:'🔧 Fixing',guess:'🤔 Which rule?'},hardR:'These rules are hard:'},
  fr:{title:'La machine à trier',lv:['Une règle','Sinon','Deux règles','Règle double (ET)'],IF:'SI',ELSE:'SINON',AND:'ET',
   q:'Où va-t-il ?',fixQ:'🔧 La machine s’est trompée ! Qu’est-ce qui n’est pas à sa place ?',guessQ:'🤔 Quelle règle la machine a-t-elle utilisée ?',newP:'Nouveau programme !',
   k:{fruit:'un fruit',animal:'un animal',veh:'un véhicule',clothes:'un vêtement'},c:{red:'rouge',yellow:'jaune',green:'vert',blue:'bleu'},
   is:x=>`c’est ${x}`,not:x=>`ce n’est pas ${x}`,Is:x=>`C’est ${x}`,Not:x=>`Ce n’est pas ${x}`,and:(a,b)=>`${a} et ${b}`,but:(a,b)=>`${a}, mais ${b}`,nor:(a,b)=>`Ce n’est ni ${a} ni ${b}`,
   go:['il va dans le panier','il va dans le seau','il va dans la boîte'],pass:'il continue sur le tapis',rule:(c,g)=>`Si ${c}, ${g}.`,els:g=>`Sinon, ${g}.`,why:(c,g)=>`${c} : ${g}.`,
-  fixWhy:w=>`${w} C’est réparé !`,guessWhy:'C’est ça ! Regarde : tout ce qui est dans le panier la respecte.',
+  fixWhy:w=>`${w} C’est réparé !`,guessWhy:'C’est ça ! Tout ce qui est dans le panier la respecte.',
   sec:'🏭 La machine à trier',note:'Chaque objet (ou défi) compte comme une réponse dans Activité. % = réussi du premier coup.',modes:{sort:'➡️ Trier',fix:'🔧 Réparer',guess:'🤔 Quelle règle ?'},hardR:'Ces règles sont difficiles :'}};
 let clLv=1;try{const v=+localStorage.getItem('peques-cllv');if(v>=1&&v<=4)clLv=v}catch(e){}
 function clRec(){if(!P.cls)P.cls={st:{},m:{},r:{}};['st','m','r'].forEach(k=>{if(!P.cls[k]||typeof P.cls[k]!=='object')P.cls[k]={}});return P.cls}
