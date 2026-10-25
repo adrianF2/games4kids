@@ -5156,7 +5156,7 @@ const BK_T={
    ask:d=>`Cela remplace tout le contenu de cette tablette par la sauvegarde du ${d}. Vous êtes sûr ?`,yes:'Oui, restaurer',has:'Contenu :',now:'Actuellement sur cette tablette :',ver:'Version de l’app',sum:x=>`${x.min} min de jeu · ${bkPl(x.days,'jour','jours')} de jeu · ${bkPl(x.sess,'session','sessions')} · ${bkPl(x.ans,'réponse','réponses')} · ${bkPl(x.scr,'jour','jours')} de temps d’écran · ${x.trk} nombres/lettres suivis · ${bkPl(x.gal,'dessin','dessins')}`,vOk:x=>`✅ Sauvegarde restaurée et vérifiée : ${x}.`,vBad:(e,g)=>`⚠️ La sauvegarde n’a pas été restaurée entièrement. Le fichier contenait : ${e}. Il y a maintenant : ${g}. Réessayez avec l’app ouverte une seule fois.`,file:f=>`Fichier : ${f}`,no:'Annuler',done:'✅ Sauvegarde restaurée. Rechargement…',last:d=>`Dernière sauvegarde : ${d}`,never:'Aucune sauvegarde enregistrée pour l’instant.',busy:'Un instant…'}};
 const bkPl=(n,a,b)=>`${n} ${n===1?a:b}`;
 const BK_SKIP=new Set(['peques-guest','peques-guestlv','peques-gen','peques-bkcheck','peques-bkres','peques-sync','peques-devid','peques-sync-final']);
-const APP_VER=149; // se sube junto con la caché de sw.js
+const APP_VER=150; // se sube junto con la caché de sw.js
 const bkKeys=()=>{const o=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('peques-')&&!BK_SKIP.has(k))o.push(k)}return o};
 const blobToData=b=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(b)});
 const dataToBlob=async d=>(await fetch(d)).blob();
@@ -5438,21 +5438,21 @@ const CZ_T={
  es:{modes:['📏 Tamaños','⚖️ Balanza','💧 Lleno o vacío','🔄 Contrarios'],same:'Son iguales',sameF:'Tienen lo mismo',sameW:'Pesan igual',weigh:'Pesar: toca la balanza',
    order:(a,b)=>`Toca del más ${a} al más ${b}`,orderFill:'Toca del que tiene menos al que tiene más',
    heavy:'¿Qué pesa más?',light:'¿Qué pesa menos?',full:(n,g)=>`¿Qué ${n} está ${g==='f'?'llena':'lleno'}?`,empty:(n,g)=>`¿Qué ${n} está ${g==='f'?'vacía':'vacío'}?`,
-   more:l=>`¿Dónde hay más ${l}?`,less:l=>`¿Dónde hay menos ${l}?`,oppL3:w=>`Mira: ${w}. ¿Cuál es lo contrario?`,
+   more:l=>`¿Dónde hay más ${l}?`,less:l=>`¿Dónde hay menos ${l}?`,oppL3:w=>`¿Cuál es lo contrario de «${w}»?`,
    alignNote:'¡Ups, casi! Los ponemos en la misma línea para comparar.',boxNote:'¡Ups, casi! Sin la caja se ve cuál es más alto.',scaleNote:'¡Ups, casi! La balanza baja del lado que pesa más.',
    title:'📏 Comparar',note:'Cada pregunta cuenta como una respuesta en Actividad. % = acertada a la primera.',dims:{size:'Grande / pequeño',len:'Largo / corto',height:'Alto / bajo',thick:'Grueso / delgado',weight:'Pesado / ligero',fill:'Lleno / vacío',opp:'Contrarios',ord:'Ordenar (nivel difícil)'},
    dimNote:'🟢 bien (3 o más y 70 % a la primera) · 🟡 practicando · 🔴 le cuesta · ⬜ sin probar.',trap:(m,a)=>`Trampas (cosas no alineadas, subidas a una caja, o grandes pero ligeras): se equivocó ${m} de ${a} ${a===1?'vez':'veces'}.`,oppHard:'Contrarios que más le cuestan'},
  en:{modes:['📏 Sizes','⚖️ Scales','💧 Full or empty','🔄 Opposites'],same:'They are the same',sameF:'They have the same',sameW:'They weigh the same',weigh:'Weigh: tap the scales',
    order:(a,b,sa,sb)=>`Tap from the ${sa} to the ${sb}`,orderFill:'Tap from the one with the least to the one with the most',
    heavy:'Which is heavier?',light:'Which is lighter?',full:n=>`Which ${n} is full?`,empty:n=>`Which ${n} is empty?`,
-   more:l=>`Where is there more ${l}?`,less:l=>`Where is there less ${l}?`,oppL3:w=>`Look: ${w}. Which one is the opposite?`,
+   more:l=>`Where is there more ${l}?`,less:l=>`Where is there less ${l}?`,oppL3:w=>`What is the opposite of “${w}”?`,
    alignNote:'Oops, almost! We line them up to compare.',boxNote:'Oops, almost! Without the box you can see which is taller.',scaleNote:'Oops, almost! The scales go down on the heavier side.',
    title:'📏 Comparing',note:'Each question counts as one answer in Activity. % = right on the first try.',dims:{size:'Big / small',len:'Long / short',height:'Tall / short',thick:'Thick / thin',weight:'Heavy / light',fill:'Full / empty',opp:'Opposites',ord:'Ordering (hard level)'},
    dimNote:'🟢 good (3+ and 70% first try) · 🟡 practising · 🔴 finds it hard · ⬜ not tried.',trap:(m,a)=>`Traps (things not lined up, standing on a box, or big but light): wrong ${m} of ${a} ${a===1?'time':'times'}.`,oppHard:'Hardest opposites'},
  fr:{modes:['📏 Tailles','⚖️ Balance','💧 Plein ou vide','🔄 Contraires'],same:'Ils sont pareils',sameF:'Il y en a autant',sameW:'Ils pèsent pareil',weigh:'Peser : touche la balance',
    order:(a,b)=>`Touche du plus ${a} au plus ${b}`,orderFill:'Touche de celui qui en a le moins à celui qui en a le plus',
    heavy:'Qu’est-ce qui est le plus lourd ?',light:'Qu’est-ce qui est le plus léger ?',full:(n,g)=>`${g==='f'?'Quelle':'Quel'} ${n} est ${g==='f'?'pleine':'plein'} ?`,empty:(n,g)=>`${g==='f'?'Quelle':'Quel'} ${n} est vide ?`,
-   more:l=>`Où y a-t-il le plus ${l} ?`,less:l=>`Où y a-t-il le moins ${l} ?`,oppL3:w=>`Regarde : ${w}. Lequel est le contraire ?`,
+   more:l=>`Où y a-t-il le plus ${l} ?`,less:l=>`Où y a-t-il le moins ${l} ?`,oppL3:w=>`Quel est le contraire de « ${w} » ?`,
    alignNote:'Oups, presque ! On les met sur la même ligne pour comparer.',boxNote:'Oups, presque ! Sans la caisse, on voit lequel est le plus haut.',scaleNote:'Oups, presque ! La balance descend du côté le plus lourd.',
    title:'📏 Comparer',note:'Chaque question compte comme une réponse dans Activité. % = réussie du premier coup.',dims:{size:'Grand / petit',len:'Long / court',height:'Haut / bas',thick:'Épais / fin',weight:'Lourd / léger',fill:'Plein / vide',opp:'Contraires',ord:'Ranger (niveau difficile)'},
    dimNote:'🟢 acquis (3 fois ou plus et 70 % du premier coup) · 🟡 en cours · 🔴 difficile · ⬜ pas essayé.',trap:(m,a)=>`Pièges (objets pas alignés, posés sur une caisse, ou gros mais légers) : ${m} ${m===1?'erreur':'erreurs'} sur ${a}.`,oppHard:'Contraires les plus difficiles'}};
